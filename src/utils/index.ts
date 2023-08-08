@@ -1,0 +1,60 @@
+import dayjs from './time'
+
+export function isArray(value: any) {
+    if (typeof Array.isArray === 'function') {
+        return Array.isArray(value)
+    } else {
+        return Object.prototype.toString.call(value) === '[object Array]'
+    }
+}
+
+export function isObject(value: any) {
+    return Object.prototype.toString.call(value) === '[object Object]'
+}
+
+export function isNumber(value: any) {
+    return !isNaN(Number(value))
+}
+
+export function isFunction(value: any) {
+    return typeof value == 'function'
+}
+
+export function isString(value: any) {
+    return typeof value == 'string'
+}
+
+export function isBoolean(value: any) {
+    return typeof value === 'boolean'
+}
+
+export function isEmpty(value: any) {
+    if (isArray(value)) {
+        return value.length === 0
+    }
+
+    if (isObject(value)) {
+        return Object.keys(value).length === 0
+    }
+
+    return value === '' || value === undefined || value === null
+}
+
+/**
+ * 如果val1为NULL, 返回val2, 否则返回val1
+ * @param val1
+ * @param val2
+ */
+export function ifNull<T = any>(val1: any, val2: any): T {
+    return isEmpty(val1) ? (val2 as T) : (val1 as T)
+}
+
+
+/**
+ * 格式化时间 默认为YYYY-MM-DD HH:mm:ss
+ * @param time 时间
+ * @param format 格式
+ */
+export function formatDateTime(time: string | number | Date, format: string = "YYYY-MM-DD HH:mm:ss") {
+    return isEmpty(time) ? "N/A" : dayjs(new Date(time)).format(format)
+}

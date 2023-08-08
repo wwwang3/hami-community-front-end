@@ -1,0 +1,61 @@
+:root {
+    --hami-brand: #1e80ff;
+    --hami-blue: #1d7dfa;
+    --hami-link-hover: #007fff;
+    --hami-text-gray: #909090;
+    --hami-card-bg: #fff;
+    --hami-bg-gray: #e5e6eb;
+    --hami-radius: 4px;
+    --hami-bg: #fff;
+    --hami-bg-light: #fff;
+    --hami-text: 15px;
+    --hami-radius-l: 15px;
+    --hami-title-color: #1d2129;
+    --hami-border-color: #e5e6eb;
+    --hami-card-hover: #fafafa;
+    --hami-card-hover-d: #f0f0f0;
+    --hami-card-shadow: 0 3px 12px -1px rgba(7,10,25,0.05), 0 22px 27px -20px rgba(7,10,25,0.05);
+}
+body {
+    margin: 0;
+    /* background-color: #f4f5f5; */
+    letter-spacing: 0.5px;
+    line-height: normal;
+}
+body::before {
+    content: '';
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background: -webkit-gradient(linear, left top, right bottom, from(#6d327c), color-stop(#485DA6), color-stop(#00a1ba), color-stop(#01b18e), to(#32b37b));
+    background: -o-linear-gradient(left top, #6d327c, #485DA6, #00a1ba, #01b18e, #32b37b);
+    background: linear-gradient(to right bottom, #6d327c, #485DA6, #00a1ba, #01b18e, #32b37b);
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+    cursor: pointer;
+    color: inherit;
+}
+.container {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 960px;
+}
+.user-popover {
+    border-radius: 8px !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+.el-popover .el-popper {
+    min-width: 0;
+    padding: 0;
+}
