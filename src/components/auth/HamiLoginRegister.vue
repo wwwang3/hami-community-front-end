@@ -12,11 +12,12 @@
             </template>
         </div>
         <div class="login-register-bottom">
-            <div class="text">或</div>
             <template v-if="frameMode === 'login'">
+                <el-divider>没有账号</el-divider>
                 <div @click="changeMode('register')" class="text option">立即注册</div>
             </template>
             <template v-else>
+                <el-divider>已有账号</el-divider>
                 <div @click="changeMode('login')" class="text option">点我登录</div>
             </template>
         </div>
@@ -32,8 +33,7 @@ import HamiLoginCard from '@/components/auth/HamiLoginCard.vue'
 import HamiRegisterCard from '@/components/auth/HamiRegisterCard.vue'
 import {useRoute, useRouter} from 'vue-router'
 interface Props {
-    mode?: string,
-    changeRoute?: boolean
+    mode?: string
 }
 const $router = useRouter()
 const $route = useRoute()
@@ -42,7 +42,7 @@ const $props = withDefaults(defineProps<Props>(), {
     mode: "login",
     changeRoute: false
 })
-const frameMode = ref($props.mode)
+const frameMode = ref<typeof $props.mode>($props.mode)
 
 watch(() => $route.fullPath, (path) => {
     if (path === "/login") {
@@ -52,10 +52,11 @@ watch(() => $route.fullPath, (path) => {
     }
 })
 const changeMode = (mode: string) => {
-    if (!$props.changeRoute) {
-        frameMode.value = mode
-    } else {
+    //在登录或者注册界面调用此方法
+    if ($route.fullPath === '/register' || $route.fullPath === '/login') {
         $router.replace("/" + mode)
+    } else { //不在登录界面, 比如弹出式的dialog中调用
+        frameMode.value = mode
     }
 }
 </script>
@@ -67,7 +68,7 @@ const changeMode = (mode: string) => {
     background-color: #fff;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 10px 22px rgba(0, 0, 0, 0.16);
     border-radius: var(--hami-radius-large);
-    min-height: 400px;
+    min-height: 420px;
     position: relative;
 }
 .login-register-header {
@@ -82,17 +83,16 @@ const changeMode = (mode: string) => {
 .login-register-bottom {
     color: var(--hami-text-gray);
     font-size: var(--hami-text-size);
+    margin-bottom: 20px;
     .text {
         text-align: center;
         line-height: 22px;
         height: 22px;
     }
-    .text:first-child {
-        margin: 4px 0;
-    }
     .option {
-        color: var(--hami-blue);
+        color: var(--hami-title-color);
         cursor: pointer;
+        font-size: 18px;
     }
 }
 .login-register-protocol {

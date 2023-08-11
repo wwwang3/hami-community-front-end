@@ -33,7 +33,7 @@ declare interface RegisterParam {
     /**
      * 重复密码
      */
-    rePassword: string
+    rePassword?: string
     /**
      * 邮箱
      */

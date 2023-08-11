@@ -1,7 +1,7 @@
 <template>
     <div class="hami-register-card">
         <el-form :model="registerParam" ref="registerForm" :rules="registerRules" label-position="left"
-                 label-width="80px" size="large" @submit.native.prevent class="hami-register-body">
+                 label-width="80px" size="large" @submit.native.prevent class="hami-register-card-body">
             <el-form-item label="用户名" prop="username">
                 <el-input v-model="registerParam.username" size="large" type="text" placeholder="用户名" clearable>
                 </el-input>
@@ -14,16 +14,16 @@
                     </el-input>
                 </el-form-item>
             </el-tooltip>
-            <el-form-item label="确认密码" prop="rePassword">
-                <el-input v-model="registerParam.rePassword" size="large" type="password" placeholder="请再次输入密码"
-                          clearable></el-input>
-            </el-form-item>
+<!--            <el-form-item label="确认密码" prop="rePassword">-->
+<!--                <el-input v-model="registerParam.rePassword" size="large" type="password" placeholder="请再次输入密码"-->
+<!--                          clearable></el-input>-->
+<!--            </el-form-item>-->
             <el-form-item label="邮箱" prop="email">
                 <el-input v-model="registerParam.email" size="large" type="text" placeholder="请输入邮箱" clearable>
                 </el-input>
             </el-form-item>
-            <div class="hami-register-button" @click="register(registerForm)">
-                <el-button type="primary" :disabled="onRegister">注册</el-button>
+            <div class="register-button" @click="register(registerForm)">
+                <el-button type="primary" :disabled="onRegister">立即注册</el-button>
             </div>
         </el-form>
     </div>
@@ -33,7 +33,11 @@
 import {reactive, ref} from 'vue'
 import type {FormInstance, FormRules} from 'element-plus'
 import {isEmpty} from '@/utils'
+import {$message} from '@/utils/message.ts'
+import {useRoute, useRouter} from 'vue-router'
 
+const $route = useRoute()
+const $router = useRouter()
 const registerForm = ref<FormInstance>()
 
 const registerParam = reactive<RegisterParam>({
@@ -93,25 +97,43 @@ const registerRules = reactive<FormRules<typeof registerParam>>({
         validator: validatePass,
         trigger: "blur"
     }],
-    rePassword: [{
-        validator: validateCheckPass,
-        trigger: "blur"
-    }]
+    // rePassword: [{
+    //     validator: validateCheckPass,
+    //     trigger: "blur"
+    // }]
 })
 
 const register = async (el: FormInstance | undefined) => {
     onRegister.value = true
-    if (!el) return
-    let valid = await el.validate()
-    if (valid) {
-        console.log("valid")
+    try {
+        let valid = await el?.validate()
+        $message.success("注册成功")
+        if ($route.fullPath === '/register') {
+            setTimeout(() => {
+                $router.replace("/login")
+            }, 200)
+        }
+    } catch (e) {
+        console.log(e)
+    } finally {
+        setTimeout(() => {
+            onRegister.value = false
+        }, 2000)
     }
-    onRegister.value = false
 }
 </script>
 
 <style scoped lang="less">
 .hami-register-card-body {
     margin: 10px 0;
+
+    .register-button {
+        :deep(button) {
+            width: 100%;
+            background: linear-gradient(135deg, #5efce8, #736efe);
+            border: none;
+        }
+    }
 }
+
 </style>

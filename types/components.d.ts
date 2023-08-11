@@ -8,10 +8,13 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElDivider: typeof import('element-plus/es')['ElDivider']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    HamiEye: typeof import('./../src/components/icon/HamiEye.vue')['default']
     HamiLoginCard: typeof import('./../src/components/auth/HamiLoginCard.vue')['default']
     HamiLoginRegister: typeof import('./../src/components/auth/HamiLoginRegister.vue')['default']
     HamiRegisterCard: typeof import('./../src/components/auth/HamiRegisterCard.vue')['default']

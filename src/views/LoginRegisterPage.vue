@@ -1,6 +1,6 @@
 <template>
     <div class="hami-login-register-container">
-        <HamiLoginRegister :mode="mode" :change-route="true"></HamiLoginRegister>
+        <HamiLoginRegister :mode="mode"></HamiLoginRegister>
     </div>
 </template>
 
@@ -27,8 +27,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #81ffef, #f067b4);
-    //background-color: #121212;
+    background: linear-gradient(135deg, #5b247a, #1bcedf);
     position: fixed;
     left: 0;
     right: 0;
