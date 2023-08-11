@@ -7,6 +7,14 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ElButton: typeof import('element-plus/es')['ElButton']
+    ElForm: typeof import('element-plus/es')['ElForm']
+    ElFormItem: typeof import('element-plus/es')['ElFormItem']
+    ElInput: typeof import('element-plus/es')['ElInput']
+    ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    HamiLoginCard: typeof import('./../src/components/auth/HamiLoginCard.vue')['default']
+    HamiLoginRegister: typeof import('./../src/components/auth/HamiLoginRegister.vue')['default']
+    HamiRegisterCard: typeof import('./../src/components/auth/HamiRegisterCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

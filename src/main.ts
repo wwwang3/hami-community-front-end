@@ -6,6 +6,7 @@ import {loadStore} from '@/store'
 import {registerRouter} from '@/router'
 import router from '@/router'
 import {formatDateTime} from '@/utils'
+
 async function start() {
     const app = createApp(App)
     let start = Date.now();

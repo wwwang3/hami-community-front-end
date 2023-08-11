@@ -11,7 +11,15 @@ import type {App} from 'vue'
 const routes: RouteRecordRaw[] = [
     {
         path: "/",
-        component: () => import("@/views/index.vue")
+        component: () => import("@/views/IndexPage.vue")
+    },
+    {
+        path: "/login",
+        component: () => import("@/views/LoginRegisterPage.vue"),
+    },
+    {
+        path: "/register",
+        component: () => import("@/views/LoginRegisterPage.vue"),
     }
 ]
 

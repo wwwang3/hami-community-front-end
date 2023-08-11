@@ -1,10 +1,10 @@
 <template>
-    <div>
-        Hello World!
-    </div>
+    <router-view></router-view>
 </template>
 
 <script setup lang="ts">
+import {onMounted} from 'vue'
+import {$message} from '@/utils/message.ts'
 
 onMounted(() => {
     $message.success("hello")
