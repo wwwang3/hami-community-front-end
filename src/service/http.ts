@@ -1,5 +1,6 @@
 import {$message} from '@/utils/message.ts'
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig} from 'axios'
+import {loadTokenStore} from '@/store/modules/token.ts'
 
 const defaultConfig: Partial<AxiosRequestConfig> = {
     baseURL: import.meta.env.VITE_BASE_API,
@@ -10,10 +11,15 @@ const defaultConfig: Partial<AxiosRequestConfig> = {
 function createInstance() {
     
     const instance: AxiosInstance = axios.create(defaultConfig)
-
     //请求拦截器
     instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-        //todo
+        let tokenStore = loadTokenStore();
+        //在请求头添加token
+        let tokenName = tokenStore.getTokenName()
+        let tokenValue  = tokenStore.getTokenValue()
+        if (tokenName !== null && tokenValue !== null) {
+            config.headers[tokenName] = tokenValue
+        }
         return config
     }, (error) => {
         console.log(error)
@@ -45,12 +51,8 @@ function createInstance() {
                 return Promise.reject(apiData.msg)
         }
     }, (error): Promise<string> => {
-        let response = error as AxiosResponse
+        // let response = error as AxiosResponse
         console.log(error)
-        let status = response.status
-        switch (status) {
-            //todo
-        }
         return Promise.reject("error")
     })
 

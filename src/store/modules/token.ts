@@ -1,5 +1,7 @@
 import store from '@/store'
 import { defineStore } from 'pinia'
+import AuthService from '@/service/modules/auth.ts'
+import {isEmpty} from '@/utils'
 
 export const useTokenStore = defineStore("token", () => {
 
@@ -17,7 +19,7 @@ export const useTokenStore = defineStore("token", () => {
     }
 
     const authenticated = () => {
-        return getTokenValue() !== null
+        return !isEmpty(getTokenName()) && !isEmpty(getTokenValue())
     }
 
     const clear = () => {
@@ -25,7 +27,29 @@ export const useTokenStore = defineStore("token", () => {
         localStorage.removeItem("_tv")
     }
 
-    return { saveToken, getTokenName, getTokenValue, authenticated, clear }
+    const login = async (loginParam: LoginParam) => {
+        try {
+            let result = await AuthService.login(loginParam)
+            saveToken(result.tokenName, result.tokenValue)
+            return Promise.resolve("success")
+        } catch (e) {
+            return Promise.reject(e)
+        }
+    }
+
+    const logout = async () => {
+        try {
+            await AuthService.logout();
+        } catch (e) {
+            return Promise.reject(e)
+        } finally {
+            //退出登录失败, token出了问题
+            //管tmd, 全给他移除了, 重新登录去
+            clear()
+        }
+    }
+
+    return { saveToken, getTokenName, getTokenValue, authenticated, clear, login, logout }
 })
 
 /**

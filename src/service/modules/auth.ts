@@ -1,5 +1,4 @@
-import http from "../http.ts"
-import { FORM } from '../http.ts'
+import http, {FORM} from "../http.ts"
 
 const AuthService: AuthServiceApi = {
 
@@ -9,6 +8,9 @@ const AuthService: AuthServiceApi = {
                 'Content-Type': FORM
             }
         })
+    },
+    logout(): Promise<any> {
+        return http.post("/auth/logout")
     }
 }
 

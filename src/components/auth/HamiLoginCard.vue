@@ -72,10 +72,12 @@ const login = async (el: FormInstance | undefined) => {
     onLogin.value = true
     try {
         await el?.validate()
-        let result: LoginResult = await AuthService.login(loginParam)
-        //登录成功，保存token
-        tokenStore.saveToken(result.tokenName, result.tokenValue)
-        success("login")
+        //登录
+        await tokenStore.login(loginParam)
+        $message.success("登录成功")
+        setTimeout(() => {
+            success("login")
+        }, 1000)
     } catch (e) {
         if (typeof e === "string") {
             $message.error(e)
@@ -83,7 +85,7 @@ const login = async (el: FormInstance | undefined) => {
     } finally {
         setTimeout(() => {
             onLogin.value = false
-        }, 2000)
+        }, 1000)
     }
 }
 

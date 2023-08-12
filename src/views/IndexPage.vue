@@ -15,7 +15,7 @@ import {useRoute, useRouter} from "vue-router"
 
 </script>
 <template>
-    $END$
+    <div>hello world!</div>
 </template>
 
 <style scoped lang="less">
