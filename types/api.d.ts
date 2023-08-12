@@ -10,7 +10,11 @@ declare interface ApiResponse<T> {
 declare interface UserInfo {
     id: string | number,
     username: string,
+}
 
+declare interface LoginResult {
+    readonly tokenName: string,
+    readonly tokenValue: string
 }
 
 declare interface LoginParam {

@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import {reactive, ref} from 'vue'
+import {inject, reactive, ref} from 'vue'
 import type {FormInstance, FormRules} from 'element-plus'
 import {isEmpty} from '@/utils'
 import {$message} from '@/utils/message.ts'
@@ -38,6 +38,7 @@ import {useRoute, useRouter} from 'vue-router'
 
 const $route = useRoute()
 const $router = useRouter()
+const  success = inject("success") as Function
 const registerForm = ref<FormInstance>()
 
 const registerParam = reactive<RegisterParam>({
@@ -106,13 +107,10 @@ const registerRules = reactive<FormRules<typeof registerParam>>({
 const register = async (el: FormInstance | undefined) => {
     onRegister.value = true
     try {
-        let valid = await el?.validate()
+        await el?.validate()
         $message.success("注册成功")
-        if ($route.fullPath === '/register') {
-            setTimeout(() => {
-                $router.replace("/login")
-            }, 200)
-        }
+        //todo 注册
+        success("register")
     } catch (e) {
         console.log(e)
     } finally {

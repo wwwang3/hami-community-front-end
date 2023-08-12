@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, watch} from 'vue'
+import {provide, ref, watch} from 'vue'
 import HamiLoginCard from '@/components/auth/HamiLoginCard.vue'
 import HamiRegisterCard from '@/components/auth/HamiRegisterCard.vue'
 import {useRoute, useRouter} from 'vue-router'
@@ -41,6 +41,16 @@ const $route = useRoute()
 const $props = withDefaults(defineProps<Props>(), {
     mode: "login",
     changeRoute: false
+})
+//登录或者注册成功的回调
+provide("success", (mode: string) => {
+    if (mode === "login") {
+        //登录成功
+        $router.replace("/")
+    } else {
+        //注册成功
+        changeMode("login")
+    }
 })
 const frameMode = ref<typeof $props.mode>($props.mode)
 
@@ -55,7 +65,7 @@ const changeMode = (mode: string) => {
     //在登录或者注册界面调用此方法
     if ($route.fullPath === '/register' || $route.fullPath === '/login') {
         $router.replace("/" + mode)
-    } else { //不在登录界面, 比如弹出式的dialog中调用
+    } else { //不在登录注册界面, 比如弹出式的dialog中调用
         frameMode.value = mode
     }
 }

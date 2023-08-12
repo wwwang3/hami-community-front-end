@@ -2,7 +2,7 @@ import {$message} from '@/utils/message.ts'
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig} from 'axios'
 
 const defaultConfig: Partial<AxiosRequestConfig> = {
-    baseURL: import.meta.env.VITE_BASE_API + import.meta.env.VITE_API_PREFIX,
+    baseURL: import.meta.env.VITE_BASE_API,
     timeout: 5000,
     withCredentials: true
 }
@@ -21,7 +21,7 @@ function createInstance() {
     })
 
     //响应拦截器
-    instance.interceptors.response.use((response: AxiosResponse<ApiResponse<any> | any>): Promise<ApiResponse<any> | any> => {
+    instance.interceptors.response.use((response: AxiosResponse<ApiResponse<any> | any>): Promise<any> => {
         let data = response.data
         let responseType = response.request?.responseType
         if (responseType === "blob" || responseType === "arraybuffer") {
@@ -34,13 +34,15 @@ function createInstance() {
             return Promise.reject("error")
         }
         switch (code) {
-            case  0:
+            case  200:
                 //success
-                return Promise.resolve(apiData)
+                //返回数据
+                return Promise.resolve(apiData.data)
             default:
                 console.log(apiData)
                 $message.error(apiData.msg)
-                return Promise.reject("error")
+                //错误信息
+                return Promise.reject(apiData.msg)
         }
     }, (error): Promise<string> => {
         let response = error as AxiosResponse
@@ -56,5 +58,6 @@ function createInstance() {
 }
 
 const http = createInstance()
-
+export const FORM_DATA= "multipart/form-data"
+export const FORM = "application/x-www-form-urlencoded"
 export default http

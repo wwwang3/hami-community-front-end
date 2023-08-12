@@ -1,4 +1,4 @@
-declare interface UserServiceApi {
+declare interface AuthServiceApi {
 
-    login(params: LoginParam): Promise<ApiResponse<any>>
+    login(params: LoginParam): Promise<LoginResult>
 }

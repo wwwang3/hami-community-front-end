@@ -30,11 +30,16 @@
 </template>
 
 <script setup lang="ts">
-import {computed, reactive, ref} from 'vue'
+import {computed, inject, reactive, ref} from 'vue'
 import type {FormInstance, FormRules} from 'element-plus'
 import {Lock, User} from '@element-plus/icons-vue'
 import {$message} from '@/utils/message.ts'
 import HamiEye from '@/components/icon/HamiEye.vue'
+import AuthService from '@/service/modules/auth.ts'
+import {useTokenStore} from '@/store/modules/token.ts'
+
+const success = inject("success") as Function
+const tokenStore = useTokenStore()
 
 const onLogin = ref<boolean>(false)
 const showPass = ref(false)
@@ -66,13 +71,15 @@ const handleChange = (open: boolean) => {
 const login = async (el: FormInstance | undefined) => {
     onLogin.value = true
     try {
-        let valid = await el?.validate()
-        console.log(valid)
-        setTimeout(() => {
-            $message.success("登录成功")
-        }, 1000)
+        await el?.validate()
+        let result: LoginResult = await AuthService.login(loginParam)
+        //登录成功，保存token
+        tokenStore.saveToken(result.tokenName, result.tokenValue)
+        success("login")
     } catch (e) {
-        console.log(e)
+        if (typeof e === "string") {
+            $message.error(e)
+        }
     } finally {
         setTimeout(() => {
             onLogin.value = false
