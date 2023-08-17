@@ -16,7 +16,7 @@
                     </template>
                     <template #suffix>
                         <HamiEye @change="handleChange" :size="18"></HamiEye>
-                        <span class="forget-password">忘记密码?</span>
+                        <span class="forget-password" @click="() => $router.replace('/reset-pass')">忘记密码?</span>
                     </template>
                 </el-input>
             </el-form-item>
