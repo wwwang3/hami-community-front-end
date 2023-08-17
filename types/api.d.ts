@@ -48,6 +48,13 @@ declare interface RegisterParam {
     captcha: string
 }
 
+declare interface ResetPassParam {
+    email: string,
+    password: string
+    rePassword: string
+    captcha: string
+}
+
 declare interface PageParam {
     /**
      * 页码

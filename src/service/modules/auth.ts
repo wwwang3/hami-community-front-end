@@ -23,6 +23,9 @@ const AuthService: AuthServiceApi = {
     register(param: RegisterParam) {
         return http.post("/auth/register", param)
     },
+    resetPassword(param: ResetPassParam): Promise<any> {
+        return http.post("/auth/reset-pass", {...param})
+    }
 
 }
 

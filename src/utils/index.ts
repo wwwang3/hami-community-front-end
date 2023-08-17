@@ -41,6 +41,15 @@ export function isEmpty(value: any) {
 }
 
 /**
+ * 判断是否是邮箱 是返回true
+ * @param value value
+ */
+export function isEmail(value: string) {
+    let regex = /^([-_A-Za-z0-9.]+)@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/
+    return !isEmpty(value) && regex.test(value)
+}
+
+/**
  * 如果val1为NULL, 返回val2, 否则返回val1
  * @param val1
  * @param val2

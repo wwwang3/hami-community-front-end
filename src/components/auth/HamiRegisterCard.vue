@@ -74,7 +74,7 @@
 <script setup lang="ts">
 import {inject, reactive, ref} from 'vue'
 import type {FormInstance, FormRules} from 'element-plus'
-import {isEmpty} from '@/utils'
+import {isEmail, isEmpty} from '@/utils'
 import {$message} from '@/utils/message.ts'
 import {useRoute, useRouter} from 'vue-router'
 import {EditPen, Lock, Message, User} from '@element-plus/icons-vue'
@@ -104,8 +104,7 @@ const validateAccount = (rule: any, value: string, callback: Function) => {
     }
 }
 const validateEmail = (rule: any, value: string, callback: Function) => {
-    let regex = /^([-_A-Za-z0-9.]+)@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/
-    if (isEmpty(value) || !regex.test(value)) {
+    if (!isEmail(value)) {
         callback(new Error("邮箱格式错误"))
     } else {
         callback()
@@ -187,6 +186,9 @@ const startCountDown = (t: number, callback: Function) => {
     return timer
 }
 const getCaptcha = async () => {
+    if (isEmpty(registerParam.email)) {
+        return
+    }
     let timer = undefined
     let callback = () => {
         captchaText.value = "获取验证码"
