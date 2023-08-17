@@ -35,7 +35,6 @@ import type {FormInstance, FormRules} from 'element-plus'
 import {Lock, User} from '@element-plus/icons-vue'
 import {$message} from '@/utils/message.ts'
 import HamiEye from '@/components/icon/HamiEye.vue'
-import AuthService from '@/service/modules/auth.ts'
 import {useTokenStore} from '@/store/modules/token.ts'
 
 const success = inject("success") as Function

@@ -1,7 +1,8 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from "path";
-
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
@@ -11,12 +12,22 @@ export default defineConfig({
     plugins: [
         vue(),
         AutoImport({
-            resolvers: [ElementPlusResolver()],
+            resolvers: [ElementPlusResolver(), IconsResolver({
+                prefix: 'Icon',
+            })],
             dts: "types/auto-import.d.ts",
         }),
         Components({
-            resolvers: [ElementPlusResolver()],
+            resolvers: [
+                ElementPlusResolver(),
+                IconsResolver({
+                    enabledCollections: ['ep'],
+                })
+            ],
             dts: "types/components.d.ts"
+        }),
+        Icons({
+            autoInstall: true,
         }),
     ],
     resolve: {
@@ -29,7 +40,7 @@ export default defineConfig({
     },
     server: {
         host: true,
-        port: 8303
+        port: 8305
     },
     envDir: "env"
 })

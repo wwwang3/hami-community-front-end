@@ -39,7 +39,7 @@ export const useTokenStore = defineStore("token", () => {
 
     const logout = async () => {
         try {
-            await AuthService.logout();
+            await AuthService.logout()
         } catch (e) {
             return Promise.reject(e)
         } finally {

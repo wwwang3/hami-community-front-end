@@ -27,7 +27,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #5b247a, #1bcedf);
+    background: linear-gradient(135deg,#65799b,#5e2563);
     position: fixed;
     left: 0;
     right: 0;

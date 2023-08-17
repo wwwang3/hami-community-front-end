@@ -41,7 +41,11 @@ declare interface RegisterParam {
     /**
      * 邮箱
      */
-    email: string
+    email: string,
+    /**
+     * 邮箱验证码
+     */
+    captcha: string
 }
 
 declare interface PageParam {

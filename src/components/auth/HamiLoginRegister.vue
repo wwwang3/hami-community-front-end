@@ -87,7 +87,6 @@ const changeMode = (mode: string) => {
         height: 56px;
         width: auto;
     }
-
 }
 
 .login-register-bottom {

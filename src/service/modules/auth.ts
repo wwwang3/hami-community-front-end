@@ -11,7 +11,19 @@ const AuthService: AuthServiceApi = {
     },
     logout(): Promise<any> {
         return http.post("/auth/logout")
-    }
+    },
+    getCaptcha(type: "register" | "rest", email: string): Promise<any> {
+        return http.get("/auth/captcha", {
+            params: {
+                type: type,
+                email: email
+            }
+        })
+    },
+    register(param: RegisterParam) {
+        return http.post("/auth/register", param)
+    },
+
 }
 
 export default AuthService

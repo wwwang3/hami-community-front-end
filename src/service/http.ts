@@ -40,7 +40,7 @@ function createInstance() {
             return Promise.reject("error")
         }
         switch (code) {
-            case  200:
+            case 200:
                 //success
                 //返回数据
                 return Promise.resolve(apiData.data)

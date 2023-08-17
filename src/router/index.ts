@@ -49,7 +49,7 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
     if (to.fullPath === "/login" || to.fullPath === "/register") {
         //如果已经登录了, 不准去啦
         if (tokenStore.authenticated()) {
-            return {name: "index"}
+            return {name: "Index"}
         }
         return true
     }
