@@ -87,21 +87,18 @@ const getCaptcha = async () => {
     if (isEmpty(resetPassParam.email)) {
         return
     }
-    let timer = undefined
-    let callback = () => {
-        captchaText.value = "获取验证码"
-        onGetCaptcha.value = false
-    }
     try {
         //禁用按钮
         onGetCaptcha.value = true
-        timer = startCountDown(60, callback)
-        await AuthService.getCaptcha("register", resetPassParam.email)
+        await AuthService.getCaptcha("reset", resetPassParam.email)
+        //发送成功开始倒计时,出错了就不倒计时了
+        startCountDown(60, () => {
+            captchaText.value = "获取验证码"
+            onGetCaptcha.value = false
+        })
         $message.success("发送成功")
     } catch (e) {
-        //出错了删除
-        callback()
-        window.clearInterval(timer)
+        onGetCaptcha.value = false
         $message.error("获取失败")
     }
 }
@@ -127,22 +124,21 @@ const changeEmail = async () => {
 }
 
 const handleResetPassword = async (el: FormInstance | undefined) => {
-    step.value = 3
-    // onReset.value = true
-    // try {
-    //     await el?.validate()
-    //     await AuthService.resetPassword(resetPassParam)
-    //     $message.success("重置密码成功")
-    //     setTimeout(() => {
-    //         step.value = 3
-    //     }, 300)
-    // } catch (e) {
-    //     console.log(e)
-    // } finally {
-    //     setTimeout(() => {
-    //         onReset.value = false
-    //     }, 2000)
-    // }
+    onReset.value = true
+    try {
+        await el?.validate()
+        await AuthService.resetPassword(resetPassParam)
+        $message.success("重置密码成功")
+        setTimeout(() => {
+            step.value = 3
+        }, 300)
+    } catch (e) {
+        console.log(e)
+    } finally {
+        setTimeout(() => {
+            onReset.value = false
+        }, 2000)
+    }
 }
 </script>
 <template>

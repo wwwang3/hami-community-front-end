@@ -78,9 +78,9 @@ const login = async (el: FormInstance | undefined) => {
             success("login")
         }, 1000)
     } catch (e) {
-        if (typeof e === "string") {
-            $message.error(e)
-        }
+        // if (typeof e === "string") {
+        //     $message.error(e)
+        // }
     } finally {
         setTimeout(() => {
             onLogin.value = false

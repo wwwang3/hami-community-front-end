@@ -51,7 +51,7 @@ declare interface RegisterParam {
 declare interface ResetPassParam {
     email: string,
     password: string
-    rePassword: string
+    rePassword?: string
     captcha: string
 }
 

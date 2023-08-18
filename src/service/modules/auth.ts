@@ -12,7 +12,7 @@ const AuthService: AuthServiceApi = {
     logout(): Promise<any> {
         return http.post("/auth/logout")
     },
-    getCaptcha(type: "register" | "rest", email: string): Promise<any> {
+    getCaptcha(type: "register" | "reset", email: string): Promise<any> {
         return http.get("/auth/captcha", {
             params: {
                 type: type,
@@ -21,10 +21,19 @@ const AuthService: AuthServiceApi = {
         })
     },
     register(param: RegisterParam) {
-        return http.post("/auth/register", param)
+        return http.post("/auth/register", {
+            username: param.username,
+            email: param.email,
+            password: param.password,
+            captcha: param.captcha
+        })
     },
     resetPassword(param: ResetPassParam): Promise<any> {
-        return http.post("/auth/reset-pass", {...param})
+        return http.post("/auth/reset-pass", {
+            email: param.email,
+            password: param.password,
+            captcha: param.captcha
+        })
     }
 
 }
