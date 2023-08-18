@@ -56,9 +56,9 @@
                         </el-input>
                     </el-col>
                     <el-col :span="8">
-                        <el-button type="primary" :disabled="onGetCaptcha" @click="getCaptcha"
+                        <el-button type="primary" :disabled="onProcess" @click="getCaptcha"
                                    size="large"
-                                   class="captcha-button">
+                                   class="captcha-button" :loading="onLoading">
                             {{ captchaText }}
                         </el-button>
                     </el-col>
@@ -79,6 +79,8 @@ import {$message} from '@/utils/message.ts'
 import {useRoute, useRouter} from 'vue-router'
 import {EditPen, Lock, Message, User} from '@element-plus/icons-vue'
 import AuthService from '@/service/modules/auth.ts'
+import {validateAccount, validateEmail, validatePass, validateRePassword} from '@/utils/validator.ts'
+import {useAutoLoading, useCountdown, useRequest} from '@/hooks'
 
 const $route = useRoute()
 const $router = useRouter()
@@ -92,40 +94,17 @@ const registerParam = reactive<RegisterParam>({
     captcha: "",
 })
 //是否在注册中
-const onRegister = ref<boolean>(false)
-const onGetCaptcha = ref<boolean>(false)
-const captchaText = ref<string>("获取验证码")
-const validateAccount = (rule: any, value: string, callback: Function) => {
-    let regex = /^([a-zA-Z0-9_\u4e00-\u9fa5]{2,16})$/
-    if (!regex.test(value)) {
-        callback(new Error("2-16个字符,支持中英文,数字,下划线"))
-    } else {
-        callback()
-    }
-}
-const validateEmail = (rule: any, value: string, callback: Function) => {
-    if (!isEmail(value)) {
-        callback(new Error("邮箱格式错误"))
-    } else {
-        callback()
-    }
-}
-const validatePass = (rule: any, value: string, callback: Function) => {
-    const regex = /^(?!.*\s)(?!^[\u4e00-\u9fa5]+$)(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$).{8,16}$/
-    if (!regex.test(value)) {
-        callback(new Error("密码格式错误"))
-    }
-    callback()
-}
-const validateCheckPass = (rule: any, value: string, callback: Function) => {
-    if (isEmpty(value)) {
-        callback(new Error("请输入密码"))
-    } else if (value !== registerParam.password) {
-        callback("两次密码不一致")
-    } else {
-        callback()
-    }
-}
+const [onRegister, doRegister] = useRequest({
+    run: (params) => AuthService.register(params)
+})
+const [onLoading, doGetCaptcha] = useRequest<void, Array<any>>({
+    run: (params) => AuthService.getCaptcha(...params as Parameters<typeof AuthService.getCaptcha>)
+})
+const [captchaText, onProcess, startCountdown] = useCountdown({
+    interval: 1000,
+    originText: "获取验证码",
+    time: 60
+})
 
 const registerRules = reactive<FormRules<typeof registerParam>>({
     username: [{
@@ -141,7 +120,7 @@ const registerRules = reactive<FormRules<typeof registerParam>>({
         trigger: "blur"
     }],
     rePassword: [{
-        validator: validateCheckPass,
+        validator: validateRePassword(registerParam),
         trigger: "blur"
     }],
     captcha: [{
@@ -154,57 +133,35 @@ const registerRules = reactive<FormRules<typeof registerParam>>({
 })
 
 const register = async (el: FormInstance | undefined) => {
-    onRegister.value = true
     try {
         await el?.validate()
-        await AuthService.register(registerParam)
-        $message.success("注册成功")
-        setTimeout(() => {
-            success("register")
-        }, 300)
+        doRegister(registerParam)
+            .then(() => {
+                $message.success("注册成功")
+                setTimeout(() => {
+                    success("register")
+                }, 300)
+            })
     } catch (e) {
         console.log(e)
-    } finally {
-        setTimeout(() => {
-            onRegister.value = false
-        }, 2000)
     }
-}
-
-const startCountDown = (t: number, callback: Function) => {
-    let time = Math.min(t, 60)
-    captchaText.value = `${time}`
-    const timer = setInterval(() => {
-        time--
-        if (time === 0) {
-            window.clearInterval(timer)
-            callback()
-        } else {
-            captchaText.value = `${time}`
-        }
-    }, 1000)
-    return timer
 }
 const getCaptcha = async () => {
-    if (isEmpty(registerParam.email)) {
+    if (!isEmail(registerParam.email)) {
+        $message.error("邮箱格式错误")
         return
     }
-    let timer = undefined
-    let callback = () => {
-        captchaText.value = "获取验证码"
-        onGetCaptcha.value = false
-    }
-    try {
-        //禁用按钮
-        onGetCaptcha.value = true
-        timer = startCountDown(60, callback)
-        await AuthService.getCaptcha("register", registerParam.email)
-    } catch (e) {
-        //出错了删除
-        callback()
-        window.clearInterval(timer)
-        $message.error("获取失败")
-    }
+    //禁用按钮
+    onProcess.value = true
+    doGetCaptcha(["reset", "email"])
+        .then(() => {
+            $message.success("发送成功")
+            startCountdown()
+        })
+        .catch(e => {
+            console.log(e)
+            onProcess.value = false
+        })
 }
 </script>
 

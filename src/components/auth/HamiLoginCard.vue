@@ -5,14 +5,18 @@
             <el-form-item label="" label-width="0" prop="account" class="login-account">
                 <el-input v-model="loginParam.account" size="large" type="text" placeholder="用户名/邮箱" clearable>
                     <template #prefix>
-                        <el-icon style="font-size: 15px"><User/></el-icon>
+                        <el-icon style="font-size: 15px">
+                            <User/>
+                        </el-icon>
                     </template>
                 </el-input>
             </el-form-item>
             <el-form-item label="" label-width="0" prop="password" class="login-password">
                 <el-input v-model="loginParam.password" size="large" :type="type" placeholder="密码">
                     <template #prefix>
-                        <el-icon style="font-size: 15px"><Lock/></el-icon>
+                        <el-icon style="font-size: 15px">
+                            <Lock/>
+                        </el-icon>
                     </template>
                     <template #suffix>
                         <HamiEye @change="handleChange" :size="18"></HamiEye>
@@ -21,7 +25,7 @@
                 </el-input>
             </el-form-item>
             <div class="login-button">
-                <el-button type="primary" size="large" @click="login(loginForm)"  :disabled="onLogin">
+                <el-button type="primary" size="large" @click="login(loginForm)" :disabled="onLogin">
                     立即登录
                 </el-button>
             </div>
@@ -36,11 +40,15 @@ import {Lock, User} from '@element-plus/icons-vue'
 import {$message} from '@/utils/message.ts'
 import HamiEye from '@/components/icon/HamiEye.vue'
 import {useTokenStore} from '@/store/modules/token.ts'
+import {useRequest} from '@/hooks'
+import AuthService from '@/service/modules/auth.ts'
 
 const success = inject("success") as Function
 const tokenStore = useTokenStore()
 
-const onLogin = ref<boolean>(false)
+const [onLogin, handleLogin] = useRequest({
+    run: (params) => AuthService.login(params)
+})
 const showPass = ref(false)
 const loginForm = ref<FormInstance>()
 const loginParam = reactive<LoginParam>({
@@ -64,27 +72,20 @@ const type = computed(() => {
 })
 const handleChange = (open: boolean) => {
     showPass.value = open
-    console.log(showPass.value)
 }
 
 const login = async (el: FormInstance | undefined) => {
-    onLogin.value = true
     try {
         await el?.validate()
         //登录
-        await tokenStore.login(loginParam)
-        $message.success("登录成功")
-        setTimeout(() => {
-            success("login")
-        }, 1000)
+        handleLogin(loginParam)
+            .then(() => {
+                $message.success("登录成功")
+                setTimeout(() => {
+                    success("login")
+                }, 1000)
+            })
     } catch (e) {
-        // if (typeof e === "string") {
-        //     $message.error(e)
-        // }
-    } finally {
-        setTimeout(() => {
-            onLogin.value = false
-        }, 1000)
     }
 }
 
@@ -104,12 +105,14 @@ const login = async (el: FormInstance | undefined) => {
             letter-spacing: 1px;
         }
     }
+
     .forget-password {
         margin-left: 4px;
         color: #00a1d6;
         font-size: 13px;
         cursor: pointer;
     }
+
     .login-button {
         margin-top: 26px;
 

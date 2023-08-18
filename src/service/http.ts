@@ -1,5 +1,5 @@
 import {$message} from '@/utils/message.ts'
-import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig} from 'axios'
+import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig} from 'axios'
 import {loadTokenStore} from '@/store/modules/token.ts'
 
 const defaultConfig: Partial<AxiosRequestConfig> = {
@@ -52,7 +52,7 @@ function createInstance() {
         }
     }, (error): Promise<string> => {
         // let response = error as AxiosResponse
-        console.log(error)
+        $message.error((error as AxiosError).message)
         return Promise.reject("error")
     })
 

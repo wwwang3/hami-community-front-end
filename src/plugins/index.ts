@@ -1,4 +1,4 @@
-import type { App } from 'vue'
+import type {App, Ref} from 'vue'
 
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'

@@ -38,6 +38,14 @@ const AuthService: AuthServiceApi = {
 
 }
 
+function mock() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve("success")
+        }, 5000)
+    })
+}
+
 export default AuthService
 
 

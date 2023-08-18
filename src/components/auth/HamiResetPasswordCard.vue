@@ -6,6 +6,8 @@ import {$message} from '@/utils/message.ts'
 import {EditPen, Lock, Message, User} from '@element-plus/icons-vue'
 import {FormInstance, FormRules} from 'element-plus'
 import AuthService from '@/service/modules/auth.ts'
+import {useAutoLoading, useCountdown, useRequest} from '@/hooks'
+import {validateEmail, validatePass, validateRePassword} from '@/utils/validator.ts'
 //interface
 
 //router, props, inject, provide
@@ -19,33 +21,6 @@ const resetPassParam = reactive<ResetPassParam>({
     rePassword: "",
     captcha: ""
 })
-//是否在注册中
-const onReset = ref<boolean>(false)
-const onGetCaptcha = ref<boolean>(false)
-const captchaText = ref<string>("获取验证码")
-const validateEmail = (rule: any, value: string, callback: Function) => {
-    if (!isEmail(value)) {
-        callback(new Error("邮箱格式错误"))
-    } else {
-        callback()
-    }
-}
-const validatePass = (rule: any, value: string, callback: Function) => {
-    const regex = /^(?!.*\s)(?!^[\u4e00-\u9fa5]+$)(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$).{8,16}$/
-    if (!regex.test(value)) {
-        callback(new Error("密码格式错误"))
-    }
-    callback()
-}
-const validateCheckPass = (rule: any, value: string, callback: Function) => {
-    if (isEmpty(value)) {
-        callback(new Error("请输入密码"))
-    } else if (value !== resetPassParam.password) {
-        callback("两次密码不一致")
-    } else {
-        callback()
-    }
-}
 
 const resetRules = reactive<FormRules<typeof resetPassParam>>({
     email: [{
@@ -57,7 +32,7 @@ const resetRules = reactive<FormRules<typeof resetPassParam>>({
         trigger: "blur"
     }],
     rePassword: [{
-        validator: validateCheckPass,
+        validator: validateRePassword(resetPassParam),
         trigger: "blur"
     }],
     captcha: [{
@@ -69,38 +44,34 @@ const resetRules = reactive<FormRules<typeof resetPassParam>>({
     }]
 })
 
-const startCountDown = (t: number, callback: Function) => {
-    let time = Math.min(t, 60)
-    captchaText.value = `${time}`
-    const timer = setInterval(() => {
-        time--
-        if (time === 0) {
-            window.clearInterval(timer)
-            callback()
-        } else {
-            captchaText.value = `${time}`
-        }
-    }, 1000)
-    return timer
-}
+const [countdownText, onProcess, startCountdown] = useCountdown({
+    interval: 1000,
+    originText: '获取验证码',
+    time: 60
+})
+
+const [onLoading, run] = useAutoLoading()
+//是否在注册中
+// const [onReset, process] = useAutoLoading()
+const [onReset, doResetPass] = useRequest({
+    loading: false,
+    run: params => AuthService.resetPassword(params)
+})
 const getCaptcha = async () => {
     if (isEmpty(resetPassParam.email)) {
         return
     }
-    try {
-        //禁用按钮
-        onGetCaptcha.value = true
-        await AuthService.getCaptcha("reset", resetPassParam.email)
-        //发送成功开始倒计时,出错了就不倒计时了
-        startCountDown(60, () => {
-            captchaText.value = "获取验证码"
-            onGetCaptcha.value = false
+    //禁用按钮
+    onProcess.value = true
+    run(AuthService.getCaptcha("reset", resetPassParam.email))
+        .then(() => {
+            $message.success("发送成功")
+            startCountdown()
         })
-        $message.success("发送成功")
-    } catch (e) {
-        onGetCaptcha.value = false
-        $message.error("获取失败")
-    }
+        .catch(e => {
+            console.log(e)
+            onProcess.value = false
+        })
 }
 //life cycle
 
@@ -124,20 +95,17 @@ const changeEmail = async () => {
 }
 
 const handleResetPassword = async (el: FormInstance | undefined) => {
-    onReset.value = true
     try {
         await el?.validate()
-        await AuthService.resetPassword(resetPassParam)
-        $message.success("重置密码成功")
-        setTimeout(() => {
-            step.value = 3
-        }, 300)
+        doResetPass(resetPassParam)
+            .then(() => {
+                $message.success("重置密码成功")
+                setTimeout(() => {
+                    step.value = 3
+                }, 1000)
+            })
     } catch (e) {
         console.log(e)
-    } finally {
-        setTimeout(() => {
-            onReset.value = false
-        }, 2000)
     }
 }
 </script>
@@ -213,16 +181,16 @@ const handleResetPassword = async (el: FormInstance | undefined) => {
                                     </el-input>
                                 </el-col>
                                 <el-col :span="8">
-                                    <el-button type="primary" :disabled="onGetCaptcha" @click="getCaptcha"
+                                    <el-button type="primary" :disabled="onProcess" @click="getCaptcha"
                                                size="large"
-                                               class="captcha-button">
-                                        {{ captchaText }}
+                                               class="captcha-button" :loading="onLoading">
+                                        {{ countdownText }}
                                     </el-button>
                                 </el-col>
                             </el-row>
                         </el-form-item>
                         <div class="reset-button">
-                            <el-button type="primary" :disabled="onReset" @click="handleResetPassword(resetPassForm)">
+                            <el-button type="primary" :loading="onReset" @click="handleResetPassword(resetPassForm)">
                                 重置密码
                             </el-button>
                         </div>

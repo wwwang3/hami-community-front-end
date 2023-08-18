@@ -34,7 +34,8 @@
         //参数未使用时报错
         "noUnusedParameters": false,
         "noFallthroughCasesInSwitch": true,
-        "allowUnusedLabels": true
+        "allowUnusedLabels": true,
+//        "noImplicitAny": false
     },
     "include": [
       "src/**/*.ts",
