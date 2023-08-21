@@ -6,3 +6,7 @@ declare interface AuthServiceApi {
     register(param: RegisterParam): Promise<any>,
     resetPassword(param: ResetPassParam): Promise<any>
 }
+
+declare interface UserServiceApi {
+    getUserProfile(): Promise<UserInfo>
+}

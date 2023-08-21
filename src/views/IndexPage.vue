@@ -3,6 +3,7 @@ import {ref, reactive, onMounted, computed} from "vue"
 import {useRoute, useRouter} from "vue-router"
 import {useTokenStore} from '@/store/modules/token.ts'
 import {$message} from '@/utils/message.ts'
+import HamiHeader from '@/components/common/HamiHeader.vue'
 //interface
 
 //router, props, inject, provide
@@ -20,8 +21,8 @@ const logout = async () => {
 }
 </script>
 <template>
-    <div>hello world!</div>
-    <el-button @click="logout">退出登录</el-button>
+    <div class="hami-index-page">
+    </div>
 </template>
 
 <style scoped lang="less">

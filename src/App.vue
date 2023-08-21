@@ -1,5 +1,8 @@
 <template>
-    <router-view></router-view>
+    <div>
+        <HamiHeader></HamiHeader>
+        <router-view></router-view>
+    </div>
 </template>
 
 <script setup lang="ts">

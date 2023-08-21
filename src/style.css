@@ -2,16 +2,18 @@
     --hami-brand: #0396ff;
     --hami-blue: #1d7dfa;
     --hami-link-hover: #007fff;
-    --hami-bg: #f5f5f5;
+    --hami-bg: #fff;
     --hami-bg-gray: #e5e6eb;
     --hami-card-bg: #fff;
-    --hami-text-gray: #909090;
+    --hami-text-1: #61666d;
+    --hami-text-2: #909090;
+    --hami-text-white: #fff;
     --hami-text-size: 15px;
     --hami-text-size-small: 13px;
     --hami-radius: 4px;
     --hami-radius-medium: 10px;
     --hami-radius-large: 15px;
-    --hami-title-color: #1d2129;
+    --hami-title: #1d2129;
     --hami-border-color: #e5e6eb;
     --hami-card-hover: #fafafa;
     --hami-card-hover-d: #f0f0f0;
@@ -19,7 +21,7 @@
 }
 body {
     margin: 0;
-    background-color: var(--hami-bg);
+    background-color: var(--hami-bg-gray);
     letter-spacing: 0.5px;
     line-height: normal;
 }

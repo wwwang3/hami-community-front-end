@@ -90,7 +90,7 @@ const changeMode = (mode: string) => {
 }
 
 .login-register-bottom {
-    color: var(--hami-text-gray);
+    color: var(--hami-text-1);
     font-size: var(--hami-text-size);
     margin-bottom: 20px;
     .text {

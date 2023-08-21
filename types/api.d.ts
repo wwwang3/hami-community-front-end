@@ -10,6 +10,14 @@ declare interface ApiResponse<T> {
 declare interface UserInfo {
     id: string | number,
     username: string,
+    avatar: string,
+    profile: string,
+    position: string
+    company: string,
+    blog: string,
+    tag?: string,
+    ctime: string,
+    mtime: string
 }
 
 declare interface LoginResult {
