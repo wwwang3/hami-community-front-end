@@ -47,6 +47,9 @@ provide("success", (mode: string) => {
     if (mode === "login") {
         //登录成功
         $router.replace("/")
+        setTimeout(() => {
+            window.location.reload()
+        }, 300)
     } else {
         //注册成功
         changeMode("login")

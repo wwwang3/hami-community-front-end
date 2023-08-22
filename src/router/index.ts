@@ -4,7 +4,8 @@ import {
     createWebHistory,
     RouteLocationNormalized,
     Router,
-    RouteRecordRaw, RouterHistory
+    RouteRecordRaw,
+    RouterHistory
 } from 'vue-router'
 import type {App} from 'vue'
 import {loadTokenStore} from '@/store/modules/token.ts'
@@ -29,6 +30,37 @@ const routes: RouteRecordRaw[] = [
         path: "/reset-pass",
         name: "RestPass",
         component: () => import("@/views/ResetPasswordPage.vue")
+    },
+    {
+        path: "/account",
+        component: () => import("@/views/UserCenterPage.vue"),
+        children: [
+            {
+                path: '',
+                name: 'default',
+                redirect: "/account/profile"
+            },
+            {
+                path: "profile",
+                name: "AccountUserProfile",
+                component: () => import("@/components/account/HamiUserProfile.vue")
+            },
+            {
+                path: "setting",
+                name: "AccountSetting",
+                component: () => import("@/components/account/HamiAccountSetting.vue")
+            },
+            {
+                path: "common",
+                name: "AccountCommonSetting",
+                component: () => import("@/components/account/HamiCommonSetting.vue")
+            },
+            {
+                path: "record",
+                name: "AccountLoginRecord",
+                component: () => import("@/components/account/HamiLoginRecord.vue")
+            },
+        ]
     }
 ]
 

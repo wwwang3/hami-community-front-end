@@ -3,17 +3,38 @@ import {isEmpty} from '@/utils'
 import {computed, ref} from 'vue'
 import store from '@/store'
 import UserService from '@/service/modules/UserService.ts'
+import * as process from 'process'
 
 const useUserStore = defineStore("user", () => {
 
-    const userInfo = ref<UserInfo>()
+    const userInfo = ref()
+    const inited = ref(false)
 
-    const getProfile = async () => {
+    const getProfile = async (): Promise<SimpleUserInfo> => {
         if (!isEmpty(userInfo.value)) {
+            inited.value = true
             return Promise.resolve(userInfo.value)
         }
-        userInfo.value = await UserService.getUserProfile()
-        return userInfo.value
+        try {
+            userInfo.value = await UserService.getLoginProfile()
+            return userInfo.value as SimpleUserInfo
+        } catch (e) {
+            return Promise.reject(e)
+        } finally {
+            inited.value = true
+        }
+    }
+    const sync = async (): Promise<void> => {
+        const start = Date.now()
+        return new Promise((resolve, reject) => {
+            const timer = setInterval(() => {
+                if (inited.value) {
+                    clearInterval(timer)
+                    console.log("sync finish");
+                    resolve()
+                }
+            }, 1)
+        })
     }
 
     const logined = computed(() => {

@@ -47,7 +47,7 @@ const success = inject("success") as Function
 const tokenStore = useTokenStore()
 
 const [onLogin, handleLogin] = useRequest({
-    run: (params) => AuthService.login(params)
+    run: (params) => tokenStore.login(params)
 })
 const showPass = ref(false)
 const loginForm = ref<FormInstance>()
@@ -101,7 +101,7 @@ const login = async (el: FormInstance | undefined) => {
 
     .login-account, .login-password {
         :deep(input) {
-            font-size: 15px;
+            font-size: 16px;
             letter-spacing: 1px;
         }
     }

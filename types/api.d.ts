@@ -7,17 +7,27 @@ declare interface ApiResponse<T> {
     msg: string
 }
 
-declare interface UserInfo {
+declare interface SimpleUserInfo {
     id: string | number,
     username: string,
     avatar: string,
     profile: string,
-    position: string
-    company: string,
-    blog: string,
     tag?: string,
-    ctime: string,
-    mtime: string
+    likes: number,
+    collects: number,
+    followings: number,
+    followers: number
+}
+
+declare interface UserProfile {
+    id: string | number,
+    username: string,
+    avatar: string,
+    profile: string,
+    position: string,
+    blog: string,
+    company: string,
+    tag?: string,
 }
 
 declare interface LoginResult {

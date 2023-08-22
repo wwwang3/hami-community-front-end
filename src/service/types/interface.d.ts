@@ -8,5 +8,6 @@ declare interface AuthServiceApi {
 }
 
 declare interface UserServiceApi {
-    getUserProfile(): Promise<UserInfo>
+    getLoginProfile(): Promise<SimpleUserInfo>,
+    getUserProfile(): Promise<UserProfile>,
 }

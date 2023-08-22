@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Account: typeof import('./../src/components/account.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
@@ -21,17 +22,29 @@ declare module 'vue' {
     ElRow: typeof import('element-plus/es')['ElRow']
     ElStep: typeof import('element-plus/es')['ElStep']
     ElSteps: typeof import('element-plus/es')['ElSteps']
+    ElTag: typeof import('element-plus/es')['ElTag']
+    ElText: typeof import('element-plus/es')['ElText']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    HamiAccountSetting: typeof import('./../src/components/account/HamiAccountSetting.vue')['default']
+    HamiCommonSetting: typeof import('./../src/components/account/HamiCommonSetting.vue')['default']
     HamiEye: typeof import('./../src/components/icon/HamiEye.vue')['default']
     HamiHeader: typeof import('./../src/components/common/HamiHeader.vue')['default']
+    HamiLoading: typeof import('./../src/components/common/HamiLoading.vue')['default']
     HamiLoginCard: typeof import('./../src/components/auth/HamiLoginCard.vue')['default']
+    HamiLoginRecord: typeof import('./../src/components/account/HamiLoginRecord.vue')['default']
     HamiLoginRegister: typeof import('./../src/components/auth/HamiLoginRegister.vue')['default']
     HamiLogo: typeof import('./../src/components/common/HamiLogo.vue')['default']
     HamiRegisterCard: typeof import('./../src/components/auth/HamiRegisterCard.vue')['default']
     HamiResetPasswordCard: typeof import('./../src/components/auth/HamiResetPasswordCard.vue')['default']
     HamiRestPasswordCard: typeof import('./../src/components/auth/HamiRestPasswordCard.vue')['default']
+    HamiSetting: typeof import('./../src/components/account/HamiSetting.vue')['default']
+    HamiUserCardV1: typeof import('./../src/components/common/HamiUserCardV1.vue')['default']
+    HamiUserProfile: typeof import('./../src/components/account/HamiUserProfile.vue')['default']
     HeaderAvatar: typeof import('./../src/components/common/HeaderAvatar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

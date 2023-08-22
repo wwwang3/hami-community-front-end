@@ -1,24 +1,29 @@
 <script setup lang="ts">
-import {onMounted, ref} from "vue"
+import {onBeforeMount, onMounted, Ref, ref} from "vue"
 import avatar from '/assets/avatar.jpg'
 import useUserStore from "@/store/modules/user.ts"
 import {useTokenStore} from '@/store/modules/token.ts'
+import {useRouter} from 'vue-router'
+import {$message} from '@/utils/message.ts'
+import {isEmpty} from '@/utils'
 //interface
 
 //router, props, inject, provide
+const $router = useRouter();
 const userStore = useUserStore()
 const tokenStore = useTokenStore()
 //custom var
 const avatarRef = ref()
 const popoverRef = ref<HTMLElement>()
 const avatarHover = ref<string>("hami-avatar-normal")
-const userInfo = ref<UserInfo | undefined>()
+const userInfo = ref<SimpleUserInfo>() as Ref<SimpleUserInfo>
 const logined = ref<boolean>(false)
 const visible = ref(false)
 //life cycle
-onMounted(async () => {
+onBeforeMount(async () => {
     try {
         userInfo.value = await userStore.getProfile()
+        userInfo.value.tag = "管理员"
         logined.value = true
     } catch (e) {
         logined.value = false
@@ -38,9 +43,6 @@ const avatarMouseLeave = () => {
     // avatarRef.value.className =  "hami-avatar-container hami-avatar-normal"
 }
 
-const logout = () => {
-    tokenStore.logout()
-}
 </script>
 <template>
     <div class="hami-avatar-wrap">
@@ -60,36 +62,22 @@ const logout = () => {
                     :show-arrow="false"
                     :show-after="200"
                     :hide-after="100"
-                    width="300"
+                    width="308"
                     virtual-triggering
                     :teleported="false"
                     popper-class="hami-avatar-popper"
                     :visible="visible"
                 >
                     <template #default>
-                        <div class="hami-avatar-panel">
-                            <div class="username">{{ userInfo?.username }}</div>
-                            <el-divider/>
-                            <div class="logout-item" @click="logout">
-                                <el-icon class="logout-icon">
-                                    <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                              d="M17.6137 9.30115C17.6932 9.10837 17.6932 8.89282 17.6137 8.70004C17.5743 8.60393 17.5165 8.51726 17.4443 8.44504L15.2221 6.22282C14.9148 5.9156 14.4176 5.91615 14.111 6.22282C13.8043 6.52948 13.8037 7.02671 14.111 7.33393L14.9921 8.21504L7.99985 8.21504C7.56596 8.21448 7.21429 8.56615 7.21429 9.00059C7.21429 9.21726 7.30207 9.41393 7.44429 9.55615C7.58651 9.69837 7.78318 9.78615 7.99985 9.78615L14.9921 9.78615L14.111 10.6673C13.8043 10.9739 13.8037 11.4712 14.111 11.7784C14.4182 12.0856 14.9154 12.085 15.2221 11.7784L17.4443 9.55615C17.5165 9.48393 17.5743 9.39726 17.6137 9.30115"
-                                              fill="currentColor"></path>
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                              d="M11.8889 5.11111C9.74127 2.96349 6.25873 2.96349 4.11111 5.11111C1.96349 7.25873 1.96349 10.7413 4.11111 12.8889C6.25873 15.0365 9.74127 15.0365 11.8889 12.8889C12.1957 12.5821 12.6932 12.5821 13 12.8889C13.3068 13.1957 13.3068 13.6932 13 14C10.2387 16.7613 5.76127 16.7613 3 14C0.238731 11.2387 0.23873 6.76127 3 4C5.76127 1.23873 10.2387 1.23873 13 4C13.3068 4.30683 13.3068 4.80429 13 5.11111C12.6932 5.41794 12.1957 5.41794 11.8889 5.11111Z"
-                                              fill="currentColor"></path>
-                                    </svg>
-                                </el-icon>
-                                <span>退出登录</span>
-                            </div>
-                        </div>
+                        <HamiUserCardV1 :user-info="userInfo"></HamiUserCardV1>
                     </template>
                 </el-popover>
             </div>
         </template>
         <template v-else>
-            <div class="login-button">登录</div>
+            <div class="login-button" @click="() => $router.replace('/login')">
+                登录
+            </div>
         </template>
     </div>
 </template>
@@ -97,7 +85,7 @@ const logout = () => {
 
 <style lang="less">
 .hami-avatar-wrap .hami-avatar-popper.el-popper {
-    padding: 24px 20px 18px;
+    padding: 24px 24px 18px;
     border-radius: var(--hami-radius-medium);
 }
 </style>
@@ -163,7 +151,6 @@ const logout = () => {
         }
     }
 
-
     .login-button {
         width: 100%;
         height: 100%;
@@ -173,51 +160,6 @@ const logout = () => {
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    .hami-avatar-panel {
-        .username {
-            text-align: center;
-            height: 32px;
-            line-height: 32px;
-            color: var(--hami-title);
-            font-weight: 700;
-            font-size: 18px;
-            margin: 10px 0 8px;
-        }
-
-        .logout-item {
-            display: flex;
-            align-items: center;
-            padding: 10px 14px;
-            border-radius: 8px;
-            color: var(--hami-text-1);
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color .3s;
-            span {
-                height: 24px;
-                line-height: 23px;
-            }
-        }
-
-        .logout-item:hover {
-            background-color: #e3e5e7;
-        }
-
-        .logout-icon {
-            font-size: 18px;
-            margin-right: 16px;
-            svg {
-                ////height: 24px;
-                ////width: 24px;
-                //display: flex;
-                //align-items: center;
-                //font-size: 18px;
-                //justify-content: center;
-                //margin-right: 16px;
-            }
-        }
     }
 }
 
@@ -252,13 +194,13 @@ const logout = () => {
     }
     100% {
         opacity: 1;
-        transform: scale(1) translate(-17px, 10px);
+        transform: scale(1) translate(-17px, 16px);
     }
 }
 
 @keyframes avatarFadeSmall {
     0% {
-        transform: scale(1) translate(-17px, 10px);
+        transform: scale(1) translate(-17px, 16px);
     }
 
     60% {

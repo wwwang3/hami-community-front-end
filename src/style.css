@@ -1,18 +1,19 @@
 :root {
     --hami-brand: #0396ff;
     --hami-blue: #1d7dfa;
-    --hami-link-hover: #007fff;
     --hami-bg: #fff;
     --hami-bg-gray: #e5e6eb;
     --hami-card-bg: #fff;
     --hami-text-1: #61666d;
     --hami-text-2: #909090;
     --hami-text-white: #fff;
+    --hami-text-blue: #007fff;
+    --hami-link-hover: #007fff;
     --hami-text-size: 15px;
     --hami-text-size-small: 13px;
     --hami-radius: 4px;
     --hami-radius-medium: 10px;
-    --hami-radius-large: 15px;
+    --hami-radius-large: 16px;
     --hami-title: #1d2129;
     --hami-border-color: #e5e6eb;
     --hami-card-hover: #fafafa;
