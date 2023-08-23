@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import {ref, reactive, onMounted, computed} from "vue"
-import {useRoute, useRouter} from "vue-router"
-import {isEmail, isEmpty} from '@/utils'
-import {$message} from '@/utils/message.ts'
-import {EditPen, Lock, Message, User} from '@element-plus/icons-vue'
-import {FormInstance, FormRules} from 'element-plus'
+import { reactive, ref } from "vue"
+import { useRouter } from "vue-router"
+import { isEmail, isEmpty } from '@/utils'
+import { $message } from '@/utils/message.ts'
+import { EditPen, Lock, Message } from '@element-plus/icons-vue'
+import { FormInstance, FormRules } from 'element-plus'
 import AuthService from '@/service/modules/auth.ts'
-import {useAutoLoading, useCountdown, useRequest} from '@/hooks'
-import {validateEmail, validatePass, validateRePassword} from '@/utils/validator.ts'
+import { useAutoLoading, useCountdown, useRequest } from '@/hooks'
+import { validateEmail, validatePass, validateRePassword } from '@/utils/validator.ts'
 //interface
 
 //router, props, inject, provide

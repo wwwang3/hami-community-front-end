@@ -8,7 +8,7 @@ declare interface ApiResponse<T> {
 }
 
 declare interface SimpleUserInfo {
-    id: string | number,
+    userId: string | number,
     username: string,
     avatar: string,
     profile: string,
@@ -20,7 +20,7 @@ declare interface SimpleUserInfo {
 }
 
 declare interface UserProfile {
-    id: string | number,
+    userId: string | number,
     username: string,
     avatar: string,
     profile: string,
@@ -66,11 +66,26 @@ declare interface RegisterParam {
     captcha: string
 }
 
+declare interface AccountInfo {
+    email: string,
+    weixin?: string,
+    github?: string,
+    qq?: string
+}
+
 declare interface ResetPassParam {
     email: string,
     password: string
     rePassword?: string
     captcha: string
+}
+
+declare interface UserProfileParam {
+    username: string,
+    profile: string,
+    position: string,
+    blog: string,
+    company: string,
 }
 
 declare interface PageParam {

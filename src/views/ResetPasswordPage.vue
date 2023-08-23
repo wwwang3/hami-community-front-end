@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import {ref, reactive, onMounted, computed} from "vue"
-import {useRoute, useRouter} from "vue-router"
 import HamiResetPasswordCard from '@/components/auth/HamiResetPasswordCard.vue'
 //interface
 
@@ -22,16 +20,16 @@ import HamiResetPasswordCard from '@/components/auth/HamiResetPasswordCard.vue'
 </template>
 
 <style scoped lang="less">
-    .hami-reset-password {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background: linear-gradient(135deg,#f02fc2,#6094ea);
-        height: 100%;
-    }
+.hami-reset-password {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #f02fc2, #6094ea);
+    height: 100%;
+}
 </style>

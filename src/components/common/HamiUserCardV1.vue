@@ -1,20 +1,18 @@
 <script setup lang="ts">
-import defaultAvatar from "/assets/avatar.jpg"
-import {useTokenStore} from '@/store/modules/token.ts'
-import {useRouter} from 'vue-router'
-import {$message} from '@/utils/message.ts'
-import {isEmpty} from '@/utils'
+import { useTokenStore } from '@/store/modules/token.ts'
+import { useRouter } from 'vue-router'
+import { $message } from '@/utils/message.ts'
+import { isEmpty } from '@/utils'
 //interface
 // type UserProfile = Partial<SimpleUserInfo>
 interface UserProfile {
     userInfo: Partial<SimpleUserInfo>
 }
+
 //router, props, inject, provide
 const tokenStore = useTokenStore()
 const $router = useRouter()
-const $props = withDefaults(defineProps<UserProfile>(), {
-
-})
+const $props = withDefaults(defineProps<UserProfile>(), {})
 //life cycle
 //watch
 const logout = async () => {

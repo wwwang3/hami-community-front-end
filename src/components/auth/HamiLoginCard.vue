@@ -34,14 +34,13 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, reactive, ref} from 'vue'
-import type {FormInstance, FormRules} from 'element-plus'
-import {Lock, User} from '@element-plus/icons-vue'
-import {$message} from '@/utils/message.ts'
+import { computed, inject, reactive, ref } from 'vue'
+import type { FormInstance, FormRules } from 'element-plus'
+import { Lock, User } from '@element-plus/icons-vue'
+import { $message } from '@/utils/message.ts'
 import HamiEye from '@/components/icon/HamiEye.vue'
-import {useTokenStore} from '@/store/modules/token.ts'
-import {useRequest} from '@/hooks'
-import AuthService from '@/service/modules/auth.ts'
+import { useTokenStore } from '@/store/modules/token.ts'
+import { useRequest } from '@/hooks'
 
 const success = inject("success") as Function
 const tokenStore = useTokenStore()

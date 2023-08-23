@@ -72,15 +72,15 @@
 </template>
 
 <script setup lang="ts">
-import {inject, reactive, ref} from 'vue'
-import type {FormInstance, FormRules} from 'element-plus'
-import {isEmail, isEmpty} from '@/utils'
-import {$message} from '@/utils/message.ts'
-import {useRoute, useRouter} from 'vue-router'
-import {EditPen, Lock, Message, User} from '@element-plus/icons-vue'
+import { inject, reactive, ref } from 'vue'
+import type { FormInstance, FormRules } from 'element-plus'
+import { isEmail } from '@/utils'
+import { $message } from '@/utils/message.ts'
+import { useRoute, useRouter } from 'vue-router'
+import { EditPen, Lock, Message, User } from '@element-plus/icons-vue'
 import AuthService from '@/service/modules/auth.ts'
-import {validateAccount, validateEmail, validatePass, validateRePassword} from '@/utils/validator.ts'
-import {useAutoLoading, useCountdown, useRequest} from '@/hooks'
+import { validateAccount, validateEmail, validatePass, validateRePassword } from '@/utils/validator.ts'
+import { useCountdown, useRequest } from '@/hooks'
 
 const $route = useRoute()
 const $router = useRouter()
@@ -173,9 +173,11 @@ const getCaptcha = async () => {
 .hami-register-card-body {
     //--el-component-size: 34px;
     margin: 10px 0;
+
     .el-input--large {
         font-size: 16px;
     }
+
     .register-button {
         margin-top: 22px;
 

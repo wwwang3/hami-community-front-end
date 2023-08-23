@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import {ref, reactive, onMounted, computed} from "vue"
-import {useRoute, useRouter} from "vue-router"
+import { computed } from "vue"
 import logo2 from "/assets/hami-logo-2.png"
 import logo3 from "/assets/hami-logo-3.png"
 

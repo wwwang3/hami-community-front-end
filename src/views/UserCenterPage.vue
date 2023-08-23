@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {ref, reactive, onMounted, computed} from "vue"
-import {useRoute, useRouter} from "vue-router"
-import {Setting} from '@element-plus/icons-vue'
+import { computed } from "vue"
+import { useRoute, useRouter } from "vue-router"
+import { Setting } from '@element-plus/icons-vue'
 //interface
 
 //router, props, inject, provide
@@ -113,7 +113,7 @@ const goBack = () => {
         margin-right: 20px;
         padding: 16px 14px 20px;
         width: 226px;
-        height: 540px;
+        min-height: 540px;
         background-color: var(--hami-bg);
         border-radius: var(--hami-radius-medium);
 
@@ -147,6 +147,7 @@ const goBack = () => {
             color: var(--hami-text-blue);
         }
     }
+
     .user-center-body {
         flex: 1;
     }

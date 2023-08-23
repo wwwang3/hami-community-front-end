@@ -1,29 +1,185 @@
 <script setup lang="ts">
-import {ref, reactive, onMounted, computed} from "vue"
-import {useRoute, useRouter} from "vue-router"
-import HamiLoading from '@/components/common/HamiLoading.vue'
+import { onMounted, ref } from 'vue'
+import { useRequest } from '@/hooks'
+import UserService from '@/service/modules/UserService.ts'
+import { $message } from '@/utils/message.ts'
 //interface
-
 //router, props, inject, provide
-
+const [onLoading, handleGetAccountInfo] = useRequest({
+    run: (params) => UserService.getAccount()
+})
 //custom var
+const account = ref<AccountInfo>({
+    email: ''
+})
 
+const onUpdatePassword = ref(false)
 //life cycle
+onMounted(async () => {
+    try {
+        account.value = await handleGetAccountInfo(null)
+    } catch (e) {
 
+    }
+})
 //watch
 
 //fun
+const updateEmail = () => {
+    $message.notifyError("暂不支持")
+}
+const updatePassword = () => {
+    // $message.notifyError("暂不支持")
+    onUpdatePassword.value = true
+}
+const deleteAccount = () => {
+    $message.notifyError("暂不支持")
+}
+
+const handleClick = () => {
+    $message.notifyError("暂不支持")
+}
+const handleSuccess = () => {
+    //修改成功的回调
+}
+const handleCancel = () => {
+    onUpdatePassword.value = false
+}
 
 </script>
 <template>
     <div class="hami-account-setting">
-<!--        <HamiLoading :loading></HamiLoading>-->
+        <el-skeleton v-if="onLoading"></el-skeleton>
+        <div class="account-setting-view" v-else>
+            <div class="account-header">账号管理</div>
+            <div class="account-body">
+                <div class="setting-list">
+                    <el-divider/>
+                    <div class="setting-item">
+                        <div class="title">邮箱</div>
+                        <div class="info-box">
+                            <div class="info">{{ account.email }}</div>
+                            <div class="action" @click="updateEmail">
+                                换绑
+                            </div>
+                        </div>
+                    </div>
+                    <el-divider/>
+                    <div class="setting-item">
+                        <div class="title">微信</div>
+                        <div class="info-box">
+                            <div class="info">未绑定</div>
+                            <div class="action" @click="handleClick">
+                                绑定
+                            </div>
+                        </div>
+                    </div>
+                    <el-divider/>
+                    <div class="setting-item">
+                        <div class="title">GitHub</div>
+                        <div class="info-box">
+                            <div class="info">未绑定</div>
+                            <div class="action" @click="handleClick">
+                                绑定
+                            </div>
+                        </div>
+                    </div>
+                    <el-divider/>
+                    <div class="setting-item">
+                        <div class="title">密码</div>
+                        <div class="info-box">
+                            <div class="info">....</div>
+                            <div class="action" @click="updatePassword">
+                                修改密码
+                            </div>
+                        </div>
+                    </div>
+                    <el-divider/>
+                    <div class="setting-item">
+                        <div class="title">账号注销</div>
+                        <div class="info-box">
+                            <div class="info"></div>
+                            <div class="action" @click="deleteAccount">
+                                注销
+                            </div>
+                        </div>
+                    </div>
+                    <el-divider/>
+                </div>
+            </div>
+        </div>
+        <el-dialog v-model="onUpdatePassword" title="修改密码" width="400">
+            <template #default>
+                <UpdatePassForm :email="account.email" @success="handleSuccess" @cancel="handleCancel"></UpdatePassForm>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
 <style scoped lang="less">
 .hami-account-setting {
-    padding: 10px 20px;
     min-height: 540px;
+    padding: 20px 24px;
+    background-color: var(--hami-bg);
+    border-radius: var(--hami-radius-medium);
 }
+
+.account-setting-view {
+    width: 100%;
+
+    .account-header {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--hami-title);
+        margin-bottom: 24px;
+        //margin-bottom: 32px;
+    }
+}
+
+.el-divider {
+    margin: 16px 0;
+}
+
+.account-body {
+    .setting-list {
+        // display: flex;
+        .setting-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 2px;
+
+            .title {
+                width: 110px;
+                font-size: 18px;
+                color: var(--hami-title);
+            }
+
+            .info-box {
+                flex: 1 1 auto;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                font-size: 18px;
+                justify-content: space-between;
+            }
+
+            .info {
+                color: var(--hami-text-2);
+                min-width: 32px;
+            }
+
+            .action {
+                font-size: 18px;
+                color: var(--hami-text-blue);
+                cursor: pointer;
+            }
+
+            .action:hover {
+                color: #1b7ad8;
+            }
+        }
+
+    }
+}
+
 </style>

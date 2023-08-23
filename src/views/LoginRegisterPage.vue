@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, reactive} from 'vue'
+import { computed, onMounted } from 'vue'
 import HamiLoginRegister from '@/components/auth/HamiLoginRegister.vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const $router = useRouter()
 const $route = useRoute()
@@ -27,7 +27,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg,#65799b,#5e2563);
+    background: linear-gradient(135deg, #65799b, #5e2563);
     position: fixed;
     left: 0;
     right: 0;

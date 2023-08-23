@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import {ref, reactive, onMounted, computed} from "vue"
-import {useRoute, useRouter} from "vue-router"
+
 //interface
-interface LoadingProps  {
+interface LoadingProps {
     loading: boolean,
     spinner?: string,
     text?: string,
-    background?: string
+    background?: string,
+    height?: string | number,
+    width?: string | number
 }
+
 const $props = withDefaults(defineProps<LoadingProps>(), {
     loading: false,
     spinner: '',
     text: '加载中',
-    background: 'rgba(100, 100, 100, .7)'
+    background: 'rgba(100, 100, 100, .7)',
 })
 
 //router, props, inject, provide
@@ -38,8 +40,7 @@ const $props = withDefaults(defineProps<LoadingProps>(), {
 </template>
 
 <style scoped lang="less">
-    .hami-loading {
-        width: 100%;
-        height: 100%;
-    }
+.hami-loading {
+    height: auto;
+}
 </style>

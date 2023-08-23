@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import {onBeforeMount, onMounted, Ref, ref} from "vue"
-import avatar from '/assets/avatar.jpg'
+import { onBeforeMount, Ref, ref } from "vue"
 import useUserStore from "@/store/modules/user.ts"
-import {useTokenStore} from '@/store/modules/token.ts'
-import {useRouter} from 'vue-router'
-import {$message} from '@/utils/message.ts'
-import {isEmpty} from '@/utils'
+import { useTokenStore } from '@/store/modules/token.ts'
+import { useRouter } from 'vue-router'
 //interface
 
 //router, props, inject, provide

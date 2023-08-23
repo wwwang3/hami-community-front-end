@@ -28,13 +28,15 @@
 </template>
 
 <script setup lang="ts">
-import {provide, ref, watch} from 'vue'
+import { provide, ref, watch } from 'vue'
 import HamiLoginCard from '@/components/auth/HamiLoginCard.vue'
 import HamiRegisterCard from '@/components/auth/HamiRegisterCard.vue'
-import {useRoute, useRouter} from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+
 interface Props {
     mode?: string
 }
+
 const $router = useRouter()
 const $route = useRoute()
 
@@ -84,8 +86,10 @@ const changeMode = (mode: string) => {
     min-height: 420px;
     position: relative;
 }
+
 .login-register-header {
     margin: 10px 0 20px 0;
+
     .logo {
         height: 56px;
         width: auto;
@@ -96,17 +100,20 @@ const changeMode = (mode: string) => {
     color: var(--hami-text-1);
     font-size: var(--hami-text-size);
     margin-bottom: 20px;
+
     .text {
         text-align: center;
         line-height: 22px;
         height: 22px;
     }
+
     .option {
         color: var(--hami-title-color);
         cursor: pointer;
         font-size: 18px;
     }
 }
+
 .login-register-protocol {
     position: absolute;
     font-size: var(--hami-text-size-small);
@@ -114,6 +121,7 @@ const changeMode = (mode: string) => {
     line-height: 24px;
     text-align: center;
     bottom: 16px;
+
     .link {
         color: var(--hami-blue);
     }

@@ -1,6 +1,4 @@
-import {reactive, Ref, ref, watch} from "vue"
-import {clear} from 'undraw-ui'
-import * as timers from 'timers'
+import { Ref, ref } from "vue"
 
 export interface CountdownProps {
     originText: string,
@@ -13,6 +11,7 @@ type CountdownResult = [
     Ref<boolean>,
     () => Promise<any>
 ]
+
 export function useCountdown(props: CountdownProps): CountdownResult {
     let origin = props.originText
     const countdownText = ref<string>(origin)
@@ -68,7 +67,7 @@ type UseRequestProps<TData, TParams extends Array<any>> = {
 type RequestResult<TData, TParams extends Array<any>> = [Ref<boolean>, TApiFun<TData, TParams>];
 
 export function useRequest<TData, TParams extends any[] = any[]>(props: UseRequestProps<TData, TParams>): RequestResult<TData, TParams> {
-    const {loading = false} = props || {loading: false}
+    const { loading = false } = props || { loading: false }
     const onRequest = ref<boolean>(loading)
     const process: TApiFun<TData, TParams> = async (...params) => {
         console.log(params)

@@ -1,6 +1,5 @@
-import type {App} from "vue"
-import {createPinia} from 'pinia'
-import {type Pinia} from 'pinia'
+import type { App } from "vue"
+import { createPinia, type Pinia } from 'pinia'
 
 const store: Pinia = createPinia();
 

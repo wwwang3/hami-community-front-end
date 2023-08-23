@@ -4,28 +4,41 @@
     --hami-bg: #fff;
     --hami-bg-gray: #e5e6eb;
     --hami-card-bg: #fff;
+    --hami-layer-light: #fff;
+    --hami-layer-dark: #1d2129;
+    --hami-text-light: #252933;
+    --hami-text-dark: #fff;
+    --hami-text-gray-l: #8a919f;
+    --hami-text-gray-d: rgba(255, 255, 255, .46);
+    --hami-text: var(--hami-text-light);
     --hami-text-1: #61666d;
     --hami-text-2: #909090;
+    --hami-text-3: #181818;
+    --hami-text-gray: #8a919f;
     --hami-text-white: #fff;
     --hami-text-blue: #007fff;
+    --hami-border-gray: #e4e6eb;
     --hami-link-hover: #007fff;
     --hami-text-size: 15px;
     --hami-text-size-small: 13px;
-    --hami-radius: 4px;
-    --hami-radius-medium: 10px;
+    --hami-radius-small: 4px;
+    --hami-radius: 6px;
+    --hami-radius-medium: 12px;
     --hami-radius-large: 16px;
     --hami-title: #1d2129;
     --hami-border-color: #e5e6eb;
     --hami-card-hover: #fafafa;
     --hami-card-hover-d: #f0f0f0;
-    --hami-card-shadow: 0 3px 12px -1px rgba(7,10,25,0.05), 0 22px 27px -20px rgba(7,10,25,0.05);
+    --hami-card-shadow: 0 3px 12px -1px rgba(7, 10, 25, 0.05), 0 22px 27px -20px rgba(7, 10, 25, 0.05);
 }
+
 body {
     margin: 0;
     background-color: var(--hami-bg-gray);
     letter-spacing: 0.5px;
     line-height: normal;
 }
+
 body::before {
     content: '';
     position: fixed;
@@ -42,26 +55,31 @@ body::before {
 *, :after, :before {
     box-sizing: border-box;
 }
+
 a {
     text-decoration: none;
     cursor: pointer;
     color: inherit;
 }
+
 li {
     list-style: none;
 }
+
 .container {
     position: relative;
     margin: 0 auto;
     width: 100%;
     max-width: 960px;
 }
+
 .user-popover {
     border-radius: 8px !important;
     min-width: 0 !important;
     padding: 0 !important;
     border: none !important;
 }
+
 .el-popover .el-popper {
     min-width: 0;
     padding: 0;

@@ -1,4 +1,4 @@
-import {isEmail, isEmpty} from '@/utils/index.ts'
+import { isEmail, isEmpty } from '@/utils/index.ts'
 
 export const validateAccount = (rule: any, value: string, callback: Function) => {
     let regex = /^([a-zA-Z0-9_\u4e00-\u9fa5]{2,16})$/

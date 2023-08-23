@@ -1,9 +1,9 @@
-import http, {FORM} from "../http.ts"
+import http, { FORM } from "../http.ts"
 
 const AuthService: AuthServiceApi = {
 
     login(params: LoginParam): Promise<LoginResult> {
-        return http.post("/auth/login", {...params}, {
+        return http.post("/auth/login", { ...params }, {
             headers: {
                 'Content-Type': FORM
             }
@@ -28,14 +28,22 @@ const AuthService: AuthServiceApi = {
             captcha: param.captcha
         })
     },
+    //无需登录访问
     resetPassword(param: ResetPassParam): Promise<any> {
         return http.post("/auth/reset-pass", {
             email: param.email,
             password: param.password,
             captcha: param.captcha
         })
+    },
+    //登录访问
+    updatePassword(params: ResetPassParam): Promise<any> {
+        return http.post("/auth/update-pass", {
+            email: params.email,
+            password: params.password,
+            captcha: params.captcha
+        })
     }
-
 }
 
 function mock() {

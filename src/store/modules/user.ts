@@ -1,9 +1,8 @@
-import {defineStore} from 'pinia'
-import {isEmpty} from '@/utils'
-import {computed, ref} from 'vue'
+import { defineStore } from 'pinia'
+import { isEmpty } from '@/utils'
+import { computed, ref } from 'vue'
 import store from '@/store'
 import UserService from '@/service/modules/UserService.ts'
-import * as process from 'process'
 
 const useUserStore = defineStore("user", () => {
 
@@ -43,6 +42,7 @@ const useUserStore = defineStore("user", () => {
 
     return { logined, getProfile }
 })
+
 export function loadUserStore() {
     return useUserStore(store)
 }

@@ -1,22 +1,32 @@
-import {ElMessage, ElMessageBox, ElLoading, ElNotification} from "element-plus";
-import {ElMessageBoxOptions, MessageBoxData} from "element-plus/es/components/message-box/src/message-box.type";
-import {LoadingInstance} from "element-plus/lib/components/loading/src/loading";
-import {LoadingOptionsResolved} from "element-plus/lib/components/loading/src/types";
+import { ElLoading, ElMessage, ElMessageBox, ElNotification } from "element-plus";
+import { ElMessageBoxOptions, MessageBoxData } from "element-plus/es/components/message-box/src/message-box.type";
+import { LoadingInstance } from "element-plus/lib/components/loading/src/loading";
+import { LoadingOptionsResolved } from "element-plus/lib/components/loading/src/types";
 
-import {NotificationParams} from "element-plus/es/components/notification/src/notification";
+import { NotificationParams } from "element-plus/es/components/notification/src/notification";
 
 export interface MessageUtils {
     success(msg: string, duration?: number): void
+
     error(msg: string, duration?: number): void
+
     warn(msg: string, duration?: number): void
+
     info(msg: string, duration?: number): void
+
     alert(msg: string, title?: string): Promise<MessageBoxData>
+
     confirm(msg: string, title?: string, type?: string): Promise<MessageBoxData>
+
     loading(text: string, background?: string, options?: LoadingOptionsResolved): any
+
     closeLoading(loading: LoadingInstance, time?: number): void
+
     notify(options: NotificationParams): any
+
     notifySuccess(msg: string, title?: string, duration?: number, offset?: number,
                   options?: NotificationParams): any
+
     notifyError(msg: string, title?: string, duration?: number, offset?: number,
                 options?: NotificationParams): any
 }
@@ -54,7 +64,7 @@ export const $message: MessageUtils = {
             autofocus: false
         })
     },
-    confirm(msg: string, title="提示", type = "error"): Promise<MessageBoxData> {
+    confirm(msg: string, title = "提示", type = "error"): Promise<MessageBoxData> {
         return ElMessageBox.confirm(msg, title, {
             autofocus: false,
             confirmButtonText: '确定',

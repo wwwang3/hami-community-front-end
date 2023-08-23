@@ -1,6 +1,6 @@
-import {$message} from '@/utils/message.ts'
-import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig} from 'axios'
-import {loadTokenStore} from '@/store/modules/token.ts'
+import { $message } from '@/utils/message.ts'
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
+import { loadTokenStore } from '@/store/modules/token.ts'
 
 const defaultConfig: Partial<AxiosRequestConfig> = {
     baseURL: import.meta.env.VITE_BASE_API,
@@ -9,14 +9,14 @@ const defaultConfig: Partial<AxiosRequestConfig> = {
 }
 
 function createInstance() {
-    
+
     const instance: AxiosInstance = axios.create(defaultConfig)
     //请求拦截器
     instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
         let tokenStore = loadTokenStore();
         //在请求头添加token
         let tokenName = tokenStore.getTokenName()
-        let tokenValue  = tokenStore.getTokenValue()
+        let tokenValue = tokenStore.getTokenValue()
         if (tokenName !== null && tokenValue !== null) {
             config.headers[tokenName] = tokenValue
         }
@@ -33,7 +33,7 @@ function createInstance() {
         if (responseType === "blob" || responseType === "arraybuffer") {
             return Promise.resolve(data)
         }
-        let apiData =  data as ApiResponse<any>
+        let apiData = data as ApiResponse<any>
         let code = apiData.code
         if (code === undefined) {
             $message.error("system error")
@@ -60,6 +60,6 @@ function createInstance() {
 }
 
 const http = createInstance()
-export const FORM_DATA= "multipart/form-data"
+export const FORM_DATA = "multipart/form-data"
 export const FORM = "application/x-www-form-urlencoded"
 export default http

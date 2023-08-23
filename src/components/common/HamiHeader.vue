@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import {ref, reactive, onMounted, computed} from "vue"
-import {useRoute, useRouter} from "vue-router"
+import { reactive, ref } from "vue"
+import { useRouter } from "vue-router"
 import HamiLogo from '@/components/common/HamiLogo.vue'
-import avatar from "/assets/avatar.jpg"
-import {Search} from '@element-plus/icons-vue'
 import HeaderAvatar from '@/components/common/HeaderAvatar.vue'
 //interface
 type NavItem = {
@@ -117,7 +115,7 @@ const avatarMouseLeave = () => {
                     <div class="option-item">
                         <el-icon>
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg" >
+                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                       d="M10 1.74286C5.02955 1.74286 1 5.7724 1 10.7429C1 15.7133 5.02955 19.7429 10 19.7429C14.9705 19.7429 19 15.7133 19 10.7429C19 5.7724 14.9705 1.74286 10 1.74286ZM10.0006 3.379C14.0612 3.379 17.3642 6.68282 17.3642 10.7426C17.3642 14.8033 14.0612 18.1063 10.0006 18.1063C5.93996 18.1063 2.63696 14.8033 2.63696 10.7426C2.63696 6.68282 5.93996 3.379 10.0006 3.379Z"
                                       fill="currentColor"></path>

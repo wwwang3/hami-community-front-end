@@ -7,8 +7,8 @@ import {
     RouteRecordRaw,
     RouterHistory
 } from 'vue-router'
-import type {App} from 'vue'
-import {loadTokenStore} from '@/store/modules/token.ts'
+import type { App } from 'vue'
+import { loadTokenStore } from '@/store/modules/token.ts'
 
 const routes: RouteRecordRaw[] = [
     {
@@ -86,7 +86,7 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
     if (to.fullPath === "/login" || to.fullPath === "/register") {
         //如果已经登录了, 不准去啦
         if (tokenStore.authenticated()) {
-            return {name: "Index"}
+            return { name: "Index" }
         }
         return true
     }
@@ -94,7 +94,7 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
         if (to.fullPath === page && !tokenStore.authenticated()) {
             //要登录的页面没有登录
             //去登录吧
-            return {name: "Login"}
+            return { name: "Login" }
         }
     }
     return true
@@ -103,4 +103,5 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
 export function registerRouter(app: App) {
     app.use(router)
 }
+
 export default router
