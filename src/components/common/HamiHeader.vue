@@ -141,7 +141,8 @@ const avatarMouseLeave = () => {
 <style scoped lang="less">
 .hami-page-header {
     background-color: var(--hami-bg);
-
+    position: relative;
+    z-index: 100;
     .page-header-container {
         display: flex;
         align-items: center;

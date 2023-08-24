@@ -8,9 +8,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onBeforeMount, onMounted } from 'vue'
 import { $message } from '@/utils/message.ts'
 import { useRoute } from 'vue-router'
+import useUserStore from '@/store/modules/user.ts'
 
 const $route = useRoute()
 onMounted(() => {

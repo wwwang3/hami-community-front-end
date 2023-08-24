@@ -1,19 +1,31 @@
 <script setup lang="ts">
-import { computed } from "vue"
+import { computed, onBeforeMount } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { Setting } from '@element-plus/icons-vue'
+import useUserStore from '@/store/modules/user.ts'
+import { $message } from '@/utils/message.ts'
 //interface
 
 //router, props, inject, provide
 const $router = useRouter()
 const $route = useRoute()
+const userStore = useUserStore()
 const activeMode = computed(() => {
     return $route.fullPath
 })
 //custom var
 
 //life cycle
-
+onBeforeMount(async () => {
+    await userStore.sync()
+    if (!userStore.logined) {
+        //未登录
+        $message.confirm("请登录后访问")
+            .finally(() => {
+                $router.replace("/")
+            })
+    }
+})
 //watch
 
 //fun

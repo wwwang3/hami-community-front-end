@@ -76,7 +76,7 @@ onMounted(async () => {
         userProfileParam.profile = userProfile.value.profile
         avatar.value = userProfile.value.avatar
     } catch (e) {
-        // $message.error("登录状态异常")
+        $message.error("获取账号信息失败")
     }
 })
 

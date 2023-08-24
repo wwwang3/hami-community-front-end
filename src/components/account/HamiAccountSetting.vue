@@ -3,10 +3,12 @@ import { onMounted, ref } from 'vue'
 import { useRequest } from '@/hooks'
 import UserService from '@/service/modules/UserService.ts'
 import { $message } from '@/utils/message.ts'
+import { useTokenStore } from '@/store/modules/token.ts'
+import { useRouter } from 'vue-router'
 //interface
 //router, props, inject, provide
 const [onLoading, handleGetAccountInfo] = useRequest({
-    run: (params) => UserService.getAccount()
+    run: (params) => UserService.getAccountInfo()
 })
 //custom var
 const account = ref<AccountInfo>({
@@ -14,12 +16,14 @@ const account = ref<AccountInfo>({
 })
 
 const onUpdatePassword = ref(false)
+const tokenStore = useTokenStore()
+const $router = useRouter()
 //life cycle
 onMounted(async () => {
     try {
-        account.value = await handleGetAccountInfo(null)
+        account.value = await handleGetAccountInfo(null) as AccountInfo
     } catch (e) {
-
+        $message.error("获取账号信息失败")
     }
 })
 //watch
@@ -41,6 +45,10 @@ const handleClick = () => {
 }
 const handleSuccess = () => {
     //修改成功的回调
+    onUpdatePassword.value = false
+    //退出
+    tokenStore.clear()
+    $router.replace("/")
 }
 const handleCancel = () => {
     onUpdatePassword.value = false

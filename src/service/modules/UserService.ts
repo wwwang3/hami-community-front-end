@@ -21,7 +21,7 @@ const UserService: UserServiceApi = {
             }
         })
     },
-    getAccount(): Promise<AccountInfo> {
+    getAccountInfo(): Promise<AccountInfo> {
         return http.get("/user/account/info")
     }
 

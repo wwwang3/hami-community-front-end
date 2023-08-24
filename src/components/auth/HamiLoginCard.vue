@@ -84,6 +84,9 @@ const login = async (el: FormInstance | undefined) => {
                     success("login")
                 }, 1000)
             })
+            .catch(e => {
+                $message.error(e)
+            })
     } catch (e) {
     }
 }

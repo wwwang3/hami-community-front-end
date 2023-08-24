@@ -4,7 +4,7 @@ declare interface AuthServiceApi {
 
     logout(): Promise<any>,
 
-    getCaptcha(type: "register" | "reset", email: string): Promise<any>,
+    getCaptcha(type: "register" | "reset" | "update", email: string): Promise<any>,
 
     register(param: RegisterParam): Promise<any>,
 
@@ -22,5 +22,5 @@ declare interface UserServiceApi {
 
     updateAvatar(avatar: File): Promise<string>
 
-    getAccount(): Promise<AccountInfo>
+    getAccountInfo(): Promise<AccountInfo>
 }

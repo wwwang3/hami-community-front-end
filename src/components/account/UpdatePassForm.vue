@@ -48,7 +48,7 @@ const [onLoading, run] = useAutoLoading()
 // const [onReset, process] = useAutoLoading()
 const [onReset, doResetPass] = useRequest({
     loading: false,
-    run: params => AuthService.resetPassword(params)
+    run: params => AuthService.updatePassword(params)
 })
 const getCaptcha = async () => {
     if (isEmpty(resetPassParam.email)) {
@@ -56,7 +56,7 @@ const getCaptcha = async () => {
     }
     //禁用按钮
     onCountDown.value = true
-    run(AuthService.getCaptcha("reset", resetPassParam.email))
+    run(AuthService.getCaptcha("update", resetPassParam.email))
         .then(() => {
             $message.success("发送成功")
             startCountdown()

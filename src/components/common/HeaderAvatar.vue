@@ -3,6 +3,7 @@ import { onBeforeMount, Ref, ref } from "vue"
 import useUserStore from "@/store/modules/user.ts"
 import { useTokenStore } from '@/store/modules/token.ts'
 import { useRouter } from 'vue-router'
+import { $message } from '@/utils/message.ts'
 //interface
 
 //router, props, inject, provide
@@ -23,6 +24,7 @@ onBeforeMount(async () => {
         userInfo.value.tag = "管理员"
         logined.value = true
     } catch (e) {
+        $message.error(e)
         logined.value = false
     }
 })

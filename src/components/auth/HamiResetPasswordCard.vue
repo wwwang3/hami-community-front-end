@@ -104,6 +104,9 @@ const handleResetPassword = async (el: FormInstance | undefined) => {
                     step.value = 3
                 }, 1000)
             })
+            .catch(e => {
+                $message.error(e)
+            })
     } catch (e) {
         console.log(e)
     }

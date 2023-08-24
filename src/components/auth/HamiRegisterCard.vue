@@ -142,6 +142,9 @@ const register = async (el: FormInstance | undefined) => {
                     success("register")
                 }, 300)
             })
+            .catch(e => {
+                $message.error(e)
+            })
     } catch (e) {
         console.log(e)
     }
@@ -160,6 +163,7 @@ const getCaptcha = async () => {
         })
         .catch(e => {
             console.log(e)
+            $message.error(e)
             onProcess.value = false
         })
 }

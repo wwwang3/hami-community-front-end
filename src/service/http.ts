@@ -46,12 +46,13 @@ function createInstance() {
                 return Promise.resolve(apiData.data)
             default:
                 console.log(apiData)
-                $message.error(apiData.msg)
+                // $message.error(apiData.msg)
                 //错误信息
                 return Promise.reject(apiData.msg)
         }
     }, (error): Promise<string> => {
         // let response = error as AxiosResponse
+        //网络错误等
         $message.error((error as AxiosError).message)
         return Promise.reject("error")
     })
