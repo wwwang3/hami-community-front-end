@@ -97,18 +97,16 @@ const changeEmail = async () => {
 const handleResetPassword = async (el: FormInstance | undefined) => {
     try {
         await el?.validate()
-        doResetPass(resetPassParam)
-            .then(() => {
-                $message.success("重置密码成功")
-                setTimeout(() => {
-                    step.value = 3
-                }, 1000)
-            })
-            .catch(e => {
-                $message.error(e)
-            })
+        await doResetPass(resetPassParam)
+        $message.success("重置密码成功")
+        setTimeout(() => {
+            step.value = 3
+        }, 1000)
     } catch (e) {
-        console.log(e)
+        if (typeof e === "string") {
+            console.log(1)
+            $message.error(e)
+        }
     }
 }
 </script>

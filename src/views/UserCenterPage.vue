@@ -17,14 +17,14 @@ const activeMode = computed(() => {
 
 //life cycle
 onBeforeMount(async () => {
-    await userStore.sync()
-    if (!userStore.logined) {
-        //未登录
-        $message.confirm("请登录后访问")
-            .finally(() => {
-                $router.replace("/")
-            })
-    }
+    // await userStore.sync()
+    // if (!userStore.logined) {
+    //     //未登录
+    //     $message.confirm("请登录后访问")
+    //         .finally(() => {
+    //             $router.replace("/")
+    //         })
+    // }
 })
 //watch
 

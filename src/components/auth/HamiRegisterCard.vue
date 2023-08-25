@@ -173,7 +173,6 @@ const getCaptcha = async () => {
 .el-form-item {
     margin-bottom: 20px;
 }
-
 .hami-register-card-body {
     //--el-component-size: 34px;
     margin: 10px 0;

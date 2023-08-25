@@ -61,6 +61,31 @@ const routes: RouteRecordRaw[] = [
                 component: () => import("@/components/account/HamiLoginRecord.vue")
             },
         ]
+    },
+    {
+        path: "/user/space/:userId",
+        component: () => import("@/views/UserSpace.vue"),
+        children: [
+            // {
+            //     path: "/articles",
+            // }
+        ]
+    },
+    {
+        path: "/creator",
+        component: () => import("@/views/Creator.vue"),
+        children: [
+            {
+                path: "",
+                name: "default",
+                redirect: "/creator/home"
+            },
+            {
+                path: "/creator/home",
+                name: "CreatorHome",
+                component: () => import("@/components/creator/HamiCreatorHome.vue")
+            }
+        ]
     }
 ]
 

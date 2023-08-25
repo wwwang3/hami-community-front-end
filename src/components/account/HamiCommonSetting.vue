@@ -27,32 +27,27 @@ const handleClick = (m: string) => {
             </div>
             <div class="setting-items">
                 <el-radio-group v-model="mode">
-                    <template v-for="m in modes">
-                        <div class="item" @click="handleClick(m)" :class="{active: m === mode}">
-                            <el-skeleton class="i-skeleton"/>
-                            <div class="radio">
-                                <el-radio :label="m"></el-radio>
-                            </div>
+                    <div class="item" @click="handleClick('light')" :class="{active: mode === 'light'}">
+                        <el-skeleton class="i-skeleton"/>
+                        <div class="radio">
+                            <el-radio label="light"></el-radio>
                         </div>
-                    </template>
-<!--                    <div class="item" @click="handleClick('light')">-->
-<!--                        <el-skeleton class="i-skeleton"/>-->
-<!--                        <div class="radio">-->
-<!--                            <el-radio label="light"></el-radio>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="item" @click="handleClick('dark')" :class="{active: mode ===}">-->
-<!--                        <el-skeleton class="i-skeleton"/>-->
-<!--                        <div class="radio">-->
-<!--                            <el-radio label="dark"></el-radio>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="item" @click="handleClick('system')">-->
-<!--                        <el-skeleton class="i-skeleton"/>-->
-<!--                        <div class="radio">-->
-<!--                            <el-radio label="system"></el-radio>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    </div>
+                    <div class="item" @click="handleClick('dark')" :class="{active: mode === 'dark'}">
+                        <el-skeleton class="i-skeleton dark"/>
+                        <div class="radio">
+                            <el-radio label="dark"></el-radio>
+                        </div>
+                    </div>
+                    <div class="item" @click="handleClick('system')" :class="{active: mode === 'system'}">
+                        <div class="skeleton-group">
+                            <el-skeleton class="i-skeleton"/>
+                            <el-skeleton class="i-skeleton dark"/>
+                        </div>
+                        <div class="radio">
+                            <el-radio label="system"></el-radio>
+                        </div>
+                    </div>
                 </el-radio-group>
             </div>
         </div>
@@ -93,6 +88,7 @@ const handleClick = (m: string) => {
                 cursor: pointer;
                 width: 240px;
                 border: 1px solid var(--hami-border-gray);
+
                 .i-skeleton {
                     padding: 10px 16px;
 
@@ -102,18 +98,38 @@ const handleClick = (m: string) => {
 
                     border-bottom: 1px solid var(--hami-border-gray);
                 }
+                .i-skeleton.dark {
+                    background-color: #181818;
+                    border-radius: var(--hami-radius) var(--hami-radius) 0 0;
+                    :deep(.el-skeleton__item) {
+                        background-color: hsla(0,0%,100%,.2);;
+                    }
+                }
+                .i-skeleton.light {
+                    background-color: #fff;
+                }
+
                 .radio {
                     padding: 10px 16px;
                 }
             }
+
             .item:not(:last-child) {
                 margin-right: 24px;
             }
+
             .item:hover .radio {
                 background-color: #eaf2ff;
             }
+
             .item.active .radio {
                 background-color: #eaf2ff;
+            }
+            .skeleton-group {
+                display: flex;
+                .i-skeleton.dark {
+                    border-top-left-radius: 0;
+                }
             }
         }
     }

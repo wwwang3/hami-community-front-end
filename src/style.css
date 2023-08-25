@@ -14,6 +14,7 @@
     --hami-text-1: #61666d;
     --hami-text-2: #909090;
     --hami-text-3: #181818;
+    --hami-text-4: #000;
     --hami-text-gray: #8a919f;
     --hami-text-white: #fff;
     --hami-text-blue: #007fff;
@@ -27,6 +28,7 @@
     --hami-radius-large: 16px;
     --hami-title: #1d2129;
     --hami-border-color: #e5e6eb;
+    --hami-border-color-1: #cfd1d5;
     --hami-card-hover: #fafafa;
     --hami-card-hover-d: #f0f0f0;
     --hami-card-shadow: 0 3px 12px -1px rgba(7, 10, 25, 0.05), 0 22px 27px -20px rgba(7, 10, 25, 0.05);

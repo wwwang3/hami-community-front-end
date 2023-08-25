@@ -85,6 +85,7 @@ const changeMode = (mode: string) => {
     border-radius: var(--hami-radius-large);
     min-height: 420px;
     position: relative;
+    margin-top: 20px;
 }
 
 .login-register-header {

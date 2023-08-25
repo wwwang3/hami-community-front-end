@@ -43,7 +43,6 @@ const records = ref<Array<LoginRecord>>([
         <el-divider></el-divider>
         <div class="login-record-body">
             <el-table :data="records"
-                      style="width: 75%"
                       max-height="640"
                       header-row-class-name="login-record-header"
                       stripe>
@@ -75,7 +74,7 @@ const records = ref<Array<LoginRecord>>([
             text-align: center;
         }
         :deep(.login-record-header th.el-table__cell) {
-            background-color: var(--hami-text-2);
+            background-color: var(--hami-bg-gray);
             color: var(--hami-text-1)
         }
         :deep(.el-table__body td.el-table__cell) {
