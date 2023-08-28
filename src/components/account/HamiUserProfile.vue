@@ -2,7 +2,7 @@
 import { onMounted, reactive, ref, Ref } from "vue"
 import { useRouter } from "vue-router"
 import { useRequest } from '@/hooks'
-import UserService from '@/service/modules/UserService.ts'
+import UserService from '@/service/modules/user.ts'
 import HamiLoading from '@/components/common/HamiLoading.vue'
 import { $message } from '@/utils/message.ts'
 import defaultAvatar from "/assets/avatar.jpg"

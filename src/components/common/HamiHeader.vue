@@ -129,7 +129,7 @@ const avatarMouseLeave = () => {
                             历史
                         </span>
                     </div>
-                    <a class="creator" href="/">
+                    <a class="creator" href="/#/creator" target="_blank">
                         创作者中心
                     </a>
                 </div>

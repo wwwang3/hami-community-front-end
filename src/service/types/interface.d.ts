@@ -24,3 +24,20 @@ declare interface UserServiceApi {
 
     getAccountInfo(): Promise<AccountInfo>
 }
+
+declare interface ArticleDraftServiceApi {
+
+    getArticles(pageNum: number, pageSize: number): Promise<PageData<ArticleDraftDetail>>
+
+    getDrafts(pageNum: number, pageSize: number): Promise<PageData<ArticleDraftDetail>>
+
+    getArticleDraft(id: number): Promise<ArticleDraftDetail>
+
+    updateArticleDraft(param: ArticleDraftParam): Promise<ArticleDraft>
+
+    publishArticle(param: ArticleDraftParam): Promise<ArticleDraft>
+
+    deleteDraft(id: number): Promise<any>
+
+    deleteArticle(id: number): Promise<any>
+}

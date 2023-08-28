@@ -8,6 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Account: typeof import('./../src/components/account.vue')['default']
+    CreatorArticle: typeof import('./../src/components/creator/CreatorArticle.vue')['default']
+    CreatorDraft: typeof import('./../src/components/creator/CreatorDraft.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
@@ -31,6 +33,8 @@ declare module 'vue' {
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElText: typeof import('element-plus/es')['ElText']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
@@ -38,6 +42,7 @@ declare module 'vue' {
     HaiUserCardV2: typeof import('./../src/components/user/HaiUserCardV2.vue')['default']
     HamiAccountSetting: typeof import('./../src/components/account/HamiAccountSetting.vue')['default']
     HamiCommonSetting: typeof import('./../src/components/account/HamiCommonSetting.vue')['default']
+    HamiCreatorContent: typeof import('./../src/components/creator/HamiCreatorContent.vue')['default']
     HamiCreatorHome: typeof import('./../src/components/creator/HamiCreatorHome.vue')['default']
     HamiEye: typeof import('./../src/components/icon/HamiEye.vue')['default']
     HamiEyeIcon: typeof import('./../src/components/icon/HamiEyeIcon.vue')['default']

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRequest } from '@/hooks'
-import UserService from '@/service/modules/UserService.ts'
+import UserService from '@/service/modules/user.ts'
 import { $message } from '@/utils/message.ts'
 import { useTokenStore } from '@/store/modules/token.ts'
 import { useRouter } from 'vue-router'

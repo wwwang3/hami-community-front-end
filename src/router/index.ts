@@ -84,6 +84,28 @@ const routes: RouteRecordRaw[] = [
                 path: "/creator/home",
                 name: "CreatorHome",
                 component: () => import("@/components/creator/HamiCreatorHome.vue")
+            },
+            {
+                path: "/creator/content",
+                name: "CreatorContent",
+                component: () => import("@/components/creator/HamiCreatorContent.vue"),
+                children: [
+                    {
+                        path: "",
+                        name: "DEFAULT",
+                        component: () => import("@/components/creator/CreatorArticle.vue")
+                    },
+                    {
+                        path: "article",
+                        name: "CreatorContentArticle",
+                        component: () => import("@/components/creator/CreatorArticle.vue")
+                    },
+                    {
+                        path: "draft",
+                        name: "CreatorContentDraft",
+                        component: () => import("@/components/creator/CreatorDraft.vue")
+                    }
+                ]
             }
         ]
     }

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { isEmpty } from '@/utils'
 import { computed, ref } from 'vue'
 import store from '@/store'
-import UserService from '@/service/modules/UserService.ts'
+import UserService from '@/service/modules/user.ts'
 
 const useUserStore = defineStore("user", () => {
 

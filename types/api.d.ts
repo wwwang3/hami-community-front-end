@@ -1,3 +1,5 @@
+
+
 /**
  * 接口响应数据遵循的格式
  */
@@ -35,37 +37,6 @@ declare interface LoginResult {
     readonly tokenValue: string
 }
 
-declare interface LoginParam {
-    account: string,
-    password: string
-}
-
-/**
- * 注册接口参数
- */
-declare interface RegisterParam {
-    /**
-     * 用户名
-     */
-    username: string
-    /**
-     * Miami
-     */
-    password: string
-    /**
-     * 重复密码
-     */
-    rePassword?: string
-    /**
-     * 邮箱
-     */
-    email: string,
-    /**
-     * 邮箱验证码
-     */
-    captcha: string
-}
-
 declare interface AccountInfo {
     email: string,
     weixin?: string,
@@ -73,36 +44,46 @@ declare interface AccountInfo {
     qq?: string
 }
 
-declare interface ResetPassParam {
-    email: string,
-    password: string
-    rePassword?: string
-    captcha: string
+declare interface Tag {
+    id: string | number
+    name: string
 }
 
-declare interface UserProfileParam {
-    username: string,
-    profile: string,
-    position: string,
-    blog: string,
-    company: string,
+declare interface ArticleDraft {
+    id: string | number,
+    articleId: string | number
+    userId: string | number
+    title: string
+    picture: string,
+    summary: string,
+    content: string //内容
+    tagIds: Array<number> | null,
+    categoryId: string | number
+    state: number,
+    deleted?: number
+    version?: number,
+    ctime: Date,
+    mtime: Date
 }
 
-declare interface PageParam {
-    /**
-     * 页码
-     */
+declare interface ArticleDraftDetail {
+    id: string | number,
+    articleId: string | number
+    userId: string | number
+    title: string
+    picture: string,
+    summary: string,
+    content: string //内容
+    tags: Array<Tag> | null,
+    categoryId: string | number
+    state?: number
+    ctime: Date,
+    mtime: Date
+}
+
+declare interface PageData<T> {
     pageNum: number
-    /**
-     * 元素个数
-     */
     pageSize: number
-    /**
-     * 关联的对象ID
-     */
-    itemId?: string | number
-    /**
-     * 排序字段
-     */
-    sort?: string
+    total: number
+    data: Array<T> | null | ""
 }

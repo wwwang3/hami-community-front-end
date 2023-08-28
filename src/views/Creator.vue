@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { onMounted, ref, watch } from "vue"
+import { RouteLocationMatched, useRoute, useRouter } from "vue-router"
 //interface
 
 //router, props, inject, provide
@@ -18,18 +18,22 @@ const menuStyle = {
 const frameMode = ref("/creator/home")
 
 onMounted(() => {
-    frameMode.value = $route.path
+    frameMode.value = $route.matched[1]!.path;
     console.log("Creator mounted");
 })
 //life cycle
 
 //watch
+watch(() => $route.path, (newValue, oldValue) => {
+    // frameMode.value = newValue
+    let matched: RouteLocationMatched[] = $route.matched
+    frameMode.value = matched[1]!.path
 
+})
 //fun
 const handleSelect = (index: string, indexPath: string) => {
     console.log("handle Select");
     console.log(index, indexPath);
-    frameMode.value = index
     $router.push(index)
 }
 
@@ -61,14 +65,14 @@ const handleClick = () => {
                         </el-icon>
                         <span>首页</span>
                     </el-menu-item>
-                    <el-sub-menu index="/creator/content">
+                    <el-sub-menu index="/creator/content-menu">
                         <template #title>
                             <el-icon>
                                 <Grid/>
                             </el-icon>
                             <span>内容管理</span>
                         </template>
-                        <el-menu-item index="/creator/content/article">
+                        <el-menu-item index="/creator/content">
                             <span>文章管理</span>
                         </el-menu-item>
                     </el-sub-menu>
@@ -108,7 +112,7 @@ const handleClick = () => {
     margin-top: 40px;
 
     .hami-creator-container {
-        max-width: 1200px;
+        max-width: 1120px;
         margin: 0 auto;
         display: flex;
         //justify-content: space-between;
@@ -135,6 +139,10 @@ const handleClick = () => {
             .el-menu-item:last-child {
                 margin-bottom: 0;
             }
+        }
+        .el-sub-menu {
+            .el-menu-item {
+                padding-left: calc(var(--el-menu-base-level-padding) + var(--el-menu-level) * var(--el-menu-level-padding) + 8px);            }
         }
         :deep(.el-menu-item.is-active ) {
             background-color: var(--active-bg-color);
