@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue"
+import { onBeforeMount, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import HamiLogo from '@/components/common/HamiLogo.vue'
 import HeaderAvatar from '@/components/common/HeaderAvatar.vue'
@@ -35,7 +35,9 @@ const avatarRef = ref()
 const popoverRef = ref<HTMLElement>()
 const avatarHover = ref<string>("hami-avatar-normal")
 //life cycle
-
+onBeforeMount(() => {
+    console.log(1111)
+})
 //watch
 
 //fun
@@ -43,15 +45,6 @@ const handleNavClick = async (item: NavItem) => {
     console.log(item)
     activeNav.value = item.name
     await $router.replace(item.path)
-}
-
-const avatarMouseEnter = () => {
-    avatarHover.value = "hami-avatar-large"
-    // avatarRef.value.className =  "hami-avatar-container hami-avatar-large"
-}
-const avatarMouseLeave = () => {
-    avatarHover.value = "hami-avatar-normal"
-    // avatarRef.value.className =  "hami-avatar-container hami-avatar-normal"
 }
 </script>
 <template>

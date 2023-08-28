@@ -69,7 +69,7 @@ type RequestResult<TData, TParams extends Array<any>> = [Ref<boolean>, TApiFun<T
 export function useRequest<TData, TParams extends any[] = any[]>(props: UseRequestProps<TData, TParams>): RequestResult<TData, TParams> {
     const { loading = false } = props || { loading: false }
     const onRequest = ref<boolean>(loading)
-    const process: TApiFun<TData, TParams> = async (...params) => {
+    const process: TApiFun<TData, TParams> = async (...params): Promise<TData> => {
         console.log(params)
         onRequest.value = true
         return props.run(...params)

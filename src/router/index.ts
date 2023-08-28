@@ -64,7 +64,7 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: "/user/space/:userId",
-        component: () => import("@/views/UserSpace.vue"),
+        component: () => import("@/views/UserSpacePage.vue"),
         children: [
             // {
             //     path: "/articles",
@@ -73,7 +73,7 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: "/creator",
-        component: () => import("@/views/Creator.vue"),
+        component: () => import("@/views/CreatorPage.vue"),
         children: [
             {
                 path: "",

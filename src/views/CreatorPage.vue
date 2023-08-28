@@ -123,6 +123,7 @@ const handleClick = () => {
         background-color: var(--hami-bg);
         padding: 16px 16px;
         min-height: 500px;
+        max-height: 600px;
         border-radius: var(--hami-radius);
         .creator-nav-title {
             width: 100%;

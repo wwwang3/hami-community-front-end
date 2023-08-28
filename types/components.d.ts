@@ -15,6 +15,7 @@ declare module 'vue' {
     ElCol: typeof import('element-plus/es')['ElCol']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDivider: typeof import('element-plus/es')['ElDivider']
+    ElEmpty: typeof import('element-plus/es')['ElEmpty']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElIcon: typeof import('element-plus/es')['ElIcon']
@@ -53,9 +54,11 @@ declare module 'vue' {
     HamiLoginRecord: typeof import('./../src/components/account/HamiLoginRecord.vue')['default']
     HamiLoginRegister: typeof import('./../src/components/auth/HamiLoginRegister.vue')['default']
     HamiLogo: typeof import('./../src/components/common/HamiLogo.vue')['default']
+    HamiNotFound: typeof import('./../src/components/common/HamiNotFound.vue')['default']
     HamiRegisterCard: typeof import('./../src/components/auth/HamiRegisterCard.vue')['default']
     HamiResetPasswordCard: typeof import('./../src/components/auth/HamiResetPasswordCard.vue')['default']
     HamiRestPasswordCard: typeof import('./../src/components/auth/HamiRestPasswordCard.vue')['default']
+    HamiScrollList: typeof import('./../src/components/common/HamiScrollList.vue')['default']
     HamiSetting: typeof import('./../src/components/account/HamiSetting.vue')['default']
     HamiUserCardV1: typeof import('./../src/components/user/HamiUserCardV1.vue')['default']
     HamiUserCardV2: typeof import('./../src/components/user/HamiUserCardV2.vue')['default']
@@ -67,6 +70,7 @@ declare module 'vue' {
     UpdatePassForm: typeof import('./../src/components/account/UpdatePassForm.vue')['default']
   }
   export interface ComponentCustomProperties {
+    vInfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

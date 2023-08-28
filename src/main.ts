@@ -4,6 +4,8 @@ import { createApp } from "vue";
 import { loadPlugins } from '@/plugins'
 import { loadStore } from '@/store'
 import router, { registerRouter } from '@/router'
+import useUserStore from '@/store/modules/user.ts'
+import { $message } from '@/utils/message.ts'
 
 async function start() {
     const app = createApp(App)
