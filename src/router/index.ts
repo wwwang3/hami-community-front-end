@@ -9,6 +9,7 @@ import {
 } from 'vue-router'
 import type { App } from 'vue'
 import { loadTokenStore } from '@/store/modules/token.ts'
+import { loadUserStore } from '@/store/modules/user.ts'
 
 const routes: RouteRecordRaw[] = [
     {
@@ -108,6 +109,11 @@ const routes: RouteRecordRaw[] = [
                 ]
             }
         ]
+    },
+    {
+        path: "/editor/drafts/:id",
+        name: "EditorPage",
+        component: () => import("@/views/EditorPage.vue")
     }
 ]
 
@@ -128,17 +134,16 @@ const needLoginPages: Array<string> = []
  * 全局路由守卫
  */
 router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-    let tokenStore = loadTokenStore()
-    console.log(to, from)
+    let userStore = loadUserStore()
     if (to.fullPath === "/login" || to.fullPath === "/register") {
         //如果已经登录了, 不准去啦
-        if (tokenStore.authenticated()) {
+        if (userStore.logined) {
             return { name: "Index" }
         }
         return true
     }
     for (let page of needLoginPages) {
-        if (to.fullPath === page && !tokenStore.authenticated()) {
+        if (to.fullPath === page && !userStore.logined) {
             //要登录的页面没有登录
             //去登录吧
             return { name: "Login" }

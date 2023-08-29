@@ -33,11 +33,21 @@ declare interface ArticleDraftServiceApi {
 
     getArticleDraft(id: number): Promise<ArticleDraftDetail>
 
-    updateArticleDraft(param: ArticleDraftParam): Promise<ArticleDraft>
+    createDraft(param: ArticleDraftParam): Promise<ArticleDraft>
+
+    updateDraft(param: ArticleDraftParam): Promise<ArticleDraft>
 
     publishArticle(param: ArticleDraftParam): Promise<ArticleDraft>
 
     deleteDraft(id: number): Promise<any>
 
     deleteArticle(id: number): Promise<any>
+}
+
+declare interface CategoryServiceApi {
+    getAllCategories(): Promise<Array<Category>>
+}
+
+declare interface TagServiceApi {
+    listTags(param: PageParam): Promise<PageData<Tag>>
 }

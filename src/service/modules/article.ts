@@ -1,6 +1,6 @@
 import http from '@/service/http.ts'
 
-const ArticleDraftService: ArticleDraftServiceApi = {
+export const ArticleDraftService: ArticleDraftServiceApi = {
 
     getArticleDraft(id: number): Promise<ArticleDraftDetail> {
         return http.get("/article_draft/get", {
@@ -25,8 +25,11 @@ const ArticleDraftService: ArticleDraftServiceApi = {
             }
         })
     },
-    updateArticleDraft(param: ArticleDraftParam): Promise<ArticleDraft> {
-        return http.post("/article_draft/update", param)
+    createDraft(param: ArticleDraftParam): Promise<ArticleDraft> {
+        return http.post("/article_draft/create", param)
+    },
+    updateDraft(param: ArticleDraftParam): Promise<ArticleDraft> {
+        return http.post("/article_draft/update")
     },
     publishArticle(param: ArticleDraftParam): Promise<ArticleDraft> {
         return http.post("/article_draft/publish", param)

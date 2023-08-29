@@ -14,12 +14,11 @@ const tokenStore = useTokenStore()
 //fun
 const logout = async () => {
     await tokenStore.logout()
-    $message.success("退出成功/")
+    $message.success("退出成功")
 }
 </script>
 <template>
-    <div class="hami-index-page">
-    </div>
+    <div class="hami-index-page"></div>
 </template>
 
 <style scoped lang="less">

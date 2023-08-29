@@ -65,7 +65,7 @@ declare interface PageParam {
 }
 
 declare interface ArticleDraftParam {
-    id: string | number
+    id?: string | number
     title?: string
     picture?: string
     summary?: string

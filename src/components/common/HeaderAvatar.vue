@@ -4,6 +4,7 @@ import useUserStore from "@/store/modules/user.ts"
 import { useTokenStore } from '@/store/modules/token.ts'
 import { useRouter } from 'vue-router'
 import { $message } from '@/utils/message.ts'
+import { isEmpty } from '@/utils'
 //interface
 
 //router, props, inject, provide
@@ -21,10 +22,11 @@ const visible = ref(false)
 onBeforeMount(async () => {
     try {
         userInfo.value = await userStore.getProfile()
-        userInfo.value.tag = "管理员"
-        logined.value = true
+        if (!isEmpty(userInfo.value)) {
+            logined.value = true
+        }
     } catch (e) {
-        $message.error(e)
+        console.log(e)
         logined.value = false
     }
 })

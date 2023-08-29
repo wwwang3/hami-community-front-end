@@ -36,7 +36,7 @@ const popoverRef = ref<HTMLElement>()
 const avatarHover = ref<string>("hami-avatar-normal")
 //life cycle
 onBeforeMount(() => {
-    console.log(1111)
+    console.log("hami-header before-mount")
 })
 //watch
 
@@ -122,9 +122,9 @@ const handleNavClick = async (item: NavItem) => {
                             历史
                         </span>
                     </div>
-                    <a class="creator" href="/#/creator" target="_blank">
-                        创作者中心
-                    </a>
+                    <router-link  to="/creator/home">
+                        <span class="creator">创作者中心</span>
+                    </router-link>
                 </div>
             </div>
         </div>

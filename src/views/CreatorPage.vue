@@ -26,9 +26,10 @@ onMounted(() => {
 //watch
 watch(() => $route.path, (newValue, oldValue) => {
     // frameMode.value = newValue
-    let matched: RouteLocationMatched[] = $route.matched
-    frameMode.value = matched[1]!.path
-
+    if (newValue.includes("/creator/")) {
+        let matched: RouteLocationMatched[] = $route.matched
+        frameMode.value = matched[1]!.path
+    }
 })
 //fun
 const handleSelect = (index: string, indexPath: string) => {
@@ -45,7 +46,7 @@ const handleClose = () => {
 }
 
 const handleClick = () => {
-
+    $router.replace("/editor/drafts/new")
 }
 
 </script>

@@ -44,8 +44,14 @@ declare interface AccountInfo {
     qq?: string
 }
 
+declare interface Category {
+    id: number
+    name: string
+    path: string
+}
+
 declare interface Tag {
-    id: string | number
+    id: number
     name: string
 }
 
@@ -74,11 +80,11 @@ declare interface ArticleDraftDetail {
     picture: string,
     summary: string,
     content: string //内容
-    tags: Array<Tag> | null,
+    tags: Array<Tag> | null | [],
     categoryId: string | number
-    state?: number
-    ctime: Date,
-    mtime: Date
+    state?: 0 | 1 | 2
+    ctime?: Date | undefined,
+    mtime?: Date | undefined
 }
 
 declare interface PageData<T> {
