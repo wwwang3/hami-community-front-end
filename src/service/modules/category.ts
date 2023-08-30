@@ -16,5 +16,9 @@ export const TagService: TagServiceApi = {
                 pageSize: param.pageSize
             }
         })
+    },
+
+    getAllTags(): Promise<Array<Tag>> {
+        return http.get("/tag/all")
     }
 }

@@ -50,4 +50,6 @@ declare interface CategoryServiceApi {
 
 declare interface TagServiceApi {
     listTags(param: PageParam): Promise<PageData<Tag>>
+
+    getAllTags(): Promise<Array<Tag>>
 }

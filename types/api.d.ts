@@ -73,15 +73,15 @@ declare interface ArticleDraft {
 }
 
 declare interface ArticleDraftDetail {
-    id: string | number,
-    articleId: string | number
-    userId: string | number
+    id: number,
+    articleId: number
+    userId: number
     title: string
     picture: string,
     summary: string,
     content: string //内容
     tags: Array<Tag> | null | [],
-    categoryId: string | number
+    categoryId: -1
     state?: 0 | 1 | 2
     ctime?: Date | undefined,
     mtime?: Date | undefined

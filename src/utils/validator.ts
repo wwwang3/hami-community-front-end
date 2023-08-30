@@ -1,4 +1,6 @@
 import { isEmail, isEmpty } from '@/utils/index.ts'
+import { UploadProps } from 'element-plus'
+import { $message } from '@/utils/message.ts'
 
 export const validateAccount = (rule: any, value: string, callback: Function) => {
     let regex = /^([a-zA-Z0-9_\u4e00-\u9fa5]{2,16})$/
@@ -32,4 +34,16 @@ export const validateRePassword = <T>(formParam: Pick<RegisterParam | ResetPassP
             callback()
         }
     }
+}
+
+export const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
+    console.log(rawFile)
+    if (!/^.*\.(jpg|jpeg|png|webp)$/i.test(rawFile.name)) {
+        $message.error("只支持png, jpg, webp等格式")
+        return false
+    } else if (rawFile.size / 1024 / 1024 > 5) {
+        $message.error("图片最大为5MB")
+        return false
+    }
+    return true
 }

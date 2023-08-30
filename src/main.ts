@@ -9,7 +9,7 @@ import { $message } from '@/utils/message.ts'
 
 
 async function loadLoginUser()  {
-    let loading = $message.loading(`加载中`)
+    let loading = $message.loading("正在进入Hami...")
     try {
         await useUserStore().getProfile()
     } catch (e) {

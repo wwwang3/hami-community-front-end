@@ -9,6 +9,7 @@ import { $message } from '@/utils/message.ts'
 import useUserStore from '@/store/modules/user.ts'
 //interface
 import defaultAvatar from "/assets/avatar.jpg"
+import { ItemType } from '@/components/creator/HamiPublishArticleForm.vue'
 
 //router, props, inject, provide
 const $route = useRoute()
@@ -19,10 +20,10 @@ const userInfo = reactive<SimpleUserInfo>(userStore.userInfo as SimpleUserInfo)
 
 const draftId = ref("")
 const draft = ref<ArticleDraftDetail>({
-    id: "",
-    articleId: "",
-    userId: "",
-    categoryId: "",
+    id: -1,
+    articleId: -1,
+    userId: -1,
+    categoryId: -1,
     tags: [],
     content: '',
     picture: '',
@@ -36,9 +37,25 @@ const [onLoading, getDraft] = useRequest({
     run: (params) => ArticleDraftService.getArticleDraft(params)
 })
 
-const showPublishDialog = ref(false)
 const buttonRef = ref()
 const publishPopRef = ref()
+const showItemForm = ref(false)
+const buttonText = computed(() => {
+    if (!isEmpty(draft.value.articleId) && draft.value.articleId > 0) {
+        return "确定并更新"
+    }
+    return "确定并发表"
+})
+const isArticle = computed(() => {
+    return !isEmpty(draft.value.articleId) && draft.value.articleId > 0;
+
+})
+const text = computed(() => {
+    if (!isEmpty(draft.value.articleId) && draft.value.articleId > 0) {
+        return "更新文章"
+    }
+    return "发表文章"
+})
 onBeforeMount(async () => {
     await handleRouteChange()
 })
@@ -59,10 +76,10 @@ const handleRouteChange = async () => {
     draftId.value = params.id as string
     if (draftId.value === "new") {
         draft.value = {
-            id: "",
-            articleId: "",
-            userId: "",
-            categoryId: "",
+            id: -1,
+            articleId: -1,
+            userId: -1,
+            categoryId: -1,
             tags: [],
             content: '',
             picture: '',
@@ -87,8 +104,35 @@ const handleRouteChange = async () => {
 const toUserHome = () => {
     $router.replace("/user/space/" + ifNull(userInfo?.userId, 1))
 }
-const handleShowDialog = () => {
-    showPublishDialog.value = true
+
+const handlePublishOrUpdate = () => {
+    showItemForm.value = true
+}
+
+const handleClose = () => {
+    showItemForm.value = false
+}
+const handleSave = (item: ItemType) => {
+    console.log(item)
+    //todo
+}
+
+const handleEnsure = (item: ItemType) => {
+    console.log(item)
+    if (!checkParam()) return
+    //todo
+}
+
+const checkParam = () => {
+    if (isEmpty(draft.value.title)) {
+        $message.notifyError("文章标题不能为空")
+        return false
+    }
+    if (isEmpty(draft.value.content)) {
+        $message.notifyError("正文内容不能为空")
+        return false
+    }
+    return true
 }
 </script>
 <template>
@@ -102,7 +146,7 @@ const handleShowDialog = () => {
                 <router-link to="/creator/content/draft">
                     <el-button plain class="draft">草稿箱</el-button>
                 </router-link>
-                <el-button type="primary" @click="handleShowDialog" ref="buttonRef">发布</el-button>
+                <el-button type="primary" ref="buttonRef" @click="handlePublishOrUpdate">{{ text }}</el-button>
                 <el-avatar
                     :size="56"
                     :src="userInfo?.avatar || defaultAvatar" class="avatar"
@@ -120,12 +164,17 @@ const handleShowDialog = () => {
             width="560"
             placement="bottom-start"
             popper-class="publish-popover"
+            :visible="showItemForm"
         >
             <HamiPublishArticleForm
-                :category-id="parseInt(draft.categoryId as string)"
+                :category-id="draft.categoryId"
                 :picture="draft.picture"
                 :summary="draft.summary"
                 :tags="draft.tags as Array<Tag>"
+                :button-text="buttonText"
+                @close="handleClose"
+                @ensure="handleEnsure"
+                @save="handleSave"
             >
 
             </HamiPublishArticleForm>
@@ -177,5 +226,8 @@ const handleShowDialog = () => {
 .publish-popover {
     padding: 20px !important;
     border-radius: var(--hami-radius-medium) !important;
+    .el-popover__title {
+        font-size: 18px;
+    }
 }
 </style>
