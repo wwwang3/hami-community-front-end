@@ -41,7 +41,7 @@ export const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
     if (!/^.*\.(jpg|jpeg|png|webp)$/i.test(rawFile.name)) {
         $message.error("只支持png, jpg, webp等格式")
         return false
-    } else if (rawFile.size / 1024 / 1024 > 5) {
+    } else if (rawFile.size / 1024 / 1024 > 2) {
         $message.error("图片最大为5MB")
         return false
     }

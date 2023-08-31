@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "cropperjs": "^1.6.0",
     "unplugin-icons": "^0.16.5",
     "vue": "^3.3.4",
     "vue-cropper": "^1.0.9"

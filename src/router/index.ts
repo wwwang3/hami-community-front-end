@@ -38,7 +38,7 @@ const routes: RouteRecordRaw[] = [
         children: [
             {
                 path: '',
-                name: 'default',
+                name: 'AccountDefault',
                 redirect: "/account/profile"
             },
             {
@@ -93,7 +93,7 @@ const routes: RouteRecordRaw[] = [
                 children: [
                     {
                         path: "",
-                        name: "DEFAULT",
+                        name: "ContentDefault",
                         component: () => import("@/components/creator/CreatorArticle.vue")
                     },
                     {

@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed, watch } from "vue"
 import { useRoute, useRouter } from "vue-router"
-import { FormInstance, FormRules } from 'element-plus'
+import { FormInstance, FormRules, UploadRequestOptions } from 'element-plus'
 import { CategoryService, TagService } from '@/service/modules/category.ts'
 import { isEmpty } from '@/utils'
 import { $message } from '@/utils/message.ts'
 import HamiLoading from '@/components/common/HamiLoading.vue'
 import { useRequest } from '@/hooks'
 import {beforeUpload} from "@/utils/validator.ts"
+import { ArticleDraftService } from '@/service/modules/article.ts'
 //interface
 interface FormProps {
     buttonText?: string
@@ -36,12 +37,12 @@ const publishForm = ref<FormInstance>()
 
 const tagList = reactive<Array<Tag>>([] as Array<Tag>)
 const categoryList = reactive<Array<Category>>([] as Array<Category>)
-
 const categoryName = ref<string>("")
 
 const [onUpload, processUpload] = useRequest({
-    run: (params) => Promise.resolve()
+    run: (params) => ArticleDraftService.uploadPicture(params)
 })
+const picRef = ref()
 
 const item = ref<ItemType>({
     categoryId: -1,
@@ -109,8 +110,19 @@ const initTags = async () => {
 const handleChange = () => {
     console.log("changed")
 }
-const handleUploadPicture = async () => {
-
+const handleUploadPicture = async (options: UploadRequestOptions) => {
+    //更新头像
+    console.log(options)
+    try {
+        //返回头像地址
+        item.value.picture = await processUpload(options.file)
+        $message.success("上传成功")
+        return Promise.resolve()
+    } catch (e) {
+        return Promise.reject(e)
+    } finally {
+        picRef.value!.clearFiles()
+    }
 }
 
 const handleClose = () => {
@@ -179,7 +191,7 @@ const checkItem = () => {
             </el-form-item>
             <el-form-item prop="picture" label="封面:" class="picture">
                 <el-upload
-                    ref="avatarRef"
+                    ref="picRef"
                     action="#"
                     name="file"
                     :before-upload="beforeUpload"
@@ -193,14 +205,14 @@ const checkItem = () => {
                         <HamiLoading :loading="onUpload" text="上传中" style="border-radius: 50%; height: 120px;">
                             <div class="picture-item">
                                 <img :src="item.picture" alt="" v-if="!isEmpty(item.picture)">
-                                <el-icon :size="24"><Plus /></el-icon>
+                                <el-icon :size="24" v-else><Plus /></el-icon>
                             </div>
                         </HamiLoading>
                     </template>
                 </el-upload>
                 <div class="tips">
                     <span>建议比例(16:9)</span>
-                    <span>图片大小不超过5M</span>
+                    <span>图片大小不超过2M</span>
                 </div>
             </el-form-item>
             <el-form-item prop="summary" label="摘要:" style="width: 90%">
@@ -304,9 +316,10 @@ const checkItem = () => {
         color: #8c939d;
         border: 1px dashed var(--el-border-color);
         transition: all .3s;
-        :deep(img) {
+        img {
             width: 240px;
-            height: auto;
+            height: 135px;
+            object-fit: contain;
         }
     }
     .picture-item:hover {

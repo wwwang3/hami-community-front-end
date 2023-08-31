@@ -37,11 +37,13 @@ declare interface ArticleDraftServiceApi {
 
     updateDraft(param: ArticleDraftParam): Promise<ArticleDraft>
 
-    publishArticle(param: ArticleDraftParam): Promise<ArticleDraft>
+    publishArticle(draftId: number): Promise<ArticleDraft>
 
     deleteDraft(id: number): Promise<any>
 
     deleteArticle(id: number): Promise<any>
+
+    uploadPicture(pic: File): Promise<string>
 }
 
 declare interface CategoryServiceApi {
