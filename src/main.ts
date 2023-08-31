@@ -25,12 +25,12 @@ async function start() {
     loadStore(app)
     //加载element-plus
     loadPlugins(app)
+    //加载登录用户
+    await loadLoginUser()
+
     //注册路由
     registerRouter(app)
     await router.isReady()
-
-    //加载登录用户
-    await loadLoginUser()
 
     app.mount("#app")
     let end = Date.now();

@@ -60,6 +60,7 @@ declare module 'vue' {
     HamiMdEditor: typeof import('./../src/components/md/HamiMdEditor.vue')['default']
     HamiNotFound: typeof import('./../src/components/common/HamiNotFound.vue')['default']
     HamiPublishArticleForm: typeof import('./../src/components/creator/HamiPublishArticleForm.vue')['default']
+    HamiPublished: typeof import('@/views/PublishedPage.vue')['default']
     HamiRegisterCard: typeof import('./../src/components/auth/HamiRegisterCard.vue')['default']
     HamiResetPasswordCard: typeof import('./../src/components/auth/HamiResetPasswordCard.vue')['default']
     HamiRestPasswordCard: typeof import('./../src/components/auth/HamiRestPasswordCard.vue')['default']

@@ -31,7 +31,7 @@ declare interface ArticleDraftServiceApi {
 
     getDrafts(pageNum: number, pageSize: number): Promise<PageData<ArticleDraftDetail>>
 
-    getArticleDraft(id: number): Promise<ArticleDraftDetail>
+    getArticleDraft(id: number ): Promise<ArticleDraftDetail>
 
     createDraft(param: ArticleDraftParam): Promise<ArticleDraft>
 

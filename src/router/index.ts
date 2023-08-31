@@ -33,6 +33,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/views/ResetPasswordPage.vue")
     },
     {
+      path: "/published",
+      name: "Published",
+      component: () => import("@/views/PublishedPage.vue")
+    },
+    {
         path: "/account",
         component: () => import("@/views/UserCenterPage.vue"),
         children: [
@@ -113,7 +118,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: "/editor/drafts/:id",
         name: "EditorPage",
-        component: () => import("@/views/EditorPage.vue")
+        component: () => import("@/views/EditorPage.vue"),
     }
 ]
 
@@ -136,6 +141,7 @@ const needLoginPages: Array<string> = []
 router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
     let userStore = loadUserStore()
     if (to.fullPath === "/login" || to.fullPath === "/register") {
+        console.log(userStore.logined)
         //如果已经登录了, 不准去啦
         if (userStore.logined) {
             return { name: "Index" }

@@ -56,15 +56,15 @@ declare interface Tag {
 }
 
 declare interface ArticleDraft {
-    id: string | number,
-    articleId: string | number
-    userId: string | number
+    id: number,
+    articleId: number
+    userId: number
     title: string
     picture: string,
     summary: string,
     content: string //内容
     tagIds: Array<number> | null,
-    categoryId: string | number
+    categoryId: number
     state: number,
     deleted?: number
     version?: number,
@@ -80,8 +80,8 @@ declare interface ArticleDraftDetail {
     picture: string,
     summary: string,
     content: string //内容
-    tags: Array<Tag> | null | [],
-    categoryId: -1
+    tags: Array<Tag> | null,
+    categoryId: number
     state?: 0 | 1 | 2
     ctime?: Date | undefined,
     mtime?: Date | undefined

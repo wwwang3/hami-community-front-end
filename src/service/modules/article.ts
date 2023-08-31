@@ -29,7 +29,7 @@ export const ArticleDraftService: ArticleDraftServiceApi = {
         return http.post("/article_draft/create", param)
     },
     updateDraft(param: ArticleDraftParam): Promise<ArticleDraft> {
-        return http.post("/article_draft/update")
+        return http.post("/article_draft/update", param)
     },
     publishArticle(draftId: number): Promise<ArticleDraft> {
         return http.post("/article_draft/publish", null, {

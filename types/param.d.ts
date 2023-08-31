@@ -70,6 +70,6 @@ declare interface ArticleDraftParam {
     picture?: string
     summary?: string
     content?: string
-    categoryId?: string
+    categoryId?: number
     tagIds?: Array<number> | null
 }
