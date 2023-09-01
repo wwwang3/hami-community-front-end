@@ -12,12 +12,6 @@ const activeMode = ref("article")
 onMounted(() => {
     changeMode()
 })
-//life cycle
-watch(() => $route.path, (newValue, oldValue) => {
-    if (/\/creator\/content\/(article|draft)/.test(newValue)) {
-        changeMode()
-    }
-})
 
 const changeMode = () => {
     if ($route.name === "CreatorContentArticle" && activeMode.value !== 'article') {
@@ -28,11 +22,9 @@ const changeMode = () => {
 }
 //fun
 const handleChange =  async (value: string) => {
-    await $router.replace("/creator/content/" + activeMode.value)
 }
 
 const handleClick = (pane: TabsPaneContext, ev: Event) => {
-    console.log(activeMode.value)
 }
 </script>
 <template>
@@ -40,12 +32,17 @@ const handleClick = (pane: TabsPaneContext, ev: Event) => {
     <el-tabs v-model="activeMode" class="content-tabs"
              @tab-click="handleClick"
              @tab-change="handleChange">
-        <el-tab-pane label="文章" name="article"></el-tab-pane>
-        <el-tab-pane label="草稿" name="draft"></el-tab-pane>
+        <el-tab-pane label="文章" name="article">
+            <div class="creator-content-body">
+                <CreatorArticle></CreatorArticle>
+            </div>
+        </el-tab-pane>
+        <el-tab-pane label="草稿" name="draft">
+            <div class="creator-content-body">
+                <CreatorDraft></CreatorDraft>
+            </div>
+        </el-tab-pane>
     </el-tabs>
-    <div class="creator-content-body">
-        <router-view></router-view>
-    </div>
 </div>
 </template>
 
@@ -66,7 +63,7 @@ const handleClick = (pane: TabsPaneContext, ev: Event) => {
         //display: none;
     }
     .creator-content-body {
-        min-height: 400px;
+        min-height: 429px;
     }
 }
 </style>

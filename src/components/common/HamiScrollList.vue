@@ -2,8 +2,8 @@
 import { ref, reactive, onMounted, computed, nextTick } from "vue"
 import { useRequest } from '@/hooks'
 import { isEmpty } from '@/utils'
-import noData from "/assets/nodata02.png"
-
+import noDataImg from "/assets/nodata02.png"
+import fetchErrorImg from "/assets/load-error.685235d2.png"
 //interface
 interface Page {
     current: number
@@ -15,7 +15,7 @@ interface ScrollListProps {
     size?: number,
     noDataText?: string
     keyProperty?: string | undefined,
-    query: <T>(pageNum: number, pageSize: number) => Promise<PageData<T>>
+    query: (pageNum: number, pageSize: number) => Promise<PageData<any>>
 }
 
 interface ExposeProps {
@@ -144,7 +144,7 @@ const refreshData = (data: any[]) => {
         <el-skeleton :rows="4" animated v-if="onLoadingMore"></el-skeleton>
         <div v-show="loadingError">
             <slot name="error">
-                <div class="default-load-error">出错了~</div>
+                <el-empty :image="fetchErrorImg" style="--el-empty-image-width: 200px" description="加载失败"></el-empty>
             </slot>
         </div>
         <div v-show="!hasMore && !showEmpty && !onLoadingMore">
@@ -156,7 +156,7 @@ const refreshData = (data: any[]) => {
         </div>
         <div v-if="showEmpty && !loadingError">
             <slot name="empty">
-                <el-empty :description="noDataText" :image="noData"></el-empty>
+                <el-empty :description="noDataText" :image="noDataImg"></el-empty>
             </slot>
         </div>
     </div>
@@ -173,6 +173,9 @@ const refreshData = (data: any[]) => {
         text-align: center;
         color: var(--hami-text-3);
         font-size: 14px;
+    }
+    :deep(.el-empty) {
+        --el-empty-image-width: 180px;
     }
 }
 </style>

@@ -1,5 +1,3 @@
-
-
 /**
  * 接口响应数据遵循的格式
  */
@@ -87,9 +85,48 @@ declare interface ArticleDraftDetail {
     mtime?: Date | undefined
 }
 
+declare interface IpInfo {
+    /**
+     * IPv4地址
+     */
+    ip: string;
+    /**
+     * 国家
+     */
+    country: string;
+    /**
+     * 省
+     */
+    province: string;
+    /**
+     * 城市
+     */
+    city: string;
+    /**
+     * 区域
+     */
+    area: string;
+    /**
+     * 运营商
+     */
+    isp: string;
+
+}
+
+declare interface LoginRecord {
+    id: number
+    userId: number
+    ipInfo: IpInfo
+    loginTime: Date | string
+    deleted?: 0 | 1
+    ctime?: Date | string
+    mtime?: Date | string
+}
+
+
 declare interface PageData<T> {
     pageNum: number
     pageSize: number
     total: number
-    data: Array<T> | null | ""
+    data: Array<T> | null
 }

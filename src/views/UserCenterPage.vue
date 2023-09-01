@@ -125,7 +125,8 @@ const goBack = () => {
         margin-right: 20px;
         padding: 16px 14px 20px;
         width: 226px;
-        min-height: 540px;
+        min-height: 500px;
+        max-height: 500px;
         background-color: var(--hami-bg);
         border-radius: var(--hami-radius-medium);
 
@@ -138,7 +139,7 @@ const goBack = () => {
             cursor: pointer;
             margin-bottom: 6px;
             padding: 6px 0 6px 16px;
-
+            transition: all .3s;
             .icon {
                 margin-right: 6px;
             }
@@ -155,7 +156,7 @@ const goBack = () => {
         }
 
         .nav-item.active {
-            background: #e8f3ff;
+            background: var(--hami-bg-light-blue);
             color: var(--hami-text-blue);
         }
     }

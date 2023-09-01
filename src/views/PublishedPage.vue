@@ -4,7 +4,7 @@ import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router"
 import { isEmpty } from '@/utils'
 //interface
 //@ts-ignore
-import noData from "/assets/nodata02.png"
+import published from "/assets/empty-channel.png"
 //router, props, inject, provide
 const article = reactive({
     title: "",
@@ -33,7 +33,7 @@ const handleClick = () => {
 <template>
     <div class="hami-published">
         <div class="hami-published-body">
-            <img :src="noData" alt="">
+            <img :src="published" alt="">
             <div class="title">《{{article.title}}》</div>
             <div class="msg">发表成功! 有你的分享Hami会变得更好~</div>
             <el-button type="primary" @click="handleClick">回到首页</el-button>
@@ -49,9 +49,6 @@ const handleClick = () => {
     background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);
     .hami-published-body {
-        //display: flex;
-        //justify-content: center;
-        align-items: center;
         min-height: 400px;
         text-align: center;
     }

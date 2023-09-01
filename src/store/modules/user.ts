@@ -47,7 +47,7 @@ const useUserStore = defineStore("user", () => {
             return userInfo.value as SimpleUserInfo
         } catch (e) {
             console.log(e)
-            tokenStore.clear()
+            // tokenStore.clear()
             return Promise.reject(e)
         } finally {
             inited.value = true

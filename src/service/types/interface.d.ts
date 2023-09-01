@@ -23,6 +23,8 @@ declare interface UserServiceApi {
     updateAvatar(avatar: File): Promise<string>
 
     getAccountInfo(): Promise<AccountInfo>
+
+    getLoginRecords(param: PageParam): Promise<PageData<LoginRecord>>
 }
 
 declare interface ArticleDraftServiceApi {

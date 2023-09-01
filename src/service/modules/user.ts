@@ -23,6 +23,11 @@ const UserService: UserServiceApi = {
     },
     getAccountInfo(): Promise<AccountInfo> {
         return http.get("/user/account/info")
+    },
+    getLoginRecords(param: PageParam): Promise<PageData<LoginRecord>> {
+        return http.get("/user/login/log", {
+            params: param
+        })
     }
 
 }

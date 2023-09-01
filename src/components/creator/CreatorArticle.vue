@@ -2,6 +2,9 @@
 import { ref, reactive, onMounted, computed } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
+import { ArticleDraftService } from '@/service/modules/article.ts'
+import { $message } from '@/utils/message.ts'
+import loadingError from "/assets/load-error.685235d2.png"
 //interface
 
 //router, props, inject, provide
@@ -15,29 +18,19 @@ onMounted(() => {
 //watch
 
 //fun
-const handleQuery = (pageNum: number, pageSize: number): Promise<PageData<any>> => {
-    return new Promise<PageData<number>>((resolve, reject) => {
-        setTimeout(() => {
-            // let data = []
-            // for (let i = 0; i < pageSize; i++) {
-            //     data.push(Math.random())
-            // }
-            // resolve({
-            //     pageSize: pageSize,
-            //     pageNum: pageNum,
-            //     total: 30,
-            //     data: data
-            // })
-            // reject("error")
+const handleQuery = (pageNum: number, pageSize: number): Promise<PageData<ArticleDraftDetail>> => {
+    return ArticleDraftService.getArticles(pageNum, pageSize)
+}
 
-            resolve({
-                pageSize: 10,
-                pageNum: 1,
-                total: 0,
-                data: []
-            })
-        }, 3000)
-    })
+const handleDelete = async (item: ArticleDraftDetail, index: number) => {
+    try {
+        await ArticleDraftService.deleteArticle(item.articleId)
+        $message.success("删除成功")
+        creatorArticleList.value?.deleteItem(item, index)
+    } catch (e) {
+        console.log(e)
+        $message.error("删除失败")
+    }
 }
 
 </script>
@@ -46,8 +39,11 @@ const handleQuery = (pageNum: number, pageSize: number): Promise<PageData<any>> 
         <HamiScrollList :size="10" :query="handleQuery" ref="creatorArticleList">
             <template #item="{item, index, _delete}">
                 <div class="creator-article-list-item">
-                    {{ item }}
+                    <HamiArticleCardV1 :article="item" :index="index" @delete="handleDelete"></HamiArticleCardV1>
                 </div>
+            </template>
+            <template #error>
+                <el-empty :image="loadingError" style="--el-empty-image-width: 200px" description="加载失败"></el-empty>
             </template>
         </HamiScrollList>
     </div>
@@ -56,11 +52,13 @@ const handleQuery = (pageNum: number, pageSize: number): Promise<PageData<any>> 
 <style scoped lang="less">
 .hami-creator-article {
     .creator-article-list-item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 32px;
-
+        //display: flex;
+        //align-items: center;
+        //justify-content: center;
+        //height: 32px;
+        &:last-child {
+            margin-bottom: 10px;
+        }
     }
 }
 </style>

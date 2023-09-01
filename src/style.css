@@ -3,7 +3,7 @@
     --hami-blue: #1d7dfa;
     --hami-bg: #fff;
     --hami-bg-gray: #e5e6eb;
-    --hami-card-bg: #fff;
+    --hami-bg-light-blue: #e8f3ff;
     --hami-layer-light: #fff;
     --hami-layer-dark: #1d2129;
     --hami-text-light: #252933;
@@ -15,6 +15,7 @@
     --hami-text-2: #909090;
     --hami-text-3: #181818;
     --hami-text-4: #000;
+    --hami-text-5: #909090;
     --hami-text-gray: #8a919f;
     --hami-text-white: #fff;
     --hami-text-blue: #007fff;
@@ -29,7 +30,9 @@
     --hami-title: #1d2129;
     --hami-border-color: #e5e6eb;
     --hami-border-color-1: #cfd1d5;
-    --hami-card-hover: #fafafa;
+    --hami-card-text: var(--hami-text-5);
+    --hami-card-bg: var(--hami-bg);
+    --hami-card-hover-bg: #fafafa;
     --hami-card-hover-d: #f0f0f0;
     --hami-blue-purple: #8312e8;
     --hami-card-shadow: 0 3px 12px -1px rgba(7, 10, 25, 0.05), 0 22px 27px -20px rgba(7, 10, 25, 0.05);
