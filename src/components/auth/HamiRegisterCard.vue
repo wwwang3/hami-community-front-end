@@ -95,10 +95,10 @@ const registerParam = reactive<RegisterParam>({
 })
 //是否在注册中
 const [onRegister, doRegister] = useRequest({
-    run: (params) => AuthService.register(params)
+    run: (...params) => AuthService.register(...params as Parameters<typeof AuthService.register>)
 })
 const [onLoading, doGetCaptcha] = useRequest<void, Array<any>>({
-    run: (params) => AuthService.getCaptcha(...params as Parameters<typeof AuthService.getCaptcha>)
+    run: (...params) => AuthService.getCaptcha(...params as Parameters<typeof AuthService.getCaptcha>)
 })
 const [captchaText, onProcess, startCountdown] = useCountdown({
     interval: 1000,
@@ -156,7 +156,7 @@ const getCaptcha = async () => {
     }
     //禁用按钮
     onProcess.value = true
-    doGetCaptcha(["reset", "email"])
+    doGetCaptcha("register", registerParam.email)
         .then(() => {
             $message.success("发送成功")
             startCountdown()

@@ -13,6 +13,7 @@ const AuthService: AuthServiceApi = {
         return http.post("/auth/logout")
     },
     getCaptcha(type: "register" | "reset", email: string): Promise<any> {
+        console.log(type, email)
         return http.get("/auth/captcha", {
             params: {
                 type: type,

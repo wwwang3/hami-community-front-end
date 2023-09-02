@@ -29,7 +29,7 @@ const $props = withDefaults(defineProps<ScrollListProps>(), {
 })
 const dataList = reactive<Array<any>>([])
 const [onLoadingMore, processQuery] = useRequest({
-    run: (...params) => handleRun(params)
+    run: (...params) => handleRun(...params)
 })
 const inited = ref(false)
 const page = ref<Page>({
@@ -100,7 +100,7 @@ const _delete = async (item: any, index: number) => {
     }
 }
 //@ts-ignore
-const handleRun = (params) => {
+const handleRun = (...params) => {
     console.log(params)
     let promise = $props.query(page.value.current, page.value.size)
     console.log(promise)

@@ -28,11 +28,11 @@ const [onLoading, getProfile] = useRequest({
 
 const [onUpdate, handleUpdateProfile] = useRequest({
     loading: false,
-    run: (params) => UserService.updateUserProfile(params)
+    run: (...params) => UserService.updateUserProfile(...params as Parameters<typeof UserService.updateUserProfile>)
 })
 
 const [onUpload, handleUpload] = useRequest({
-    run: (params) => UserService.updateAvatar(params)
+    run: (...params) => UserService.updateAvatar(...params as Parameters<typeof UserService.updateAvatar>)
 })
 
 const logined = ref(false)
@@ -74,7 +74,9 @@ onMounted(async () => {
         userProfileParam.company = userProfile.value.company
         userProfileParam.blog = userProfile.value.blog
         userProfileParam.profile = userProfile.value.profile
-        avatar.value = userProfile.value.avatar
+        if (!isEmpty(userProfile.value.avatar)) {
+            avatar.value = userProfile.value.avatar
+        }
     } catch (e) {
         $message.error("获取账号信息失败")
     }

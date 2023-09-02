@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router'
 //interface
 //router, props, inject, provide
 const [onLoading, handleGetAccountInfo] = useRequest({
-    run: (params) => UserService.getAccountInfo()
+    run: (...params) => UserService.getAccountInfo()
 })
 //custom var
 const account = ref<AccountInfo>({

@@ -55,7 +55,7 @@ const [onLoading, run] = useAutoLoading()
 // const [onReset, process] = useAutoLoading()
 const [onReset, doResetPass] = useRequest({
     loading: false,
-    run: params => AuthService.resetPassword(params)
+    run: (...params) => AuthService.resetPassword(...params as Parameters<typeof AuthService.resetPassword>)
 })
 const getCaptcha = async () => {
     if (isEmpty(resetPassParam.email)) {

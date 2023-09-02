@@ -46,7 +46,7 @@ const success = inject("success") as Function
 const tokenStore = useTokenStore()
 
 const [onLogin, handleLogin] = useRequest({
-    run: (params) => tokenStore.login(params)
+    run: (...params) => tokenStore.login(...params as Parameters<typeof tokenStore.login>)
 })
 const showPass = ref(false)
 const loginForm = ref<FormInstance>()

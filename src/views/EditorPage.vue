@@ -31,7 +31,7 @@ const draft = ref<ArticleDraftDetail>({
     state: 0
 })
 const [onLoading, getDraft] = useRequest({
-    run: (params) => ArticleDraftService.getArticleDraft(params)
+    run: (...params) => ArticleDraftService.getArticleDraft(...params as Parameters<typeof ArticleDraftService.getArticleDraft>)
 })
 
 const buttonRef = ref()

@@ -5,6 +5,7 @@ import { useTokenStore } from '@/store/modules/token.ts'
 import { useRouter } from 'vue-router'
 import { $message } from '@/utils/message.ts'
 import { isEmpty } from '@/utils'
+import defaultAvatar from "/assets/avatar.jpg"
 //interface
 
 //router, props, inject, provide
@@ -51,10 +52,10 @@ const avatarMouseLeave = () => {
             <div class="hami-avatar-container" :class="avatarHover" ref="avatarRef"
                  @mouseenter="avatarMouseEnter" @mouseleave="avatarMouseLeave">
                 <a href="/" class="hami-avatar normal">
-                    <img :src="userInfo?.avatar" alt="" class="avatar">
+                    <img :src="userInfo?.avatar || defaultAvatar" alt="" class="avatar">
                 </a>
                 <a href="/" class="hami-avatar large">
-                    <img :src="userInfo?.avatar" alt="" class="avatar">
+                    <img :src="userInfo?.avatar || defaultAvatar" alt="" class="avatar">
                 </a>
                 <el-popover
                     ref="popoverRef"
