@@ -10,7 +10,8 @@ import loadingError from "/assets/load-error.685235d2.png"
 //router, props, inject, provide
 
 //custom var
-const creatorArticleList = ref<InstanceType<typeof HamiScrollList> | null>(null)
+// @ts-ignore
+const creatorArticleList = ref<InstanceType<typeof HamiScrollList<ArticleDraftDetail>> | null>(null)
 //life cycle
 onMounted(() => {
     creatorArticleList.value?.init()

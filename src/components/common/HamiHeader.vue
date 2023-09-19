@@ -3,6 +3,7 @@ import { onBeforeMount, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import HamiLogo from '@/components/common/HamiLogo.vue'
 import HeaderAvatar from '@/components/common/HeaderAvatar.vue'
+import { Message } from '@element-plus/icons-vue'
 //interface
 type NavItem = {
     name: string,
@@ -133,9 +134,11 @@ const handleNavClick = async (item: NavItem) => {
 
 <style scoped lang="less">
 .hami-page-header {
-    background-color: var(--hami-bg);
+    //background-color: var(--hami-bg);
     position: relative;
     z-index: 100;
+    background: linear-gradient(-225deg, #e3fdf5 0, #ffe6fa 100%);;
+    box-shadow: .1rem 0.1rem 0.2rem rgba(0, 0, 0, .1);
     .page-header-container {
         display: flex;
         align-items: center;

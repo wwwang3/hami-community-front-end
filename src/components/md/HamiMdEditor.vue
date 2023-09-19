@@ -72,7 +72,6 @@ const handleError = async (e: { name: string, message: string }) => {
             :on-error="handleError"
             :toolbars="toolbars"
         >
-
         </MdEditor>
     </div>
 </template>

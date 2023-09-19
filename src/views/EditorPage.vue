@@ -215,7 +215,7 @@ const checkParam = () => {
                 <router-link to="/">
                     <el-button plain>回到主页</el-button>
                 </router-link>
-                <router-link to="/creator/content/draft">
+                <router-link to="/creator/content">
                     <el-button plain class="draft">草稿箱</el-button>
                 </router-link>
                 <el-button type="primary" ref="buttonRef" @click="handlePublishOrUpdate">{{ text }}</el-button>

@@ -3,16 +3,16 @@ import { useTokenStore } from '@/store/modules/token.ts'
 import { useRouter } from 'vue-router'
 import { $message } from '@/utils/message.ts'
 import { isEmpty } from '@/utils'
-//interface
-// type UserProfile = Partial<SimpleUserInfo>
-interface UserProfile {
-    userInfo: Partial<SimpleUserInfo>
-}
+import { computed } from 'vue'
+import dayjs from 'dayjs'
+import { ArrowRight, Edit, User } from '@element-plus/icons-vue'
 
 //router, props, inject, provide
 const tokenStore = useTokenStore()
 const $router = useRouter()
-const $props = withDefaults(defineProps<UserProfile>(), {})
+const $props = withDefaults(defineProps<{
+    userInfo: SimpleUserInfo
+}>(), {})
 //life cycle
 //watch
 const logout = async () => {
@@ -26,6 +26,11 @@ const gotoUserCenter = async () => {
     await $router.replace("/account")
     location.reload()
 }
+const joinTime = computed(() => {
+    let ctime = $props.userInfo.ctime
+    let days = dayjs(Date.now()).diff(new Date(ctime), 'day');
+    return "加入Hami的第" + days + "天"
+})
 </script>
 <template>
     <div class="hami-avatar-panel">
@@ -49,7 +54,7 @@ const gotoUserCenter = async () => {
             </div>
         </div>
         <div class="join-time">
-            <span>加入Hami的第 100 天</span>
+            <span>{{ joinTime }}</span>
         </div>
         <div class="options">
             <div class="link-option" @click="gotoUserCenter">
@@ -152,17 +157,17 @@ const gotoUserCenter = async () => {
         margin-top: 12px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         width: 100%;
         padding: 8px 12px;
-        background: #FFD9E4;
+        background-color: var(--hami-pink-1);
         border-radius: var(--hami-radius-medium);
         background-size: cover;
         transition: background-color .2s;
         letter-spacing: 1px;
 
         span {
-            color: #FF6699;;
+            color: #FF6699;
             display: -webkit-box;
             line-clamp: 1;
             text-overflow: ellipsis;

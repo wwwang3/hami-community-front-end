@@ -141,7 +141,7 @@ const goBack = () => {
             padding: 6px 0 6px 16px;
             transition: all .3s;
             .icon {
-                margin-right: 6px;
+                margin-right: 8px;
             }
 
         }
@@ -151,12 +151,12 @@ const goBack = () => {
         }
 
         .nav-item:hover {
-            color: var(--hami-blue);
-            background: #e8f3ff;
+            color: var(--hami-text-blue);
+            background-color: var(--hami-bg-blue);
         }
 
         .nav-item.active {
-            background: var(--hami-bg-light-blue);
+            background: var(--hami-bg-blue);
             color: var(--hami-text-blue);
         }
     }

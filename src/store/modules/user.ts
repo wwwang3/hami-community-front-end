@@ -73,11 +73,15 @@ const useUserStore = defineStore("user", () => {
         return Date.now() - start > time
     }
 
+    const isAuthor = (userId: number) => {
+        return userId === userInfo.value?.userId
+    }
+
     const logined = computed(() => {
         return !isEmpty(userInfo.value) && !isEmpty(userInfo.value?.userId)
     })
 
-    return { logined, getProfile, sync, userInfo}
+    return { logined, getProfile, sync, userInfo, isAuthor}
 })
 
 export function loadUserStore() {

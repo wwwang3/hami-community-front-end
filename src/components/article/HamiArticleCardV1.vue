@@ -3,6 +3,7 @@ import { ref, reactive, onMounted, computed } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { isEmpty } from '@/utils'
 import { $message } from '@/utils/message.ts'
+import { MoreFilled } from '@element-plus/icons-vue'
 
 //interface
 interface CardProps {
@@ -17,7 +18,7 @@ const $route = useRoute()
 const $props = defineProps<CardProps>()
 //life cycle
 const $emit = defineEmits<{
-    (e: "delete", item: ArticleDraftDetail, index: number)
+    (e: "delete", item: ArticleDraftDetail, index: number): any
 }>()
 //watch
 const handleEdit = async () => {

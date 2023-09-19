@@ -5,13 +5,16 @@ const UserService: UserServiceApi = {
     getLoginProfile(): Promise<SimpleUserInfo> {
         return http.get("/nav/profile")
     },
+
     getUserProfile(): Promise<UserProfile> {
         return http.get("/user/profile")
     },
+
     updateUserProfile(params: UserProfileParam): Promise<any> {
         console.log(params)
         return http.post("/user/update", params)
     },
+
     updateAvatar(avatar: File): Promise<string> {
         let data = new FormData()
         data.set("avatar", avatar)
@@ -21,9 +24,11 @@ const UserService: UserServiceApi = {
             }
         })
     },
+
     getAccountInfo(): Promise<AccountInfo> {
         return http.get("/user/account/info")
     },
+
     getLoginRecords(param: PageParam): Promise<PageData<LoginRecord>> {
         return http.get("/user/login/log", {
             params: param

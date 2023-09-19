@@ -56,10 +56,46 @@ export const ArticleDraftService: ArticleDraftServiceApi = {
         console.log(pic)
         let data = new FormData()
         data.set("picture", pic)
-        return http.post("/article_draft/upload/pic", data,  {
+        return http.post("/article_draft/upload/pic", data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
     }
+}
+
+export const ArticleService: ArticleServiceApi = {
+
+    listRecommendArticles(param: ArticleParam): Promise<PageData<Article>> {
+        return http.post("/article/list/recommend", {
+            ...param,
+            cateId: param.cateId === -1 ? null: param.cateId
+        })
+    },
+
+    listFollowUserUserArticles(param: PageParam): Promise<PageData<Article>> {
+        return http.post("/article/list/follow", param)
+    },
+
+    getArticleContent(id: number): Promise<ArticleContent> {
+        return http.get("/article/detail", {
+            params: {
+                article_id: id
+            }
+        })
+    },
+
+    listHotArticles(cateId: number): Promise<Array<HotArticle>> {
+        console.log(cateId)
+        return http.get("/article/rank/hot", {
+            params: {
+                category_id: cateId === -1 ? null : cateId
+            }
+        })
+    },
+
+    listUserArticles(param: UserArticleParam): Promise<PageData<Article>> {
+        return http.post("/article/query_list", param)
+    }
+
 }

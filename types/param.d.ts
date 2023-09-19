@@ -73,3 +73,30 @@ declare interface ArticleDraftParam {
     categoryId?: number
     tagIds?: Array<number> | null
 }
+
+declare type ArticleParam = PageParam & {
+    cateId: number
+}
+
+declare type UserArticleParam = PageParam & {
+    userId: number
+}
+
+declare interface LikeItemParam {
+    itemId: number
+    itemType: 1 | 2
+}
+
+declare interface CommentParam {
+    articleId: number
+    rootId?: number
+    parentId?: number
+    content: string
+    contentImg?: string
+}
+
+declare type CommentPageParam = PageParam & {
+    articleId: number,
+    rootId: number,
+    sort: 0 | 1
+}

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue"
 import { RouteLocationMatched, useRoute, useRouter } from "vue-router"
+import { Grid, HomeFilled } from '@element-plus/icons-vue'
 //interface
 
 //router, props, inject, provide

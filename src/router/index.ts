@@ -15,7 +15,75 @@ const routes: RouteRecordRaw[] = [
     {
         path: "/",
         name: "Index",
-        component: () => import("@/views/IndexPage.vue")
+        component: () => import("@/views/IndexPage.vue"),
+        children: [
+            {
+                path: "",
+                name: "IndexDefault",
+                component: () => import("@/components/article/HamiIndexArticle.vue")
+            },
+            {
+                path: "/recommend",
+                name: "IndexRecommend",
+                component: () => import("@/components/article/HamiIndexArticle.vue")
+            },
+            {
+                path: "",
+                name: "IndexDefault",
+                component: () => import("@/components/article/HamiIndexArticle.vue")
+            },
+            {
+                path: "/backend",
+                name: "IndexBackend",
+                component: () => import("@/components/article/HamiIndexArticle.vue")
+            },
+            {
+                path: "/front-end",
+                name: "IndexFrontend",
+                component: () => import("@/components/article/HamiIndexArticle.vue")
+            },
+            {
+                path: "/android",
+                name: "IndexAndroid",
+                component: () => import("@/components/article/HamiIndexArticle.vue")
+            },
+            {
+                path: "/ios",
+                name: "IndexIOS",
+                component: () => import("@/components/article/HamiIndexArticle.vue")
+            },
+            {
+                path: "/ai",
+                name: "IndexAi",
+                component: () => import("@/components/article/HamiIndexArticle.vue")
+            },
+            {
+                path: "/tool",
+                name: "IndexTool",
+                component: () => import("@/components/article/HamiIndexArticle.vue")
+            },
+            {
+                path: "/coding",
+                name: "IndexCoding",
+                component: () => import("@/components/article/HamiIndexArticle.vue")
+            },
+            {
+                path: "/reading",
+                name: "IndexReading",
+                component: () => import("@/components/article/HamiIndexArticle.vue")
+            },
+            {
+                path: "/follow",
+                name: "IndexFollow",
+                component: () => import("@/components/article/HamiFollowUserArticle.vue")
+            }
+        ]
+    },
+    {
+        path: "/article/:id(\\d+)",
+        name: "ArticleContent",
+        props: true,
+        component: () => import("@/views/ArticleContentPage.vue"),
     },
     {
         path: "/login",
@@ -33,9 +101,9 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/views/ResetPasswordPage.vue")
     },
     {
-      path: "/published",
-      name: "Published",
-      component: () => import("@/views/PublishedPage.vue")
+        path: "/published",
+        name: "Published",
+        component: () => import("@/views/PublishedPage.vue")
     },
     {
         path: "/account",
@@ -143,6 +211,10 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
 
 export function registerRouter(app: App) {
     app.use(router)
+}
+
+export function getRoutePrefix() {
+    return import.meta.env.VITE_ROUTER_HISTORY === "hash" ? "/#/" : "/"
 }
 
 export default router

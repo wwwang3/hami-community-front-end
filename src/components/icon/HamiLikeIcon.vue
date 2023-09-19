@@ -47,11 +47,11 @@ const $props = withDefaults(defineProps<LikeIconProps>(), {
 <style scoped lang="less">
 .hami-like-icon:not(.active) {
     &:hover {
-        color: #66b2ff;
+        color: var(--hami-text-blue);
     }
-    color: #bfbfbf;
+    color: var(--hami-text-5);
 }
 .hami-like-icon.active {
-    color: #1296db;
+    color: var(--hami-text-blue);
 }
 </style>

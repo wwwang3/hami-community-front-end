@@ -5,12 +5,9 @@ import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { ArticleDraftService } from '@/service/modules/article.ts'
 import { $message } from '@/utils/message.ts'
 import loadingError from "/assets/load-error.685235d2.png"
-//interface
 
-//router, props, inject, provide
-
-//custom var
-const creatorDraftList = ref<InstanceType<typeof HamiScrollList> | null>(null)
+// @ts-ignore
+const creatorDraftList = ref<InstanceType<typeof HamiScrollList<ArticleDraftDetail>> | null>(null)
 //life cycle
 onMounted(() => {
     creatorDraftList.value?.init()

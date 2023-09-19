@@ -7,7 +7,6 @@ import router, { registerRouter } from '@/router'
 import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils/message.ts'
 
-
 async function loadLoginUser()  {
     let loading = $message.loading("正在进入Hami...")
     try {

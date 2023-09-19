@@ -8,19 +8,20 @@ declare interface ApiResponse<T> {
 }
 
 declare interface SimpleUserInfo {
-    userId: string | number,
+    userId: number,
     username: string,
     avatar: string,
     profile: string,
+    ctime: number
     tag?: string,
-    likes: number,
-    collects: number,
-    followings: number,
-    followers: number
+    likes: number, //我点赞的文章
+    collects: number, //我收藏的文章
+    followings: number, //我的关注
+    followers: number //我的粉丝
 }
 
 declare interface UserProfile {
-    userId: string | number,
+    userId: number,
     username: string,
     avatar: string,
     profile: string,
@@ -123,10 +124,114 @@ declare interface LoginRecord {
     mtime?: Date | string
 }
 
-
 declare interface PageData<T> {
     pageNum: number
     pageSize: number
     total: number
     data: Array<T> | null
+}
+
+declare interface ArticleInfo {
+    id: number,
+    userId: number,
+    categoryId: number,
+    title: string,
+    summary: string,
+    picture: string
+    ctime: number
+    mtime: number
+    tagIds: Array<number>
+}
+
+declare interface UserStat {
+    userId: number,
+    totalArticles: number,
+    totalViews: number,
+    totalCollects: number,
+    totalLikes: number,
+    totalComments: number,
+    followers: number,
+    followings: number,
+}
+declare interface ArticleStat {
+    articleId: number,
+    views: number,
+    likes: number,
+    comments: number,
+    collects: number,
+}
+
+declare interface CategoryDTO {
+    categoryId: number,
+    categoryName: number
+}
+declare interface TagDTO {
+    tagId: number,
+    tagName: number
+}
+
+declare type User = UserProfile & {
+    stat: UserStat
+    ctime: number
+    followed: boolean
+}
+
+declare interface Article {
+    id: number,
+    userId: number,
+    articleInfo: ArticleInfo,
+    author: User,
+    stat: ArticleStat,
+    category: CategoryDTO,
+    tags: Array<TagDTO>
+    liked: boolean,
+    collected: boolean
+}
+
+declare type ArticleContent = Article & {
+    content: string
+}
+
+declare interface HotArticle {
+    articleId: number,
+    hotRank: number,
+    article: Article
+}
+
+declare interface ReadingRecord {
+    articleId: number,
+    userId: number,
+    readingTime: number | Date
+    article: Article
+}
+
+declare interface Comment {
+    id: number
+    articleId: number
+    userId: number
+    isAuthor: boolean
+    ipInfo: IpInfo
+    rootId?: number
+    parentId?: number
+    content: string
+    contentImg?: string
+    replyTo?: number
+    likes: number
+    ctime: number | Date
+}
+
+declare interface Reply {
+    total: number
+    list: CommentInfo[]
+}
+
+declare interface CommentInfo {
+    id: number
+    articleId: number
+    userId: number
+    comment: Comment
+    user: User
+    replyTo?: User
+    reply?: Reply
+    liked: boolean
 }

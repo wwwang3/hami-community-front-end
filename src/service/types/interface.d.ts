@@ -57,3 +57,48 @@ declare interface TagServiceApi {
 
     getAllTags(): Promise<Array<Tag>>
 }
+
+declare interface UserInteractApi {
+    follow(followingId: number): Promise<any>
+
+    unfollow(followingId: number): Promise<any>
+
+    like(param: LikeItemParam): Promise<any>
+
+    cancelLike(param: LikeItemParam): Promise<any>
+
+    collect(articleId: number): Promise<any>
+
+    cancelCollect(articleId: number): Promise<any>
+
+    listReadingRecord(param: PageParam): Promise<PageData<ReadingRecord>>
+
+    listCollectArticles(param: UserArticleParam): Promise<PageData<Article>>
+
+    listUserLikeArticle(param: UserArticleParam): Promise<PageData<Article>>
+
+    listUserFollow(param: UserArticleParam): Promise<PageData<User>>
+
+    listUserFollower(param: UserArticleParam): Promise<PageData<User>>
+
+}
+
+declare interface CommentServiceApi  {
+    listComment(param: CommentPageParam): Promise<PageData<CommentInfo>>
+
+    listReply(param: CommentPageParam): Promise<PageData<CommentInfo>>
+
+    submitComment(param: CommentParam): Promise<Comment>
+
+    submitReply(param: CommentParam): Promise<Comment>
+
+    deleteComment(id: number): Promise<any>
+}
+
+declare  interface ImageServiceApi {
+    upload(image: File, type: "comment" | "avatar" | "article"): Promise<string>
+}
+
+declare interface NotifyServiceApi {
+
+}

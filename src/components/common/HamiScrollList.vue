@@ -1,9 +1,10 @@
-<script setup lang="ts">
-import { ref, reactive, onMounted, computed, nextTick } from "vue"
+<script setup lang="ts" generic="T">
+import { ref, reactive, onMounted, computed, nextTick, defineSlots } from "vue"
 import { useRequest } from '@/hooks'
 import { isEmpty } from '@/utils'
 import noDataImg from "/assets/nodata02.png"
 import fetchErrorImg from "/assets/load-error.685235d2.png"
+
 //interface
 interface Page {
     current: number
@@ -15,13 +16,20 @@ interface ScrollListProps {
     size?: number,
     noDataText?: string
     keyProperty?: string | undefined,
-    query: (pageNum: number, pageSize: number) => Promise<PageData<any>>
+    query: (pageNum: number, pageSize: number) => Promise<PageData<T>>
 }
 
 interface ExposeProps {
     init: () => void,
     deleteItem: (item: any, index: number) => void
 }
+
+const slots = defineSlots<{
+    item(props: { item: T, index: number, _delete: typeof _delete }): any,
+    empty(props: any): any,
+    noMore(props: any): any,
+    error(props: any): any,
+}>()
 
 const $props = withDefaults(defineProps<ScrollListProps>(), {
     size: 10,
@@ -61,7 +69,7 @@ defineExpose<ExposeProps>({
     init() {
         _init()
     },
-    deleteItem(item: any, index: number): void {
+    deleteItem(item: T, index: number): void {
         _delete(item, index)
     },
 
@@ -78,10 +86,10 @@ const _init = () => {
     page.value.size = $props.size
     inited.value = false
     dataList.splice(0, dataList.length)
+    let start = Date.now()
     processQuery(page.value.current, page.value.size)
         .then(pageData => {
             console.log(pageData)
-            page.value.size = pageData.pageSize
             page.value.total = pageData.total
             refreshData(pageData.data as any[])
         })
@@ -91,7 +99,7 @@ const _init = () => {
         })
         .finally(() => {
             inited.value = true
-            console.log("init finish")
+            console.log(`init finish, cos: ${Date.now() - start}ms`)
         })
 }
 const _delete = async (item: any, index: number) => {
@@ -114,7 +122,6 @@ const handleScroll = async () => {
     page.value.current++
     try {
         let pageData: PageData<any> = await processQuery([page.value.current, page.value.size])
-        page.value.size = pageData.pageSize
         refreshData(pageData.data as any[])
     } catch (e) {
         //出错了
@@ -141,14 +148,15 @@ const refreshData = (data: any[]) => {
                 <slot name="item" v-bind="{item, index, _delete}"></slot>
             </template>
         </div>
-        <el-skeleton :rows="4" animated v-if="onLoadingMore"></el-skeleton>
+        <el-skeleton :rows="3" animated v-if="onLoadingMore"></el-skeleton>
         <div v-show="loadingError">
             <slot name="error">
-                <el-empty :image="fetchErrorImg" style="--el-empty-image-width: 200px" description="加载失败"></el-empty>
+                <el-empty :image="fetchErrorImg" style="--el-empty-image-width: 200px"
+                          description="加载失败"></el-empty>
             </slot>
         </div>
         <div v-show="!hasMore && !showEmpty && !onLoadingMore">
-            <slot name="no-more">
+            <slot name="noMore">
                 <div class="no-more">
                     我是有底线的~
                 </div>
@@ -159,6 +167,22 @@ const refreshData = (data: any[]) => {
                 <el-empty :description="noDataText" :image="noDataImg"></el-empty>
             </slot>
         </div>
+        <el-backtop class="back-top" :right="60" :bottom="64">
+            <template #default>
+                <el-icon :size="18" color="#1d7dfa">
+                    <svg viewBox="0 0 1024 1024"
+                         xmlns="http://www.w3.org/2000/svg"
+                         data-spm-anchor-id="a313x.7781069.0.i0" width="200" height="200">
+                        <path
+                            d="M780.288 750.592H244.736V415.744C244.736 229.376 396.288 79.872 460.8 24.576c29.696-24.576 71.68-24.576 101.376 0 65.536 55.296 217.088 204.8 217.088 391.168v334.848z m-453.632-81.92h371.712V415.744c0-150.528-128-277.504-186.368-326.656-57.344 49.152-186.368 176.128-186.368 326.656v252.928zM509.952 87.04z"
+                            fill="#1d7dfa"></path>
+                        <path
+                            d="M326.656 750.592H148.48c-43.008 0-78.848-34.816-78.848-78.848v-76.8c0-26.624 13.312-51.2 34.816-65.536l221.184-146.432v367.616z m-175.104-81.92h92.16v-133.12l-92.16 61.44v71.68zM875.52 750.592H697.344V384l221.184 146.432c22.528 14.336 34.816 38.912 34.816 65.536v76.8c1.024 41.984-34.816 77.824-77.824 77.824z m-96.256-81.92h92.16v-71.68l-92.16-61.44v133.12zM513.024 489.472c-64.512 0-116.736-52.224-116.736-116.736S449.536 256 513.024 256s116.736 52.224 116.736 116.736-52.224 116.736-116.736 116.736z m0-151.552c-18.432 0-34.816 15.36-34.816 34.816s15.36 34.816 34.816 34.816 34.816-15.36 34.816-34.816S532.48 337.92 513.024 337.92zM512 1017.856c-22.528 0-40.96-18.432-40.96-40.96v-163.84c0-22.528 18.432-40.96 40.96-40.96s40.96 18.432 40.96 40.96v163.84c0 22.528-18.432 40.96-40.96 40.96zM351.232 953.344c-22.528 0-40.96-18.432-40.96-40.96v-66.56c0-22.528 18.432-40.96 40.96-40.96s40.96 18.432 40.96 40.96v66.56c0 22.528-18.432 40.96-40.96 40.96zM673.792 953.344c-22.528 0-40.96-18.432-40.96-40.96v-66.56c0-22.528 18.432-40.96 40.96-40.96s40.96 18.432 40.96 40.96v66.56c0 22.528-18.432 40.96-40.96 40.96z"
+                        ></path>
+                    </svg>
+                </el-icon>
+            </template>
+        </el-backtop>
     </div>
 </template>
 
@@ -174,8 +198,16 @@ const refreshData = (data: any[]) => {
         color: var(--hami-text-3);
         font-size: 14px;
     }
+
     :deep(.el-empty) {
         --el-empty-image-width: 180px;
+    }
+
+    :deep(.el-skeleton) {
+        background-color: var(--hami-bg);
+        border-radius: var(--hami-radius);
+        padding: 20px;
+        margin-bottom: 20px;
     }
 }
 </style>

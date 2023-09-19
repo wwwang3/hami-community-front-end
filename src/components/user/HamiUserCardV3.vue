@@ -4,41 +4,39 @@ import { useRoute, useRouter } from "vue-router"
 import defaultAvatar from "/assets/avatar.jpg"
 import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils/message.ts'
+import { useTokenStore } from '@/store/modules/token.ts'
+import dayjs from 'dayjs'
 //interface
+const $props = withDefaults(defineProps<{
+    userInfo: SimpleUserInfo
+}>(), {})
 
-//router, props, inject, provide
-const $router = useRouter()
-const userStore = useUserStore
-//custom var
-
-//life cycle
-
-//watch
-
-//fun
-
+const days = computed(() => {
+    let ctime = $props.userInfo.ctime
+    return dayjs(Date.now()).diff(new Date(ctime), 'day')
+})
 </script>
 <template>
     <div class="hami-user-card-v3">
         <div class="user-card-v3-container">
-            <el-avatar :src="defaultAvatar" size="large" class="user-card-avatar"></el-avatar>
+            <el-avatar :src="userInfo.avatar ? userInfo.avatar : defaultAvatar" size="large" class="user-card-avatar"></el-avatar>
             <div class="user-card-body">
                 <div class="info-box">
-                    <div class="profile-item username">wang3</div>
+                    <div class="profile-item username">{{ userInfo.username }}</div>
                     <div class="profile-item">
                         <div class="follow followers">
-                            <div class="count">1</div>
+                            <div class="count">{{ userInfo?.followers }}</div>
                             <div class="content">粉丝</div>
                         </div>
                         <el-divider direction="vertical"></el-divider>
                         <div class="follow followings">
-                            <div class="count">1</div>
+                            <div class="count">{{ userInfo?.followings }}</div>
                             <div class="content">关注</div>
                         </div>
                         <el-divider direction="vertical"></el-divider>
                         <div class="follow time">
                             <div class="content">在Hami创作的第</div>
-                            <div class="count">600</div>
+                            <div class="count">{{ days }}</div>
                             <div class="content">天</div>
                         </div>
                     </div>
