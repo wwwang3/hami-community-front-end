@@ -14,7 +14,7 @@ import { useAutoLoading, useRequest } from '@/hooks'
 //interface
 interface ArticleCardProps {
     article: Article,
-    border: boolean
+    border?: boolean
 }
 
 const $props = withDefaults(defineProps<ArticleCardProps>(), {

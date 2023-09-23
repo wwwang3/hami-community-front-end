@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { onBeforeMount, reactive, ref } from "vue"
+import { computed, onBeforeMount, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import HamiLogo from '@/components/common/HamiLogo.vue'
 import HeaderAvatar from '@/components/common/HeaderAvatar.vue'
 import { Message } from '@element-plus/icons-vue'
+import { NotifyService } from '@/service/modules/notify.ts'
 //interface
 type NavItem = {
     name: string,
@@ -32,13 +33,13 @@ const nav = reactive([
 ])
 const activeNav = ref<string>("首页")
 const search = ref<string>("")
-const avatarRef = ref()
-const popoverRef = ref<HTMLElement>()
-const avatarHover = ref<string>("hami-avatar-normal")
+const messageCount = ref(0)
 //life cycle
-onBeforeMount(() => {
+onBeforeMount(async () => {
     console.log("hami-header before-mount")
+    await getNotifyCount()
 })
+
 //watch
 
 //fun
@@ -46,6 +47,16 @@ const handleNavClick = async (item: NavItem) => {
     console.log(item)
     activeNav.value = item.name
     await $router.replace(item.path)
+}
+
+const getNotifyCount = async () => {
+    let count = await NotifyService.getNoReadCount()
+    console.log(count)
+    let c = 0
+    Object.values(count).forEach((value: number, index) => {
+        c += value
+    })
+    messageCount.value = c
 }
 </script>
 <template>
@@ -81,15 +92,20 @@ const handleNavClick = async (item: NavItem) => {
                 </div>
                 <div class="page-header-options">
                     <div class="option-item">
-                        <el-icon>
-                            <Message/>
-                        </el-icon>
+                        <el-badge class="badge" :value="messageCount"
+                                  :is-dot="messageCount >= 10"
+                                  :hidden="messageCount === 0"
+                        >
+                            <el-icon size="20">
+                                <Message/>
+                            </el-icon>
+                        </el-badge>
                         <span>
                             消息
                         </span>
                     </div>
                     <div class="option-item">
-                        <el-icon>
+                        <el-icon size="20">
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -107,7 +123,7 @@ const handleNavClick = async (item: NavItem) => {
                         </span>
                     </div>
                     <div class="option-item">
-                        <el-icon>
+                        <el-icon size="20">
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -123,7 +139,7 @@ const handleNavClick = async (item: NavItem) => {
                             历史
                         </span>
                     </div>
-                    <router-link  to="/creator/home">
+                    <router-link to="/creator/home">
                         <span class="creator">创作者中心</span>
                     </router-link>
                 </div>
@@ -139,6 +155,7 @@ const handleNavClick = async (item: NavItem) => {
     z-index: 100;
     background: linear-gradient(-225deg, #e3fdf5 0, #ffe6fa 100%);;
     box-shadow: .1rem 0.1rem 0.2rem rgba(0, 0, 0, .1);
+
     .page-header-container {
         display: flex;
         align-items: center;
@@ -219,6 +236,19 @@ const handleNavClick = async (item: NavItem) => {
             text-align: center;
             font-size: 15px;
             cursor: pointer;
+
+            .badge {
+                height: 20px;
+                --el-badge-radius: 10px;
+                --el-badge-font-size: 12px;
+                --el-badge-padding: 4px;
+                --el-badge-size: 16px;
+
+                :deep(.el-badge__content) {
+                    right: 5px;
+                    top: 3px;
+                }
+            }
 
             &:hover .el-icon {
                 animation: jump .3s;

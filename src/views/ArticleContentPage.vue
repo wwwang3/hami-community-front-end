@@ -11,6 +11,7 @@ import useUserStore from '@/store/modules/user.ts'
 import { formatDateTime } from '@/utils'
 import HamiMdViewer from '@/components/md/HamiMdViewer.vue'
 import { MdCatalog } from 'md-editor-v3'
+import HamiUserCard from '@/components/user/HamiUserCard.vue'
 //interface
 
 
@@ -49,9 +50,16 @@ const userLink = computed(() => {
 const [onLoading, getArticleContent] = useRequest({
     run: (...params) => ArticleService.getArticleContent(...params as Parameters<typeof ArticleService.getArticleContent>)
 })
+const inited = ref<boolean>(false)
 
 onBeforeMount(async () => {
-    await getArticle()
+    try {
+        await getArticle()
+    } catch (e) {
+
+    } finally {
+        inited.value = true
+    }
 })
 //life cycle
 onMounted(async () => {
@@ -134,7 +142,7 @@ const getArticle = async () => {
 </script>
 <template>
     <div class="hami-article-content-page">
-        <div class="article-content-container container">
+        <div class="article-content-container container" v-if="inited">
             <div class="main-content">
                 <div class="content-wrapper">
                     <div class="title">
@@ -163,49 +171,47 @@ const getArticle = async () => {
                     </div>
                     <div class="content">
                         <HamiMdViewer v-model="article.content"></HamiMdViewer>
+                    </div>
+                    <div class="content-bottom">
                         <div class="tags">
-                            标签:
+<!--                            <el-icon size="20">-->
+<!--                                <svg viewBox="0 0 1024 1024"-->
+<!--                                     xmlns="http://www.w3.org/2000/svg" p-id="5355"-->
+<!--                                     width="200"-->
+<!--                                     height="200">-->
+<!--                                    <path-->
+<!--                                        d="M469.333533 968.08a52.986667 52.986667 0 0 1-37.713333-15.62l-416-416A52.986667 52.986667 0 0 1 0.0002 498.746667V138.666667a53.393333 53.393333 0 0 1 53.333333-53.333334h360.08a52.986667 52.986667 0 0 1 37.713334 15.62l416 416a53.4 53.4 0 0 1 0 75.426667l-360.08 360.08a52.986667 52.986667 0 0 1-37.713334 15.62zM53.333533 128a10.666667 10.666667 0 0 0-10.666666 10.666667v360.08a10.573333 10.573333 0 0 0 3.126666 7.54l416 416a10.666667 10.666667 0 0 0 15.08 0l360.08-360.08a10.666667 10.666667 0 0 0 0-15.08l-416-416a10.573333 10.573333 0 0 0-7.54-3.126667z m224 341.333333c-58.813333 0-106.666667-47.853333-106.666666-106.666666s47.853333-106.666667 106.666666-106.666667 106.666667 47.853333 106.666667 106.666667-47.853333 106.666667-106.666667 106.666666z m0-170.666666a64 64 0 1 0 64 64 64.073333 64.073333 0 0 0-64-64z m335.086667 676.42l382.706667-382.706667a53.4 53.4 0 0 0 0-75.426667L569.753533 91.58a21.333333 21.333333 0 0 0-30.173333 30.173333l425.373333 425.373334a10.666667 10.666667 0 0 1 0 15.08l-382.706666 382.706666a21.333333 21.333333 0 0 0 30.173333 30.173334z"-->
+<!--                                        fill="currentColor"></path>-->
+<!--                                </svg>-->
+<!--                            </el-icon>-->
+                            <span>标签: </span>
                             <template v-for="tag in article.tags">
                                 <el-tag type="info" size="large">
                                     {{ tag.tagName }}
                                 </el-tag>
                             </template>
                         </div>
+                        <div class="category">
+<!--                            <el-icon size="18">-->
+<!--                                <svg viewBox="0 0 1194 1024"-->
+<!--                                     xmlns="http://www.w3.org/2000/svg" width="200" height="200">-->
+<!--                                    <path-->
+<!--                                        d="M1111.167537 860.160068H81.023966A80.8533 80.8533 0 0 0 0 940.800035v0.426666c0 44.543981 36.266652 80.639966 81.023966 80.639967h1030.143571a80.8533 80.8533 0 0 0 81.023966-80.639967v-0.426666c0-44.543981-36.309318-80.639966-81.066633-80.639967m-0.383999-430.59182H81.493299A81.237299 81.237299 0 0 0 0 510.634881v0.639999c0 44.714648 36.437318 81.066633 81.450633 81.066633h1029.290238c44.970648 0 81.450633-36.351985 81.450632-81.066633v-0.639999c0-44.799981-36.479985-81.066633-81.450632-81.066633M1111.167537 0.000427H81.023966A80.8533 80.8533 0 0 0 0 80.640393v0.426667c0 44.543981 36.266652 80.639966 81.023966 80.639966h1030.143571a80.8533 80.8533 0 0 0 81.023966-80.639966v-0.426667c0-44.501315-36.309318-80.639966-81.066633-80.639966"-->
+<!--                                        fill="currentColor"></path>-->
+<!--                                </svg>-->
+<!--                            </el-icon>-->
+                            <span>分类: </span>
+                            <span class="item">
+                                {{ article?.category.categoryName }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="comment-wrapper"></div>
+                <div class="comment-wrapper" id="hami-comment"></div>
             </div>
             <div class="right-panel">
                 <div class="user-info">
-                    <div class="header">
-                        <div class="avatar">
-                            <el-avatar :size="54" :src="article.author?.avatar"></el-avatar>
-                        </div>
-                        <div class="info">
-                            <el-text class="username" truncated size="large">
-                                {{ article.author?.username }}
-                            </el-text>
-                            <div class="job">{{ article.author?.position }}</div>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <div class="bottom-item">
-                            <div class="count">{{article.author?.stat.totalArticles}}</div>
-                            <div class="text">文章</div>
-                        </div>
-                        <div class="bottom-item">
-                            <div class="count">{{article.author?.stat.totalViews}}</div>
-                            <div class="text">阅读</div>
-                        </div>
-                        <div class="bottom-item">
-                            <div class="count">{{article.author?.stat.followings}}</div>
-                            <div class="text">粉丝</div>
-                        </div>
-                    </div>
-                    <div class="btn-group" v-if="!userStore.isAuthor(article.userId)">
-                        <el-button type="primary">关注</el-button>
-                        <el-button type="primary" plain>私信</el-button>
-                    </div>
+                    <HamiUserCard :user="article.author"></HamiUserCard>
                 </div>
                 <el-affix :offset="100">
                     <div class="cate-log">
@@ -229,16 +235,18 @@ const getArticle = async () => {
                         </div>
                     </el-badge>
                     <el-badge :value="article.stat?.comments" type="info" :max="100">
-                        <div class="option-item">
-                            <el-icon size="22">
-                                <svg viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                          fill="currentColor"
-                                          d="M4.62739 1.25C2.9347 1.25 1.5625 2.6222 1.5625 4.31489L1.56396 12.643C1.56403 14.3356 2.9362 15.7078 4.62885 15.7078H6.48326L6.93691 17.6869L6.93884 17.6948C7.16894 18.6441 8.28598 19.0599 9.08073 18.4921L12.7965 15.7078H15.5001C17.1928 15.7078 18.565 14.3355 18.565 12.6428L18.5635 4.31477C18.5635 2.62213 17.1913 1.25 15.4986 1.25H4.62739ZM5.98265 9.89255C6.68783 9.89255 7.2595 9.32089 7.2595 8.61571C7.2595 7.91053 6.68783 7.33887 5.98265 7.33887C5.27747 7.33887 4.70581 7.91053 4.70581 8.61571C4.70581 9.32089 5.27747 9.89255 5.98265 9.89255ZM9.95604 9.89255C10.6612 9.89255 11.2329 9.32089 11.2329 8.61571C11.2329 7.91053 10.6612 7.33887 9.95604 7.33887C9.25086 7.33887 8.6792 7.91053 8.6792 8.61571C8.6792 9.32089 9.25086 9.89255 9.95604 9.89255ZM15.2124 8.61571C15.2124 9.32089 14.6407 9.89255 13.9355 9.89255C13.2304 9.89255 12.6587 9.32089 12.6587 8.61571C12.6587 7.91053 13.2304 7.33887 13.9355 7.33887C14.6407 7.33887 15.2124 7.91053 15.2124 8.61571Z">
+                        <div class="option-item comment">
+                            <router-link to="#hami-comment">
+                                <el-icon size="22">
+                                    <svg viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                              fill="currentColor"
+                                              d="M4.62739 1.25C2.9347 1.25 1.5625 2.6222 1.5625 4.31489L1.56396 12.643C1.56403 14.3356 2.9362 15.7078 4.62885 15.7078H6.48326L6.93691 17.6869L6.93884 17.6948C7.16894 18.6441 8.28598 19.0599 9.08073 18.4921L12.7965 15.7078H15.5001C17.1928 15.7078 18.565 14.3355 18.565 12.6428L18.5635 4.31477C18.5635 2.62213 17.1913 1.25 15.4986 1.25H4.62739ZM5.98265 9.89255C6.68783 9.89255 7.2595 9.32089 7.2595 8.61571C7.2595 7.91053 6.68783 7.33887 5.98265 7.33887C5.27747 7.33887 4.70581 7.91053 4.70581 8.61571C4.70581 9.32089 5.27747 9.89255 5.98265 9.89255ZM9.95604 9.89255C10.6612 9.89255 11.2329 9.32089 11.2329 8.61571C11.2329 7.91053 10.6612 7.33887 9.95604 7.33887C9.25086 7.33887 8.6792 7.91053 8.6792 8.61571C8.6792 9.32089 9.25086 9.89255 9.95604 9.89255ZM15.2124 8.61571C15.2124 9.32089 14.6407 9.89255 13.9355 9.89255C13.2304 9.89255 12.6587 9.32089 12.6587 8.61571C12.6587 7.91053 13.2304 7.33887 13.9355 7.33887C14.6407 7.33887 15.2124 7.91053 15.2124 8.61571Z">
 
-                                    </path>
-                                </svg>
-                            </el-icon>
+                                        </path>
+                                    </svg>
+                                </el-icon>
+                            </router-link>
                         </div>
                     </el-badge>
                     <el-badge :value="article.stat?.collects" :type="activeCollectType" :max="100"
@@ -321,6 +329,13 @@ const getArticle = async () => {
             }
         }
 
+        .comment {
+            a {
+                display: block;
+                height: 22px;
+            }
+        }
+
         .like.active {
             color: var(--hami-text-blue);
         }
@@ -390,11 +405,32 @@ const getArticle = async () => {
             }
         }
 
+        .content-bottom {
+            display: flex;
+            align-items: center;
+            //justify-content: space-between;
+            width: 400px;
+            height: 24px;
+            font-size: 14px;
+        }
+
+        .category {
+            display: flex;
+            align-items: center;
+            color: var(--hami-text);
+            cursor: pointer;
+            margin-left: 40px;
+            .item {
+                color: var(--hami-text-blue);
+                margin-left: 10px;
+            }
+        }
+
         .tags {
             display: flex;
             align-items: center;
-            margin-top: 10px;
-
+            //color: var(--hami-text-blue);
+            color: var(--hami-text);
             .el-tag {
                 margin-left: 16px;
             }
@@ -411,44 +447,6 @@ const getArticle = async () => {
             background-color: var(--hami-bg);
             border-radius: var(--hami-radius);
             margin-bottom: 20px;
-
-            .header {
-                display: flex;
-                justify-content: space-between;
-                .info {
-                    flex: 1;
-                    max-width: 140px;
-                    margin-left: 10px;
-                    .username {
-                        margin-top: 10px;
-                        color: var(--hami-text);
-                    }
-                }
-            }
-            .bottom {
-                display: flex;
-                justify-content: space-around;
-                margin: 8px 0 10px 0;
-                .bottom-item {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    .count {
-                        font-size: 17px;
-                    }
-                    .text {
-                        color: var(--hami-text-gray);
-                        font-size: 13px;
-                    }
-                }
-            }
-            .btn-group {
-                display: flex;
-                justify-content: space-between;
-                button {
-                    width: 100px;
-                }
-            }
         }
 
         .cate-log {
@@ -456,6 +454,13 @@ const getArticle = async () => {
             background-color: var(--hami-bg);
             border-radius: var(--hami-radius);
         }
+    }
+
+    .comment-wrapper {
+        background-color: var(--hami-bg);
+        margin-top: 20px;
+        border-radius: var(--hami-radius);
+        min-height: 100px;
     }
 }
 </style>

@@ -33,7 +33,7 @@ declare interface ArticleDraftServiceApi {
 
     getDrafts(pageNum: number, pageSize: number): Promise<PageData<ArticleDraftDetail>>
 
-    getArticleDraft(id: number ): Promise<ArticleDraftDetail>
+    getArticleDraft(id: number): Promise<ArticleDraftDetail>
 
     createDraft(param: ArticleDraftParam): Promise<ArticleDraft>
 
@@ -83,7 +83,7 @@ declare interface UserInteractApi {
 
 }
 
-declare interface CommentServiceApi  {
+declare interface CommentServiceApi {
     listComment(param: CommentPageParam): Promise<PageData<CommentInfo>>
 
     listReply(param: CommentPageParam): Promise<PageData<CommentInfo>>
@@ -95,10 +95,20 @@ declare interface CommentServiceApi  {
     deleteComment(id: number): Promise<any>
 }
 
-declare  interface ImageServiceApi {
+declare interface ImageServiceApi {
     upload(image: File, type: "comment" | "avatar" | "article"): Promise<string>
 }
 
 declare interface NotifyServiceApi {
+
+    queryCommentNotify(param: PageParam): Promise<PageData<NotifyMsg>>
+
+    queryLikeCollectNotify(param: PageParam): Promise<PageData<NotifyMsg>>
+
+    queryFollowNotify(param: PageParam): Promise<PageData<NotifyMsg>>
+
+    queryNotify(notify_type: "comment" | "like_collect" | "follow", param: PageParam): Promise<PageData<NotifyMsg>>
+
+    getNoReadCount(): Promise<NotifyCount>
 
 }

@@ -112,14 +112,14 @@ const avatarMouseLeave = () => {
         .hami-avatar.large {
             img {
                 opacity: 1;
-                transition: all .35s;
+                transition: all .6s;
             }
         }
     }
 
     .hami-avatar-normal {
         .hami-avatar.large {
-            animation: avatarFadeSmall .35s both;
+            animation: avatarFadeSmall .4s both;
         }
     }
 
@@ -130,7 +130,7 @@ const avatarMouseLeave = () => {
     .hami-avatar.large {
         opacity: 0;
         display: block;
-        animation: avatarFadeLarge .35s both;
+        animation: avatarFadeLarge .6s both;
         width: 84px;
         height: 84px;
         position: absolute;
@@ -140,7 +140,7 @@ const avatarMouseLeave = () => {
 
         img {
             opacity: 0;
-            transition: all .35s;
+            transition: all .6s;
         }
     }
 

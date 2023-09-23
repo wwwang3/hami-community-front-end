@@ -5,7 +5,6 @@ import store from '@/store'
 import UserService from '@/service/modules/user.ts'
 import { loadTokenStore } from '@/store/modules/token.ts'
 import { useRequest } from '@/hooks'
-import { state } from 'vue-tsc/out/shared'
 
 const useUserStore = defineStore("user", () => {
 
@@ -14,7 +13,7 @@ const useUserStore = defineStore("user", () => {
     const tokenStore = loadTokenStore()
 
     const [onLoading, process] = useRequest({
-        run: (params) => UserService.getLoginProfile()
+        run: (...params) => UserService.getLoginProfile()
     })
     const getProfile = async (): Promise<SimpleUserInfo> => {
         console.log("start to get profile")
@@ -74,7 +73,7 @@ const useUserStore = defineStore("user", () => {
     }
 
     const isAuthor = (userId: number) => {
-        return userId === userInfo.value?.userId
+        return userId !== undefined && userId === userInfo.value?.userId
     }
 
     const logined = computed(() => {

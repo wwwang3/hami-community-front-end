@@ -150,8 +150,8 @@ declare interface UserStat {
     totalCollects: number,
     totalLikes: number,
     totalComments: number,
-    followers: number,
-    followings: number,
+    totalFollowers: number,
+    totalFollowings: number,
 }
 declare interface ArticleStat {
     articleId: number,
@@ -234,4 +234,32 @@ declare interface CommentInfo {
     replyTo?: User
     reply?: Reply
     liked: boolean
+}
+
+declare interface NotifyInfo {
+    id: number
+    name: string,
+    image?: string
+    detail: string
+}
+
+declare interface NotifyMsg {
+    id: number,
+    ctime: Date,
+    state: 0 | 1
+    type: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
+    sender: NotifyInfo,
+    relatedInfo: NotifyInfo,
+    itemInfo: NotifyInfo
+}
+
+declare interface NotifyCount {
+    '0': number
+    '1': number
+    '2': number
+    '3': number
+    '4': number
+    '5': number
+    '6': number
+    '7': number
 }

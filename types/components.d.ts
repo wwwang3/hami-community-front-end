@@ -82,6 +82,7 @@ declare module 'vue' {
     HamiRestPasswordCard: typeof import('./../src/components/auth/HamiRestPasswordCard.vue')['default']
     HamiScrollList: typeof import('./../src/components/common/HamiScrollList.vue')['default']
     HamiSetting: typeof import('./../src/components/account/HamiSetting.vue')['default']
+    HamiUserCard: typeof import('./../src/components/user/HamiUserCard.vue')['default']
     HamiUserCardV1: typeof import('./../src/components/user/HamiUserCardV1.vue')['default']
     HamiUserCardV2: typeof import('./../src/components/user/HamiUserCardV2.vue')['default']
     HamiUserCardV3: typeof import('./../src/components/user/HamiUserCardV3.vue')['default']
