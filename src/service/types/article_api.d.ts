@@ -1,6 +1,6 @@
 declare interface ArticleServiceApi {
 
-    listRecommendArticles(param: ArticleParam): Promise<PageData<Article>>
+    listNewestArticles(param: ArticleParam): Promise<PageData<Article>>
 
     listFollowUserUserArticles(param: PageParam): Promise<PageData<Article>>
 

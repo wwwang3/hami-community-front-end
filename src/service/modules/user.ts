@@ -1,13 +1,18 @@
 import http, { FORM_DATA } from '@/service/http.ts'
+import User from '@/store/modules/user.ts'
 
 const UserService: UserServiceApi = {
 
-    getLoginProfile(): Promise<SimpleUserInfo> {
-        return http.get("/nav/profile")
+    getLoginProfile(): Promise<LoginProfile> {
+        return http.get("/user/me")
     },
 
     getUserProfile(): Promise<UserProfile> {
         return http.get("/user/profile")
+    },
+
+    getAuthorInfo(user_id: number): Promise<User> {
+        return http.get("/user/author_info/" + user_id)
     },
 
     updateUserProfile(params: UserProfileParam): Promise<any> {
@@ -33,7 +38,7 @@ const UserService: UserServiceApi = {
         return http.get("/user/login/log", {
             params: param
         })
-    }
+    },
 
 }
 

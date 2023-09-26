@@ -2,10 +2,11 @@
 import { useTokenStore } from '@/store/modules/token.ts'
 import useUserStore from '@/store/modules/user.ts'
 import { CateRoutePath, useCateStore } from '@/store/modules/category.ts'
-import { onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import HamiBulletin from '@/components/common/HamiBulletin.vue'
-import HamiHotArticle from '@/components/article/HamiHotArticle.vue'
 import HamiCateNav from '@/components/common/HamiCateNav.vue'
+import HamiIndexArticle from '@/components/article/HamiIndexArticle.vue'
+import HamiHotArticle from "@/components/article/HamiHotArticle.vue"
 import { useRoute, useRouter } from 'vue-router'
 
 const $router = useRouter()
@@ -38,6 +39,10 @@ const resolveRoute = (route: string) => {
     }
 }
 
+const isFollow = computed(() => {
+    return $route.path === "/follow"
+})
+
 </script>
 <template>
     <div class="hami-index-page">
@@ -48,7 +53,12 @@ const resolveRoute = (route: string) => {
                 </el-affix>
             </div>
             <div class="main-panel">
-                <router-view></router-view>
+                <template v-if="isFollow">
+                    <HamiFollowUserArticle></HamiFollowUserArticle>
+                </template>
+                <template v-else>
+                    <HamiIndexArticle :cate-id="cateId"></HamiIndexArticle>
+                </template>
             </div>
             <div class="right-panel">
                 <div class="right-card">
@@ -165,7 +175,5 @@ const resolveRoute = (route: string) => {
 }
 </style>
 <style>
-.back-top {
 
-}
 </style>

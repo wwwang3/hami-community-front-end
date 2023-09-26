@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { ref, reactive, onMounted, computed, nextTick, defineSlots } from "vue"
+import { computed, defineSlots, nextTick, onMounted, reactive, ref } from "vue"
 import { useRequest } from '@/hooks'
 import { isEmpty } from '@/utils'
 import noDataImg from "/assets/nodata02.png"
@@ -16,6 +16,8 @@ interface ScrollListProps {
     size?: number,
     noDataText?: string
     keyProperty?: string | undefined,
+    showNoMore?: boolean,
+    immediateLoading?: boolean
     query: (pageNum: number, pageSize: number) => Promise<PageData<T>>
 }
 
@@ -31,14 +33,29 @@ const slots = defineSlots<{
     error(props: any): any,
 }>()
 
+defineExpose<ExposeProps>({
+    init() {
+        _init()
+    },
+    deleteItem(item: T, index: number): void {
+        _delete(item, index)
+    },
+})
+
 const $props = withDefaults(defineProps<ScrollListProps>(), {
     size: 10,
-    noDataText: "还没有数据"
+    noDataText: "还没有数据",
+    showNoMore: true,
+    immediateLoading: false
 })
+
 const dataList = reactive<Array<any>>([])
-const [onLoadingMore, processQuery] = useRequest({
+
+const [onLoadingMore, processQuery] = useRequest<PageData<T>, [number, number]>({
+    loading: $props.immediateLoading,
     run: (...params) => handleRun(...params)
 })
+
 const inited = ref(false)
 const page = ref<Page>({
     current: 1,
@@ -65,16 +82,6 @@ const showEmpty = computed(() => {
     return inited.value && dataList.length === 0
 })
 
-defineExpose<ExposeProps>({
-    init() {
-        _init()
-    },
-    deleteItem(item: T, index: number): void {
-        _delete(item, index)
-    },
-
-})
-
 //life cycle
 onMounted(() => {
     console.debug("HamiScrollList mounted")
@@ -86,6 +93,7 @@ const _init = () => {
     page.value.size = $props.size
     inited.value = false
     dataList.splice(0, dataList.length)
+    onLoadingMore.value = true
     let start = Date.now()
     processQuery(page.value.current, page.value.size)
         .then(pageData => {
@@ -107,12 +115,9 @@ const _delete = async (item: any, index: number) => {
         dataList.splice(index, 1)
     }
 }
-//@ts-ignore
-const handleRun = (...params) => {
-    console.log(params)
-    let promise = $props.query(page.value.current, page.value.size)
-    console.log(promise)
-    return promise
+
+const handleRun = (...params: [number, number]) => {
+    return $props.query(...params)
 }
 
 const handleScroll = async () => {
@@ -121,7 +126,7 @@ const handleScroll = async () => {
     }
     page.value.current++
     try {
-        let pageData: PageData<any> = await processQuery([page.value.current, page.value.size])
+        let pageData: PageData<any> = await processQuery(page.value.current, page.value.size)
         refreshData(pageData.data as any[])
     } catch (e) {
         //出错了
@@ -148,14 +153,18 @@ const refreshData = (data: any[]) => {
                 <slot name="item" v-bind="{item, index, _delete}"></slot>
             </template>
         </div>
-        <el-skeleton :rows="3" animated v-if="onLoadingMore"></el-skeleton>
+        <el-skeleton :rows="4" animated :throttle="200" :loading="onLoadingMore"></el-skeleton>
         <div v-show="loadingError">
             <slot name="error">
-                <el-empty :image="fetchErrorImg" style="--el-empty-image-width: 200px"
-                          description="加载失败"></el-empty>
+                <el-empty :image="fetchErrorImg"
+                          style="--el-empty-image-width: 200px"
+                          description="加载失败"
+                          class="empty"
+                >
+                </el-empty>
             </slot>
         </div>
-        <div v-show="!hasMore && !showEmpty && !onLoadingMore">
+        <div v-show="showNoMore && !hasMore && !showEmpty && !onLoadingMore">
             <slot name="noMore">
                 <div class="no-more">
                     我是有底线的~
@@ -164,7 +173,7 @@ const refreshData = (data: any[]) => {
         </div>
         <div v-if="showEmpty && !loadingError">
             <slot name="empty">
-                <el-empty :description="noDataText" :image="noDataImg"></el-empty>
+                <el-empty :description="noDataText" :image="noDataImg" class="empty"></el-empty>
             </slot>
         </div>
         <el-backtop class="back-top" :right="60" :bottom="64">
@@ -209,5 +218,15 @@ const refreshData = (data: any[]) => {
         padding: 20px;
         margin-bottom: 20px;
     }
+}
+</style>
+<style>
+.empty {
+    background-color: var(--hami-bg);
+    border-radius: var(--hami-radius);
+}
+.back-top {
+    width: 48px;
+    height: 48px;
 }
 </style>

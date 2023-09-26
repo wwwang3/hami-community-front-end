@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue"
-import { formatTime } from 'element-plus/es/components/countdown/src/utils'
 import { formatDateTime, isEmpty } from '@/utils'
 import { useRequest } from '@/hooks'
 import UserService from '@/service/modules/user.ts'
@@ -21,7 +20,7 @@ const page = ref<Page>({
     size: 8,
     total: 0
 })
-const hasNext = computed(() => {
+computed(() => {
     return page.value.current < Math.ceil(page.value.total / page.value.size)
 })
 const [onRequest, getLoginRecords] = useRequest({
@@ -53,9 +52,20 @@ onMounted(async () => {
 //fun
 const calculateLocation = (ipInfo: IpInfo) => {
     if (isEmpty(ipInfo)) return "未知"
-    return `${ipInfo.country || ''}-${ipInfo.province || ''}-${ipInfo.city || ''}`
+    let location = ""
+    if (!isEmpty(ipInfo.country)) {
+        location = location + ipInfo.country + '-'
+    }
+    if (ipInfo.province) {
+        location = location + ipInfo.province + '-'
+    }
+    if (ipInfo.city) {
+        location += ipInfo.city
+    }
+    return location;
 }
 const calculateIp = (ipInfo: IpInfo) => {
+    console.log(ipInfo)
     if (isEmpty(ipInfo)) {
         return "未知IP属地"
     }
@@ -70,6 +80,13 @@ const handleChange = async (val: number) => {
         records.value = []
     }
 }
+
+const formatTime = (time: number) => {
+    let date = new Date(time)
+    // console.log(time)
+    return formatDateTime(date)
+}
+
 </script>
 <template>
     <div class="hami-login-record">
@@ -86,15 +103,19 @@ const handleChange = async (val: number) => {
                           stripe
                           v-if="!onRequest"
                 >
-                    <el-table-column prop="loginTime" label="登录时间" width="240"/>
+                    <el-table-column label="登录时间" width="280">
+                        <template #default="{row, column, $index}">
+                            {{ formatTime(row.loginTime) }}
+                        </template>
+                    </el-table-column>
                     <el-table-column label="IP地址" width="240">
                         <template #default="{row, column, $index}">
-                            {{ calculateIp(row) }}
+                            {{ calculateIp(row.ipInfo) }}
                         </template>
                     </el-table-column>
                     <el-table-column label="地理位置">
                         <template #default="{row, column, $index}">
-                            {{ calculateLocation(row) }}
+                            {{ calculateLocation(row.ipInfo) }}
                         </template>
                     </el-table-column>
                     <template #empty>
@@ -113,7 +134,6 @@ const handleChange = async (val: number) => {
                 background
                 v-if="inited"
             >
-
             </el-pagination>
         </div>
     </div>
@@ -125,7 +145,7 @@ const handleChange = async (val: number) => {
     background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);
     color: var(--hami-text);
-
+    min-height: 500px;
     .login-record-title {
         font-size: 18px;
         font-weight: 700;
@@ -156,7 +176,7 @@ const handleChange = async (val: number) => {
     }
 
     .page {
-        margin-top: 10px;
+        margin-top: 20px;
 
     }
 }

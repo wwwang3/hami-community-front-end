@@ -9,6 +9,7 @@ import HamiLoading from '@/components/common/HamiLoading.vue'
 import { useRequest } from '@/hooks'
 import { beforeUpload } from "@/utils/validator.ts"
 import { ArticleDraftService } from '@/service/modules/article.ts'
+import { Close } from '@element-plus/icons-vue'
 
 //interface
 interface FormProps {

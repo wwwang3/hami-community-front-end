@@ -21,9 +21,8 @@ const $route = useRoute()
 
 //fun
 const handleClick = async (path: CateRoutePath) => {
-    await $router.push({
-        path: path
-    })
+    console.log(path)
+    await $router.replace(path)
 }
 </script>
 <template>

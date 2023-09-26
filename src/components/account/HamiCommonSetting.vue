@@ -60,7 +60,7 @@ const handleClick = (m: string) => {
     background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);
     color: var(--hami-text);
-
+    min-height: 500px;
     .common-setting-title {
         font-size: 18px;
         font-weight: 700;

@@ -8,14 +8,34 @@ import { useRequest } from '@/hooks'
 
 const useUserStore = defineStore("user", () => {
 
-    const userInfo = ref<SimpleUserInfo>()
+    const userInfo = ref<LoginProfile>({
+        userId: -1,
+        username: "",
+        avatar: '',
+        collects: 0,
+        ctime: 0,
+        followers: 0,
+        followings: 0,
+        likes: 0,
+        profile: '',
+        stat: {
+            totalArticles: 0,
+            totalCollects: 0,
+            totalComments: 0,
+            totalFollowers: 0,
+            totalFollowings: 0,
+            totalLikes: 0,
+            totalViews: 0,
+            userId: -1
+        }
+    })
     const inited = ref(false)
     const tokenStore = loadTokenStore()
 
-    const [onLoading, process] = useRequest({
+    const [onLoading, process] = useRequest<LoginProfile, any[]>({
         run: (...params) => UserService.getLoginProfile()
     })
-    const getProfile = async (): Promise<SimpleUserInfo> => {
+    const getProfile = async (): Promise<LoginProfile> => {
         console.log("start to get profile")
         //token在cookie就不要判断了
         // if (tokenStore.getTokenValue() === null || tokenStore.getTokenName() == null) {
@@ -23,15 +43,15 @@ const useUserStore = defineStore("user", () => {
         //     return Promise.reject("没有token")
         // }
         if (checkLoaded()) {
-            return Promise.resolve(userInfo.value as SimpleUserInfo)
+            return Promise.resolve(userInfo.value)
         }
         if (onLoading.value) {
             await sync() //等待
-            return Promise.resolve(userInfo.value as SimpleUserInfo)
+            return Promise.resolve(userInfo.value)
         }
-        if (!isEmpty(userInfo.value)) {
+        if (userInfo.value.userId !== -1) {
             inited.value = true
-            return Promise.resolve(userInfo.value as SimpleUserInfo)
+            return Promise.resolve(userInfo.value)
         }
         return await fetch()
     }
@@ -43,7 +63,7 @@ const useUserStore = defineStore("user", () => {
     const fetch = async () => {
         try {
             userInfo.value = await process(null)
-            return userInfo.value as SimpleUserInfo
+            return userInfo.value
         } catch (e) {
             console.log(e)
             // tokenStore.clear()
@@ -72,15 +92,15 @@ const useUserStore = defineStore("user", () => {
         return Date.now() - start > time
     }
 
-    const isAuthor = (userId: number) => {
-        return userId !== undefined && userId === userInfo.value?.userId
+    const isSelf = (userId: number) => {
+        return userId !== undefined && userInfo.value.userId !== -1 && userId === userInfo.value.userId
     }
 
     const logined = computed(() => {
-        return !isEmpty(userInfo.value) && !isEmpty(userInfo.value?.userId)
+        return !isEmpty(userInfo.value) && !isEmpty(userInfo.value.userId) && userInfo.value.userId !== -1
     })
 
-    return { logined, getProfile, sync, userInfo, isAuthor}
+    return { logined, getProfile, sync, userInfo, isSelf: isSelf}
 })
 
 export function loadUserStore() {

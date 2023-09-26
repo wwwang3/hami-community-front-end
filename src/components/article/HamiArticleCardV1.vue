@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed } from "vue"
 import { useRoute, useRouter } from "vue-router"
-import { isEmpty } from '@/utils'
+import { formatDateTime, isEmpty } from '@/utils'
 import { $message } from '@/utils/message.ts'
 import { MoreFilled } from '@element-plus/icons-vue'
 
@@ -35,6 +35,7 @@ const handleDelete = async () => {
             console.log(e)
         })
 }
+
 </script>
 <template>
     <div class="hami-article-card-v1">
@@ -61,9 +62,11 @@ const handleDelete = async () => {
                 </div>
             </div>
             <div class="card-body">
-                <div class="ctime" v-if="!isEmpty($props.article.ctime)">创建时间: {{ $props.article.ctime }}</div>
+                <div class="ctime" v-if="!isEmpty($props.article.ctime)">创建时间:
+                    {{ formatDateTime($props.article.ctime as Date) }}</div>
                 <div class="divider" v-if="!isEmpty($props.article.ctime) && !isEmpty($props.article.mtime)">·</div>
-                <div class="mtime" v-if="!isEmpty($props.article.mtime)">最后更新于: {{ $props.article.mtime }}</div>
+                <div class="mtime" v-if="!isEmpty($props.article.mtime)">最后更新于:
+                    {{ formatDateTime($props.article.mtime as Date) }}</div>
             </div>
         </div>
     </div>

@@ -1,23 +1,26 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, Ref } from "vue"
+import { ref, computed } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import useUserStore from '@/store/modules/user.ts'
-import { formatDateTime, isEmpty } from '@/utils'
-import auth from '@/service/modules/auth.ts'
-import { getRoutePrefix } from '@/router'
-import dayjs from 'dayjs'
-import { Calendar, MoreFilled, View } from '@element-plus/icons-vue'
+import { formatDateTime } from '@/utils'
+import { Calendar, Comment, View } from '@element-plus/icons-vue'
 import { $message } from '@/utils/message.ts'
-import { UserInteractService } from '@/service/modules/interact.ts'
-import { useAutoLoading, useRequest } from '@/hooks'
+import { EpPropMergeType } from 'element-plus/es/utils'
+import { useLike } from '@/hooks/userInteract.ts'
 
 //interface
 interface ArticleCardProps {
     article: Article,
+    comment?: boolean,
     border?: boolean
 }
 
+const $slots = defineSlots<{
+    item(props: Article): any,
+}>()
+
 const $props = withDefaults(defineProps<ArticleCardProps>(), {
+    comment: true,
     border: false
 })
 //router, props, inject, provide
@@ -26,21 +29,18 @@ const $router = useRouter()
 const userStore = useUserStore()
 
 //custom var
-const prefix = getRoutePrefix() + "article/"
-
 const article = ref<ArticleInfo>($props.article.articleInfo)
 const author = ref<User>($props.article.author)
 const category = ref<CategoryDTO>($props.article.category)
 const tags = ref<TagDTO[]>($props.article.tags)
 const stat = ref<ArticleStat>($props.article.stat)
-const collected = ref($props.article.collected)
-const liked = ref($props.article.liked)
 
-// const [onLike, doLike] = useRequest({
-//     run: (...params) => UserInteractService.like(...params as Parameters<typeof UserInteractService.like>)
-// })
 const link = computed(() => {
-    return "/article/" +article.value.id
+    return "/article/" + article.value.id
+})
+
+const userLink = computed(() => {
+    return "/user/space/" + article.value.userId
 })
 
 const ctime = computed(() => {
@@ -51,72 +51,71 @@ const showCate = computed(() => {
     return $route.path === '/recommend' || $route.path === "/"
 })
 
-const [onLike, processLike] = useAutoLoading()
-//life cycle
+const comments = computed(() => {
+    return stat.value.comments > 0 ? stat.value.comments : "评论"
+})
 
-//watch
+const [liked, processLike] = useLike($props.article.liked)
 
-//fun
-const handleLike = async () => {
-    try {
-        await check(onLike)
-        if (liked.value) {
-            //已经点赞
-            await processLike(UserInteractService.cancelLike({
-                itemId: article.value.id,
-                itemType: 1
-            }))
-            stat.value.likes--
-        } else {
-            await processLike(UserInteractService.like({
-                itemId: article.value.id,
-                itemType: 1
-            }))
+const handleLike = () => {
+    processLike({
+        itemId: article.value.id,
+        itemType: 1
+    }).then(state => {
+        if (state) {
             stat.value.likes++
+            $props.article.liked = true
+        } else {
+            stat.value.likes--
+            $props.article.liked = false
         }
-        liked.value = !liked.value
-    } catch (e) {
-        console.log(e)
-    }
+    }).catch(e => {
+        $message.error("点赞失败")
+    })
+}
+const tagTypes = ["", "info", "danger", "warning", "success"]
+const getTagType = (id: number) => {
+    return tagTypes[id % tagTypes.length] as
+        EpPropMergeType<StringConstructor, "" | "info" | "danger" | "warning" | "success", unknown> | undefined
 }
 
-const check = async (ref: Ref<boolean>) => {
-    if (!userStore.logined) {
-        $message.notifyError("请登录后访问")
-        return Promise.reject()
-    }
-    if (ref.value) {
-        $message.error("上个请求还没处理完(´･_･`)")
-        return Promise.reject()
-    }
+const toComment = () => {
+    $router.push("/article/" + article.value.id + "#hami-comment")
 }
-const isAuthor = () => {
-    return !isEmpty(userStore.userInfo) && userStore.userInfo?.userId === author.value.userId
-}
-
 </script>
 <template>
     <div class="hami-article-card">
-        <div class="entry">
+        <div class="entry" :class="{'entry-border': border}">
             <div class="article-info">
                 <div class="article-header">
-                    <el-text class="author" truncated>{{ author.username }}</el-text>
-                    <div class="ctime">
-                        <el-icon>
-                            <Calendar/>
-                        </el-icon>
-                        {{ ctime }}
+                    <div class="left-panel">
+                        <router-link :to="userLink" class="link">
+                            <el-text class="author" truncated>{{ author.username }}</el-text>
+                        </router-link>
+                        <div class="ctime">
+                            <el-icon size="16">
+                                <Calendar/>
+                            </el-icon>
+                            <span class="text">{{ ctime }}</span>
+                        </div>
+                        <span class="category" v-if="showCate">
+                        {{ category.categoryName }}
+                    </span>
                     </div>
-                    <div class="category" v-if="showCate">
-                        {{category.categoryName}}
+                    <div class="right-panel">
+                        <slot v-bind="$props.article" name="item"></slot>
                     </div>
                 </div>
-                <el-text class="title">
-                    {{ article.title }}
-                </el-text>
-                <router-link class="summary" :to="link">
-                    {{ article.summary }}
-                </router-link>
+                <div class="title-row">
+                    <router-link :to="link" class="title">
+                        {{ article.title }}
+                    </router-link>
+                </div>
+                <div class="summary-row">
+                    <router-link class="summary" :to="link">
+                        {{ article.summary }}
+                    </router-link>
+                </div>
                 <div class="bottom">
                     <div class="stat">
                         <div class="item views">
@@ -137,10 +136,23 @@ const isAuthor = () => {
                             </el-icon>
                             <span class="count">{{ stat.likes }}</span>
                         </div>
+                        <div class="item comments" @click="toComment" v-if="comment">
+                            <el-icon size="14">
+                                <svg width="14" height="14" viewBox="0 0 14 14"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M1.30136 9.11421L1.30019 2.45191C1.30024 1.6778 1.92779 1.05019 2.70191 1.05019H11.3989C12.1731 1.05019 12.8006 1.67785 12.8006 2.452L12.8018 9.1144C12.8017 9.8885 12.1742 10.516 11.4001 10.516H9.13225C8.97329 10.516 8.81862 10.5675 8.69142 10.6629L5.65162 12.9406C5.62173 12.9598 5.58148 12.9444 5.57209 12.91L5.15416 11.0869C5.07758 10.7528 4.78033 10.516 4.43761 10.516H2.70308C1.92893 10.516 1.30136 9.88836 1.30136 9.11421ZM2.70191 0C1.34776 0 0.25 1.09776 0.25 2.45191L0.25117 9.1144C0.25122 10.4685 1.34896 11.5662 2.70308 11.5662H4.18661L4.54953 13.1495L4.55107 13.1558C4.73515 13.9153 5.62879 14.248 6.26458 13.7937L9.23719 11.5662H11.4001C12.7542 11.5662 13.852 10.4684 13.852 9.11421L13.8508 2.45182C13.8508 1.09771 12.753 0 11.3989 0H2.70191ZM3.78612 6.91404C4.35027 6.91404 4.8076 6.45671 4.8076 5.89257C4.8076 5.32842 4.35027 4.87109 3.78612 4.87109C3.22198 4.87109 2.76465 5.32842 2.76465 5.89257C2.76465 6.45671 3.22198 6.91404 3.78612 6.91404ZM7.98631 5.89257C7.98631 6.45671 7.52898 6.91404 6.96483 6.91404C6.40069 6.91404 5.94336 6.45671 5.94336 5.89257C5.94336 5.32842 6.40069 4.87109 6.96483 4.87109C7.52898 4.87109 7.98631 5.32842 7.98631 5.89257ZM10.1484 6.91404C10.7126 6.91404 11.1699 6.45671 11.1699 5.89257C11.1699 5.32842 10.7126 4.87109 10.1484 4.87109C9.58428 4.87109 9.12695 5.32842 9.12695 5.89257C9.12695 6.45671 9.58428 6.91404 10.1484 6.91404Z"
+                                          fill="currentColor"></path>
+                                </svg>
+                            </el-icon>
+                            <span class="count">
+                                {{ comments }}
+                            </span>
+                        </div>
                     </div>
                     <div class="tags">
                         <template v-for="tag in tags">
-                            <el-tag round effect="light" class="tag-item" type="info" size="small">
+                            <el-tag class="tag-item" :type="getTagType(tag.tagId)" size="small">
                                 {{ tag.tagName }}
                             </el-tag>
                         </template>
@@ -159,59 +171,109 @@ const isAuthor = () => {
 <style scoped lang="less">
 .hami-article-card {
     background-color: var(--hami-card-bg);
-    padding: 16px 20px;
+    padding: 16px 20px 0;
     transition: all .3s;
     cursor: pointer;
 
     .entry {
         display: flex;
         justify-content: space-between;
+        padding-bottom: 16px;
+    }
+    .entry.entry-border {
+        border-bottom: 1px solid var(--el-border-color-light);
     }
 
     .article-info {
         flex: 1;
+        margin-right: 6px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .article-header {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         color: var(--hami-text-1);
         font-size: 14px;
-        height: 20px;
+        height: 21px;
+        .left-panel {
+            display: flex;
+            align-items: center;
+            max-width: 256px;
+        }
+        .right-panel {
+            display: flex;
+            align-items: center;
+        }
+
+        .link {
+            display: flex;
+            align-items: center;
+
+            .author:hover {
+                color: var(--hami-link-hover);
+            }
+        }
 
         .author {
             max-width: 100px;
-            margin-right: 6px;
+            margin-right: 10px;
+            font-size: 16px;
         }
 
         .ctime {
             display: flex;
             align-items: center;
 
-            .el-icon {
-                margin-right: 4px;
+            .text {
+                margin-left: 4px;
+                font-size: 14px;
             }
         }
+
         .category {
-            margin-left: 16px;
+            margin-left: 12px;
         }
+    }
+
+    .title-row {
+        display: flex;
+        align-items: center;
     }
 
     .title {
         display: block;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 700;
         color: var(--hami-title);
-        margin: 6px 0;
+        line-clamp: 1;
+        margin: 4px 0;
+        line-height: 24px;
+        width: 100%;
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+    }
+
+    .summary-row {
+        display: flex;
+        align-items: center;
     }
 
     .summary {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
-        max-height: 5rem;
-        font-size: 15px;
+        max-height: 48px;
+        font-size: 14px;
         overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
         color: var(--hami-text);
     }
 
@@ -220,6 +282,7 @@ const isAuthor = () => {
         align-items: center;
         justify-content: space-between;
         padding-top: 10px;
+        height: 32px;
     }
 
     .stat {
@@ -229,10 +292,13 @@ const isAuthor = () => {
             display: flex;
             align-items: center;
             color: var(--hami-text-5);
+
+            &:not(:first-child) {
+                margin-left: 16px;
+            }
         }
 
         .likes {
-            margin-left: 8px;
             position: relative;
             z-index: 99;
             pointer-events: visible;
@@ -253,17 +319,27 @@ const isAuthor = () => {
         .count {
             margin-left: 4px;
         }
+
+        .comments {
+            .el-icon {
+                position: relative;
+                top: 1px;
+            }
+
+            &:hover {
+                color: var(--hami-text-blue);
+            }
+        }
     }
 
     .tags {
         display: flex;
         align-items: center;
         color: var(--hami-text-5);
+
         .tag-item {
-            font-size: 14px;
-            margin: 0 6px;
-            //background-color: var   ;
-            //color: var(--hami-text-5);
+            font-size: 12px;
+            margin-right: 10px;
         }
     }
 
@@ -277,6 +353,7 @@ const isAuthor = () => {
         }
     }
 }
+
 .hami-article-card.border {
     border-bottom: 1px solid var(--el-border-color);
     //padding-bottom: 10px;

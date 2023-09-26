@@ -49,19 +49,19 @@ const avatar = ref(defaultAvatar)
 const avatarRef = ref<UploadInstance>()
 const userProfileForm = ref<FormInstance>()
 const userProfileFormRules = reactive<FormRules<typeof userProfileParam>>({
-    username: [
-        {
-            required: true,
-            message: "用户名不能为空",
-            trigger: "blur"
-        },
-        {
-            min: 2,
-            max: 20,
-            trigger: "blur",
-            message: "长度在2-20个字符"
-        }
-    ],
+    // username: [
+    //     {
+    //         required: true,
+    //         message: "用户名不能为空",
+    //         trigger: "blur"
+    //     },
+    //     {
+    //         min: 2,
+    //         max: 20,
+    //         trigger: "blur",
+    //         message: "长度在2-20个字符"
+    //     }
+    // ],
 })
 
 onMounted(async () => {
@@ -158,18 +158,6 @@ const getChangedProp = (): UserProfileParam => {
     return profile
 }
 
-const checkChange = () => {
-    //比较是否改变
-    try {
-        if (userProfileParam.username !== userProfile.value.username) return true
-        if (userProfileParam.position !== userProfile.value.position) return true
-        if (userProfileParam.blog !== userProfile.value.blog) return true
-        if (userProfileParam.company !== userProfile.value.company) return true
-        if (userProfileParam.profile !== userProfile.value.profile) return true
-    } catch (e) {
-        return false
-    }
-}
 </script>
 <template>
     <div class="hami-user-profile">
@@ -185,7 +173,7 @@ const checkChange = () => {
                              @submit.native.prevent class="form">
                         <el-form-item label="用户名" prop="username" class="username">
                             <el-input v-model="userProfileParam.username" size="large" type="text" placeholder="用户名"
-                                      minlength="2" maxlength="20" show-word-limit>
+                                      minlength="2" maxlength="20" show-word-limit disabled>
                             </el-input>
                         </el-form-item>
                         <el-form-item label="职位" prop="position" class="position">
@@ -241,7 +229,6 @@ const checkChange = () => {
                             </div>
                         </template>
                     </el-upload>
-
                 </div>
             </div>
         </div>
@@ -253,10 +240,7 @@ const checkChange = () => {
     padding: 20px 24px;
     background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);
-
-    .user-profile-container {
-        min-height: 520px;
-    }
+    min-height: 540px;
 
     .user-profile-header {
         font-size: 18px;

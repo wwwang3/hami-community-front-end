@@ -22,5 +22,15 @@ export const useCateStore = defineStore("cate", () => {
         "/", "/recommend", "/backend", "/front-end", "/android", "/ios", "/ai", "/tool", "/coding", "/reading"
     ]
 
-    return { cates, cateRoutes}
+    const findCateRoure = (cateId: number) => {
+        for (let ele in cates) {
+            // @ts-ignore
+            if (cates[ele] === cateId) {
+                return ele;
+            }
+        }
+        return "/"
+    }
+
+    return { cates, cateRoutes, findCateRoure}
 })

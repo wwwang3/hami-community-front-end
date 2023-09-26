@@ -66,7 +66,7 @@ export const ArticleDraftService: ArticleDraftServiceApi = {
 
 export const ArticleService: ArticleServiceApi = {
 
-    listRecommendArticles(param: ArticleParam): Promise<PageData<Article>> {
+    listNewestArticles(param: ArticleParam): Promise<PageData<Article>> {
         return http.post("/article/list/recommend", {
             ...param,
             cateId: param.cateId === -1 ? null: param.cateId

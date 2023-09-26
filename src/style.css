@@ -3,11 +3,13 @@
     --hami-blue: #1d7dfa;
     --hami-bg: #fff;
     --hami-bg-gray: #e5e6eb;
+    --hami-bg-gray-1: #f7f8fa;
     --hami-bg-light-blue: #e8f3ff;
     --hami-bg-blue: var(--hami-bg-light-blue);
+    --hami-bg-blue-1: #ecf5ff;
     --hami-layer-light: #fff;
     --hami-layer-dark: #1d2129;
-    --hami-text-light: #252933;
+    --hami-text-light: #333;
     --hami-text-dark: #fff;
     --hami-text: var(--hami-text-light);
     --hami-text-1: #61666d;
@@ -17,10 +19,12 @@
     --hami-text-5: #909090;
     --hami-text-6: #515767;
     --hami-text-7: #252933;
+    --hami-text-8: #1d2129;;
+    --hami-text-9: #18191C;
     --hami-text-gray: #8a919f;
     --hami-text-gray-1: #f7f8fa;
     --hami-text-white: #fff;
-    --hami-pink: #ee677b;
+    --hami-read: #ee677b;
     --hami-pink-1: #FFD9E4;
     --hami-text-blue: #007fff;
     --hami-text-yellow: #ffb800;

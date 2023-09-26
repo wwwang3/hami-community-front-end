@@ -7,7 +7,7 @@ declare interface ApiResponse<T> {
     msg: string
 }
 
-declare interface SimpleUserInfo {
+declare interface LoginProfile {
     userId: number,
     username: string,
     avatar: string,
@@ -18,6 +18,7 @@ declare interface SimpleUserInfo {
     collects: number, //我收藏的文章
     followings: number, //我的关注
     followers: number //我的粉丝
+    stat: UserStat
 }
 
 declare interface UserProfile {
@@ -79,11 +80,11 @@ declare interface ArticleDraftDetail {
     picture: string,
     summary: string,
     content: string //内容
-    tags: Array<Tag> | null,
+    tags: Array<Tag> | null
     categoryId: number
     state?: 0 | 1 | 2
-    ctime?: Date | undefined,
-    mtime?: Date | undefined
+    ctime?: Date
+    mtime?: Date
 }
 
 declare interface IpInfo {
@@ -263,3 +264,4 @@ declare interface NotifyCount {
     '6': number
     '7': number
 }
+

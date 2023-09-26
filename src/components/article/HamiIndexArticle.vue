@@ -8,7 +8,12 @@ import { ArticleService } from '@/service/modules/article.ts'
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import HamiArticleCard from '@/components/article/HamiArticleCard.vue'
 //interface
-
+interface IndexArticleProps {
+    cateId: number
+}
+const $props = withDefaults(defineProps<IndexArticleProps>(), {
+    cateId: -1
+})
 //router, props, inject, provide
 const tokenStore = useTokenStore()
 const userStore = useUserStore()
@@ -16,35 +21,24 @@ const cateStore = useCateStore()
 const $route = useRoute()
 //custom var
 const cateId = ref<number>(-1)
-const cates = cateStore.cates
 
 // @ts-ignore
 const articleList = ref<InstanceType<typeof HamiScrollList> | null>(null)
 //life cycle
 onMounted(() => {
-    resolveCateId($route.path)
     articleList.value?.init()
 })
 
-
-//watch
-watch(() => $route.path, (newVal: string, oldVal: string) => {
-    console.log(newVal, oldVal)
-    resolveCateId(newVal)
+watch(() => $props.cateId, (newVal, oldVal) => {
     articleList.value?.init()
 })
+
 //fun
-
-const resolveCateId = (path: string) => {
-    if (path in cates && cates[path as CateRoutePath] !== cateId.value) {
-        cateId.value = cates[path as CateRoutePath]
-    }
-}
 const getArticles = async (pageNum: number, pageSize: number): Promise<PageData<Article>> => {
-    return ArticleService.listRecommendArticles({
+    return ArticleService.listNewestArticles({
         pageNum: pageNum,
         pageSize: pageSize,
-        cateId: cateId.value
+        cateId: $props.cateId
     })
 }
 </script>

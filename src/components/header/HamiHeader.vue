@@ -2,9 +2,10 @@
 import { computed, onBeforeMount, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import HamiLogo from '@/components/common/HamiLogo.vue'
-import HeaderAvatar from '@/components/common/HeaderAvatar.vue'
+import HeaderAvatar from '@/components/header/HeaderAvatar.vue'
 import { Message } from '@element-plus/icons-vue'
 import { NotifyService } from '@/service/modules/notify.ts'
+import useUserStore from '@/store/modules/user.ts'
 //interface
 type NavItem = {
     name: string,
@@ -12,6 +13,7 @@ type NavItem = {
 }
 //router, props, inject, provide
 const $router = useRouter()
+const userStore = useUserStore()
 //custom var
 const nav = reactive([
     {
@@ -58,6 +60,10 @@ const getNotifyCount = async () => {
     })
     messageCount.value = c
 }
+const toCollect = () => {
+    $router.push("/user/space/" + userStore.userInfo.userId + "/collects")
+}
+
 </script>
 <template>
     <div class="hami-page-header">
@@ -104,7 +110,7 @@ const getNotifyCount = async () => {
                             消息
                         </span>
                     </div>
-                    <div class="option-item">
+                    <div class="option-item" @click="toCollect">
                         <el-icon size="20">
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">

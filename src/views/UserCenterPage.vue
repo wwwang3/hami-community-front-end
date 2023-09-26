@@ -1,7 +1,8 @@
 <script setup lang="ts">
+
 import { computed, onBeforeMount } from "vue"
 import { useRoute, useRouter } from "vue-router"
-import { Setting } from '@element-plus/icons-vue'
+import { ArrowLeft, Position, Postcard, Setting, User } from '@element-plus/icons-vue'
 import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils/message.ts'
 //interface
@@ -17,14 +18,6 @@ const activeMode = computed(() => {
 
 //life cycle
 onBeforeMount(async () => {
-    // await userStore.sync()
-    // if (!userStore.logined) {
-    //     //未登录
-    //     $message.confirm("请登录后访问")
-    //         .finally(() => {
-    //             $router.replace("/")
-    //         })
-    // }
 })
 //watch
 
@@ -33,7 +26,7 @@ const changeMode = async (path: string) => {
     await $router.replace(path)
 }
 const goBack = () => {
-    $router.replace("/user/space")
+    $router.replace("/user/space/" + userStore.userInfo.userId)
 }
 </script>
 <template>
@@ -78,7 +71,10 @@ const goBack = () => {
                 </div>
             </div>
             <div class="user-center-body">
-                <router-view></router-view>
+                <router-view v-slot="{ Component }">
+                    <Component :is="Component"></Component>
+                </router-view>
+                <!--                <router-view></router-view>-->
             </div>
         </div>
     </div>
@@ -140,6 +136,7 @@ const goBack = () => {
             margin-bottom: 6px;
             padding: 6px 0 6px 16px;
             transition: all .3s;
+
             .icon {
                 margin-right: 8px;
             }

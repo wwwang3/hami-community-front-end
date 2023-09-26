@@ -85,6 +85,10 @@ const getSubList = () => {
 const getRoute = (id: number) => {
     return prefix + "article/" + id
 }
+
+const calculateHotIndex = (rank: number) => {
+    return Math.ceil(rank);
+}
 </script>
 <template>
     <div class="hami-hot-article">
@@ -121,7 +125,7 @@ const getRoute = (id: number) => {
                                         fill="currentColor"></path>
                                 </svg>
                             </el-icon>
-                            <span class="hot-index">{{item.hotRank}}</span>
+                            <span class="hot-index">{{ calculateHotIndex(item.hotRank) }}</span>
                         </span>
                     </a>
                 </div>
@@ -243,7 +247,7 @@ const getRoute = (id: number) => {
         .title {
             color: var(--hami-text-7);
             display: block;
-            width: 100%;
+            max-width: 130px;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;

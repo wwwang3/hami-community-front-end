@@ -229,7 +229,7 @@ const checkParam = () => {
         <HamiMdEditor v-if="!onLoading" v-model="draft.content"></HamiMdEditor>
         <el-popover
             ref="publishPopRef"
-            title="发表文章"
+            :title="text"
             :virtual-ref="buttonRef"
             virtual-triggering
             trigger="click"

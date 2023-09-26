@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue"
-import { RouteLocationMatched, useRoute, useRouter } from "vue-router"
+import { NavigationFailure, RouteLocationMatched, useRoute, useRouter } from "vue-router"
 import { Grid, HomeFilled } from '@element-plus/icons-vue'
+import { MenuItemClicked } from 'element-plus'
 //interface
 
 //router, props, inject, provide
@@ -33,7 +34,8 @@ watch(() => $route.path, (newValue, oldValue) => {
     }
 })
 //fun
-const handleSelect = (index: string, indexPath: string) => {
+const handleSelect = (index: string, indexPath: string[], item: MenuItemClicked,
+                      routeResult?: Promise<void | NavigationFailure> | undefined): any => {
     console.log("handle Select");
     console.log(index, indexPath);
     $router.push(index)
@@ -121,7 +123,7 @@ const handleClick = () => {
     }
 
     .creator-nav {
-        min-width: 240px;
+        min-width: 230px;
         background-color: var(--hami-bg);
         padding: 16px 16px;
         min-height: 500px;

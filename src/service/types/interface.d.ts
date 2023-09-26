@@ -14,9 +14,11 @@ declare interface AuthServiceApi {
 }
 
 declare interface UserServiceApi {
-    getLoginProfile(): Promise<SimpleUserInfo>
+    getLoginProfile(): Promise<LoginProfile>
 
     getUserProfile(): Promise<UserProfile>
+
+    getAuthorInfo(user_id: number): Promise<User>
 
     updateUserProfile(params: UserProfileParam): Promise<any>
 
@@ -77,7 +79,7 @@ declare interface UserInteractApi {
 
     listUserLikeArticle(param: UserArticleParam): Promise<PageData<Article>>
 
-    listUserFollow(param: UserArticleParam): Promise<PageData<User>>
+    listUserFollowing(param: UserArticleParam): Promise<PageData<User>>
 
     listUserFollower(param: UserArticleParam): Promise<PageData<User>>
 

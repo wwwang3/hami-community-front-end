@@ -126,7 +126,7 @@ const handleCancel = () => {
 
 <style scoped lang="less">
 .hami-account-setting {
-    min-height: 540px;
+    min-height: 500px;
     padding: 20px 24px;
     background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);

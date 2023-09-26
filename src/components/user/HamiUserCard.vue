@@ -19,14 +19,18 @@ const userStore = useUserStore()
 const [state, handleAction] = useFollow($props.user?.followed)
 //life cycle
 
+const link = computed(() => {
+    return "/user/space/" + $props.user.userId
+})
+
 //watch
-watch(() => $props.user.followed, (newVal, oldVal) => {
+watch(() => $props.user?.followed, (newVal, oldVal) => {
     state.value = newVal
 })
 
 //fun
 const handleFollow = () => {
-    if (userStore.isAuthor($props.user.userId)) {
+    if (userStore.isSelf($props.user.userId)) {
         return
     }
     handleAction($props.user.userId).then(active => {
@@ -50,21 +54,21 @@ const hasText = () => {
 </script>
 <template>
     <div class="hami-user-card">
-        <div class="header">
+        <router-link class="header" :to="link">
             <div class="avatar">
                 <el-avatar :size="54" :src="user?.avatar"></el-avatar>
             </div>
             <div class="info">
-                <el-text class="username" truncated size="large">
+                <el-text class="username" truncated size="large" tag="div">
                     {{ user?.username }}
                 </el-text>
                 <div class="job">
-                    <span>{{ user?.position }}</span>
-                    <span v-if="hasText()">@</span>
-                    <span>{{ user?.company }}</span>
+                    <el-text truncated>{{ user?.position }}</el-text>
+                    <el-text v-if="hasText()" class="at">@</el-text>
+                    <el-text truncated>{{ user?.company }}</el-text>
                 </div>
             </div>
-        </div>
+        </router-link>
         <div class="bottom">
             <div class="bottom-item">
                 <div class="count">{{ user?.stat.totalArticles }}</div>
@@ -79,7 +83,7 @@ const hasText = () => {
                 <div class="text">粉丝</div>
             </div>
         </div>
-        <div class="btn-group" v-if="!userStore.isAuthor(user?.userId)">
+        <div class="btn-group" v-if="!userStore.isSelf(user?.userId)">
             <el-button type="info" @click="handleFollow" v-if="state" plain>取消关注</el-button>
             <el-button type="primary" @click="handleFollow" v-else>关注</el-button>
             <el-button type="primary" plain @click="handleChat">私信</el-button>
@@ -92,6 +96,7 @@ const hasText = () => {
     .header {
         display: flex;
         justify-content: space-between;
+        align-items: center;
 
         .info {
             flex: 1;
@@ -99,8 +104,17 @@ const hasText = () => {
             margin-left: 10px;
 
             .username {
-                margin-top: 10px;
                 color: var(--hami-text);
+                font-size: 17px;
+                font-weight: 600;
+            }
+            .job {
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+            }
+            .at {
+                margin: 0 4px;
             }
         }
     }

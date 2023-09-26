@@ -16,68 +16,56 @@ const routes: RouteRecordRaw[] = [
         path: "/",
         name: "Index",
         component: () => import("@/views/IndexPage.vue"),
-        children: [
-            {
-                path: "",
-                name: "IndexDefault",
-                component: () => import("@/components/article/HamiIndexArticle.vue")
-            },
-            {
-                path: "/recommend",
-                name: "IndexRecommend",
-                component: () => import("@/components/article/HamiIndexArticle.vue")
-            },
-            {
-                path: "",
-                name: "IndexDefault",
-                component: () => import("@/components/article/HamiIndexArticle.vue")
-            },
-            {
-                path: "/backend",
-                name: "IndexBackend",
-                component: () => import("@/components/article/HamiIndexArticle.vue")
-            },
-            {
-                path: "/front-end",
-                name: "IndexFrontend",
-                component: () => import("@/components/article/HamiIndexArticle.vue")
-            },
-            {
-                path: "/android",
-                name: "IndexAndroid",
-                component: () => import("@/components/article/HamiIndexArticle.vue")
-            },
-            {
-                path: "/ios",
-                name: "IndexIOS",
-                component: () => import("@/components/article/HamiIndexArticle.vue")
-            },
-            {
-                path: "/ai",
-                name: "IndexAi",
-                component: () => import("@/components/article/HamiIndexArticle.vue")
-            },
-            {
-                path: "/tool",
-                name: "IndexTool",
-                component: () => import("@/components/article/HamiIndexArticle.vue")
-            },
-            {
-                path: "/coding",
-                name: "IndexCoding",
-                component: () => import("@/components/article/HamiIndexArticle.vue")
-            },
-            {
-                path: "/reading",
-                name: "IndexReading",
-                component: () => import("@/components/article/HamiIndexArticle.vue")
-            },
-            {
-                path: "/follow",
-                name: "IndexFollow",
-                component: () => import("@/components/article/HamiFollowUserArticle.vue")
-            }
-        ]
+    },
+    {
+        path: "/recommend",
+        name: "IndexRecommend",
+        component: () => import("@/views/IndexPage.vue"),
+    },
+    {
+        path: "/backend",
+        name: "IndexBackend",
+        component: () => import("@/views/IndexPage.vue"),
+    },
+    {
+        path: "/front-end",
+        name: "IndexFrontend",
+        component: () => import("@/views/IndexPage.vue"),
+    },
+    {
+        path: "/android",
+        name: "IndexAndroid",
+        component: () => import("@/views/IndexPage.vue"),
+    },
+    {
+        path: "/ios",
+        name: "IndexIOS",
+        component: () => import("@/views/IndexPage.vue"),
+    },
+    {
+        path: "/ai",
+        name: "IndexAi",
+        component: () => import("@/views/IndexPage.vue"),
+    },
+    {
+        path: "/tool",
+        name: "IndexTool",
+        component: () => import("@/views/IndexPage.vue"),
+    },
+    {
+        path: "/coding",
+        name: "IndexCoding",
+        component: () => import("@/views/IndexPage.vue"),
+    },
+    {
+        path: "/reading",
+        name: "IndexReading",
+        component: () => import("@/views/IndexPage.vue"),
+    },
+    {
+        path: "/follow",
+        name: "IndexFollow",
+        component: () => import("@/views/IndexPage.vue"),
     },
     {
         path: "/article/:id(\\d+)",
@@ -137,12 +125,41 @@ const routes: RouteRecordRaw[] = [
         ]
     },
     {
-        path: "/user/space/:userId",
+        path: "/user/space/:id(\\d+)",
         component: () => import("@/views/UserSpacePage.vue"),
+        props: true,
         children: [
-            // {
-            //     path: "/articles",
-            // }
+            {
+                path: "",
+                name: "UserSpaceDefault",
+                props: true,
+                component: () => import("@/components/user/HamiUserArticles.vue")
+
+            },
+            {
+                path: "articles",
+                name: "UserArticles",
+                props: true,
+                component: () => import("@/components/user/HamiUserArticles.vue")
+            },
+            {
+                path: "likes",
+                name: "UserLike",
+                props: true,
+                component: () => import("@/components/user/HamiUserLike.vue")
+            },
+            {
+                path: "collects",
+                name: "UserCollect",
+                props: true,
+                component: () => import("@/components/user/HamiUserCollect.vue")
+            },
+            {
+                path: "follows",
+                name: "UserFollow",
+                props: true,
+                component: () => import("@/components/user/HamiUserFollow.vue")
+            }
         ]
     },
     {
@@ -163,6 +180,16 @@ const routes: RouteRecordRaw[] = [
                 path: "/creator/content",
                 name: "CreatorContent",
                 component: () => import("@/components/creator/HamiCreatorContent.vue"),
+            },
+            {
+                path: "/creator/tool/import",
+                name: "CreatorTool",
+                component: () => import("@/components/creator/HamiCreatorTool.vue")
+            },
+            {
+                path: "/creator/help/question",
+                name: "CreatorHelpQuestion",
+                component: () => import("@/components/creator/HamiCreatorHelp.vue")
             }
         ]
     },
@@ -184,7 +211,7 @@ const router: Router = createRouter({
     routes: routes
 })
 
-const needLoginPages: Array<string> = []
+const needLoginPages: Array<string> = ["/"]
 
 /**
  * 全局路由守卫

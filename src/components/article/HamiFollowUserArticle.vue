@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed } from "vue"
 import { useRoute, useRouter } from "vue-router"
+import { ArticleService } from '@/service/modules/article.ts'
+import useUserStore from '@/store/modules/user.ts'
+import fetchErrorImg from '../../../assets/load-error.685235d2.png'
 //interface
 
+const userStore = useUserStore()
+const $router = useRouter()
 //router, props, inject, provide
-
+const logined = ref(userStore.logined)
+const followUserArticleList = ref()
+onMounted(() => {
+    followUserArticleList.value?.init()
+})
 //custom var
 
 //life cycle
@@ -12,12 +21,55 @@ import { useRoute, useRouter } from "vue-router"
 //watch
 
 //fun
+const handleQuery = (current: number, size: number) => {
+    return ArticleService.listFollowUserUserArticles({
+        pageNum: current,
+        pageSize: size
+    })
+}
 
+const handleClick = () => {
+    $router.replace("/login")
+}
 </script>
 <template>
-
+    <div class="hami-follow-user-articles">
+        <HamiScrollList
+            ref="followUserArticleList"
+            :query="handleQuery"
+            no-data-text="还没有文章"
+            key-property="id"
+            :show-no-more="false"
+            v-if="logined"
+        >
+            <template #item="data">
+                <HamiArticleCard :article="data.item" border></HamiArticleCard>
+            </template>
+        </HamiScrollList>
+        <template v-else>
+            <el-empty :image="fetchErrorImg" style="--el-empty-image-width: 200px"
+                      description="加载失败">
+                <el-button @click="handleClick">登录</el-button>
+            </el-empty>
+        </template>
+    </div>
 </template>
 
 <style scoped lang="less">
-
+    .hami-follow-user-articles {
+        .list-item {
+            border-radius: var(--hami-radius);
+            margin-top: 16px;
+            transition: all .3s;
+            &:first-child {
+                margin-top: 0;
+            }
+            &:hover {
+                box-shadow: var(--el-box-shadow);
+            }
+            &:last-child {
+                margin-bottom: 20px;
+            }
+        }
+    }
 </style>

@@ -1,31 +1,30 @@
 <script setup lang="ts">
-import { onBeforeMount, Ref, ref } from "vue"
+import { computed, onBeforeMount, Ref, ref } from "vue"
 import useUserStore from "@/store/modules/user.ts"
-import { useTokenStore } from '@/store/modules/token.ts'
 import { useRouter } from 'vue-router'
-import { $message } from '@/utils/message.ts'
-import { isEmpty } from '@/utils'
 import defaultAvatar from "/assets/avatar.jpg"
+import HeaderUserCard from '@/components/header/HeaderUserCard.vue'
 //interface
 
 //router, props, inject, provide
 const $router = useRouter();
 const userStore = useUserStore()
-const tokenStore = useTokenStore()
 //custom var
 const avatarRef = ref()
 const popoverRef = ref<HTMLElement>()
 const avatarHover = ref<string>("hami-avatar-normal")
-const userInfo = ref<SimpleUserInfo>() as Ref<SimpleUserInfo>
+const userInfo = ref<LoginProfile>()
 const logined = ref<boolean>(false)
 const visible = ref(false)
+
+const spaceRoute = computed(() => {
+    return "/user/space/" + userInfo.value.userId
+})
 //life cycle
 onBeforeMount(async () => {
     try {
         userInfo.value = await userStore.getProfile()
-        if (!isEmpty(userInfo.value)) {
-            logined.value = true
-        }
+        logined.value = userStore.logined
     } catch (e) {
         console.log(e)
         logined.value = false
@@ -51,12 +50,12 @@ const avatarMouseLeave = () => {
         <template v-if="logined">
             <div class="hami-avatar-container" :class="avatarHover" ref="avatarRef"
                  @mouseenter="avatarMouseEnter" @mouseleave="avatarMouseLeave">
-                <a href="/" class="hami-avatar normal">
+                <router-link :to="spaceRoute" class="hami-avatar normal">
                     <img :src="userInfo?.avatar || defaultAvatar" alt="" class="avatar">
-                </a>
-                <a href="/" class="hami-avatar large">
+                </router-link>
+                <router-link :to="spaceRoute" class="hami-avatar large">
                     <img :src="userInfo?.avatar || defaultAvatar" alt="" class="avatar">
-                </a>
+                </router-link>
                 <el-popover
                     ref="popoverRef"
                     :virtual-ref="avatarRef"
@@ -71,7 +70,7 @@ const avatarMouseLeave = () => {
                     :visible="visible"
                 >
                     <template #default>
-                        <HamiUserCardV1 :user-info="userInfo"></HamiUserCardV1>
+                        <HeaderUserCard :user-info="userInfo"></HeaderUserCard>
                     </template>
                 </el-popover>
             </div>

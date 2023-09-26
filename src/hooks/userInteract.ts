@@ -26,7 +26,7 @@ type ActionStateProps<T extends Array<any>> = {
 
 type ActionFun<TParams extends Array<any>> = (...params: TParams) => Promise<boolean>;
 
-type ActionResult<T extends Array<any>> = [ Ref<boolean>, ActionFun<T>]
+type ActionResult<T extends Array<any>> = [Ref<boolean>, ActionFun<T>]
 
 function check(onRequest: Ref<Boolean>, checkLogin: boolean) {
     console.log(onRequest.value)
@@ -43,7 +43,7 @@ function check(onRequest: Ref<Boolean>, checkLogin: boolean) {
 
 export function useAction<T extends any[] = any[]>(props: ActionStateProps<T>): ActionResult<T> {
     const { active = false } = props || { active: false }
-    const {checkLogin = true} = props || {checkLogin: true}
+    const { checkLogin = true } = props || { checkLogin: true }
     const _active = ref<boolean>(active)
     const [onLoading, process] = useAutoLoading()
     const handleAction: ActionFun<T> = async (...params): Promise<boolean> => {
@@ -66,7 +66,7 @@ export function useAction<T extends any[] = any[]>(props: ActionStateProps<T>): 
         }
     }
 
-    return [ _active, handleAction]
+    return [_active, handleAction]
 }
 
 export function useFollow(followed: boolean): ActionResult<[number]> {

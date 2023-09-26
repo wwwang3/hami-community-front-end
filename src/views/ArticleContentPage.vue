@@ -1,39 +1,37 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, watch, onBeforeMount } from "vue"
-import { useRoute, useRouter } from "vue-router"
-import { useAutoLoading, useRequest } from '@/hooks'
+import { ref, computed, watch, onBeforeMount } from "vue"
+import { useRequest } from '@/hooks'
 import { ArticleService } from '@/service/modules/article.ts'
-import { Calendar, ChatDotSquare, View } from '@element-plus/icons-vue'
-import { UserInteractService } from '@/service/modules/interact.ts'
-import { Ref } from 'vue/dist/vue'
+import { Calendar, Clock, Files, FirstAidKit, View } from '@element-plus/icons-vue'
 import { $message } from '@/utils/message.ts'
-import useUserStore from '@/store/modules/user.ts'
 import { formatDateTime } from '@/utils'
 import HamiMdViewer from '@/components/md/HamiMdViewer.vue'
 import { MdCatalog } from 'md-editor-v3'
 import HamiUserCard from '@/components/user/HamiUserCard.vue'
-//interface
+import { useCateStore } from '@/store/modules/category.ts'
+import { useCollect, useLike } from '@/hooks/userInteract.ts'
 
-
-//router, props, inject, provide
-
+defineOptions({})
 const $props = defineProps<{
     id: string
 }>()
-const $router = useRouter()
-const $route = useRoute()
-const userStore = useUserStore()
-
+const [onLoading, getArticleContent] = useRequest({
+    loading: true,
+    run: (...params) => ArticleService.getArticleContent(...params as Parameters<typeof ArticleService.getArticleContent>)
+})
+const cateStore = useCateStore()
 const articleId = ref<number>(parseInt($props.id))
 const article = ref<ArticleContent>({} as ArticleContent)
+
 const mdId = "hami-md-viewer"
 const scrollElement = document.documentElement;
-
+const cateRoute = ref('/')
 
 const activeLikeType = computed(() => {
     return article.value?.liked ? "primary" : "info"
 })
 
+const inited = ref(false)
 const activeCollectType = computed(() => {
     return article.value?.collected ? "primary" : "info"
 })
@@ -43,26 +41,28 @@ const ctime = computed(() => {
     return formatDateTime(time, "YYYY-MM-DD")
 })
 
+const mtime = computed(() => {
+    let time = article.value?.articleInfo.mtime
+    return formatDateTime(time, "YYYY-MM-DD")
+})
+
+const words = computed(() => {
+    let count = article.value?.content.length || 0
+    return count > 1000 ? (count / 1000).toFixed(1) + "k" : count
+})
+
+const viewTime = computed(() => {
+    return Math.ceil((article.value?.content.length || 0) / 275)
+})
+
+// const
 const userLink = computed(() => {
     return "/user/space/" + article.value?.author?.userId
 })
 //custom var
-const [onLoading, getArticleContent] = useRequest({
-    run: (...params) => ArticleService.getArticleContent(...params as Parameters<typeof ArticleService.getArticleContent>)
-})
-const inited = ref<boolean>(false)
 
 onBeforeMount(async () => {
-    try {
-        await getArticle()
-    } catch (e) {
-
-    } finally {
-        inited.value = true
-    }
-})
-//life cycle
-onMounted(async () => {
+    await getArticle()
 })
 //watch
 watch(() => $props.id, (newVal, oldVal) => {
@@ -73,71 +73,53 @@ watch(() => $props.id, (newVal, oldVal) => {
 })
 //fun
 
-const [onLike, processLike] = useAutoLoading()
-const [onCollect, processCollect] = useAutoLoading()
-const handleLike = async () => {
-    try {
-        await check(onLike)
-        if (article.value?.liked) {
-            //已经点赞
-            await processLike(UserInteractService.cancelLike({
-                itemId: article.value.id,
-                itemType: 1
-            }))
-            article.value.stat.likes--
-            article.value.liked = false
-        } else {
-            await processLike(UserInteractService.like({
-                itemId: article.value.id,
-                itemType: 1
-            }))
+const [liked, processLike] = useLike(article.value?.liked)
+const [collected, processCollect] = useCollect(article.value?.collected)
+const handleLike = () => {
+    processLike({
+        itemId: article.value.id,
+        itemType: 1
+    }).then(state => {
+        if (state) {
             article.value.stat.likes++
             article.value.liked = true
-        }
-    } catch (e) {
-        console.log(e)
-    }
-}
-const handleCollect = async () => {
-    try {
-        await check(onCollect)
-        if (article.value?.collected) {
-            //已经点赞
-            await processCollect(UserInteractService.cancelCollect(articleId.value))
-            article.value.stat.collects--
-            article.value.collected = false
         } else {
-            await processCollect(UserInteractService.collect(articleId.value))
-            article.value.stat.collects++
-            article.value.collected = true
+            article.value.stat.likes--
+            article.value.liked = false
         }
-    } catch (e) {
-
-    }
+    }).catch(e => {
+        $message.error("点赞失败")
+    })
 }
-
-const handleComment = () => {
-
-}
-const check = async (ref: Ref<boolean>) => {
-    if (!userStore.logined) {
-        $message.notifyError("请登录后访问")
-        return Promise.reject()
-    }
-    if (ref.value) {
-        $message.error("上个请求还没处理完(´･_･`)")
-        return Promise.reject()
-    }
+const handleCollect = () => {
+    processCollect(article.value.id)
+        .then(state => {
+            if (state) {
+                article.value.stat.collects++
+                article.value.collected = true
+            } else {
+                article.value.stat.collects--
+                article.value.collected = false
+            }
+        })
+        .catch(e => {
+            $message.error("收藏失败")
+        })
 }
 
 const getArticle = async () => {
     try {
+        inited.value = false
         article.value = await getArticleContent(articleId.value)
+        liked.value = article.value.liked
+        collected.value = article.value.collected
+        cateRoute.value = cateStore.findCateRoure(article.value.category.categoryId)
     } catch (e) {
         console.log(e)
+    } finally {
+        inited.value = true
     }
 }
-
 
 </script>
 <template>
@@ -149,24 +131,61 @@ const getArticle = async () => {
                         {{ article.articleInfo?.title }}
                     </div>
                     <div class="info">
-                        <el-text class="author item" truncated>
+                        <el-text class="author" truncated>
                             <router-link :to="userLink">
                                 {{ article.author?.username }}
                             </router-link>
                         </el-text>
+                    </div>
+                    <div class="meta-data">
                         <div class="ctime item">
                             <el-icon>
                                 <Calendar/>
                             </el-icon>
-                            <span class="time">
+                            <span class="text">
                                 {{ ctime }}
                             </span>
+                        </div>
+                        <div class="mtime item">
+                            <el-icon>
+                                <svg viewBox="0 0 1024 1024"
+                                     xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+                                    <path
+                                        d="M512.736 992a483.648 483.648 0 0 1-164.672-28.8 36.88 36.88 0 1 1 25.104-69.36 407.456 407.456 0 1 0-184.608-136.512A36.912 36.912 0 0 1 129.488 801.6a473.424 473.424 0 0 1-97.472-290A480 480 0 1 1 512.736 992z"
+                                        fill="currentColor"></path>
+                                    <path
+                                        d="M685.6 638.592a32 32 0 0 1-14.032-2.96l-178.048-73.888a36.8 36.8 0 0 1-22.912-34.016V236.672a36.944 36.944 0 1 1 73.888 0v266.72l155.2 64.272a36.336 36.336 0 0 1 19.952 48 37.616 37.616 0 0 1-34.048 22.928z"
+                                        fill="currentColor"></path>
+                                </svg>
+                            </el-icon>
+                            <span class="text">{{ mtime }}</span>
+                        </div>
+                        <div class="words item">
+                            <el-icon>
+                                <svg class="icon" viewBox="0 0 1024 1024"
+                                     xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+                                    <path
+                                        d="M854.6 288.6L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326z m1.8 562H232V136h302v216c0 23.2 18.8 42 42 42h216v494z"></path>
+                                    <path
+                                        d="M528.1 472h-32.2c-5.5 0-10.3 3.7-11.6 9.1L434.6 680l-46.1-198.7c-1.3-5.4-6.1-9.3-11.7-9.3h-35.4c-1.1 0-2.1 0.1-3.1 0.4-6.4 1.7-10.2 8.3-8.5 14.7l74.2 276c1.4 5.2 6.2 8.9 11.6 8.9h32c5.4 0 10.2-3.6 11.6-8.9l52.8-197 52.8 197c1.4 5.2 6.2 8.9 11.6 8.9h31.8c5.4 0 10.2-3.6 11.6-8.9l74.4-276c0.3-1 0.4-2.1 0.4-3.1 0-6.6-5.4-12-12-12H647c-5.6 0-10.4 3.9-11.7 9.3l-45.8 199.1-49.8-199.3c-1.3-5.4-6.1-9.1-11.6-9.1z"
+                                    ></path>
+                                </svg>
+                            </el-icon>
+                            <span class="text">
+                                字数: {{ words }}
+                            </span>
+                        </div>
+                        <div class="view-time item">
+                            <el-icon>
+                                <Clock/>
+                            </el-icon>
+                            <span class="text">阅读时长: {{ viewTime }}分钟</span>
                         </div>
                         <div class="views item">
                             <el-icon>
                                 <View/>
                             </el-icon>
-                            <span class="count">{{ article.stat?.views }}</span>
+                            <span class="text">阅读量: {{ article.stat?.views }}</span>
                         </div>
                     </div>
                     <div class="content">
@@ -174,16 +193,6 @@ const getArticle = async () => {
                     </div>
                     <div class="content-bottom">
                         <div class="tags">
-<!--                            <el-icon size="20">-->
-<!--                                <svg viewBox="0 0 1024 1024"-->
-<!--                                     xmlns="http://www.w3.org/2000/svg" p-id="5355"-->
-<!--                                     width="200"-->
-<!--                                     height="200">-->
-<!--                                    <path-->
-<!--                                        d="M469.333533 968.08a52.986667 52.986667 0 0 1-37.713333-15.62l-416-416A52.986667 52.986667 0 0 1 0.0002 498.746667V138.666667a53.393333 53.393333 0 0 1 53.333333-53.333334h360.08a52.986667 52.986667 0 0 1 37.713334 15.62l416 416a53.4 53.4 0 0 1 0 75.426667l-360.08 360.08a52.986667 52.986667 0 0 1-37.713334 15.62zM53.333533 128a10.666667 10.666667 0 0 0-10.666666 10.666667v360.08a10.573333 10.573333 0 0 0 3.126666 7.54l416 416a10.666667 10.666667 0 0 0 15.08 0l360.08-360.08a10.666667 10.666667 0 0 0 0-15.08l-416-416a10.573333 10.573333 0 0 0-7.54-3.126667z m224 341.333333c-58.813333 0-106.666667-47.853333-106.666666-106.666666s47.853333-106.666667 106.666666-106.666667 106.666667 47.853333 106.666667 106.666667-47.853333 106.666667-106.666667 106.666666z m0-170.666666a64 64 0 1 0 64 64 64.073333 64.073333 0 0 0-64-64z m335.086667 676.42l382.706667-382.706667a53.4 53.4 0 0 0 0-75.426667L569.753533 91.58a21.333333 21.333333 0 0 0-30.173333 30.173333l425.373333 425.373334a10.666667 10.666667 0 0 1 0 15.08l-382.706666 382.706666a21.333333 21.333333 0 0 0 30.173333 30.173334z"-->
-<!--                                        fill="currentColor"></path>-->
-<!--                                </svg>-->
-<!--                            </el-icon>-->
                             <span>标签: </span>
                             <template v-for="tag in article.tags">
                                 <el-tag type="info" size="large">
@@ -192,18 +201,10 @@ const getArticle = async () => {
                             </template>
                         </div>
                         <div class="category">
-<!--                            <el-icon size="18">-->
-<!--                                <svg viewBox="0 0 1194 1024"-->
-<!--                                     xmlns="http://www.w3.org/2000/svg" width="200" height="200">-->
-<!--                                    <path-->
-<!--                                        d="M1111.167537 860.160068H81.023966A80.8533 80.8533 0 0 0 0 940.800035v0.426666c0 44.543981 36.266652 80.639966 81.023966 80.639967h1030.143571a80.8533 80.8533 0 0 0 81.023966-80.639967v-0.426666c0-44.543981-36.309318-80.639966-81.066633-80.639967m-0.383999-430.59182H81.493299A81.237299 81.237299 0 0 0 0 510.634881v0.639999c0 44.714648 36.437318 81.066633 81.450633 81.066633h1029.290238c44.970648 0 81.450633-36.351985 81.450632-81.066633v-0.639999c0-44.799981-36.479985-81.066633-81.450632-81.066633M1111.167537 0.000427H81.023966A80.8533 80.8533 0 0 0 0 80.640393v0.426667c0 44.543981 36.266652 80.639966 81.023966 80.639966h1030.143571a80.8533 80.8533 0 0 0 81.023966-80.639966v-0.426667c0-44.501315-36.309318-80.639966-81.066633-80.639966"-->
-<!--                                        fill="currentColor"></path>-->
-<!--                                </svg>-->
-<!--                            </el-icon>-->
                             <span>分类: </span>
-                            <span class="item">
-                                {{ article?.category.categoryName }}
-                            </span>
+                            <router-link class="item" :to="cateRoute">
+                                {{ article?.category?.categoryName }}
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -242,7 +243,6 @@ const getArticle = async () => {
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                               fill="currentColor"
                                               d="M4.62739 1.25C2.9347 1.25 1.5625 2.6222 1.5625 4.31489L1.56396 12.643C1.56403 14.3356 2.9362 15.7078 4.62885 15.7078H6.48326L6.93691 17.6869L6.93884 17.6948C7.16894 18.6441 8.28598 19.0599 9.08073 18.4921L12.7965 15.7078H15.5001C17.1928 15.7078 18.565 14.3355 18.565 12.6428L18.5635 4.31477C18.5635 2.62213 17.1913 1.25 15.4986 1.25H4.62739ZM5.98265 9.89255C6.68783 9.89255 7.2595 9.32089 7.2595 8.61571C7.2595 7.91053 6.68783 7.33887 5.98265 7.33887C5.27747 7.33887 4.70581 7.91053 4.70581 8.61571C4.70581 9.32089 5.27747 9.89255 5.98265 9.89255ZM9.95604 9.89255C10.6612 9.89255 11.2329 9.32089 11.2329 8.61571C11.2329 7.91053 10.6612 7.33887 9.95604 7.33887C9.25086 7.33887 8.6792 7.91053 8.6792 8.61571C8.6792 9.32089 9.25086 9.89255 9.95604 9.89255ZM15.2124 8.61571C15.2124 9.32089 14.6407 9.89255 13.9355 9.89255C13.2304 9.89255 12.6587 9.32089 12.6587 8.61571C12.6587 7.91053 13.2304 7.33887 13.9355 7.33887C14.6407 7.33887 15.2124 7.91053 15.2124 8.61571Z">
-
                                         </path>
                                     </svg>
                                 </el-icon>
@@ -262,22 +262,7 @@ const getArticle = async () => {
                     </el-badge>
                 </div>
             </el-affix>
-            <el-backtop class="back-top" :right="100" :bottom="64">
-                <template #default>
-                    <el-icon :size="18" color="#1d7dfa">
-                        <svg viewBox="0 0 1024 1024"
-                             xmlns="http://www.w3.org/2000/svg"
-                             data-spm-anchor-id="a313x.7781069.0.i0" width="200" height="200">
-                            <path
-                                d="M780.288 750.592H244.736V415.744C244.736 229.376 396.288 79.872 460.8 24.576c29.696-24.576 71.68-24.576 101.376 0 65.536 55.296 217.088 204.8 217.088 391.168v334.848z m-453.632-81.92h371.712V415.744c0-150.528-128-277.504-186.368-326.656-57.344 49.152-186.368 176.128-186.368 326.656v252.928zM509.952 87.04z"
-                                fill="#1d7dfa"></path>
-                            <path
-                                d="M326.656 750.592H148.48c-43.008 0-78.848-34.816-78.848-78.848v-76.8c0-26.624 13.312-51.2 34.816-65.536l221.184-146.432v367.616z m-175.104-81.92h92.16v-133.12l-92.16 61.44v71.68zM875.52 750.592H697.344V384l221.184 146.432c22.528 14.336 34.816 38.912 34.816 65.536v76.8c1.024 41.984-34.816 77.824-77.824 77.824z m-96.256-81.92h92.16v-71.68l-92.16-61.44v133.12zM513.024 489.472c-64.512 0-116.736-52.224-116.736-116.736S449.536 256 513.024 256s116.736 52.224 116.736 116.736-52.224 116.736-116.736 116.736z m0-151.552c-18.432 0-34.816 15.36-34.816 34.816s15.36 34.816 34.816 34.816 34.816-15.36 34.816-34.816S532.48 337.92 513.024 337.92zM512 1017.856c-22.528 0-40.96-18.432-40.96-40.96v-163.84c0-22.528 18.432-40.96 40.96-40.96s40.96 18.432 40.96 40.96v163.84c0 22.528-18.432 40.96-40.96 40.96zM351.232 953.344c-22.528 0-40.96-18.432-40.96-40.96v-66.56c0-22.528 18.432-40.96 40.96-40.96s40.96 18.432 40.96 40.96v66.56c0 22.528-18.432 40.96-40.96 40.96zM673.792 953.344c-22.528 0-40.96-18.432-40.96-40.96v-66.56c0-22.528 18.432-40.96 40.96-40.96s40.96 18.432 40.96 40.96v66.56c0 22.528-18.432 40.96-40.96 40.96z"
-                            ></path>
-                        </svg>
-                    </el-icon>
-                </template>
-            </el-backtop>
+            <HamiBackTop></HamiBackTop>
         </div>
     </div>
 </template>
@@ -293,6 +278,7 @@ const getArticle = async () => {
 
     .main-content {
         flex: 1;
+        box-shadow: var(--el-box-shadow);
     }
 
     :deep(.el-affix--fixed .options) {
@@ -357,7 +343,7 @@ const getArticle = async () => {
         margin-bottom: 20px;
 
         .title {
-            font-size: 24px;
+            font-size: 30px;
             color: var(--hami-title);
             font-weight: 700;
             margin-bottom: 16px;
@@ -367,50 +353,47 @@ const getArticle = async () => {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
+            color: var(--hami-text-gray);
+        }
 
-            .item {
-                color: var(--hami-text-gray);
+        .meta-data {
+            display: flex;
+            align-items: center;
 
-                &:not(:first-child) {
-                    margin-left: 12px;
-                }
+            .item:not(:first-child) {
+                margin-left: 10px;
             }
 
-            .author.item {
-                max-width: 160px;
-                color: var(--hami-text);
-                transition: all .3s;
+            color: var(--hami-text-gray);
+        }
 
-                &:hover {
-                    color: var(--hami-link-hover);
-                }
+        .item {
+            background: var(--hami-bg-blue);
+            padding: 4px 8px;
+            font-size: 16px;
+            border-radius: var(--hami-radius-small);
+            display: flex;
+            align-items: center;
+            .text {
+                margin-left: 5px;
             }
+        }
 
-            .ctime.item {
-                display: flex;
-                align-items: center;
+        .author {
+            max-width: 160px;
+            color: var(--hami-text);
+            transition: all .3s;
+            font-size: 18px;
 
-                .time {
-                    margin-left: 6px;
-                }
-            }
-
-            .views.item {
-                display: flex;
-                align-items: center;
-
-                .count {
-                    margin-left: 6px;
-                }
+            &:hover {
+                color: var(--hami-link-hover);
             }
         }
 
         .content-bottom {
             display: flex;
             align-items: center;
-            //justify-content: space-between;
-            width: 400px;
-            height: 24px;
+            height: 28px;
             font-size: 14px;
         }
 
@@ -420,9 +403,11 @@ const getArticle = async () => {
             color: var(--hami-text);
             cursor: pointer;
             margin-left: 40px;
+
             .item {
                 color: var(--hami-text-blue);
                 margin-left: 10px;
+                font-size: 16px;
             }
         }
 
@@ -431,6 +416,7 @@ const getArticle = async () => {
             align-items: center;
             //color: var(--hami-text-blue);
             color: var(--hami-text);
+
             .el-tag {
                 margin-left: 16px;
             }
@@ -438,7 +424,7 @@ const getArticle = async () => {
     }
 
     .right-panel {
-        max-width: 260px;
+        max-width: 280px;
         min-width: 240px;
         margin-left: 24px;
 
@@ -461,6 +447,15 @@ const getArticle = async () => {
         margin-top: 20px;
         border-radius: var(--hami-radius);
         min-height: 100px;
+        margin-bottom: 20px;
     }
+}
+</style>
+<style>
+.md-editor-catalog-active>span {
+    color: var(--el-menu-active-color);
+}
+.md-editor-catalog-link span:hover {
+    color: var(--el-menu-hover-text-color);
 }
 </style>

@@ -11,7 +11,7 @@ import { ArrowRight, Edit, User } from '@element-plus/icons-vue'
 const tokenStore = useTokenStore()
 const $router = useRouter()
 const $props = withDefaults(defineProps<{
-    userInfo: SimpleUserInfo
+    userInfo: LoginProfile
 }>(), {})
 //life cycle
 //watch
@@ -38,7 +38,7 @@ const joinTime = computed(() => {
         <div class="item tag" v-if="!isEmpty(userInfo.tag)">
             <el-tag size="default">{{ userInfo.tag }}</el-tag>
         </div>
-        <el-text class="item profile" truncated>{{ userInfo.profile }}</el-text>
+        <el-text class="item profile" truncated v-if="!isEmpty(userInfo.profile)">{{ userInfo.profile }}</el-text>
         <div class="item stats">
             <div class="stat-item">
                 <span class="count">{{ userInfo.followings }}</span>
@@ -47,6 +47,10 @@ const joinTime = computed(() => {
             <div class="stat-item">
                 <span class="count">{{ userInfo.followers }}</span>
                 <span class="text">粉丝</span>
+            </div>
+            <div class="stat-item">
+                <span class="count">{{ userInfo.collects }}</span>
+                <span class="text">收藏</span>
             </div>
             <div class="stat-item">
                 <span class="count">{{ userInfo.likes }}</span>
@@ -113,10 +117,13 @@ const joinTime = computed(() => {
         text-align: center;
         height: 32px;
         line-height: 32px;
-        color: var(--hami-title);
+        background: linear-gradient(135deg,#79f1a4,#0e5cad);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
         font-weight: 700;
         font-size: 22px;
-        margin: 10px 0 8px;
+        margin: 10px 0 10px;
     }
 
     .tag {
@@ -148,7 +155,7 @@ const joinTime = computed(() => {
             .count {
                 font-size: 18px;
                 font-weight: 600;
-                color: var(--hami-title);
+                color: var(--hami-text-9);
             }
         }
     }
