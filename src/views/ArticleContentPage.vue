@@ -21,7 +21,9 @@ const [onLoading, getArticleContent] = useRequest({
 })
 const cateStore = useCateStore()
 const articleId = ref<number>(parseInt($props.id))
-const article = ref<ArticleContent>({} as ArticleContent)
+const article = ref<ArticleContent>({
+    content: ''
+} as ArticleContent)
 
 const mdId = "hami-md-viewer"
 const scrollElement = document.documentElement;
@@ -38,21 +40,21 @@ const activeCollectType = computed(() => {
 
 const ctime = computed(() => {
     let time = article.value?.articleInfo?.ctime
-    return formatDateTime(time, "YYYY-MM-DD")
+    return formatDateTime(time)
 })
 
 const mtime = computed(() => {
-    let time = article.value?.articleInfo.mtime
-    return formatDateTime(time, "YYYY-MM-DD")
+    let time = article.value?.articleInfo?.mtime
+    return formatDateTime(time)
 })
 
 const words = computed(() => {
-    let count = article.value?.content.length || 0
+    let count = article.value?.content?.length || 0
     return count > 1000 ? (count / 1000).toFixed(1) + "k" : count
 })
 
 const viewTime = computed(() => {
-    return Math.ceil((article.value?.content.length || 0) / 275)
+    return Math.ceil((article.value?.content?.length || 0) / 275)
 })
 
 // const
@@ -108,8 +110,8 @@ const handleCollect = () => {
 }
 
 const getArticle = async () => {
+    let loading = $message.loading("加载中")
     try {
-        inited.value = false
         article.value = await getArticleContent(articleId.value)
         liked.value = article.value.liked
         collected.value = article.value.collected
@@ -117,15 +119,15 @@ const getArticle = async () => {
     } catch (e) {
         console.log(e)
     } finally {
-        inited.value = true
+        loading?.close()
     }
 }
 
 </script>
 <template>
     <div class="hami-article-content-page">
-        <div class="article-content-container container" v-if="inited">
-            <div class="main-content">
+        <div class="article-content-container container" v-if="!onLoading">
+            <div class="main-content" >
                 <div class="content-wrapper">
                     <div class="title">
                         {{ article.articleInfo?.title }}
@@ -278,7 +280,6 @@ const getArticle = async () => {
 
     .main-content {
         flex: 1;
-        box-shadow: var(--el-box-shadow);
     }
 
     :deep(.el-affix--fixed .options) {
@@ -341,6 +342,7 @@ const getArticle = async () => {
         border-radius: var(--hami-radius);
         background-color: var(--hami-bg);
         margin-bottom: 20px;
+        box-shadow: var(--el-box-shadow);
 
         .title {
             font-size: 30px;
@@ -370,7 +372,7 @@ const getArticle = async () => {
         .item {
             background: var(--hami-bg-blue);
             padding: 4px 8px;
-            font-size: 16px;
+            font-size: 14px;
             border-radius: var(--hami-radius-small);
             display: flex;
             align-items: center;
@@ -448,11 +450,12 @@ const getArticle = async () => {
         border-radius: var(--hami-radius);
         min-height: 100px;
         margin-bottom: 20px;
+        box-shadow: var(--el-box-shadow);
     }
 }
 </style>
 <style>
-.md-editor-catalog-active>span {
+.md-editor-catalog-active > span {
     color: var(--el-menu-active-color);
 }
 .md-editor-catalog-link span:hover {

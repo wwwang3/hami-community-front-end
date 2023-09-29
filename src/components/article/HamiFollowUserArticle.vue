@@ -43,7 +43,7 @@ const handleClick = () => {
             v-if="logined"
         >
             <template #item="data">
-                <HamiArticleCard :article="data.item" border></HamiArticleCard>
+                <HamiArticleCard :article="data.item" class="list-item"></HamiArticleCard>
             </template>
         </HamiScrollList>
         <template v-else>

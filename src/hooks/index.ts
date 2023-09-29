@@ -1,4 +1,4 @@
-import { computed, ComputedRef, reactive, Ref, ref } from "vue"
+import { computed, ComputedRef, reactive, Ref, ref, nextTick} from "vue"
 import { isEmpty } from '@/utils'
 import { UnwrapNestedRefs } from '@vue/reactivity'
 
@@ -76,7 +76,9 @@ export function useRequest<TData, TParams extends any[] = any[]>(props: UseReque
         onRequest.value = true
         return props.run(...params)
             .finally(() => {
-                onRequest.value = false
+                setTimeout(() => {
+                    onRequest.value = false
+                }, 10)
             })
     }
     return [onRequest, process]

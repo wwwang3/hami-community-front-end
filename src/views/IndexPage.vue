@@ -15,32 +15,24 @@ const $route = useRoute()
 const tokenStore = useTokenStore()
 const userStore = useUserStore()
 const cateStore = useCateStore()
-const cateRoute = cateStore.cateRoutes
+const isFollow = computed(() => {
+    return $route.path === "/follow"
+})
 
 const cateId = ref<number>(-1)
 const activePath = ref<string>("/recommend")
 
-//custom var
-
-//life cycle
-onMounted(() => {
-    resolveRoute($route.path)
-})
-//watch
-watch(() => $route.path, (newVal, oldVal) => {
-    resolveRoute(newVal)
-})
-
 const resolveRoute = (route: string) => {
-    console.log(route)
     if (route in cateStore.cates) {
         activePath.value = route === "/" ? "/recommend" : route
         cateId.value = cateStore.cates[route as CateRoutePath]
     }
 }
 
-const isFollow = computed(() => {
-    return $route.path === "/follow"
+watch(() => $route.path, (newVal, oldVal) => {
+    resolveRoute(newVal)
+}, {
+    immediate: true
 })
 
 </script>
@@ -111,13 +103,11 @@ const isFollow = computed(() => {
 
     .left-panel {
         min-width: 180px;
-        margin-right: 20px;
         max-height: 500px;
     }
 
     .right-panel {
         max-width: 280px;
-        margin-left: 20px;
         height: fit-content;
 
         .right-card {
@@ -130,6 +120,7 @@ const isFollow = computed(() => {
 
     .main-panel {
         flex: 1;
+        margin: 0 24px;
     }
 
     .welcome {

@@ -38,15 +38,19 @@ const handleQuery = (current: number, size: number) => {
     })
 }
 
-const handleCancelCollect = (id: number) => {
+const handleCancelCollect = async (id: number) => {
     console.log(id)
-    $message.confirm("确定取消收藏吗?")
-        .then(() => {
-            console.log("s")
-        })
-        .catch(e => {
-            console.log(e)
-        })
+    try {
+        let res = await $message.confirm("确定取消收藏吗?")
+        await UserInteractService.unfollow(id)
+
+        $message.success("取消收藏成功")
+    } catch (e) {
+        console.log(e)
+        if (e !== 'cancel') {
+            $message.error("取消收藏失败")
+        }
+    }
 }
 
 const  isAuthor = (userId: number) => {
@@ -87,6 +91,7 @@ const  isAuthor = (userId: number) => {
         align-items: center;
         opacity: 0;
         transition: opacity .3s;
+        margin-right: 6px;
 
         .text {
             font-size: 13px;

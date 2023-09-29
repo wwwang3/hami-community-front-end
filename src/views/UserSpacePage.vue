@@ -91,6 +91,7 @@ const handleClick = (pane:TabsPaneContext) => {
     .user-space-container {
         position: relative;
         max-width: 1020px;
+        min-width: 800px;
         margin: 24px auto;
         display: flex;
     }

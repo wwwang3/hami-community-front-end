@@ -34,7 +34,7 @@ const handleClick = () => {
     <div class="hami-published">
         <div class="hami-published-body">
             <img :src="published" alt="">
-            <div class="title">《{{article.title}}》</div>
+            <router-link :to="'/article/' + article.id" class="title">《{{article.title}}》</router-link>
             <div class="msg">发表成功! 有你的分享Hami会变得更好~</div>
             <el-button type="primary" @click="handleClick">回到首页</el-button>
         </div>
@@ -53,6 +53,7 @@ const handleClick = () => {
         text-align: center;
     }
     .title {
+        display: block;
         color: var(--hami-title);
         font-size: 18px;
         height: 32px;

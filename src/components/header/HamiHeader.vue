@@ -6,6 +6,7 @@ import HeaderAvatar from '@/components/header/HeaderAvatar.vue'
 import { Message } from '@element-plus/icons-vue'
 import { NotifyService } from '@/service/modules/notify.ts'
 import useUserStore from '@/store/modules/user.ts'
+import HamiSearch from '@/components/header/HamiSearch.vue'
 //interface
 type NavItem = {
     name: string,
@@ -34,7 +35,6 @@ const nav = reactive([
     },
 ])
 const activeNav = ref<string>("首页")
-const search = ref<string>("")
 const messageCount = ref(0)
 //life cycle
 onBeforeMount(async () => {
@@ -60,8 +60,18 @@ const getNotifyCount = async () => {
     })
     messageCount.value = c
 }
+
+const toNotify = () => {
+    $router.replace("/notify")
+}
+
+
 const toCollect = () => {
     $router.push("/user/space/" + userStore.userInfo.userId + "/collects")
+}
+
+const toHistory = () => {
+    $router.replace("/history")
 }
 
 </script>
@@ -85,19 +95,13 @@ const toCollect = () => {
             </div>
             <div class="page-header-right">
                 <div class="page-header-search">
-                    <el-input placeholder="探索Hami" size="large" v-model="search">
-                        <template #suffix>
-                            <el-icon :size="18">
-                                <Search/>
-                            </el-icon>
-                        </template>
-                    </el-input>
+                    <HamiSearch></HamiSearch>
                 </div>
                 <div class="page-header-user">
                     <HeaderAvatar></HeaderAvatar>
                 </div>
                 <div class="page-header-options">
-                    <div class="option-item">
+                    <div class="option-item" @click="toNotify">
                         <el-badge class="badge" :value="messageCount"
                                   :is-dot="messageCount >= 10"
                                   :hidden="messageCount === 0"
@@ -128,7 +132,7 @@ const toCollect = () => {
                             收藏
                         </span>
                     </div>
-                    <div class="option-item">
+                    <div class="option-item" @click="toHistory">
                         <el-icon size="20">
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">

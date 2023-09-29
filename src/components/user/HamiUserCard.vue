@@ -20,7 +20,7 @@ const [state, handleAction] = useFollow($props.user?.followed)
 //life cycle
 
 const link = computed(() => {
-    return "/user/space/" + $props.user.userId
+    return "/user/space/" + $props.user?.userId
 })
 
 //watch

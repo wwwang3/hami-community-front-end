@@ -197,6 +197,21 @@ const routes: RouteRecordRaw[] = [
         path: "/editor/drafts/:id",
         name: "EditorPage",
         component: () => import("@/views/EditorPage.vue"),
+    },
+    {
+        path: "/notify",
+        name: "Notify",
+        component: () => import("@/views/NotifyMsgPage.vue")
+    },
+    {
+        path: "/search",
+        name: "SearchPage",
+        component: () => import("@/views/SearchPage.vue")
+    },
+    {
+        path: "/history",
+        name: "HistoryPage",
+        component: () => import("@/views/HistoryPage.vue")
     }
 ]
 

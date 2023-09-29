@@ -14,7 +14,7 @@ const $route = useRoute()
 const $router = useRouter()
 const userStore = useUserStore()
 
-const userInfo = reactive<SimpleUserInfo>(userStore.userInfo as SimpleUserInfo)
+const userInfo = reactive<LoginProfile>(userStore.userInfo)
 const draftId = ref("")
 const draft = ref<ArticleDraftDetail>({
     id: -1,
@@ -166,7 +166,7 @@ const handleUpdate = async (): Promise<ArticleDraft> => {
 const handleEnsure = async () => {
     //发表文章
     if (!checkParam()) return
-    let loading = $message.loading("。。。")
+    let loading = $message.loading("请稍后...")
     try {
         //先保存
         await handleSave()
@@ -175,10 +175,11 @@ const handleEnsure = async () => {
             return
         }
         let data = await process(ArticleDraftService.publishArticle(draft.value.id))
-        if (!isEmpty(data)) {
+        if (!isEmpty(data) || isEmpty(data.articleId)) {
             //跳转到发表成功页面
+            draft.value.articleId = data.articleId
             $message.notifySuccess("发表成功")
-            window.sessionStorage.setItem("p_articleId", draft.value.articleId + "")
+            window.sessionStorage.setItem("p_articleId", data.articleId + "")
             window.sessionStorage.setItem("p_title", draft.value.title)
             await $router.replace({
                 name: "Published",

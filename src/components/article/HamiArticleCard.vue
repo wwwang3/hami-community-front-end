@@ -111,11 +111,11 @@ const toComment = () => {
                         {{ article.title }}
                     </router-link>
                 </div>
-                <div class="summary-row">
-                    <router-link class="summary" :to="link">
+                <router-link class="summary-row" :to="link">
+                    <span class="summary">
                         {{ article.summary }}
-                    </router-link>
-                </div>
+                    </span>
+                </router-link>
                 <div class="bottom">
                     <div class="stat">
                         <div class="item views">
@@ -263,17 +263,17 @@ const toComment = () => {
     .summary-row {
         display: flex;
         align-items: center;
+        line-height: 1.5rem;
     }
 
     .summary {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
-        max-height: 48px;
         font-size: 14px;
+        word-break: break-all;
         overflow: hidden;
         text-overflow: ellipsis;
-        word-break: break-all;
         color: var(--hami-text);
     }
 

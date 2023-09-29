@@ -100,7 +100,7 @@ const useUserStore = defineStore("user", () => {
         return !isEmpty(userInfo.value) && !isEmpty(userInfo.value.userId) && userInfo.value.userId !== -1
     })
 
-    return { logined, getProfile, sync, userInfo, isSelf: isSelf}
+    return { logined, getProfile, sync, userInfo, isSelf}
 })
 
 export function loadUserStore() {
