@@ -3,6 +3,7 @@ import { ref, reactive, onMounted, computed, inject, Ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { useFollow } from '@/hooks/userInteract.ts'
 import useUserStore from '@/store/modules/user.ts'
+import { $message } from '@/utils/message.ts'
 
 //interface
 interface SimpleUserCardProps {
@@ -15,32 +16,28 @@ const $router = useRouter()
 //router, props, inject, provide
 const [followed, handleAction] = useFollow($props.user?.followed)
 
-const user = inject<Ref<User>>("user") as Ref<User>
-const handleFollow = () => {
+const spaceUser = inject<Ref<User>>("SPACE_USER") as Ref<User>
+const handleFollow = async () => {
     if (userStore.isSelf($props.user.userId)) {
+        $message.error("自己不能关注自己~")
         return
     }
-    console.log(user)
-    handleAction($props.user.userId).then(active => {
-        console.log(11111111)
-        if (userStore.isSelf(user.value?.userId)) {
+    try {
+        let state = await handleAction($props.user.userId)
+        if (userStore.isSelf(spaceUser.value?.userId)) {
             //如果点开的页面是登录用户自己
-            let stat = user.value?.stat
-            if (active) {
+            let stat = spaceUser.value?.stat
+            if (state) {
                 stat.totalFollowings++;
             } else {
                 stat.totalFollowings--;
             }
         }
-    })
+    } catch (e) {
+        $message.error("操作失败")
+    }
 }
-//custom var
 
-//life cycle
-
-//watch
-
-//fun
 const toUserSpace = ()  => {
     return "/user/space/" + $props.user.userId
 }

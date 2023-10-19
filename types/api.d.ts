@@ -200,10 +200,11 @@ declare interface HotArticle {
 }
 
 declare interface ReadingRecord {
-    articleId: number,
-    userId: number,
+    id: number
+    articleId: number
+    userId: number
     readingTime: number | Date
-    article: Article
+    content: Article
 }
 
 declare interface Comment {

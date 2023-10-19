@@ -163,6 +163,7 @@ const handleClick = () => {
     .creator-body {
         flex: 1;
         margin-left: 32px;
+        margin-bottom: 20px;
     }
 }
 </style>

@@ -64,7 +64,7 @@ export const $message: MessageUtils = {
             autofocus: false
         })
     },
-    confirm(msg: string, title = "提示", type = "error"): Promise<MessageBoxData> {
+    confirm(msg: string, title = "提示", type: '' | 'success' | 'warning' | 'info' | 'error'  = 'error'): Promise<MessageBoxData> {
         return ElMessageBox.confirm(msg, title, {
             autofocus: false,
             confirmButtonText: '确定',

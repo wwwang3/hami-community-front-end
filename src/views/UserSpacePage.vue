@@ -29,7 +29,7 @@ const prefix2 = computed(() => {
 
 const activeRoute = ref("articles")
 
-provide("user", user)
+provide("SPACE_USER", user)
 
 onMounted(() => {
     getAuthor()

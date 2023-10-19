@@ -8,18 +8,12 @@ interface UserStatProps {
     ctime: number | undefined
 }
 const $props = defineProps<UserStatProps>()
-//router, props, inject, provide
+
 
 const ctime = computed(() => {
     return formatDateTime($props.ctime as number, "YYYY-MM-DD")
 })
-//custom var
 
-//life cycle
-
-//watch
-
-//fun
 
 </script>
 <template>

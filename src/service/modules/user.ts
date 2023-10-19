@@ -3,10 +3,6 @@ import User from '@/store/modules/user.ts'
 
 const UserService: UserServiceApi = {
 
-    getLoginProfile(): Promise<LoginProfile> {
-        return http.get("/user/me")
-    },
-
     getUserProfile(): Promise<UserProfile> {
         return http.get("/user/profile")
     },

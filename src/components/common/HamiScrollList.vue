@@ -1,7 +1,14 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+export default defineComponent({
+})
+
+</script>
+
 <script setup lang="ts" generic="T">
 import { computed, defineSlots, nextTick, onMounted, reactive, ref } from "vue"
 import { useRequest } from '@/hooks'
-import { isEmpty } from '@/utils'
+import { formatDateTime, isEmpty } from '@/utils'
 import noDataImg from "/assets/nodata02.png"
 import fetchErrorImg from "/assets/load-error.685235d2.png"
 
@@ -17,7 +24,9 @@ interface ScrollListProps {
     noDataText?: string
     keyProperty?: string | undefined,
     showNoMore?: boolean,
-    immediateLoading?: boolean
+    immediateLoading?: boolean,
+    timeline?: boolean,
+    timestampKey?: string, //timeline为true时, 需要指定timestamp-key
     query: (pageNum: number, pageSize: number) => Promise<PageData<T>>
 }
 
@@ -46,7 +55,8 @@ const $props = withDefaults(defineProps<ScrollListProps>(), {
     size: 10,
     noDataText: "还没有数据",
     showNoMore: true,
-    immediateLoading: false
+    immediateLoading: false,
+    timeline: false,
 })
 
 const dataList = reactive<Array<any>>([])
@@ -80,6 +90,10 @@ const disableScroll = computed(() => {
 
 const showEmpty = computed(() => {
     return inited.value && dataList.length === 0
+})
+
+const timestampKey = computed(() => {
+    return $props.timestampKey === undefined ? "ctime" : $props.timestampKey
 })
 
 //life cycle
@@ -141,6 +155,15 @@ const refreshData = (data: any[]) => {
         }
     })
 }
+
+const formatTime = (time: number | Date) => {
+    return formatDateTime(time, "YYYY-MM-DD")
+}
+
+const nodeType = ["info", "success", "danger", "warning"]
+const randomType = () => {
+    return nodeType[Math.floor(Math.random() * 4)]
+}
 </script>
 <template>
     <div class="hami-scroll-list">
@@ -148,9 +171,25 @@ const refreshData = (data: any[]) => {
              v-infinite-scroll="handleScroll"
              :infinite-scroll-disabled="disableScroll"
         >
-            <template v-for="(item, index) in dataList"
-                      :key="keyProperty === undefined ? index : `${item[$props.keyProperty]}`">
-                <slot name="item" v-bind="{item, index, _delete}"></slot>
+            <template v-if="!timeline">
+                <template v-for="(item, index) in dataList"
+                          :key="keyProperty === undefined ? index : `${item[$props.keyProperty]}`">
+                    <slot name="item" v-bind="{item, index, _delete}"></slot>
+                </template>
+            </template>
+            <template v-else>
+                <el-timeline>
+                    <template v-for="(item, index) in dataList"
+                              :key="keyProperty === undefined ? index : `${item[$props.keyProperty]}`">
+                        <el-timeline-item
+                            placement="top"
+                            :timestamp="formatTime(item[timestampKey])"
+                            type="success"
+                        >
+                            <slot name="item" v-bind="{item, index, _delete}"></slot>
+                        </el-timeline-item>
+                    </template>
+                </el-timeline>
             </template>
         </div>
         <el-skeleton :rows="4" animated :throttle="200" :loading="onLoadingMore"></el-skeleton>
@@ -225,6 +264,7 @@ const refreshData = (data: any[]) => {
     background-color: var(--hami-bg);
     border-radius: var(--hami-radius);
 }
+
 .back-top {
     width: 48px;
     height: 48px;

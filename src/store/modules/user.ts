@@ -5,6 +5,7 @@ import store from '@/store'
 import UserService from '@/service/modules/user.ts'
 import { loadTokenStore } from '@/store/modules/token.ts'
 import { useRequest } from '@/hooks'
+import AuthService from '@/service/modules/auth.ts'
 
 const useUserStore = defineStore("user", () => {
 
@@ -33,7 +34,7 @@ const useUserStore = defineStore("user", () => {
     const tokenStore = loadTokenStore()
 
     const [onLoading, process] = useRequest<LoginProfile, any[]>({
-        run: (...params) => UserService.getLoginProfile()
+        run: (...params) => AuthService.getLoginProfile()
     })
     const getProfile = async (): Promise<LoginProfile> => {
         console.log("start to get profile")

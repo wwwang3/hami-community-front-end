@@ -12,7 +12,10 @@ import { useLike } from '@/hooks/userInteract.ts'
 interface ArticleCardProps {
     article: Article,
     comment?: boolean,
-    border?: boolean
+    border?: boolean,
+    reverse?: boolean
+    highlightTitle?: boolean
+    highlightSummary?: boolean
 }
 
 const $slots = defineSlots<{
@@ -21,7 +24,10 @@ const $slots = defineSlots<{
 
 const $props = withDefaults(defineProps<ArticleCardProps>(), {
     comment: true,
-    border: false
+    border: false,
+    reverse: false,
+    highlightTitle: false,
+    highlightSummary: false
 })
 //router, props, inject, provide
 const $route = useRoute()
@@ -85,7 +91,7 @@ const toComment = () => {
 </script>
 <template>
     <div class="hami-article-card">
-        <div class="entry" :class="{'entry-border': border}">
+        <div class="entry" :class="{'entry-border': border, 'reverse': reverse}">
             <div class="article-info">
                 <div class="article-header">
                     <div class="left-panel">
@@ -107,13 +113,18 @@ const toComment = () => {
                     </div>
                 </div>
                 <div class="title-row">
-                    <router-link :to="link" class="title">
+                    <router-link :to="link" class="title" v-if="!highlightTitle">
                         {{ article.title }}
+                    </router-link>
+                    <router-link :to="link" class="title" v-else v-html="article.title">
                     </router-link>
                 </div>
                 <router-link class="summary-row" :to="link">
-                    <span class="summary">
+                   <span class="summary" v-if="!highlightSummary">
                         {{ article.summary }}
+                   </span>
+                    <span v-else v-html="article.summary">
+
                     </span>
                 </router-link>
                 <div class="bottom">
@@ -180,8 +191,18 @@ const toComment = () => {
         justify-content: space-between;
         padding-bottom: 16px;
     }
+
     .entry.entry-border {
         border-bottom: 1px solid var(--el-border-color-light);
+    }
+
+    .entry.reverse {
+        flex-direction: row-reverse;
+
+        .article-info {
+            margin-right: 0;
+            margin-left: 10px;
+        }
     }
 
     .article-info {
@@ -199,11 +220,13 @@ const toComment = () => {
         color: var(--hami-text-1);
         font-size: 14px;
         height: 21px;
+
         .left-panel {
             display: flex;
             align-items: center;
             max-width: 256px;
         }
+
         .right-panel {
             display: flex;
             align-items: center;
@@ -242,6 +265,13 @@ const toComment = () => {
     .title-row {
         display: flex;
         align-items: center;
+    }
+
+    .title-row, .summary-row {
+        :deep(em) {
+            color: var(--hami-red-1);
+            font-style: normal;
+        }
     }
 
     .title {

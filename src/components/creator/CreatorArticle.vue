@@ -11,7 +11,7 @@ import loadingError from "/assets/load-error.685235d2.png"
 
 //custom var
 // @ts-ignore
-const creatorArticleList = ref<InstanceType<typeof HamiScrollList<ArticleDraftDetail>> | null>(null)
+const creatorArticleList = ref<InstanceType<typeof HamiScrollList> | null>(null)
 //life cycle
 onMounted(() => {
     creatorArticleList.value?.init()

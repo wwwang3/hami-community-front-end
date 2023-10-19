@@ -6,15 +6,17 @@ declare interface AuthServiceApi {
 
     getCaptcha(type: "register" | "reset" | "update", email: string): Promise<any>,
 
-    register(param: RegisterParam): Promise<any>,
+    register(param: RegisterParam): Promise<any>
 
-    resetPassword(param: ResetPassParam): Promise<any>,
+    resetPassword(param: ResetPassParam): Promise<any>
 
     updatePassword(params: ResetPassParam): Promise<any>
+
+    getLoginProfile(): Promise<LoginProfile>
+
 }
 
 declare interface UserServiceApi {
-    getLoginProfile(): Promise<LoginProfile>
 
     getUserProfile(): Promise<UserProfile>
 
@@ -73,8 +75,6 @@ declare interface UserInteractApi {
 
     cancelCollect(articleId: number): Promise<any>
 
-    listReadingRecord(param: PageParam): Promise<PageData<ReadingRecord>>
-
     listCollectArticles(param: UserArticleParam): Promise<PageData<Article>>
 
     listUserLikeArticle(param: UserArticleParam): Promise<PageData<Article>>
@@ -112,5 +112,19 @@ declare interface NotifyServiceApi {
     queryNotify(notify_type: "comment" | "like_collect" | "follow", param: PageParam): Promise<PageData<NotifyMsg>>
 
     getNoReadCount(): Promise<NotifyCount>
+
+    deleteNotify(msg_id: number)
+
+    doRead(msg_id: number)
+
+}
+
+declare interface ReadingRecordServiceApi {
+
+    listReadingRecord(param: SearchParam): Promise<PageData<ReadingRecord>>
+
+    deleteReadingRecord(record_id: number)
+
+    clearReadingRecords()
 
 }

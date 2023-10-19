@@ -10,15 +10,15 @@ const CommentService: CommentServiceApi = {
     },
 
     submitComment(param: CommentParam): Promise<Comment> {
-        return http.post("/interact/comment/submit", param)
+        return http.post("/comment/submit", param)
     },
 
     submitReply(param: CommentParam): Promise<Comment> {
-        return http.post("/interact/reply/submit")
+        return http.post("/reply/submit")
     },
 
     deleteComment(id: number): Promise<any> {
-        return http.post("/interact/comment/delete", null, {
+        return http.post("/comment/delete", null, {
             params: {
                 id: id
             }

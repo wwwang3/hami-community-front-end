@@ -24,7 +24,8 @@
     --hami-text-gray: #8a919f;
     --hami-text-gray-1: #f7f8fa;
     --hami-text-white: #fff;
-    --hami-read: #ee677b;
+    --hami-red: #ee677b;
+    --hami-red-1: #ff5132;
     --hami-pink-1: #FFD9E4;
     --hami-text-blue: #007fff;
     --hami-text-yellow: #ffb800;
@@ -75,6 +76,10 @@ a {
     text-decoration: none;
     cursor: pointer;
     color: inherit;
+}
+
+ul {
+    padding: 0;
 }
 
 li {

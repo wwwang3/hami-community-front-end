@@ -1,4 +1,5 @@
 import http, { FORM } from "../http.ts"
+import * as console from 'console'
 
 const AuthService: AuthServiceApi = {
 
@@ -9,9 +10,11 @@ const AuthService: AuthServiceApi = {
             }
         })
     },
+
     logout(): Promise<any> {
         return http.post("/auth/logout")
     },
+
     getCaptcha(type: "register" | "reset", email: string): Promise<any> {
         console.log(type, email)
         return http.get("/auth/captcha", {
@@ -21,6 +24,7 @@ const AuthService: AuthServiceApi = {
             }
         })
     },
+
     register(param: RegisterParam) {
         return http.post("/auth/register", {
             username: param.username,
@@ -29,6 +33,7 @@ const AuthService: AuthServiceApi = {
             captcha: param.captcha
         })
     },
+
     //无需登录访问
     resetPassword(param: ResetPassParam): Promise<any> {
         return http.post("/auth/reset-pass", {
@@ -37,6 +42,7 @@ const AuthService: AuthServiceApi = {
             captcha: param.captcha
         })
     },
+
     //登录访问
     updatePassword(params: ResetPassParam): Promise<any> {
         return http.post("/auth/update-pass", {
@@ -44,6 +50,9 @@ const AuthService: AuthServiceApi = {
             password: params.password,
             captcha: params.captcha
         })
+    },
+    getLoginProfile(): Promise<LoginProfile> {
+        return http.get("/auth/me")
     }
 }
 

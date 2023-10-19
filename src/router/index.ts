@@ -211,7 +211,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: "/history",
         name: "HistoryPage",
-        component: () => import("@/views/HistoryPage.vue")
+        component: () => import("@/views/ReadingRecordPage.vue")
     }
 ]
 

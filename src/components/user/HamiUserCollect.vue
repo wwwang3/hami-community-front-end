@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
+import { ref, reactive, onMounted, computed, inject, Ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { useRequest } from '@/hooks'
 import { ArticleService } from '@/service/modules/article.ts'
@@ -16,34 +16,39 @@ interface UserArticleProps {
 //router, props, inject, provide
 const $props = defineProps<UserArticleProps>()
 const $route = useRoute()
-const userId = ref($props.id)
+const userId = ref(parseInt($props.id))
 const userArticleList = ref()
 const userStore = useUserStore()
+
+const spaceUser = inject<Ref<User>>("SPACE_USER") as Ref<User>
+
 onMounted(() => {
     console.log(userId)
     userArticleList.value?.init()
 })
-//custom var
 
-//life cycle
-
-//watch
-
-//fun
 const handleQuery = (current: number, size: number) => {
     return UserInteractService.listCollectArticles({
         pageNum: current,
         pageSize: size,
-        userId: parseInt(userId.value)
+        userId: userId.value
     })
 }
 
-const handleCancelCollect = async (id: number) => {
-    console.log(id)
+const handleCancelCollect = async (item: Article, index: number) => {
+    let id = item.id
+    console.log(index, item)
     try {
-        let res = await $message.confirm("确定取消收藏吗?")
-        await UserInteractService.unfollow(id)
-
+        await $message.confirm("确定取消收藏吗?")
+        let result = await UserInteractService.cancelCollect(id)
+        await userArticleList.value?.deleteItem(item, index)
+        if (isSelf() && item.userId === userId.value) {
+            //self && 取消收藏自己的文章
+            let stat = spaceUser.value?.stat
+            if (stat) {
+                stat.totalCollects--
+            }
+        }
         $message.success("取消收藏成功")
     } catch (e) {
         console.log(e)
@@ -53,8 +58,8 @@ const handleCancelCollect = async (id: number) => {
     }
 }
 
-const  isAuthor = (userId: number) => {
-    return userStore.isSelf(userId)
+const isSelf = () => {
+    return userStore.isSelf(userId.value)
 }
 </script>
 <template>
@@ -69,7 +74,7 @@ const  isAuthor = (userId: number) => {
             <template #item="data">
                 <HamiArticleCard :article="data.item" border>
                     <template #item="article">
-                        <div class="option-item" @click="handleCancelCollect(article.id)" v-if="isAuthor(article.userId)">
+                        <div class="option-item" @click="handleCancelCollect(article, data.index)" v-if="isSelf()">
                             <el-icon size="13">
                                 <Delete/>
                             </el-icon>

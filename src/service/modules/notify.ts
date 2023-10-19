@@ -28,6 +28,27 @@ export const NotifyService: NotifyServiceApi = {
 
     getNoReadCount(): Promise<NotifyCount> {
         return http.get("/notify/count")
+    },
+
+    deleteNotify(msg_id: number) {
+        let data = new FormData()
+        data.set("msg_id", msg_id + "")
+        return http.post("/notify/delete", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+    },
+
+    doRead(msg_id: number) {
+        let data = new FormData()
+        data.set("msg_id", msg_id + "")
+        return http.post("/notify/read", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
+
 
 }

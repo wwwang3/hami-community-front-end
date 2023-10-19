@@ -18,7 +18,7 @@ const logined = ref<boolean>(false)
 const visible = ref(false)
 
 const spaceRoute = computed(() => {
-    return "/user/space/" + userInfo.value.userId
+    return "/user/space/" + userInfo.value?.userId
 })
 //life cycle
 onBeforeMount(async () => {
@@ -70,7 +70,7 @@ const avatarMouseLeave = () => {
                     :visible="visible"
                 >
                     <template #default>
-                        <HeaderUserCard :user-info="userInfo"></HeaderUserCard>
+                        <HeaderUserCard :user-info="userInfo as LoginProfile"></HeaderUserCard>
                     </template>
                 </el-popover>
             </div>

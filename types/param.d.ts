@@ -47,7 +47,7 @@ declare interface UserProfileParam {
 
 declare interface PageParam {
     /**
-     * 页码
+     * 页码s
      */
     pageNum: number
     /**
@@ -62,6 +62,11 @@ declare interface PageParam {
      * 排序字段
      */
     sort?: string
+}
+
+type SearchParam = PageParam & {
+    keyword?: string
+    type?: number
 }
 
 declare interface ArticleDraftParam {
