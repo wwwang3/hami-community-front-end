@@ -266,3 +266,12 @@ declare interface NotifyCount {
     '7': number
 }
 
+declare interface DailyDataGrowing {
+    article_incr?: number
+    view_incr?: number
+    like_incr?: number
+    comment_incr?: number
+    collect_incr?: number
+    follower_incr?: number
+    cancel_follow_incr?: number
+}

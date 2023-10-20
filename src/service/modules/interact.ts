@@ -9,6 +9,7 @@ export const UserInteractService: UserInteractApi = {
             }
         })
     },
+
     unfollow(followingId: number): Promise<any> {
         return http.post("/interact/follow/cancel", null, {
             params: {
@@ -16,6 +17,7 @@ export const UserInteractService: UserInteractApi = {
             }
         })
     },
+
     collect(articleId: number): Promise<any> {
         return http.post("/interact/collect", null, {
             params: {
@@ -23,6 +25,7 @@ export const UserInteractService: UserInteractApi = {
             }
         })
     },
+
     cancelCollect(articleId: number): Promise<any> {
         return http.post("/interact/collect/cancel", null, {
             params: {
@@ -34,6 +37,7 @@ export const UserInteractService: UserInteractApi = {
     like(param: LikeItemParam): Promise<any> {
         return http.post("/interact/like", param)
     },
+
     cancelLike(param: LikeItemParam): Promise<any> {
         return http.post("/interact/like/cancel", param)
     },
@@ -53,5 +57,9 @@ export const UserInteractService: UserInteractApi = {
     listUserLikeArticle(param: UserArticleParam): Promise<PageData<Article>> {
         return http.post("/interact/like/query_list", param)
     },
+
+    getUserDataGrowing(): Promise<DailyDataGrowing> {
+        return http.get("/interact/data_growing")
+    }
 
 }

@@ -22,7 +22,7 @@ async function start() {
     let start = Date.now();
     //加载Pinia
     loadStore(app)
-    //加载element-plus
+    //加载其他ui库
     loadPlugins(app)
     //加载登录用户
     await loadLoginUser()

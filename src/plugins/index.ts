@@ -3,13 +3,9 @@ import type { App } from 'vue'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-// import 'vue-cropper/dist/index.css'
-import VueCropper from 'vue-cropper';
+import UndrawUi from 'undraw-ui'
+import 'undraw-ui/dist/style.css'
 
-function loadMessage(app: App) {
-    // app.use(ElementPlus)
-    // app.provide("$message", $message)
-}
 
 function loadIcons(app: App) {
     //register all icons
@@ -18,12 +14,11 @@ function loadIcons(app: App) {
     }
 }
 
-function loadCropper(app: App): void {
-    app.use(VueCropper)
+function loadUndrawUi(app: App) {
+    app.use(UndrawUi)
 }
 
 export function loadPlugins(app: App) {
-    loadMessage(app)
     loadIcons(app)
-    // loadCropper(app)
+    loadUndrawUi(app)
 }

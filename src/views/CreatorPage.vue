@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue"
 import { NavigationFailure, RouteLocationMatched, useRoute, useRouter } from "vue-router"
-import { Grid, HomeFilled } from '@element-plus/icons-vue'
+import { Grid, HomeFilled, QuestionFilled, Tools } from '@element-plus/icons-vue'
 import { MenuItemClicked } from 'element-plus'
 //interface
 

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "cropperjs": "^1.6.0",
+    "undraw-ui": "^0.9.9",
     "unplugin-icons": "^0.16.5",
     "vue": "^3.3.4",
     "vue-cropper": "^1.0.9"
@@ -26,7 +27,6 @@
     "md-editor-v3": "^4.4.0",
     "pinia": "^2.1.4",
     "typescript": "^5.0.2",
-    "undraw-ui": "^0.9.6",
     "unplugin-auto-import": "^0.16.6",
     "unplugin-vue-components": "^0.25.1",
     "vite": "^4.4.0",

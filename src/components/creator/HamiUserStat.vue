@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { computed, onMounted, ref } from "vue"
+import { UserInteractService } from '@/service/modules/interact.ts'
+import { CaretTop } from '@element-plus/icons-vue'
+import { ifNull, isEmpty } from '@/utils'
+import HamiStatCard from '@/components/creator/HamiStatCard.vue'
+
 //interface
 interface UserStatProps {
     stat: UserStat
 }
-//router, props, inject, providec
+
 const $props = withDefaults(defineProps<UserStatProps>(), {
     stat: {
         userId: -1,
@@ -18,13 +22,32 @@ const $props = withDefaults(defineProps<UserStatProps>(), {
         totalFollowings: 0,
     }
 })
-//custom var
 
+const dataGrowing = ref<DailyDataGrowing>()
+
+const follower_incr = computed(() => {
+    if (isEmpty(dataGrowing.value)) return 0
+    let incr =  ifNull(dataGrowing.value?.follower_incr, 0)
+    let cancel = ifNull(dataGrowing.value?.cancel_follow_incr, 0)
+    return incr - cancel;
+})
+
+onMounted(() => {
+    getUserDataGrowing()
+})
 //life cycle
 
 //watch
 
 //fun
+const getUserDataGrowing = async () => {
+    try {
+        dataGrowing.value = await UserInteractService.getUserDataGrowing()
+    } catch (e) {
+
+    }
+}
+
 
 </script>
 <template>
@@ -34,28 +57,46 @@ const $props = withDefaults(defineProps<UserStatProps>(), {
         </div>
         <div class="user-stat-container">
             <div class="user-stat-item">
-                <div class="stat-title">总粉丝数</div>
-                <div class="count">{{stat.totalFollowers}}</div>
+                <HamiStatCard
+                    title="总文章数"
+                    :value="stat.totalArticles"
+                    :incr="dataGrowing?.article_incr">
+                </HamiStatCard>
             </div>
             <div class="user-stat-item">
-                <div class="stat-title">总文章数</div>
-                <div class="count">{{stat.totalArticles}}</div>
+                <HamiStatCard
+                    title="文章阅读量"
+                    :value="stat.totalViews"
+                    :incr="dataGrowing?.view_incr">
+                </HamiStatCard>
             </div>
             <div class="user-stat-item">
-                <div class="stat-title">文章阅读数</div>
-                <div class="count">{{stat.totalViews}}</div>
+                <HamiStatCard
+                    title="文章点赞数"
+                    :value="stat.totalLikes"
+                    :incr="dataGrowing?.like_incr">
+                </HamiStatCard>
             </div>
             <div class="user-stat-item">
-                <div class="stat-title">文章点赞数</div>
-                <div class="count">{{stat.totalLikes}}</div>
+                <HamiStatCard
+                    title="文章评论数"
+                    :value="stat.totalComments"
+                    :incr="dataGrowing?.comment_incr">
+                </HamiStatCard>
             </div>
             <div class="user-stat-item">
-                <div class="stat-title">文章评论数</div>
-                <div class="count">{{stat.totalComments}}</div>
+                <HamiStatCard
+                    title="文章收藏数"
+                    :value="stat.totalCollects"
+                    :incr="dataGrowing?.collect_incr">
+                </HamiStatCard>
             </div>
             <div class="user-stat-item">
-                <div class="stat-title">文章收藏</div>
-                <div class="count">{{stat.totalCollects}}</div>
+                <HamiStatCard
+                    title="总粉丝数"
+                    :value="stat.totalFollowers"
+                    :incr="follower_incr">
+                </HamiStatCard>
             </div>
         </div>
     </div>
@@ -67,17 +108,20 @@ const $props = withDefaults(defineProps<UserStatProps>(), {
     border-radius: var(--hami-radius);
     margin-top: 20px;
     background-color: var(--hami-bg);
+
     .user-stat-title {
         padding: 20px;
         font-size: 18px;
         color: var(--hami-title);
         border-bottom: 1px solid var(--el-border-color);
     }
+
     .user-stat-container {
         padding: 20px;
         display: flex;
         flex-flow: row wrap;
     }
+
     .user-stat-item {
         background-color: var(--hami-bg-gray-1);
         width: calc(33.33333% - 13.33333px);
@@ -85,21 +129,13 @@ const $props = withDefaults(defineProps<UserStatProps>(), {
         margin-bottom: 20px;
         padding: 16px 20px;
         height: fit-content;
-        .stat-title {
-            color: var(--hami-text-1);
-            height: 24px;
-        }
-        .count {
-            color: var(--hami-text-8);
-            font-weight: 600;
-            font-size: 32px;
-            line-height: 42px;
-            margin-bottom: 4px;
-            white-space: nowrap;
-        }
+        border-radius: var(--hami-radius-small);
+
+
         &:nth-child(n+3) {
             margin-bottom: 0;
         }
+
         &:nth-child(3n) {
             margin-right: 0;
         }

@@ -63,6 +63,7 @@ declare interface TagServiceApi {
 }
 
 declare interface UserInteractApi {
+
     follow(followingId: number): Promise<any>
 
     unfollow(followingId: number): Promise<any>
@@ -82,6 +83,8 @@ declare interface UserInteractApi {
     listUserFollowing(param: UserArticleParam): Promise<PageData<User>>
 
     listUserFollower(param: UserArticleParam): Promise<PageData<User>>
+
+    getUserDataGrowing(): Promise<DailyDataGrowing>
 
 }
 
