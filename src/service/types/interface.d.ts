@@ -131,3 +131,8 @@ declare interface ReadingRecordServiceApi {
     clearReadingRecords()
 
 }
+
+declare interface SearchServiceApi {
+
+    searchArticle(param: SearchParam): Promise<PageData<Article>>
+}

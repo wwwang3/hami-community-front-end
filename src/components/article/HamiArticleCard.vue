@@ -10,12 +10,13 @@ import { useLike } from '@/hooks/userInteract.ts'
 
 //interface
 interface ArticleCardProps {
-    article: Article,
-    comment?: boolean,
-    border?: boolean,
+    article: Article
+    comment?: boolean
+    border?: boolean
     reverse?: boolean
     highlightTitle?: boolean
     highlightSummary?: boolean
+    showCate?: boolean
 }
 
 const $slots = defineSlots<{
@@ -27,7 +28,8 @@ const $props = withDefaults(defineProps<ArticleCardProps>(), {
     border: false,
     reverse: false,
     highlightTitle: false,
-    highlightSummary: false
+    highlightSummary: false,
+    showCate: true
 })
 //router, props, inject, provide
 const $route = useRoute()
@@ -51,10 +53,6 @@ const userLink = computed(() => {
 
 const ctime = computed(() => {
     return formatDateTime(article.value.ctime, "YYYY-MM-DD")
-})
-
-const showCate = computed(() => {
-    return $route.path === '/recommend' || $route.path === "/"
 })
 
 const comments = computed(() => {
@@ -224,7 +222,7 @@ const toComment = () => {
         .left-panel {
             display: flex;
             align-items: center;
-            max-width: 256px;
+            max-width: 60%;
         }
 
         .right-panel {

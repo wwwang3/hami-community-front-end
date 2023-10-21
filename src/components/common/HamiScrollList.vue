@@ -192,7 +192,7 @@ const randomType = () => {
                 </el-timeline>
             </template>
         </div>
-        <el-skeleton :rows="4" animated :throttle="200" :loading="onLoadingMore"></el-skeleton>
+        <el-skeleton :rows="3" animated :throttle="200" :loading="onLoadingMore"></el-skeleton>
         <div v-show="loadingError">
             <slot name="error">
                 <el-empty :image="fetchErrorImg"

@@ -30,7 +30,6 @@
     --hami-pink-1: #FFD9E4;
     --hami-text-blue: #007fff;
     --hami-text-yellow: #ffb800;
-    --hami-border-gray: #e4e6eb;
     --hami-link-hover: #007fff;
     --hami-text-size: 15px;
     --hami-text-size-small: 13px;
@@ -39,6 +38,7 @@
     --hami-radius-medium: 12px;
     --hami-radius-large: 16px;
     --hami-title: #1d2129;
+    --hami-border-gray: #e4e6eb;
     --hami-border-color: #e5e6eb;
     --hami-border-color-1: #cfd1d5;
     --hami-card-text: var(--hami-text-5);

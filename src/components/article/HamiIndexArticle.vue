@@ -19,8 +19,6 @@ const tokenStore = useTokenStore()
 const userStore = useUserStore()
 const cateStore = useCateStore()
 const $route = useRoute()
-//custom var
-const cateId = ref<number>(-1)
 
 // @ts-ignore
 const articleList = ref<InstanceType<typeof HamiScrollList> | null>(null)
@@ -31,6 +29,10 @@ onMounted(() => {
 
 watch(() => $props.cateId, (newVal, oldVal) => {
     articleList.value?.init()
+})
+
+const showCate = computed(() => {
+    return $props.cateId === -1
 })
 
 //fun
@@ -47,12 +49,13 @@ const getArticles = async (pageNum: number, pageSize: number): Promise<PageData<
         <HamiScrollList
             :size="20"
             no-data-text="还没有文章"
-            key-property="articleId"
+            key-property="id"
             :query="getArticles"
             ref="articleList"
+            immediate-loading
         >
             <template #item="{item, index, _delete}">
-                <HamiArticleCard :article="item" class="list-item"></HamiArticleCard>
+                <HamiArticleCard :article="item" :show-cate="showCate" class="list-item"></HamiArticleCard>
             </template>
         </HamiScrollList>
     </div>

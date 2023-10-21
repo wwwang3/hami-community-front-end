@@ -206,7 +206,8 @@ const routes: RouteRecordRaw[] = [
     {
         path: "/search",
         name: "SearchPage",
-        component: () => import("@/views/SearchPage.vue")
+        component: () => import("@/views/SearchPage.vue"),
+        props: route => ({ keyword: route.query.keyword })
     },
     {
         path: "/history",
