@@ -211,10 +211,9 @@ declare interface Comment {
     id: number
     articleId: number
     userId: number
-    isAuthor: boolean
     ipInfo: IpInfo
-    rootId?: number
-    parentId?: number
+    rootId: number | null
+    parentId: number | null
     content: string
     contentImg?: string
     replyTo?: number
@@ -231,10 +230,17 @@ declare interface CommentInfo {
     id: number
     articleId: number
     userId: number
-    comment: Comment
-    user: User
-    replyTo?: User
+    replyTo: number
+    ipInfo: IpInfo
+    rootId: number | null
+    parentId: number | null
+    content: string
+    contentImg?: string
+    likes: number
+    ctime: number | Date
     reply?: Reply
+    user: User
+    replyUser?: User
     liked: boolean
 }
 

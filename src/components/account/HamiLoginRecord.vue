@@ -4,7 +4,7 @@ import { formatDateTime, isEmpty } from '@/utils'
 import { useRequest } from '@/hooks'
 import UserService from '@/service/modules/user.ts'
 import HamiEmpty from '@/components/common/HamiEmpty.vue'
-
+import { calculateLocation } from "@/utils"
 //interface
 interface Page {
     current: number
@@ -50,20 +50,7 @@ onMounted(async () => {
 //watch
 
 //fun
-const calculateLocation = (ipInfo: IpInfo) => {
-    if (isEmpty(ipInfo)) return "未知"
-    let location = ""
-    if (!isEmpty(ipInfo.country)) {
-        location = location + ipInfo.country + '-'
-    }
-    if (ipInfo.province) {
-        location = location + ipInfo.province + '-'
-    }
-    if (ipInfo.city) {
-        location += ipInfo.city
-    }
-    return location;
-}
+
 const calculateIp = (ipInfo: IpInfo) => {
     console.log(ipInfo)
     if (isEmpty(ipInfo)) {

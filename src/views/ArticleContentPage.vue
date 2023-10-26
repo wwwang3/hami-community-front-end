@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onBeforeMount } from "vue"
+import { ref, computed, watch, onBeforeMount, provide } from "vue"
 import { useRequest } from '@/hooks'
 import { ArticleService } from '@/service/modules/article.ts'
 import { Calendar, Clock, Files, FirstAidKit, View } from '@element-plus/icons-vue'
@@ -10,8 +10,10 @@ import { MdCatalog } from 'md-editor-v3'
 import HamiUserCard from '@/components/user/HamiUserCard.vue'
 import { useCateStore } from '@/store/modules/category.ts'
 import { useCollect, useLike } from '@/hooks/userInteract.ts'
+import { COMMENT_AREA_OWNER } from '@/store/keys.ts'
+import HamiComment from '@/components/comment/HamiComment.vue'
 
-defineOptions({})
+
 const $props = defineProps<{
     id: string
 }>()
@@ -24,6 +26,12 @@ const articleId = ref<number>(parseInt($props.id))
 const article = ref<ArticleContent>({
     content: ''
 } as ArticleContent)
+
+provide<User>(COMMENT_AREA_OWNER, article.value.author)
+
+onBeforeMount(async () => {
+    await getArticle()
+})
 
 const mdId = "hami-md-viewer"
 const scrollElement = document.documentElement;
@@ -62,10 +70,6 @@ const userLink = computed(() => {
     return "/user/space/" + article.value?.author?.userId
 })
 //custom var
-
-onBeforeMount(async () => {
-    await getArticle()
-})
 //watch
 watch(() => $props.id, (newVal, oldVal) => {
     // articleId.value = parseInt($props.id)
@@ -108,6 +112,11 @@ const handleCollect = () => {
             $message.error("收藏失败")
         })
 }
+
+const handleCommentChange = (delta: number) => {
+    article.value.stat.comments += delta
+}
+
 
 const getArticle = async () => {
     let loading = $message.loading("加载中")
@@ -210,7 +219,11 @@ const getArticle = async () => {
                         </div>
                     </div>
                 </div>
-                <div class="comment-wrapper" id="hami-comment"></div>
+                <div class="comment-wrapper" id="hami-comment">
+                    <HamiComment :area-id="article.id" @change="handleCommentChange">
+
+                    </HamiComment>
+                </div>
             </div>
             <div class="right-panel">
                 <div class="user-info">

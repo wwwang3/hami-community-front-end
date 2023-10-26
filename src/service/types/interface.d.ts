@@ -93,6 +93,8 @@ declare interface CommentServiceApi {
 
     listReply(param: CommentPageParam): Promise<PageData<CommentInfo>>
 
+    publishComment(param: CommentParam, reply: boolean = false): Promise<Comment>
+
     submitComment(param: CommentParam): Promise<Comment>
 
     submitReply(param: CommentParam): Promise<Comment>
@@ -135,4 +137,6 @@ declare interface ReadingRecordServiceApi {
 declare interface SearchServiceApi {
 
     searchArticle(param: SearchParam): Promise<PageData<Article>>
+
+    getHotSearchList(): Promise<Array<string>>
 }

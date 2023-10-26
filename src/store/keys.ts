@@ -1,0 +1,3 @@
+
+export const SPACE_USER = "SPACE_USER"
+export const COMMENT_AREA_OWNER = "COMMENT_AREA_OWNER"

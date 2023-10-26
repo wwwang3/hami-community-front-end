@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
-import { Search } from '@element-plus/icons-vue'
+import { onMounted, ref } from "vue"
+import { useRouter } from "vue-router"
 import { SearchConfig, USearch } from 'undraw-ui'
-import * as querystring from 'querystring'
+import { SearchService } from '@/service/modules/search.ts'
 //interface
 const config = ref<SearchConfig>({
     search: '', //可选输入框默认值
@@ -24,7 +23,20 @@ const config = ref<SearchConfig>({
 
 const $router = useRouter()
 
+onMounted( () => {
+    getHotSearchList()
+})
 
+
+const getHotSearchList = async () => {
+    try {
+        let list = await SearchService.getHotSearchList()
+        config.value.hotSearchList = list
+        config.value.keywords = list
+    } catch (e) {
+
+    }
+}
 const handleSearch = (val: string) => {
     $router.replace({
         path: "/search",

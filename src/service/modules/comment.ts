@@ -9,12 +9,20 @@ const CommentService: CommentServiceApi = {
         return http.post("/comment/reply/query_list")
     },
 
+    publishComment(param: CommentParam, reply: boolean = false): Promise<Comment> {
+        if (reply) {
+            return this.submitReply(param)
+        } else {
+            return this.submitComment(param)
+        }
+    },
+
     submitComment(param: CommentParam): Promise<Comment> {
         return http.post("/comment/submit", param)
     },
 
     submitReply(param: CommentParam): Promise<Comment> {
-        return http.post("/reply/submit")
+        return http.post("/comment/reply/submit", param)
     },
 
     deleteComment(id: number): Promise<any> {
@@ -26,3 +34,5 @@ const CommentService: CommentServiceApi = {
     }
 
 }
+
+export default CommentService

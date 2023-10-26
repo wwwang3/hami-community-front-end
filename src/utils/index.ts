@@ -67,3 +67,18 @@ export function ifNull<T = any>(val1: any, val2: any): T {
 export function formatDateTime(time: string | number | Date, format: string = "YYYY-MM-DD HH:mm:ss") {
     return isEmpty(time) ? "N/A" : dayjs(new Date(time)).format(format)
 }
+
+export function calculateLocation(ipInfo: IpInfo) {
+    if (isEmpty(ipInfo)) return "未知"
+    let location = ""
+    if (!isEmpty(ipInfo.country)) {
+        location = location + ipInfo.country + '-'
+    }
+    if (ipInfo.province) {
+        location = location + ipInfo.province + '-'
+    }
+    if (ipInfo.city) {
+        location += ipInfo.city
+    }
+    return location;
+}

@@ -135,8 +135,10 @@ function allEmoji(): {} {
   return emojiMap
 }
 
-export default {
+const emoji = {
   faceList,
   emojiList,
   allEmoji: allEmoji()
 }
+
+export default emoji

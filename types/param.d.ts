@@ -58,10 +58,6 @@ declare interface PageParam {
      * 关联的对象ID
      */
     itemId?: string | number
-    /**
-     * 排序字段
-     */
-    sort?: string
 }
 
 type SearchParam = PageParam & {
@@ -93,15 +89,15 @@ declare interface LikeItemParam {
 }
 
 declare interface CommentParam {
-    articleId: number
-    rootId?: number
-    parentId?: number
+    articleId: number | string
+    rootId?: number | string | null
+    parentId?: number | string | null
     content: string
     contentImg?: string
 }
 
 declare type CommentPageParam = PageParam & {
     articleId: number,
-    rootId: number,
-    sort: 0 | 1
+    rootId?: number,
+    sort?: 0 | 1
 }

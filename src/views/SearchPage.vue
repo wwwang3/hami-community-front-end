@@ -17,11 +17,8 @@ const searchArticleList = ref<InstanceType<typeof HamiScrollList> | null>(null)
 
 
 onMounted(() => {
-    searchArticleList.value?.init()
-})
-
-onMounted(() => {
     console.log($props)
+    searchArticleList.value?.init()
 })
 
 watch(() => $props.keyword, (newVal: string, oldVal: string) => {
@@ -52,6 +49,7 @@ const handleQuery = (current: number, size: number) => {
                 no-data-text="暂无文章"
                 key-property="id"
                 immediate-loading
+                :show-no-more="false"
             >
                 <template #item="{item, index, _delete}">
                     <HamiArticleCard :article="item" highlight-summary highlight-title class="list-item">
