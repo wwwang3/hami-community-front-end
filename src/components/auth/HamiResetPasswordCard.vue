@@ -5,7 +5,7 @@ import { isEmail, isEmpty } from '@/utils'
 import { $message } from '@/utils/message.ts'
 import { EditPen, Lock, Message } from '@element-plus/icons-vue'
 import { FormInstance, FormRules } from 'element-plus'
-import AuthService from '@/service/modules/auth.ts'
+import { AuthService } from '@/service/modules/user.ts'
 import { useAutoLoading, useCountdown, useRequest } from '@/hooks'
 import { validateEmail, validatePass, validateRePassword } from '@/utils/validator.ts'
 //interface

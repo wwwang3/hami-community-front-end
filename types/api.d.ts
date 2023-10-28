@@ -7,18 +7,11 @@ declare interface ApiResponse<T> {
     msg: string
 }
 
-declare interface LoginProfile {
-    userId: number,
-    username: string,
-    avatar: string,
-    profile: string,
-    ctime: number
-    tag?: string,
-    likes: number, //我点赞的文章
-    collects: number, //我收藏的文章
-    followings: number, //我的关注
-    followers: number //我的粉丝
-    stat: UserStat
+declare interface PageData<T> {
+    pageNum: number
+    pageSize: number
+    total: number
+    data: Array<T> | null
 }
 
 declare interface UserProfile {
@@ -29,7 +22,16 @@ declare interface UserProfile {
     position: string,
     blog: string,
     company: string,
+    ctime: number
     tag?: string,
+}
+
+declare type LoginProfile = UserProfile & {
+    likes: number, //我点赞的文章
+    collects: number, //我收藏的文章
+    followings: number, //我的关注
+    followers: number //我的粉丝
+    stat: UserStat | undefined
 }
 
 declare interface LoginResult {
@@ -125,13 +127,6 @@ declare interface LoginRecord {
     mtime?: Date | string
 }
 
-declare interface PageData<T> {
-    pageNum: number
-    pageSize: number
-    total: number
-    data: Array<T> | null
-}
-
 declare interface ArticleInfo {
     id: number,
     userId: number,
@@ -173,7 +168,6 @@ declare interface TagDTO {
 
 declare type User = UserProfile & {
     stat: UserStat
-    ctime: number
     followed: boolean
 }
 

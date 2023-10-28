@@ -4,23 +4,24 @@ import { COMMENT_AREA_OWNER } from "@/store/keys.ts"
 import CommentService from "@/service/modules/comment.ts"
 import useUserStore from '@/store/modules/user.ts'
 import emoji from './emoji.ts'
+import HamiUserCardHover from '@/components/common/HamiUserCardHover.vue'
 import {
     CommentApi, CommentInstance,
     CommentUserApi,
     ConfigApi,
     ReplyApi,
     ReplyPageParamApi,
-    SubmitParamApi,
+    SubmitParamApi, throttle,
     UComment,
     UCommentNav,
     UCommentScroll,
     UserApi
 } from 'undraw-ui'
-import { calculateLocation, formatDateTime, isEmpty } from "@/utils/index.ts"
+import { calculateLocation, formatDateTime, ifNull, isEmpty } from "@/utils/index.ts"
 import { $message } from '@/utils/message.ts'
 import ImageService from '@/service/modules/image.ts'
 import { UserInteractService } from '@/service/modules/interact.ts'
-import { emitChangeFn } from 'element-plus'
+import Operate from '@/components/comment/Operate.vue'
 
 interface CommentProps {
     areaId: number
@@ -33,7 +34,6 @@ const $emit = defineEmits<{
 const $props = defineProps<CommentProps>()
 const userStore = useUserStore()
 //评论区作者(文章作者)
-const comment_area_owner = inject<User>(COMMENT_AREA_OWNER)
 const commentRef = ref<CommentInstance>()
 const inited = ref(false)
 const latest = ref(true)
@@ -56,7 +56,7 @@ const commentConfig = reactive<ConfigApi>({
     total: page.value.total,
     user: {} as UserApi,
     emoji: emoji,
-    aTarget: '_blank'
+    aTarget: '_blank',
 })
 
 onMounted(async () => {
@@ -90,7 +90,6 @@ const init = async () => {
 }
 
 const publishComment = async ({ content, parentId, files, finish, reply }: SubmitParamApi) => {
-    console.log(reply)
     try {
         let contentImg = await uploadImg(files)
         const commentParam: CommentParam = {
@@ -113,7 +112,7 @@ const publishComment = async ({ content, parentId, files, finish, reply }: Submi
             user: {
                 username: commentConfig.user.username,
                 avatar: commentConfig.user.avatar,
-                level: 6,
+                level: 0,
                 homeLink: "/user/space/" + commentConfig.user.id
             },
             reply: null
@@ -133,9 +132,7 @@ const uploadImg = async (files: File[] | undefined) => {
     });
     return (await Promise.all(requests)).join("||")
 }
-const deleteComment = async () => {
 
-}
 const handleMore = async () => {
     page.value.current++
     let comments = await handleQueryComments(page.value.current, page.value.size)
@@ -155,7 +152,7 @@ const handleLike = async (id: string, finish: () => void) => {
         itemType: 2
     }
     try {
-        if (commentConfig.user.likeIds.includes(itemId as never)) {
+        if (commentConfig.user.likeIds.findIndex(value => value == itemId) != -1) {
             //点赞
             await UserInteractService.cancelLike(param)
         } else {
@@ -164,8 +161,22 @@ const handleLike = async (id: string, finish: () => void) => {
         finish()
     } catch (e) {
         $message.error("操作失败")
-    } finally {
+    }
+}
 
+// 删除评论
+const remove = async (comment: CommentApi) => {
+    try {
+        await $message.confirm("确定删除这条评论吗")
+        await CommentService.deleteComment(comment.id as number)
+        $message.success("删除成功")
+        commentRef.value?.remove(comment)
+        $emit("change", 1 + ifNull(comment.reply?.total, 0))
+    } catch (e) {
+        if (e !== 'cancel') {
+            console.log(e)
+            $message.error("操作失败")
+        }
     }
 }
 
@@ -178,6 +189,12 @@ const handleReplyPage = async (param: ReplyPageParamApi) => {
     }
 }
 
+const handleShowInfo = async (uid: string, finish: Function) => {
+    console.log(uid)
+    finish({
+        id: parseInt(uid)
+    })
+}
 
 const handleQueryComments = async (current: number, size: number) => {
     let data = await CommentService.listComment({
@@ -257,11 +274,20 @@ const convertToCommentUser = (user: User): CommentUserApi => {
                 @submit="publishComment"
                 @like="handleLike"
                 @reply-page="handleReplyPage"
+                @show-info="handleShowInfo"
                 upload
                 page
                 relative-time
             >
-                <u-comment-nav v-model="latest" @sorted="handleSort"></u-comment-nav>
+                <template #default>
+                    <u-comment-nav v-model="latest" @sorted="handleSort"></u-comment-nav>
+                </template>
+                <template #card="scope">
+                    <HamiUserCardHover :id="scope.id"></HamiUserCardHover>
+                </template>
+                <template #operate="scope">
+                    <Operate :comment="scope" @remove="remove"/>
+                </template>
             </u-comment>
         </u-comment-scroll>
     </div>

@@ -16,17 +16,6 @@ const $props = withDefaults(defineProps<LoadingProps>(), {
     text: '加载中',
     background: 'rgba(100, 100, 100, .7)',
 })
-
-//router, props, inject, provide
-
-//custom var
-
-//life cycle
-
-//watch
-
-//fun
-
 </script>
 <template>
     <div class="hami-loading"

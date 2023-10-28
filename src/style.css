@@ -101,7 +101,13 @@ li {
     border: none !important;
 }
 
-.el-popover .el-popper {
-    min-width: 0;
-    padding: 0;
+/*.el-popover .el-popper {*/
+/*    min-width: 0;*/
+/*    padding: 0;*/
+/*}*/
+
+.el-popover.el-popper {
+    min-width: 0 !important;
+    padding: 0 !important;
+    --el-popover-border-radius: var(--hami-radius);
 }

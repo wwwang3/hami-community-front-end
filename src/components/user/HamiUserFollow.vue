@@ -2,10 +2,10 @@
 import { ref, reactive, onMounted, computed, inject } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { TabPaneName } from 'element-plus'
-import UserService from '@/service/modules/user.ts'
 import { UserInteractService } from '@/service/modules/interact.ts'
 import FollowUserCard from '@/components/user/FollowUserCard.vue'
 import useUserStore from '@/store/modules/user.ts'
+import comment from '@/service/modules/comment.ts'
 //interface
 interface UserFollowProps {
     id: string
@@ -19,8 +19,12 @@ const activeRoute = ref<"following" | "follower">("following")
 const userFollowingList = ref()
 const userFollowerList = ref()
 
-const prefix = computed(() => {
-    return !userStore.isSelf(parseInt($props.id)) ? "他" : ""
+const followLabel = computed(() => {
+    return userStore.isSelf(parseInt($props.id)) ? "我的关注" : "关注的用户"
+})
+
+const followerLabel = computed(() => {
+    return userStore.isSelf(parseInt($props.id)) ? "我的粉丝" : "粉丝"
 })
 
 //custom var
@@ -61,7 +65,7 @@ const handleChange = (name: TabPaneName) => {
 <template>
     <div class="user-follow">
         <el-tabs v-model="activeRoute" @tab-change="handleChange" type="border-card">
-            <el-tab-pane label="关注的用户" name="following" >
+            <el-tab-pane :label="followLabel" name="following" >
                 <HamiScrollList
                     ref="userFollowingList"
                     :query="handleQueryFollowing"
@@ -74,7 +78,7 @@ const handleChange = (name: TabPaneName) => {
                     </template>
                 </HamiScrollList>
             </el-tab-pane>
-            <el-tab-pane label="粉丝" name="follower">
+            <el-tab-pane :label="followerLabel" name="follower">
                 <HamiScrollList
                     ref="userFollowerList"
                     :query="handleQueryFollower"

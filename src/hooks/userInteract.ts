@@ -74,10 +74,10 @@ export function useFollow(followed: boolean): ActionResult<[number]> {
         checkLogin: true,
         active: followed,
         action: (...params) => {
-            return UserInteractService.follow(...params as Parameters<typeof UserInteractService.follow>)
+            return UserInteractService.follow(...params)
         },
         cancel: (...params) => {
-            return UserInteractService.unfollow(...params as Parameters<typeof UserInteractService.unfollow>)
+            return UserInteractService.unfollow(...params)
         }
     })
 }

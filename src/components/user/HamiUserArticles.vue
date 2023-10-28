@@ -48,7 +48,7 @@ const handleQuery = (current: number, size: number) => {
             :show-no-more="false"
         >
             <template #item="data">
-                <HamiArticleCard :article="data.item" border></HamiArticleCard>
+                <HamiArticleCard :article="data.item" border :show-user="false"></HamiArticleCard>
             </template>
         </HamiScrollList>
     </div>

@@ -53,8 +53,8 @@ const handleClick = () => {
 }
 </script>
 <template>
-    <div class="hami-user-card-v2">
-        <div class="user-card-v2-container">
+    <div class="hami-user-card">
+        <div class="user-card-container">
             <el-avatar :src="defaultAvatar" size="large" class="user-card-avatar"></el-avatar>
             <div class="user-card-body">
                 <div class="profile-item username">{{ user.username }}</div>
@@ -111,13 +111,13 @@ const handleClick = () => {
 </template>
 
 <style scoped lang="less">
-.hami-user-card-v2 {
+.hami-user-card {
     padding: 30px;
     border-radius: var(--hami-radius-medium);
     background-color: var(--hami-bg);
     margin-bottom: 20px;
 
-    .user-card-v2-container {
+    .user-card-container {
         display: flex;
     }
 

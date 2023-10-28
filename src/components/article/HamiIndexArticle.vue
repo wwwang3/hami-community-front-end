@@ -7,6 +7,7 @@ import { useRoute } from 'vue-router'
 import { ArticleService } from '@/service/modules/article.ts'
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import HamiArticleCard from '@/components/article/HamiArticleCard.vue'
+import { HamiScrollListInstance } from '@/components/types'
 //interface
 interface IndexArticleProps {
     cateId: number
@@ -20,8 +21,7 @@ const userStore = useUserStore()
 const cateStore = useCateStore()
 const $route = useRoute()
 
-// @ts-ignore
-const articleList = ref<InstanceType<typeof HamiScrollList> | null>(null)
+const articleList = ref<HamiScrollListInstance<Article>>(null)
 //life cycle
 onMounted(() => {
     articleList.value?.init()
@@ -37,10 +37,15 @@ const showCate = computed(() => {
 
 //fun
 const getArticles = async (pageNum: number, pageSize: number): Promise<PageData<Article>> => {
-    return ArticleService.listNewestArticles({
-        pageNum: pageNum,
-        pageSize: pageSize,
-        cateId: $props.cateId
+    return new Promise((resolve, reject) => {
+        let promise = ArticleService.listNewestArticles({
+            pageNum: pageNum,
+            pageSize: pageSize,
+            cateId: $props.cateId
+        })
+        setTimeout(() => {
+            resolve(promise)
+        }, 1000)
     })
 }
 </script>

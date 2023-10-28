@@ -3,7 +3,6 @@ import { onBeforeMount, ref } from "vue"
 import { useRouter } from "vue-router"
 import useUserStore from '@/store/modules/user.ts'
 import { useRequest } from '@/hooks'
-import UserService from '@/service/modules/user.ts'
 import HamiUserStat from '@/components/creator/HamiUserStat.vue'
 import HamiUserCardV3 from "@/components/user/CreatorUserCard.vue"
 //interface

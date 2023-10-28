@@ -78,7 +78,7 @@ import { isEmail } from '@/utils'
 import { $message } from '@/utils/message.ts'
 import { useRoute, useRouter } from 'vue-router'
 import { EditPen, Lock, Message, User } from '@element-plus/icons-vue'
-import AuthService from '@/service/modules/auth.ts'
+import { AuthService } from '@/service/modules/user.ts'
 import { validateAccount, validateEmail, validatePass, validateRePassword } from '@/utils/validator.ts'
 import { useCountdown, useRequest } from '@/hooks'
 

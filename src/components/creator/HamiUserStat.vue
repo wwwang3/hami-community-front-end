@@ -7,21 +7,10 @@ import HamiStatCard from '@/components/creator/HamiStatCard.vue'
 
 //interface
 interface UserStatProps {
-    stat: UserStat
+    stat: UserStat | undefined
 }
 
-const $props = withDefaults(defineProps<UserStatProps>(), {
-    stat: {
-        userId: -1,
-        totalArticles: 0,
-        totalViews: 0,
-        totalCollects: 0,
-        totalLikes: 0,
-        totalComments: 0,
-        totalFollowers: 0,
-        totalFollowings: 0,
-    }
-})
+const $props = defineProps<UserStatProps>()
 
 const dataGrowing = ref<DailyDataGrowing>()
 
@@ -59,28 +48,28 @@ const getUserDataGrowing = async () => {
             <div class="user-stat-item">
                 <HamiStatCard
                     title="总文章数"
-                    :value="stat.totalArticles"
+                    :value="stat?.totalArticles"
                     :incr="dataGrowing?.article_incr">
                 </HamiStatCard>
             </div>
             <div class="user-stat-item">
                 <HamiStatCard
                     title="文章阅读量"
-                    :value="stat.totalViews"
+                    :value="stat?.totalViews"
                     :incr="dataGrowing?.view_incr">
                 </HamiStatCard>
             </div>
             <div class="user-stat-item">
                 <HamiStatCard
                     title="文章点赞数"
-                    :value="stat.totalLikes"
+                    :value="stat?.totalLikes"
                     :incr="dataGrowing?.like_incr">
                 </HamiStatCard>
             </div>
             <div class="user-stat-item">
                 <HamiStatCard
                     title="文章评论数"
-                    :value="stat.totalComments"
+                    :value="stat?.totalComments"
                     :incr="dataGrowing?.comment_incr">
                 </HamiStatCard>
             </div>
@@ -94,7 +83,7 @@ const getUserDataGrowing = async () => {
             <div class="user-stat-item">
                 <HamiStatCard
                     title="总粉丝数"
-                    :value="stat.totalFollowers"
+                    :value="stat?.totalFollowers"
                     :incr="follower_incr">
                 </HamiStatCard>
             </div>

@@ -2,39 +2,33 @@ import { defineStore } from 'pinia'
 import { isEmpty } from '@/utils'
 import { computed, ref } from 'vue'
 import store from '@/store'
-import UserService from '@/service/modules/user.ts'
+import { AccountService } from '@/service/modules/user.ts'
 import { loadTokenStore } from '@/store/modules/token.ts'
 import { useRequest } from '@/hooks'
-import AuthService from '@/service/modules/auth.ts'
 
 const useUserStore = defineStore("user", () => {
 
     const userInfo = ref<LoginProfile>({
-        userId: -1,
-        username: "",
         avatar: '',
+        blog: '',
         collects: 0,
+        company: '',
         ctime: 0,
         followers: 0,
         followings: 0,
         likes: 0,
+        position: '',
         profile: '',
-        stat: {
-            totalArticles: 0,
-            totalCollects: 0,
-            totalComments: 0,
-            totalFollowers: 0,
-            totalFollowings: 0,
-            totalLikes: 0,
-            totalViews: 0,
-            userId: -1
-        }
+        stat: undefined,
+        tag: '',
+        userId: -1,
+        username: ''
     })
     const inited = ref(false)
     const tokenStore = loadTokenStore()
 
     const [onLoading, process] = useRequest<LoginProfile, any[]>({
-        run: (...params) => AuthService.getLoginProfile()
+        run: (...params) => AccountService.getLoginProfile()
     })
     const getProfile = async (): Promise<LoginProfile> => {
         console.log("start to get profile")
@@ -50,7 +44,7 @@ const useUserStore = defineStore("user", () => {
             await sync() //等待
             return Promise.resolve(userInfo.value)
         }
-        if (userInfo.value.userId !== -1) {
+        if (userInfo.value?.userId !== -1) {
             inited.value = true
             return Promise.resolve(userInfo.value)
         }
@@ -94,14 +88,14 @@ const useUserStore = defineStore("user", () => {
     }
 
     const isSelf = (userId: number) => {
-        return userId !== undefined && userInfo.value.userId !== -1 && userId === userInfo.value.userId
+        return userId !== undefined && userInfo.value?.userId !== -1 && userId === userInfo.value?.userId
     }
 
     const logined = computed(() => {
-        return !isEmpty(userInfo.value) && !isEmpty(userInfo.value.userId) && userInfo.value.userId !== -1
+        return !isEmpty(userInfo.value) && !isEmpty(userInfo.value?.userId) && userInfo.value?.userId !== -1
     })
 
-    return { logined, getProfile, sync, userInfo, isSelf}
+    return { logined, getProfile, sync, userInfo, isSelf }
 })
 
 export function loadUserStore() {

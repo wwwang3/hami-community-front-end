@@ -25,12 +25,15 @@ export const ArticleDraftService: ArticleDraftServiceApi = {
             }
         })
     },
+
     createDraft(param: ArticleDraftParam): Promise<ArticleDraft> {
         return http.post("/article_draft/create", param)
     },
+
     updateDraft(param: ArticleDraftParam): Promise<ArticleDraft> {
         return http.post("/article_draft/update", param)
     },
+
     publishArticle(draftId: number): Promise<ArticleDraft> {
         return http.post("/article_draft/publish", null, {
             params: {
@@ -52,16 +55,6 @@ export const ArticleDraftService: ArticleDraftServiceApi = {
             }
         })
     },
-    uploadPicture(pic: File): Promise<string> {
-        console.log(pic)
-        let data = new FormData()
-        data.set("picture", pic)
-        return http.post("/article_draft/upload/pic", data, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-    }
 }
 
 export const ArticleService: ArticleServiceApi = {

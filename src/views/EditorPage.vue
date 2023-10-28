@@ -9,7 +9,6 @@ import { $message } from '@/utils/message.ts'
 import useUserStore from '@/store/modules/user.ts'
 import defaultAvatar from "/assets/avatar.jpg"
 
-//router, props, inject, provide
 const $route = useRoute()
 const $router = useRouter()
 const userStore = useUserStore()
@@ -30,8 +29,8 @@ const draft = ref<ArticleDraftDetail>({
     mtime: undefined,
     state: 0
 })
-const [onLoading, getDraft] = useRequest({
-    run: (...params) => ArticleDraftService.getArticleDraft(...params as Parameters<typeof ArticleDraftService.getArticleDraft>)
+const [onLoading, getDraft] = useRequest<ArticleDraftDetail, [number]>({
+    run: (...params) => ArticleDraftService.getArticleDraft(...params)
 })
 
 const buttonRef = ref()

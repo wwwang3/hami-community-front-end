@@ -1,4 +1,5 @@
 import dayjs from './time'
+export * from '@/utils/message.ts'
 
 export function isArray(value: any) {
     if (typeof Array.isArray === 'function') {

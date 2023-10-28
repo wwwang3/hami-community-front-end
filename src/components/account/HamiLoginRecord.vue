@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from "vue"
 import { formatDateTime, isEmpty } from '@/utils'
 import { useRequest } from '@/hooks'
-import UserService from '@/service/modules/user.ts'
+import { AccountService } from '@/service/modules/user.ts'
 import HamiEmpty from '@/components/common/HamiEmpty.vue'
 import { calculateLocation } from "@/utils"
 //interface
@@ -23,13 +23,11 @@ const page = ref<Page>({
 computed(() => {
     return page.value.current < Math.ceil(page.value.total / page.value.size)
 })
-const [onRequest, getLoginRecords] = useRequest({
-    run: (...params) => {
-        return UserService.getLoginRecords({
-            pageNum: page.value.current,
-            pageSize: page.value.size
-        })
-    }
+const [onRequest, getLoginRecords] = useRequest<PageData<LoginRecord>, [any]>({
+    run: (...params) => AccountService.getLoginRecords({
+        pageSize: page.value.size,
+        pageNum: page.value.current
+    })
 })
 const records = ref<LoginRecord[]>([] as LoginRecord[])
 const inited = ref(false)

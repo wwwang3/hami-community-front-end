@@ -7,6 +7,7 @@ import { Calendar, Comment, View } from '@element-plus/icons-vue'
 import { $message } from '@/utils/message.ts'
 import { EpPropMergeType } from 'element-plus/es/utils'
 import { useLike } from '@/hooks/userInteract.ts'
+import HamiUserCardHover from '@/components/common/HamiUserCardHover.vue'
 
 //interface
 interface ArticleCardProps {
@@ -17,6 +18,7 @@ interface ArticleCardProps {
     highlightTitle?: boolean
     highlightSummary?: boolean
     showCate?: boolean
+    showUser?: boolean
 }
 
 const $slots = defineSlots<{
@@ -29,7 +31,8 @@ const $props = withDefaults(defineProps<ArticleCardProps>(), {
     reverse: false,
     highlightTitle: false,
     highlightSummary: false,
-    showCate: true
+    showCate: true,
+    showUser: true
 })
 //router, props, inject, provide
 const $route = useRoute()
@@ -61,6 +64,8 @@ const comments = computed(() => {
 
 const [liked, processLike] = useLike($props.article.liked)
 
+const showInfo = ref(false)
+
 const handleLike = () => {
     processLike({
         itemId: article.value.id,
@@ -86,6 +91,10 @@ const getTagType = (id: number) => {
 const toComment = () => {
     $router.push("/article/" + article.value.id + "#hami-comment")
 }
+const handleBeforeEnter = () => {
+    showInfo.value = true
+}
+
 </script>
 <template>
     <div class="hami-article-card">
@@ -93,9 +102,25 @@ const toComment = () => {
             <div class="article-info">
                 <div class="article-header">
                     <div class="left-panel">
-                        <router-link :to="userLink" class="link">
-                            <el-text class="author" truncated>{{ author.username }}</el-text>
-                        </router-link>
+                        <el-popover
+                            trigger="hover"
+                            width="300"
+                            placement="top"
+                            @before-enter="handleBeforeEnter"
+                            :show-after="300"
+                        >
+                            <template #reference>
+                                <router-link
+                                    :to="userLink"
+                                    class="link"
+                                    v-if="showUser"
+                                >
+                                    <el-text class="author" truncated>{{ author.username }}</el-text>
+                                </router-link>
+                            </template>
+                            <HamiUserCardHover :id="article.userId" v-if="showInfo"></HamiUserCardHover>
+                        </el-popover>
+
                         <div class="ctime">
                             <el-icon size="16">
                                 <Calendar/>
@@ -121,9 +146,7 @@ const toComment = () => {
                    <span class="summary" v-if="!highlightSummary">
                         {{ article.summary }}
                    </span>
-                    <span v-else v-html="article.summary">
-
-                    </span>
+                    <span v-else v-html="article.summary"></span>
                 </router-link>
                 <div class="bottom">
                     <div class="stat">

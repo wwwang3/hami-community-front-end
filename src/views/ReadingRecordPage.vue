@@ -6,11 +6,13 @@ import { UserInteractService } from '@/service/modules/interact.ts'
 import { AlarmClock, Clock, Delete, Search } from '@element-plus/icons-vue'
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { $message } from '@/utils/message.ts'
-import { ReadingRecordService } from '@/service/modules/reading.ts'
+import { ReadingRecordService } from '@/service/modules/interact.ts'
 import { isEmpty } from '@/utils'
+import { HamiScrollListInstance } from '@/components/types'
 //interface
 
-const readingRecordList = ref<InstanceType<typeof HamiScrollList<ReadingRecord>> | null>(null)
+// @ts-ignore
+const readingRecordList = ref<HamiScrollListInstance<ReadingRecord>>()
 
 const keyword = ref("")
 onMounted(() => {

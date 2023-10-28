@@ -4,7 +4,7 @@ import { useRouter } from "vue-router"
 import { FormInstance, FormRules } from 'element-plus'
 import { validatePass } from '@/utils/validator.ts'
 import { useAutoLoading, useCountdown, useRequest } from '@/hooks'
-import AuthService from '@/service/modules/auth.ts'
+import { AuthService } from '@/service/modules/user.ts'
 import { isEmail, isEmpty } from '@/utils'
 import { $message } from '@/utils/message.ts'
 import { EditPen, Lock, Message } from '@element-plus/icons-vue'

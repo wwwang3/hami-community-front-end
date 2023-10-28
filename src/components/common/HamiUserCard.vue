@@ -8,9 +8,15 @@ import { $message } from '@/utils/message.ts'
 //interface
 interface UserCardProps {
     user: User
+    profile?: boolean,
+    position?: boolean
 }
 
-const $props = defineProps<UserCardProps>()
+const $props = withDefaults(defineProps<UserCardProps>(), {
+    user: {},
+    profile: false,
+    position: true
+})
 //router, props, inject, provide
 const $router = useRouter()
 const $route = useRoute
@@ -33,7 +39,7 @@ const handleFollow = () => {
     if (userStore.isSelf($props.user.userId)) {
         return
     }
-    handleAction($props.user.userId).then(active => {
+    handleAction($props.user.userId).then((active: boolean) => {
         let stat = $props.user!.stat
         if (active) {
             stat.totalFollowers++
@@ -62,11 +68,14 @@ const hasText = () => {
                 <el-text class="username" truncated size="large" tag="div">
                     {{ user?.username }}
                 </el-text>
-                <div class="job">
-                    <el-text truncated>{{ user?.position }}</el-text>
+                <div class="job" v-if="position">
+                    <el-text truncated :title="user?.position">{{ user?.position }}</el-text>
                     <el-text v-if="hasText()" class="at">@</el-text>
                     <el-text truncated>{{ user?.company }}</el-text>
                 </div>
+                <el-text class="profile" truncated tag="div" v-if="profile">
+                    {{ user?.profile }}
+                </el-text>
             </div>
         </router-link>
         <div class="bottom">
@@ -95,7 +104,7 @@ const hasText = () => {
 .hami-user-card {
     .header {
         display: flex;
-        justify-content: space-between;
+        margin-left: 10px;
         align-items: center;
 
         .info {
@@ -111,6 +120,9 @@ const hasText = () => {
             .job {
                 display: flex;
                 align-items: center;
+                font-size: 14px;
+            }
+            .profile {
                 font-size: 14px;
             }
             .at {

@@ -32,27 +32,27 @@ export interface MessageUtils {
 }
 
 export const $message: MessageUtils = {
-    success(msg: string, duration: number = 2500) {
+    success(msg: string, duration: number = 2000) {
         ElMessage({
             type: "success",
             duration: duration,
             message: msg
         })
     },
-    error(msg: string, duration: number = 2500) {
+    error(msg: string, duration: number = 2000) {
         ElMessage({
             type: "error",
             duration: duration,
             message: msg
         })
     },
-    warn(msg: string, duration: number = 2500) {
+    warn(msg: string, duration: number = 2000) {
         ElMessage.warning({
             message: msg,
             duration: duration
         })
     },
-    info(msg: string, duration: number = 2500) {
+    info(msg: string, duration: number = 2000) {
         ElMessage.warning({
             message: msg,
             duration: duration
@@ -98,7 +98,7 @@ export const $message: MessageUtils = {
             ...options as {}
         })
     },
-    notifyError(msg: string, title: string = "通知", duration: number = 2500, offset: number = 0,
+    notifyError(msg: string, title: string = "通知", duration: number = 2000, offset: number = 0,
                 options?: NotificationParams) {
         return this.notify({
             type: "error",

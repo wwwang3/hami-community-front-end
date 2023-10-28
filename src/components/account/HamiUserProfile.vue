@@ -2,9 +2,8 @@
 import { onMounted, reactive, ref, Ref } from "vue"
 import { useRouter } from "vue-router"
 import { useRequest } from '@/hooks'
-import UserService from '@/service/modules/user.ts'
+import { AccountService } from '@/service/modules/user.ts'
 import HamiLoading from '@/components/common/HamiLoading.vue'
-import { $message } from '@/utils/message.ts'
 import defaultAvatar from "/assets/avatar.jpg"
 import {
     FormInstance,
@@ -15,36 +14,39 @@ import {
     UploadRawFile,
     UploadRequestOptions
 } from 'element-plus'
-import user from '@/store/modules/user.ts'
-import { isEmpty } from '@/utils'
+import { $message, isEmpty } from '@/utils'
+import useUserStore from '@/store/modules/user.ts'
+import ImageService from '@/service/modules/image.ts'
 //interface
 //router, props, inject, provide
 const $router = useRouter()
-//custom var
-const [onLoading, getProfile] = useRequest({
+
+const userStore = useUserStore()
+
+const [onLoading, getProfile] = useRequest<LoginProfile, []>({
     loading: true,
-    run: (params) => UserService.getUserProfile()
+    run: (...params) => userStore.getProfile()
 })
 
-const [onUpdate, handleUpdateProfile] = useRequest({
+const [onUpdate, handleUpdateProfile] = useRequest<any, [UserProfileParam]>({
     loading: false,
-    run: (...params) => UserService.updateUserProfile(...params as Parameters<typeof UserService.updateUserProfile>)
+    run: (...params) => AccountService.updateUserProfile(...params)
 })
 
-const [onUpload, handleUpload] = useRequest({
-    run: (...params) => UserService.updateAvatar(...params as Parameters<typeof UserService.updateAvatar>)
+const [onUpload, handleUpload] = useRequest<string, [File]>({
+    run: (...params) => ImageService.upload(...params, 'avatar')
 })
 
-const logined = ref(false)
 const userProfileParam = reactive<UserProfileParam>({
     blog: '',
     company: '',
     position: '',
     profile: '',
-    username: ''
+    username: '',
+    avatar: '',
 })
 
-const userProfile = ref<UserProfile>() as Ref<UserProfile>
+const userProfile = ref<LoginProfile>()
 const avatar = ref(defaultAvatar)
 const avatarRef = ref<UploadInstance>()
 const userProfileForm = ref<FormInstance>()
@@ -66,17 +68,14 @@ const userProfileFormRules = reactive<FormRules<typeof userProfileParam>>({
 
 onMounted(async () => {
     try {
-        userProfile.value = await getProfile(null)
-        logined.value = true
+        userProfile.value = await getProfile()
         //copy to param
         userProfileParam.username = userProfile.value.username
         userProfileParam.position = userProfile.value.position
         userProfileParam.company = userProfile.value.company
         userProfileParam.blog = userProfile.value.blog
         userProfileParam.profile = userProfile.value.profile
-        if (!isEmpty(userProfile.value.avatar)) {
-            avatar.value = userProfile.value.avatar
-        }
+        userProfileParam.avatar = userProfile.value.avatar
     } catch (e) {
         $message.error("获取账号信息失败")
     }
@@ -131,8 +130,8 @@ const handleBeforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
     if (!/^.*\.(jpg|jpeg|png|webp)$/i.test(rawFile.name)) {
         $message.error("只支持png, jpg, webp等格式")
         return false
-    } else if (rawFile.size / 1024 / 1024 > 5) {
-        $message.error("图片最大为5MB")
+    } else if (rawFile.size / 1024 / 1024 > 2) {
+        $message.error("图片最大为2MB")
         return false
     }
     return true
@@ -140,29 +139,22 @@ const handleBeforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
 
 const getChangedProp = (): UserProfileParam => {
     let profile = {} as UserProfileParam
-    if (userProfileParam.username !== userProfile.value.username) {
-        profile.username = userProfileParam.username
-    }
-    if (userProfileParam.position !== userProfile.value.position) {
-        profile.position = userProfileParam.position
-    }
-    if (userProfileParam.blog !== userProfile.value.blog) {
-        profile.blog = userProfileParam.blog
-    }
-    if (userProfileParam.company !== userProfile.value.company) {
-        profile.company = userProfileParam.company
-    }
-    if (userProfileParam.profile !== userProfile.value.profile) {
-        profile.profile = userProfileParam.profile
-    }
+    Object.keys(userProfileParam)
+        .forEach((key, index) => {
+            // @ts-ignore
+            if (userProfileParam[key] !== userProfile.value![key]) {
+                // @ts-ignore
+                profile[key] = userProfileParam[key]
+            }
+        })
     return profile
 }
 
 </script>
 <template>
     <div class="hami-user-profile">
-        <el-skeleton :rows="5" animated v-if="onLoading"></el-skeleton>
-        <div class="user-profile-container" v-else>
+        <el-skeleton :rows="5" animated :loading="onLoading"></el-skeleton>
+        <div class="user-profile-container" v-if="!onLoading">
             <div class="user-profile-header">个人资料</div>
             <div class="user-profile-body">
                 <div class="profile-form">
@@ -218,7 +210,7 @@ const getChangedProp = (): UserProfileParam => {
                     >
                         <template #default>
                             <HamiLoading :loading="onUpload" text="上传中" style="border-radius: 50%; height: 120px;">
-                                <img :src="avatar" alt="">
+                                <img :src="userProfileParam.avatar" alt="">
                             </HamiLoading>
                         </template>
                         <template #trigger>
@@ -229,6 +221,7 @@ const getChangedProp = (): UserProfileParam => {
                             </div>
                         </template>
                     </el-upload>
+                    <div class="tip">点击下方保存修改后生效</div>
                 </div>
             </div>
         </div>
@@ -265,6 +258,13 @@ const getChangedProp = (): UserProfileParam => {
             padding-left: 60px;
             padding-top: 30px;
 
+            .tip {
+                text-align: center;
+                font-size: 13px;
+                color: var(--hami-text-gray);
+                width: 100%;
+                margin-top: 6px;
+            }
             img {
                 width: 120px;
                 height: 120px;

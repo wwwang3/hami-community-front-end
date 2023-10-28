@@ -107,6 +107,7 @@ const joinTime = computed(() => {
 
 <style scoped lang="less">
 .hami-avatar-panel {
+    padding: 20px 18px 18px;
     .item {
         display: flex;
         align-items: center;
@@ -246,16 +247,6 @@ const joinTime = computed(() => {
     .logout-icon {
         font-size: 18px;
         margin-right: 16px;
-
-        svg {
-            ////height: 24px;
-            ////width: 24px;
-            //display: flex;
-            //align-items: center;
-            //font-size: 18px;
-            //justify-content: center;
-            //margin-right: 16px;
-        }
     }
 }
 </style>

@@ -6,11 +6,12 @@ import { loadStore } from '@/store'
 import router, { registerRouter } from '@/router'
 import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils/message.ts'
+import { LOGIN_USER } from '@/store/keys.ts'
 
 async function loadLoginUser()  {
     let loading = $message.loading("正在进入Hami...")
     try {
-        await useUserStore().getProfile()
+        return await useUserStore().getProfile()
     } catch (e) {
         console.log(e)
     } finally {
@@ -25,8 +26,8 @@ async function start() {
     //加载其他ui库
     loadPlugins(app)
     //加载登录用户
-    await loadLoginUser()
-
+    let loginUser = await loadLoginUser()
+    console.log(loginUser)
     //注册路由
     registerRouter(app)
     await router.isReady()

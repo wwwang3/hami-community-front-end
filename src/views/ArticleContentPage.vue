@@ -2,12 +2,12 @@
 import { ref, computed, watch, onBeforeMount, provide } from "vue"
 import { useRequest } from '@/hooks'
 import { ArticleService } from '@/service/modules/article.ts'
-import { Calendar, Clock, Files, FirstAidKit, View } from '@element-plus/icons-vue'
+import { Calendar, Clock, View } from '@element-plus/icons-vue'
 import { $message } from '@/utils/message.ts'
 import { formatDateTime } from '@/utils'
 import HamiMdViewer from '@/components/md/HamiMdViewer.vue'
 import { MdCatalog } from 'md-editor-v3'
-import HamiUserCard from '@/components/user/HamiUserCard.vue'
+import HamiUserCard from '@/components/common/HamiUserCard.vue'
 import { useCateStore } from '@/store/modules/category.ts'
 import { useCollect, useLike } from '@/hooks/userInteract.ts'
 import { COMMENT_AREA_OWNER } from '@/store/keys.ts'
@@ -385,7 +385,7 @@ const getArticle = async () => {
         .item {
             background: var(--hami-bg-blue);
             padding: 4px 8px;
-            font-size: 14px;
+            font-size: 13px;
             border-radius: var(--hami-radius-small);
             display: flex;
             align-items: center;

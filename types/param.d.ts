@@ -43,6 +43,7 @@ declare interface UserProfileParam {
     position: string,
     blog: string,
     company: string,
+    avatar: string
 }
 
 declare interface PageParam {

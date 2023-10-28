@@ -5,7 +5,8 @@ import { loadTokenStore } from '@/store/modules/token.ts'
 const defaultConfig: Partial<AxiosRequestConfig> = {
     baseURL: import.meta.env.VITE_BASE_API,
     timeout: 5000,
-    withCredentials: true
+    withCredentials: true,
+    timeoutErrorMessage: "请求超时"
 }
 
 function createInstance() {

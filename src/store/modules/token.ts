@@ -1,6 +1,6 @@
 import store from '@/store'
 import { defineStore } from 'pinia'
-import AuthService from '@/service/modules/auth.ts'
+import { AuthService } from '@/service/modules/user.ts'
 import { isEmpty } from '@/utils'
 
 export const useTokenStore = defineStore("token", () => {

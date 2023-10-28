@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRequest } from '@/hooks'
-import UserService from '@/service/modules/user.ts'
+import { AccountService} from '@/service/modules/user.ts'
 import { $message } from '@/utils/message.ts'
 import { useTokenStore } from '@/store/modules/token.ts'
 import { useRouter } from 'vue-router'
 //interface
 //router, props, inject, provide
 const [onLoading, handleGetAccountInfo] = useRequest({
-    run: (...params) => UserService.getAccountInfo()
+    run: (...params) => AccountService.getAccountInfo()
 })
 //custom var
 const account = ref<AccountInfo>({

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, provide, computed} from "vue"
 import { useRequest } from '@/hooks'
-import UserService from '@/service/modules/user.ts'
+import { UserService } from '@/service/modules/user.ts'
 import HamiUserData from '@/components/user/HamiUserData.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { TabPaneName, TabsPaneContext } from 'element-plus'
+import { TabsPaneContext } from 'element-plus'
 import useUserStore from '@/store/modules/user.ts'
 //interface
 interface UserSpaceProps {

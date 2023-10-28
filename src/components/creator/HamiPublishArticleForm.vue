@@ -10,6 +10,7 @@ import { useRequest } from '@/hooks'
 import { beforeUpload } from "@/utils/validator.ts"
 import { ArticleDraftService } from '@/service/modules/article.ts'
 import { Close } from '@element-plus/icons-vue'
+import ImageService from '@/service/modules/image.ts'
 
 //interface
 interface FormProps {
@@ -27,8 +28,8 @@ const publishForm = ref<FormInstance>()
 const tagList = reactive<Array<Tag>>([] as Array<Tag>)
 const categoryList = reactive<Array<Category>>([] as Array<Category>)
 
-const [onUpload, processUpload] = useRequest({
-    run: (params) => ArticleDraftService.uploadPicture(params)
+const [onUpload, processUpload] = useRequest<string, [File]>({
+    run: (...params) => ImageService.upload(...params, "article-picture")
 })
 const picRef = ref()
 

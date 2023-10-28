@@ -12,23 +12,25 @@ declare interface AuthServiceApi {
 
     updatePassword(params: ResetPassParam): Promise<any>
 
-    getLoginProfile(): Promise<LoginProfile>
-
 }
 
-declare interface UserServiceApi {
+declare interface AccountServiceApi {
 
-    getUserProfile(): Promise<UserProfile>
+    getLoginProfile(): Promise<LoginProfile>
 
-    getAuthorInfo(user_id: number): Promise<User>
-
-    updateUserProfile(params: UserProfileParam): Promise<any>
-
-    updateAvatar(avatar: File): Promise<string>
+    getLoginProfile(): Promise<LoginProfile>
 
     getAccountInfo(): Promise<AccountInfo>
 
     getLoginRecords(param: PageParam): Promise<PageData<LoginRecord>>
+
+    updateUserProfile(params: UserProfileParam): Promise<any>
+}
+
+declare interface UserServiceApi {
+
+    getAuthorInfo(user_id: number): Promise<User>
+
 }
 
 declare interface ArticleDraftServiceApi {
@@ -48,8 +50,6 @@ declare interface ArticleDraftServiceApi {
     deleteDraft(id: number): Promise<any>
 
     deleteArticle(id: number): Promise<any>
-
-    uploadPicture(pic: File): Promise<string>
 }
 
 declare interface CategoryServiceApi {
@@ -103,7 +103,7 @@ declare interface CommentServiceApi {
 }
 
 declare interface ImageServiceApi {
-    upload(image: File, type: "comment" | "avatar" | "article"): Promise<string>
+    upload(image: File, type: "comment" | "avatar" | "article" | string): Promise<string>
 }
 
 declare interface NotifyServiceApi {
