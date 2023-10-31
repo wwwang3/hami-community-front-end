@@ -213,7 +213,7 @@ const handleClick = async (path: CateRoutePath) => {
 
     .icon {
         margin-right: 10px;
-        color: var(--hami-text-gray);
+        color: var(--hami-gray);
         height: 20px;
         display: flex;
         align-items: center;

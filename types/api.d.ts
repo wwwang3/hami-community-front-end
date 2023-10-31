@@ -239,7 +239,7 @@ declare interface CommentInfo {
 }
 
 declare interface NotifyInfo {
-    id: number
+    id: number | string
     name: string,
     image?: string
     detail: string
@@ -255,15 +255,24 @@ declare interface NotifyMsg {
     itemInfo: NotifyInfo
 }
 
-declare interface NotifyCount {
-    '0': number
-    '1': number
-    '2': number
-    '3': number
-    '4': number
-    '5': number
-    '6': number
-    '7': number
+declare interface NotifyCountMap {
+    '0': number //系统
+    '1': number //评论
+    '2': number //评论回复
+    '3': number //文章点赞
+    '4': number //评论点赞
+    '5': number //收藏
+    '6': number //关注
+    '7': number //待定
+    '8': number //im 未开发
+}
+
+declare interface NotifyCountItem {
+    "system": number,
+    "reply": number,
+    "love": number,
+    "follow": number,
+    "im": number
 }
 
 declare interface DailyDataGrowing {

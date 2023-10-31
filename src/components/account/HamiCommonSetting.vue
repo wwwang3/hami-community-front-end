@@ -74,7 +74,7 @@ const handleClick = (m: string) => {
         }
 
         .tips {
-            color: var(--hami-text-gray);
+            color: var(--hami-gray);
             margin-bottom: 20px;
             font-size: 14px;
         }

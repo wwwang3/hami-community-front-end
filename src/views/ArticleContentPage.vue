@@ -368,7 +368,7 @@ const getArticle = async () => {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
-            color: var(--hami-text-gray);
+            color: var(--hami-gray);
         }
 
         .meta-data {
@@ -379,7 +379,7 @@ const getArticle = async () => {
                 margin-left: 10px;
             }
 
-            color: var(--hami-text-gray);
+            color: var(--hami-gray);
         }
 
         .item {

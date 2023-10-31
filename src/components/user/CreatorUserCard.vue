@@ -95,7 +95,7 @@ const days = computed(() => {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-                color: var(--hami-text-gray);
+                color: var(--hami-gray);
                 line-height: 28px;
                 height: 28px;
             }

@@ -7,6 +7,7 @@ import { Message } from '@element-plus/icons-vue'
 import { NotifyService } from '@/service/modules/notify.ts'
 import useUserStore from '@/store/modules/user.ts'
 import HamiSearch from '@/components/header/HamiSearch.vue'
+import HeaderNotify from '@/components/header/HeaderNotify.vue'
 //interface
 type NavItem = {
     name: string,
@@ -35,11 +36,10 @@ const nav = reactive([
     },
 ])
 const activeNav = ref<string>("首页")
-const messageCount = ref(0)
+
 //life cycle
 onBeforeMount(async () => {
     console.log("hami-header before-mount")
-    await getNotifyCount()
 })
 
 //watch
@@ -51,20 +51,6 @@ const handleNavClick = async (item: NavItem) => {
     await $router.replace(item.path)
 }
 
-const getNotifyCount = async () => {
-    let count = await NotifyService.getNoReadCount()
-    console.log(count)
-    let c = 0
-    Object.values(count).forEach((value: number, index) => {
-        c += value
-    })
-    messageCount.value = c
-}
-
-const toNotify = () => {
-    $router.replace("/notify")
-}
-
 
 const toCollect = () => {
     $router.push("/user/space/" + userStore.userInfo.userId + "/collects")
@@ -72,6 +58,10 @@ const toCollect = () => {
 
 const toHistory = () => {
     $router.replace("/history")
+}
+
+const toNotify = () => {
+    $router.replace("/notify")
 }
 
 </script>
@@ -101,19 +91,7 @@ const toHistory = () => {
                     <HeaderAvatar></HeaderAvatar>
                 </div>
                 <div class="page-header-options">
-                    <div class="option-item" @click="toNotify">
-                        <el-badge class="badge" :value="messageCount"
-                                  :is-dot="messageCount >= 10"
-                                  :hidden="messageCount === 0"
-                        >
-                            <el-icon size="20">
-                                <Message/>
-                            </el-icon>
-                        </el-badge>
-                        <span>
-                            消息
-                        </span>
-                    </div>
+                    <HeaderNotify class="option-item" @click="toNotify"></HeaderNotify>
                     <div class="option-item" @click="toCollect">
                         <el-icon size="20">
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none"
@@ -221,7 +199,7 @@ const toHistory = () => {
         .creator {
             background-color: var(--hami-brand);
             padding: 0 10px;
-            color: var(--hami-text-white);
+            color: var(--hami-white);
             font-size: var(--hami-text-size);
             height: 40px;
             border-radius: var(--hami-radius);
@@ -247,21 +225,10 @@ const toHistory = () => {
             font-size: 15px;
             cursor: pointer;
 
-            .badge {
-                height: 20px;
-                --el-badge-radius: 10px;
-                --el-badge-font-size: 12px;
-                --el-badge-padding: 4px;
-                --el-badge-size: 16px;
-
-                :deep(.el-badge__content) {
-                    right: 5px;
-                    top: 3px;
+            &:hover  {
+                :deep(.el-icon) {
+                    animation: jump .3s;
                 }
-            }
-
-            &:hover .el-icon {
-                animation: jump .3s;
             }
 
             &:hover {

@@ -146,7 +146,7 @@ const hasText = () => {
             }
 
             .text {
-                color: var(--hami-text-gray);
+                color: var(--hami-gray);
                 font-size: 13px;
             }
         }

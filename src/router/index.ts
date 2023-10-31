@@ -201,7 +201,39 @@ const routes: RouteRecordRaw[] = [
     {
         path: "/notify",
         name: "Notify",
-        component: () => import("@/views/NotifyMsgPage.vue")
+        component: () => import("@/views/NotifyMsgPage.vue"),
+        children: [
+            {
+                path: "",
+                name: "NotifyDefault",
+                redirect: "/notify/reply"
+            },
+            {
+                path: "reply",
+                name: "NotifyReply",
+                component: () => import("@/components/notify/HamiNotifyReply.vue")
+            },
+            {
+                path: "love",
+                name: "NotifyLove",
+                component: () => import("@/components/notify/HamiNotifyLove.vue")
+            },
+            {
+                path: "follow",
+                name: "Notifyfollow",
+                component: () => import("@/components/notify/HamiNotifyFollow.vue")
+            },
+            {
+                path: "im",
+                name: "NotifyIM",
+                component: () => import("@/components/notify/HamiNotifyIM.vue")
+            },
+            {
+                path: "system",
+                name: "NotifySystem",
+                component: () => import("@/components/notify/HamiNotifySystem.vue")
+            }
+        ]
     },
     {
         path: "/search",

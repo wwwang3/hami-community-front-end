@@ -114,9 +114,11 @@ declare interface NotifyServiceApi {
 
     queryFollowNotify(param: PageParam): Promise<PageData<NotifyMsg>>
 
-    queryNotify(notify_type: "comment" | "like_collect" | "follow", param: PageParam): Promise<PageData<NotifyMsg>>
+    querySystemNotify(param: PageParam): Promise<PageData<NotifyMsg>>
 
-    getNoReadCount(): Promise<NotifyCount>
+    queryNotify(notify_type: "reply" | "love" | "follow" | 'system', param: PageParam): Promise<PageData<NotifyMsg>>
+
+    getNoReadCount(): Promise<NotifyCountMap>
 
     deleteNotify(msg_id: number)
 

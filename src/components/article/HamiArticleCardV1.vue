@@ -84,7 +84,7 @@ const handleDelete = async () => {
     }
 
     &:hover {
-        background-color: var(--hami-card-hover-bg);
+        background-color: var(--hami-card-hover);
     }
 
     .card-header {

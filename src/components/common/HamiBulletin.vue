@@ -67,7 +67,7 @@ import { ArrowRight } from '@element-plus/icons-vue'
         align-items: center;
         cursor: pointer;
         height: 20px;
-        color: var(--hami-text-gray);
+        color: var(--hami-gray);
         .el-icon {
             position: relative;
             top: 1px;

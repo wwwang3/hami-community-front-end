@@ -1,18 +1,22 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 export default defineComponent({
+    name: "HamiScrollList"
 })
-
 </script>
 
 <script setup lang="ts" generic="T">
-import { computed, defineSlots, nextTick, onMounted, reactive, ref } from "vue"
+import { computed, nextTick, onMounted, reactive, ref } from "vue"
 import { useRequest } from '@/hooks'
 import { formatDateTime, isEmpty } from '@/utils'
 import noDataImg from "/assets/nodata02.png"
 import fetchErrorImg from "/assets/load-error.685235d2.png"
 
-//interface
+export interface ItemType<T> {
+    item: T
+    index: number
+    _delete: (d: T, i: number) => void
+}
 interface Page {
     current: number
     size: number
@@ -32,11 +36,11 @@ interface ScrollListProps {
 
 interface ExposeProps {
     init: () => void,
-    deleteItem: (item: any, index: number) => void
+    deleteItem: (item: T, index: number) => void
 }
 
 const slots = defineSlots<{
-    item(props: { item: T, index: number, _delete: typeof _delete }): any,
+    item(props: ItemType<T>): any,
     empty(props: any): any,
     noMore(props: any): any,
     error(props: any): any,
@@ -54,7 +58,7 @@ defineExpose<ExposeProps>({
 const $props = withDefaults(defineProps<ScrollListProps>(), {
     size: 10,
     noDataText: "还没有数据",
-    showNoMore: true,
+    showNoMore: false,
     immediateLoading: false,
     timeline: false,
 })
@@ -174,7 +178,7 @@ const randomType = () => {
             <template v-if="!timeline">
                 <template v-for="(item, index) in dataList"
                           :key="keyProperty === undefined ? index : `${item[$props.keyProperty]}`">
-                    <slot name="item" v-bind="{item, index, _delete}"></slot>
+                    <slot name="item" v-bind="{item, index, _delete} as ItemType<T>"></slot>
                 </template>
             </template>
             <template v-else>
@@ -186,7 +190,7 @@ const randomType = () => {
                             :timestamp="formatTime(item[timestampKey])"
                             type="success"
                         >
-                            <slot name="item" v-bind="{item, index, _delete}"></slot>
+                            <slot name="item" v-bind="{item, index, _delete} as ItemType<T>"></slot>
                         </el-timeline-item>
                     </template>
                 </el-timeline>

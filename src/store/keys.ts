@@ -1,5 +1,6 @@
 
 export const SPACE_USER = "SPACE_USER"
 export const COMMENT_AREA_OWNER = "COMMENT_AREA_OWNER"
-
 export const LOGIN_USER = "LOGIN_USER"
+
+export const NOTIFY_STORE = "NOTIFY_STORE"

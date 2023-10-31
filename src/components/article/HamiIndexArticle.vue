@@ -21,7 +21,7 @@ const userStore = useUserStore()
 const cateStore = useCateStore()
 const $route = useRoute()
 
-const articleList = ref<HamiScrollListInstance<Article>>(null)
+const articleList = ref<HamiScrollListInstance<Article>>()
 //life cycle
 onMounted(() => {
     articleList.value?.init()

@@ -83,3 +83,12 @@ export function calculateLocation(ipInfo: IpInfo) {
     }
     return location;
 }
+
+export function calculate(...nums: number[]): number {
+    if (isEmpty(nums)) {
+        return 0
+    }
+    return nums.reduce((pre, val, index) => {
+        return pre + (isNumber(val) ? val : 0)
+    }, 0)
+}

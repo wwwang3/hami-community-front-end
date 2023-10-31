@@ -261,7 +261,7 @@ const getChangedProp = (): UserProfileParam => {
             .tip {
                 text-align: center;
                 font-size: 13px;
-                color: var(--hami-text-gray);
+                color: var(--hami-gray);
                 width: 100%;
                 margin-top: 6px;
             }

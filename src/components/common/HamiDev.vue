@@ -4,7 +4,7 @@
 
 <template>
     <div class="hami-dev">
-        开发中,敬请期待
+        开发中, 敬请期待
     </div>
 </template>
 

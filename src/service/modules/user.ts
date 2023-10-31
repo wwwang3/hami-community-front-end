@@ -1,5 +1,4 @@
 import http, { FORM, FORM_DATA } from '@/service/http.ts'
-import console from 'console'
 
 
 export const AuthService: AuthServiceApi = {

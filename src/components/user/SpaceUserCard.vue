@@ -141,14 +141,14 @@ const handleClick = () => {
         .profile-item {
             display: flex;
             align-items: center;
-            color: var(--hami-text-gray);
+            color: var(--hami-gray);
 
             .content {
                 max-width: 160px;
                 line-height: 28px;
                 height: 28px;
                 margin-left: 6px;
-                color: var(--hami-text-gray);
+                color: var(--hami-gray);
             }
         }
 
@@ -167,7 +167,7 @@ const handleClick = () => {
 
             .divider {
                 margin: 0 10px;
-                color: var(--hami-text-gray);
+                color: var(--hami-gray);
             }
         }
 
