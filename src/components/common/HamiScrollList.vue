@@ -50,6 +50,7 @@ defineExpose<ExposeProps>({
     init() {
         _init()
     },
+    //todo 重构
     deleteItem(item: T, index: number): void {
         _delete(item, index)
     },

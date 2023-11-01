@@ -48,6 +48,7 @@ declare module 'vue' {
     ElTimelineItem: typeof import('element-plus/es')['ElTimelineItem']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElUpload: typeof import('element-plus/es')['ElUpload']
+    FollowMsgCard: typeof import('./../src/components/notify/card/FollowMsgCard.vue')['default']
     FollowUserCard: typeof import('./../src/components/user/FollowUserCard.vue')['default']
     HamiAccountSetting: typeof import('./../src/components/account/HamiAccountSetting.vue')['default']
     HamiArticleCard: typeof import('./../src/components/article/HamiArticleCard.vue')['default']
@@ -102,11 +103,15 @@ declare module 'vue' {
     HeaderAvatar: typeof import('./../src/components/header/HeaderAvatar.vue')['default']
     HeaderNotify: typeof import('./../src/components/header/HeaderNotify.vue')['default']
     HeaderUserCard: typeof import('./../src/components/header/HeaderUserCard.vue')['default']
+    LoveMsgCard: typeof import('./../src/components/notify/card/LoveMsgCard.vue')['default']
     NotifyNavList: typeof import('./../src/components/notify/NotifyNavList.vue')['default']
     Operate: typeof import('./../src/components/comment/Operate.vue')['default']
+    ReplyMsgCard: typeof import('./../src/components/notify/card/ReplyMsgCard.vue')['default']
+    ReplyNofityCard: typeof import('./../src/components/notify/card/ReplyNofityCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SpaceUserCard: typeof import('./../src/components/user/SpaceUserCard.vue')['default']
+    SystemMsgCard: typeof import('./../src/components/notify/card/SystemMsgCard.vue')['default']
     UpdatePassForm: typeof import('./../src/components/account/UpdatePassForm.vue')['default']
   }
   export interface ComponentCustomProperties {

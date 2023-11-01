@@ -15,9 +15,11 @@ import { useRoute, useRouter } from "vue-router"
 
 </script>
 <template>
-    <HamiDev></HamiDev>
+    <HamiDev class="dev"></HamiDev>
 </template>
 
 <style scoped lang="less">
-
+    .dev {
+        margin-top: 10px;
+    }
 </style>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, watch } from "vue"
+import { computed, ref, watch } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { isEmpty } from '@/utils'
 import NotifyNavList from '@/components/notify/NotifyNavList.vue'
 import useNotifyStore, { NotifyRouteItem, NotifyRouteType } from '@/store/modules/notify.ts'
-
+import comment from '@/service/modules/comment.ts'
 
 
 const activeRoute = ref<NotifyRouteType>("/notify/reply")
@@ -27,6 +27,10 @@ const handleClick = (item: NotifyRouteItem) => {
     $router.push(item.path)
 }
 
+const header = computed(() => {
+    return notifyStore.notifyRoutes.find(item => item.path == activeRoute.value)?.name ?? "通知"
+})
+
 </script>
 <template>
     <div class="hami-notify">
@@ -38,7 +42,7 @@ const handleClick = (item: NotifyRouteItem) => {
                 item-class="nav-item"
                 list-class="nav-list"
                 @click="handleClick"
-                >
+            >
                 <template #header>
                     <div class="nav-header">
                         <el-icon size="18">
@@ -57,7 +61,12 @@ const handleClick = (item: NotifyRouteItem) => {
                 </template>
             </NotifyNavList>
             <div class="notify-body">
-                <router-view></router-view>
+                <div class="notify-body-header">
+                    {{ header }}
+                </div>
+                <div class="notify-body-content">
+                    <router-view></router-view>
+                </div>
             </div>
         </div>
     </div>
@@ -80,18 +89,17 @@ const handleClick = (item: NotifyRouteItem) => {
 }
 
 .hami-notify {
-    margin-top: 48px;
+    margin-top: 10px;
 
     .hami-notify-container {
         display: flex;
         justify-content: space-between;
         max-width: 1000px;
+        height: calc(100vh - 70px);
     }
 
     :deep(.notify-nav) {
         min-width: 160px;
-        border-radius: var(--hami-radius);
-        margin-right: 40px;
         background-color: rgba(255, 255, 255, .8);
         font-size: 16px;
         font-weight: 700;
@@ -133,6 +141,7 @@ const handleClick = (item: NotifyRouteItem) => {
                     padding-left: 10px;
                     line-height: 40px;
                 }
+
                 .count {
                     position: absolute;
                     right: 12px;
@@ -157,9 +166,28 @@ const handleClick = (item: NotifyRouteItem) => {
     }
 
     .notify-body {
-        background-color: rgba(255, 255, 255, .8);
+        padding: 10px;
+        background-color: rgba(255, 255, 255, .5);
         flex: 1;
-        border-radius: var(--hami-radius);
+
+        .notify-body-header {
+            border-radius: var(--hami-radius);
+            background-color: var(--hami-bg);
+            height: 42px;
+            -webkit-box-shadow: 0 2px 4px 0 rgba(121, 146, 185, 0.54);
+            box-shadow: 0 2px 4px 0 rgba(121, 146, 185, 0.54);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            font-size: 15px;
+            color: var(--hami-gray-5);
+        }
+
+        .notify-body-content {
+            height: calc(100% - 66px);
+        }
     }
 }
 </style>

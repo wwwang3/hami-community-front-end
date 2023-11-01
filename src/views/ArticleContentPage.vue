@@ -341,7 +341,7 @@ const getArticle = async () => {
         }
 
         .collect.active {
-            color: var(--hami-text-yellow);
+            color: var(--hami-yellow-1);
         }
 
         :deep(.el-badge__content.is-fixed) {

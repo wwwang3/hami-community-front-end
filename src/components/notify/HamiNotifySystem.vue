@@ -1,23 +1,21 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
-//interface
-
-//router, props, inject, provide
-
-//custom var
-
-//life cycle
-
-//watch
-
-//fun
+import HamiNotifyList from '@/components/notify/HamiNotifyList.vue'
+import { ItemType } from '@/components/common/HamiScrollList.vue'
+import SystemMsgCard from '@/components/notify/card/SystemMsgCard.vue'
 
 </script>
 <template>
-5
+    <div class="hami-system-notify">
+        <HamiNotifyList notify-type="system">
+            <template #notify="scope: ItemType<NotifyMsg>">
+                <SystemMsgCard :notify="scope.item"></SystemMsgCard>
+            </template>
+        </HamiNotifyList>
+    </div>
 </template>
 
 <style scoped lang="less">
-
+.hami-system-notify {
+    padding: 10px 0;
+}
 </style>

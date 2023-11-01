@@ -243,6 +243,7 @@ declare interface NotifyInfo {
     name: string,
     image?: string
     detail: string
+    followed: boolean
 }
 
 declare interface NotifyMsg {
