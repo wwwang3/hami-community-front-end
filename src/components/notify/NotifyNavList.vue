@@ -20,7 +20,8 @@ const notifyRoutes = notifyStore.notifyRoutes
 
 const $emit = defineEmits<{
     (e: 'update:modelValue', value: string): void,
-    (e: 'click', value: NotifyRouteItem): void
+    (e: 'click', value: NotifyRouteItem): void,
+    (e: 'update', value: NotifyRouteType): void
 }>()
 
 export type NotifyEmitType = typeof $emit
@@ -34,6 +35,7 @@ const changeActiveRoute = (path: NotifyRouteType) => {
     if (activeRoute.value === path || isEmpty(path)) return
     activeRoute.value = path
     $emit("update:modelValue", path)
+    $emit('update', path)
 }
 
 const handleClick = (item: NotifyRouteItem) => {

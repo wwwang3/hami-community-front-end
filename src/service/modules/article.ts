@@ -67,7 +67,7 @@ export const ArticleService: ArticleServiceApi = {
     },
 
     listFollowUserUserArticles(param: PageParam): Promise<PageData<Article>> {
-        return http.post("/article/list/follow", param)
+        return http.post("/article/follow/query_list", param)
     },
 
     getArticleContent(id: number): Promise<ArticleContent> {
@@ -88,7 +88,7 @@ export const ArticleService: ArticleServiceApi = {
     },
 
     listUserArticles(param: UserArticleParam): Promise<PageData<Article>> {
-        return http.post("/article/query_list", param)
+        return http.post("/article/user/query_list", param)
     }
 
 }

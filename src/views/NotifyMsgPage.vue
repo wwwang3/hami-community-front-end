@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue"
+import { computed, nextTick, ref, watch } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { isEmpty } from '@/utils'
 import NotifyNavList from '@/components/notify/NotifyNavList.vue'
@@ -27,6 +27,16 @@ const handleClick = (item: NotifyRouteItem) => {
     $router.push(item.path)
 }
 
+const handleUpdate = (path: NotifyRouteType) => {
+    let item = notifyStore.notifyRoutes.find(item => item.path === path)
+    if (isEmpty(item)) {
+        return
+    }
+    nextTick(() => {
+        notifyStore.notifyCountItem[item!.type] = 0
+    })
+}
+
 const header = computed(() => {
     return notifyStore.notifyRoutes.find(item => item.path == activeRoute.value)?.name ?? "通知"
 })
@@ -42,6 +52,7 @@ const header = computed(() => {
                 item-class="nav-item"
                 list-class="nav-list"
                 @click="handleClick"
+                @update="handleUpdate"
             >
                 <template #header>
                     <div class="nav-header">

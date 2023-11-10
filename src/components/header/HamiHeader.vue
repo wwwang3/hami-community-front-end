@@ -8,6 +8,7 @@ import { NotifyService } from '@/service/modules/notify.ts'
 import useUserStore from '@/store/modules/user.ts'
 import HamiSearch from '@/components/header/HamiSearch.vue'
 import HeaderNotify from '@/components/header/HeaderNotify.vue'
+import { $message } from '@/utils'
 //interface
 type NavItem = {
     name: string,
@@ -30,10 +31,10 @@ const nav = reactive([
         "name": "文档",
         "path": "/"
     },
-    {
-        "name": "关于",
-        "path": "/"
-    },
+    // {
+    //     "name": "关于",
+    //     "path": "/"
+    // },
 ])
 const activeNav = ref<string>("首页")
 
@@ -64,6 +65,10 @@ const toNotify = () => {
     $router.replace("/notify")
 }
 
+const handleAboutClick = () => {
+    $message.alert("作者喜欢吃哈密瓜, 所以叫Hami ✿ヽ(°▽°)ノ✿", "关于Hami")
+}
+
 </script>
 <template>
     <div class="hami-page-header">
@@ -81,6 +86,12 @@ const toNotify = () => {
                             {{ item.name }}
                         </div>
                     </template>
+                    <div class="header-nav-item"
+                         @click="handleAboutClick"
+                         :class="{active: '关于' === activeNav}"
+                    >
+                        关于Hami
+                    </div>
                 </div>
             </div>
             <div class="page-header-right">

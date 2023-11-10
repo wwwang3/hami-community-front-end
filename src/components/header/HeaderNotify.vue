@@ -49,17 +49,6 @@ const handleClick = (item: NotifyRouteItem) => {
                 >
 
                 </NotifyNavList>
-<!--            <div class="notify-item-list">-->
-<!--                <div class="notify-item" @click="handleClick('reply')">-->
-<!--                    <span class="text">评论</span>-->
-<!--                    <span class="count">{{}}</span>-->
-<!--                </div>-->
-<!--                <div class="notify-item" @click="handleClick('love')">赞和收藏</div>-->
-<!--                <div class="notify-item" @click="handleClick('follow')">新增粉丝</div>-->
-<!--                <div class="notify-item" @click="handleClick('im')">私信</div>-->
-<!--                <div class="notify-item" @click="handleClick('system')">系统通知</div>-->
-<!--            </div>-->
-
         </el-popover>
     </div>
 </template>

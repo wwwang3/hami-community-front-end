@@ -1,17 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-//interface
 
-//router, props, inject, provide
-
-//custom var
 const modes = ['light', 'dark', 'system']
 const mode = ref("light")
-//life cycle
-
-//watch
-
-//fun
 const handleClick = (m: string) => {
     mode.value = m
 }

@@ -10,7 +10,7 @@ export const CategoryService: CategoryServiceApi = {
 import type { Tag } from "/types/api"
 export const TagService: TagServiceApi = {
     listTags(param: PageParam): Promise<PageData<Tag>> {
-        return http.get("/tag/list", {
+        return http.get("/tag/query_list", {
             params: {
                 pageNum: param.pageNum,
                 pageSize: param.pageSize

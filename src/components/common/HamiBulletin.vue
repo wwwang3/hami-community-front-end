@@ -1,19 +1,11 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
 import { ArrowRight } from '@element-plus/icons-vue'
-//interface
+import { $message } from '@/utils'
 
-//router, props, inject, provide
 
-//custom var
-
-//life cycle
-
-//watch
-
-//fun
-
+const handleClick = async () => {
+    $message.notifySuccess("开发中, 敬请期待")
+}
 </script>
 <template>
     <div class="hami-bulletin">
@@ -31,7 +23,7 @@ import { ArrowRight } from '@element-plus/icons-vue'
         <div class="bulletin-item-list">
             <el-text class="bulletin-item" truncated>Hami-v0.0.1发布啦</el-text>
         </div>
-        <div class="more-log">
+        <div class="more-log" @click="handleClick">
             查看更多
             <el-icon size="16">
                 <ArrowRight />

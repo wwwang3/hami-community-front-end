@@ -259,7 +259,7 @@ const router: Router = createRouter({
     routes: routes
 })
 
-const needLoginPages: Array<string> = ["/"]
+const needLoginPages: Array<string> = []
 
 /**
  * 全局路由守卫

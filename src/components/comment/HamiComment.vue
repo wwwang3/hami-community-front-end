@@ -91,6 +91,10 @@ const init = async () => {
 
 const publishComment = async ({ content, parentId, files, finish, reply }: SubmitParamApi) => {
     try {
+        if (!userStore.logined) {
+            $message.notifyError("请登录后评论")
+            return
+        }
         let contentImg = await uploadImg(files)
         const commentParam: CommentParam = {
             articleId: $props.areaId,
