@@ -3,23 +3,15 @@ import HamiResetPasswordCard from '@/components/auth/HamiResetPasswordCard.vue'
 import { useTokenStore } from '@/store/modules/token.ts'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-//interface
 
-//router, props, inject, provide
-
-//custom var
-
-//life cycle
 const tokenStore = useTokenStore()
 const $router = useRouter()
+
 onMounted(() => {
     if (tokenStore.authenticated()) {
         $router.replace("/")
     }
 })
-//watch
-
-//fun
 
 </script>
 <template>

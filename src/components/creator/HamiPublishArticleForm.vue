@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, watch, inject } from "vue"
 import type { Ref } from "vue"
+import { inject, onMounted, reactive, ref } from "vue"
 import { FormInstance, UploadRequestOptions } from 'element-plus'
 import { CategoryService, TagService } from '@/service/modules/category.ts'
 import { isEmpty } from '@/utils'
@@ -8,11 +8,9 @@ import { $message } from '@/utils/message.ts'
 import HamiLoading from '@/components/common/HamiLoading.vue'
 import { useRequest } from '@/hooks'
 import { beforeUpload } from "@/utils/validator.ts"
-import { ArticleDraftService } from '@/service/modules/article.ts'
 import { Close } from '@element-plus/icons-vue'
 import ImageService from '@/service/modules/image.ts'
 
-//interface
 interface FormProps {
     buttonText?: string
     isArticle?: boolean
@@ -215,8 +213,8 @@ const checkItem = () => {
 
         .close {
             position: absolute;
-            top: -43px;
-            right: 26px;
+            top: -44px;
+            right: 12px;
             cursor: pointer;
         }
     }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, onBeforeMount, watch, provide } from "vue"
+import { computed, onBeforeMount, onMounted, provide, reactive, ref, unref, watch } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import HamiMdEditor from '@/components/md/HamiMdEditor.vue'
 import { isEmpty } from '@/utils'
@@ -8,6 +8,7 @@ import { ArticleDraftService } from '@/service/modules/article.ts'
 import { $message } from '@/utils/message.ts'
 import useUserStore from '@/store/modules/user.ts'
 import defaultAvatar from "/assets/avatar.jpg"
+import { ClickOutside as vClickOutside } from 'element-plus'
 
 const $route = useRoute()
 const $router = useRouter()
@@ -35,7 +36,7 @@ const [onLoading, getDraft] = useRequest<ArticleDraftDetail, [number]>({
 
 const buttonRef = ref()
 const publishPopRef = ref()
-const showItemForm = ref(false)
+
 const buttonText = computed(() => {
     if (!isEmpty(draft.value.articleId) && draft.value.articleId > 0) {
         return "确定并更新"
@@ -51,21 +52,23 @@ const text = computed(() => {
     }
     return "发表文章"
 })
-//life cycle
+
+
 onBeforeMount(async () => {
     await handleRouteChange()
 })
+
 onMounted(() => {
     console.log("EditorPage loaded")
 })
 
-//watch
 watch(() => $route.params, (newVal, oldVal) => {
     console.log(newVal, oldVal)
     if ($route.path.includes("/editor/drafts") && !isEmpty($route.params) && !isEmpty($route.params.id)) {
         handleRouteChange()
     }
 })
+
 //fun
 const handleRouteChange = async () => {
     let params = $route.params
@@ -101,13 +104,14 @@ const toUserHome = () => {
     $router.replace("/user/space/" + userInfo?.userId)
 }
 
-const handlePublishOrUpdate = () => {
-    showItemForm.value = true
+const handleClose = () => {
+    unref(publishPopRef)?.hide()
 }
 
-const handleClose = () => {
-    showItemForm.value = false
+const handleClickOutSide = () => {
+    unref(publishPopRef).popperRef?.delayHide?.()
 }
+
 const [onProcess, process] = useAutoLoading()
 
 provide("ONPROCESS", onProcess)
@@ -212,13 +216,13 @@ const checkParam = () => {
         <div class="hami-editor-header">
             <el-input placeholder="请输入文章标题" class="title" v-model="draft.title"></el-input>
             <div class="right-box">
-                <router-link to="/">
+                <router-link to="/creator/home">
                     <el-button plain>回到主页</el-button>
                 </router-link>
                 <router-link to="/creator/content">
                     <el-button plain class="draft">草稿箱</el-button>
                 </router-link>
-                <el-button type="primary" ref="buttonRef" @click="handlePublishOrUpdate">{{ text }}</el-button>
+                <el-button type="primary" ref="buttonRef" v-click-outside="handleClickOutSide">{{ text }}</el-button>
                 <el-avatar
                     :size="56"
                     :src="userInfo?.avatar || defaultAvatar" class="avatar"
@@ -236,7 +240,6 @@ const checkParam = () => {
             width="560"
             placement="bottom-start"
             popper-class="publish-popover"
-            :visible="showItemForm"
         >
             <HamiPublishArticleForm
                 :button-text="buttonText"
@@ -245,7 +248,6 @@ const checkParam = () => {
                 @ensure="handleEnsure"
                 @save="handleSave"
             >
-
             </HamiPublishArticleForm>
         </el-popover>
     </div>
@@ -292,7 +294,7 @@ const checkParam = () => {
 </style>
 
 <style>
-.publish-popover {
+.el-popover.publish-popover {
     padding: 20px !important;
     border-radius: var(--hami-radius-medium) !important;
 

@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
-import Cropper from 'cropperjs';
+import { computed, reactive } from "vue"
 import 'cropperjs/dist/cropper.css';
-import { MdEditor, config } from 'md-editor-v3';
+import { config, MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { emojis } from '@/components/md/extension/EmojiExtension/data.ts'
-import { ArticleDraftService } from '@/service/modules/article.ts'
-import {toolbars} from '@/components/md/editorConfig.ts'
-//interface
+import { toolbars } from '@/components/md/editorConfig.ts'
+import ImageService from '@/service/modules/image.ts'
+
 const $props = defineProps({
     modelValue: {
         type: String,
@@ -29,6 +26,7 @@ const content = computed({
         $emit("update:modelValue", value)
     }
 })
+
 const editorId = "hami-md-editor-v3"
 const mdConfig = reactive({
     showToolbarName: true
@@ -36,9 +34,6 @@ const mdConfig = reactive({
 
 config({
     editorExtensions: {
-        // cropper: {
-        //     instance: Cropper
-        // }
     }
 })
 
@@ -50,7 +45,7 @@ const handleSave = async (value: string, h: Promise<string>) => {
 const handleUploadImg = async (files: Array<File>, callback: (urls: Array<string>) => void) => {
     const res = await Promise.all(
         files.map((file) => {
-            return ArticleDraftService.uploadPicture(file)
+            return ImageService.upload(file, 'article')
         })
     );
 

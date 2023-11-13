@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { useRouter } from "vue-router"
 import { CateRoutePath } from '@/store/modules/category.ts'
 //interface
 
@@ -11,17 +10,8 @@ const $props = defineProps({
     }
 })
 const $router = useRouter()
-const $route = useRoute()
-//router, props, inject, provide
-//custom var
-
-//life cycle
-
-//watch
-
-//fun
-const handleClick = async (path: CateRoutePath) => {
-    await $router.replace(path)
+const handleClick = (path: CateRoutePath) => {
+    $router.replace(path)
 }
 </script>
 <template>

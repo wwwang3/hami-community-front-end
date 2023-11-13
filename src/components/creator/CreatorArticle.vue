@@ -1,24 +1,18 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { onMounted, ref } from "vue"
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { ArticleDraftService } from '@/service/modules/article.ts'
 import { $message } from '@/utils/message.ts'
 import loadingError from "/assets/load-error.685235d2.png"
-//interface
+import HamiArticleCardV1 from '@/components/article/HamiArticleCardV1.vue'
+import { HamiScrollListInstance } from '@/components/types'
 
-//router, props, inject, provide
+const creatorArticleList = ref<HamiScrollListInstance<ArticleDraftDetail>>()
 
-//custom var
-// @ts-ignore
-const creatorArticleList = ref<InstanceType<typeof HamiScrollList> | null>(null)
-//life cycle
 onMounted(() => {
     creatorArticleList.value?.init()
 })
-//watch
 
-//fun
 const handleQuery = (pageNum: number, pageSize: number): Promise<PageData<ArticleDraftDetail>> => {
     return ArticleDraftService.getArticles(pageNum, pageSize)
 }

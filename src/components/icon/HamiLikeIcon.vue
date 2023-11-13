@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
 
-//interface
 interface LikeIconProps {
     size?: string | number,
     active?: boolean

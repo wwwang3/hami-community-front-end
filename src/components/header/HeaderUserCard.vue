@@ -7,14 +7,12 @@ import { computed } from 'vue'
 import dayjs from 'dayjs'
 import { ArrowRight, Edit, User } from '@element-plus/icons-vue'
 
-//router, props, inject, provide
 const tokenStore = useTokenStore()
 const $router = useRouter()
 const $props = withDefaults(defineProps<{
     userInfo: LoginProfile
 }>(), {})
-//life cycle
-//watch
+
 const logout = async () => {
     await tokenStore.logout()
     $message.success("退出成功")
@@ -24,7 +22,6 @@ const logout = async () => {
 }
 const gotoUserCenter = async () => {
     await $router.replace("/account")
-    location.reload()
 }
 const joinTime = computed(() => {
     let ctime = $props.userInfo.ctime

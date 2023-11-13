@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, Ref, ref } from "vue"
+import { computed, onBeforeMount, ref } from "vue"
 import useUserStore from "@/store/modules/user.ts"
 import { useRouter } from 'vue-router'
 import defaultAvatar from "/assets/avatar.jpg"
 import HeaderUserCard from '@/components/header/HeaderUserCard.vue'
-//interface
 
-//router, props, inject, provide
 const $router = useRouter();
 const userStore = useUserStore()
-//custom var
 const avatarRef = ref()
 const popoverRef = ref<HTMLElement>()
 const avatarHover = ref<string>("hami-avatar-normal")
@@ -30,18 +27,14 @@ onBeforeMount(async () => {
         logined.value = false
     }
 })
-//watch
 
-//fun
 const avatarMouseEnter = () => {
     visible.value = true
     avatarHover.value = "hami-avatar-large"
-    // avatarRef.value.className =  "hami-avatar-container hami-avatar-large"
 }
 const avatarMouseLeave = () => {
     avatarHover.value = "hami-avatar-normal"
     visible.value = false
-    // avatarRef.value.className =  "hami-avatar-container hami-avatar-normal"
 }
 
 </script>

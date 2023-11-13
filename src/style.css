@@ -1,4 +1,5 @@
 :root {
+    --hami-header-bg: linear-gradient(-225deg, #e3fdf5 0, #ffe6fa 100%);
     --hami-black: #000;
     --hami-black-1: #181818;
     --hami-black-2: #1d2129;
@@ -6,8 +7,10 @@
     --hami-brand: #0396ff;
     --hami-blue: #1d7dfa;
     --hami-blue-1: #2faee3;
-    --hami-bg: #fff;
     --hami-bg-gray: #e5e6eb;
+    --hami-bg-light: #e5e6eb;
+    --hami-bg-night: #000;
+    --hami-bg: #fff;
     --hami-bg-gray-1: #f7f8fa;
     --hami-bg-light-blue: #e8f3ff;
     --hami-bg-blue: var(--hami-bg-light-blue);

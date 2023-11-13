@@ -1,56 +1,17 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, reactive, ref } from "vue"
+import { ref } from "vue"
 import { useRouter } from "vue-router"
 import HamiLogo from '@/components/common/HamiLogo.vue'
 import HeaderAvatar from '@/components/header/HeaderAvatar.vue'
-import { Message } from '@element-plus/icons-vue'
-import { NotifyService } from '@/service/modules/notify.ts'
 import useUserStore from '@/store/modules/user.ts'
 import HamiSearch from '@/components/header/HamiSearch.vue'
 import HeaderNotify from '@/components/header/HeaderNotify.vue'
 import { $message } from '@/utils'
-//interface
-type NavItem = {
-    name: string,
-    path: string
-}
-//router, props, inject, provide
+
 const $router = useRouter()
 const userStore = useUserStore()
-//custom var
-const nav = reactive([
-    {
-        "name": "首页",
-        "path": "/"
-    },
-    {
-        "name": "沸点",
-        "path": "/"
-    },
-    {
-        "name": "文档",
-        "path": "/"
-    },
-    // {
-    //     "name": "关于",
-    //     "path": "/"
-    // },
-])
+
 const activeNav = ref<string>("首页")
-
-//life cycle
-onBeforeMount(async () => {
-    console.log("hami-header before-mount")
-})
-
-//watch
-
-//fun
-const handleNavClick = async (item: NavItem) => {
-    console.log(item)
-    activeNav.value = item.name
-    await $router.replace(item.path)
-}
 
 
 const toCollect = () => {
@@ -69,23 +30,35 @@ const handleAboutClick = () => {
     $message.alert("作者喜欢吃哈密瓜, 所以叫Hami ✿ヽ(°▽°)ノ✿", "关于Hami")
 }
 
+const onPPT = () => {
+    $message.notifySuccess("开发中~~~")
+}
+
 </script>
 <template>
     <div class="hami-page-header">
         <div class="page-header-container">
             <div class="page-header-left">
-                <div class="page-header-logo">
+                <router-link class="page-header-logo" to="/">
                     <HamiLogo fit="fill" size="small" type="logo3"></HamiLogo>
-                </div>
+                </router-link>
                 <div class="page-header-nav">
-                    <template v-for="item in nav">
-                        <div class="header-nav-item"
-                             @click="handleNavClick(item)"
-                             :class="{active: item.name === activeNav}"
-                        >
-                            {{ item.name }}
-                        </div>
-                    </template>
+                    <router-link class="header-nav-item" to="/"
+                    >
+                        首页
+                    </router-link>
+                    <div class="header-nav-item"
+                         @click="onPPT"
+                    >
+                        沸点
+                    </div>
+                    <a
+                        href="https://github.com/wwwang3/hami-community"
+                        target="_blank"
+                        class="header-nav-item"
+                    >
+                        项目地址
+                    </a>
                     <div class="header-nav-item"
                          @click="handleAboutClick"
                          :class="{active: '关于' === activeNav}"
@@ -149,10 +122,9 @@ const handleAboutClick = () => {
 
 <style scoped lang="less">
 .hami-page-header {
-    //background-color: var(--hami-bg);
     position: relative;
     z-index: 100;
-    background: linear-gradient(-225deg, #e3fdf5 0, #ffe6fa 100%);;
+    background: var(--hami-header-bg);
     box-shadow: .1rem 0.1rem 0.2rem rgba(0, 0, 0, .1);
 
     .page-header-container {
@@ -236,7 +208,7 @@ const handleAboutClick = () => {
             font-size: 15px;
             cursor: pointer;
 
-            &:hover  {
+            &:hover {
                 :deep(.el-icon) {
                     animation: jump .3s;
                 }

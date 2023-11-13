@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
+import { onMounted, reactive } from "vue"
 import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router"
 import { isEmpty } from '@/utils'
-//interface
-//@ts-ignore
+
 import published from "/assets/empty-channel.png"
 //router, props, inject, provide
 const article = reactive({
@@ -12,6 +11,7 @@ const article = reactive({
 })
 const $router = useRouter()
 const $route = useRoute()
+
 onMounted(() => {
     article.id = window.sessionStorage.getItem("p_articleId") || ""
     article.title = window.sessionStorage.getItem("p_title") || ""

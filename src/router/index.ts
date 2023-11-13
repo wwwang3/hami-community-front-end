@@ -8,7 +8,6 @@ import {
     RouterHistory
 } from 'vue-router'
 import type { App } from 'vue'
-import { loadTokenStore } from '@/store/modules/token.ts'
 import { loadUserStore } from '@/store/modules/user.ts'
 
 const routes: RouteRecordRaw[] = [

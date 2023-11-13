@@ -6,7 +6,6 @@ import { loadStore } from '@/store'
 import router, { registerRouter } from '@/router'
 import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils/message.ts'
-import { LOGIN_USER } from '@/store/keys.ts'
 
 async function loadLoginUser()  {
     let loading = $message.loading("正在进入Hami...")
@@ -18,6 +17,7 @@ async function loadLoginUser()  {
         loading?.close()
     }
 }
+
 async function start() {
     const app = createApp(App)
     let start = Date.now();

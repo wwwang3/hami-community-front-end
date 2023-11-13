@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { formatDateTime, isEmpty } from '@/utils'
 import { $message } from '@/utils/message.ts'
 import { MoreFilled } from '@element-plus/icons-vue'
 
-//interface
 interface CardProps {
     article: ArticleDraftDetail,
     index: number
@@ -47,7 +45,6 @@ const handleDelete = async () => {
                         :width="100"
                         trigger="click"
                         :teleported="false"
-                        popper-class="card-dropdown"
                     >
                         <template #reference>
                             <el-icon :size="18">
@@ -55,8 +52,10 @@ const handleDelete = async () => {
                             </el-icon>
                         </template>
                         <template #default>
-                            <el-button text type="primary" @click="handleEdit">编辑</el-button>
-                            <el-button text type="danger" @click="handleDelete">删除</el-button>
+                            <div class="card-dropdown">
+                                <el-button text type="primary" @click="handleEdit">编辑</el-button>
+                                <el-button text type="danger" @click="handleDelete">删除</el-button>
+                            </div>
                         </template>
                     </el-popover>
                 </div>
@@ -128,7 +127,7 @@ const handleDelete = async () => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 100px !important;
+    padding: 10px 0;
 
     .el-button + .el-button {
         margin-left: 0;

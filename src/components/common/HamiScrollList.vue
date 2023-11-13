@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+
 export default defineComponent({
     name: "HamiScrollList"
 })
@@ -36,7 +37,7 @@ interface ScrollListProps {
 
 interface ExposeProps {
     init: () => void,
-    deleteItem: (item: T, index: number) => void
+    deleteItem: (item: T, index: number) => void,
 }
 
 const slots = defineSlots<{
@@ -121,12 +122,12 @@ const _init = () => {
             refreshData(pageData.data as any[])
         })
         .catch(e => {
-            console.log(e)
+            console.error(e)
             loadingError.value = true
         })
         .finally(() => {
             inited.value = true
-            console.log(`init finish, cos: ${Date.now() - start}ms`)
+            console.log(`init finish, cost: ${Date.now() - start}ms`)
         })
 }
 const _delete = async (item: any, index: number) => {
@@ -165,9 +166,10 @@ const formatTime = (time: number | Date) => {
     return formatDateTime(time, "YYYY-MM-DD")
 }
 
+type NodeType = "info" | "success"| "danger" | "warning"
 const nodeType = ["info", "success", "danger", "warning"]
-const randomType = () => {
-    return nodeType[Math.floor(Math.random() * 4)]
+const randomType = (): NodeType => {
+    return nodeType[Math.floor(Math.random() * 4)] as NodeType
 }
 </script>
 <template>
@@ -189,7 +191,7 @@ const randomType = () => {
                         <el-timeline-item
                             placement="top"
                             :timestamp="formatTime(item[timestampKey])"
-                            type="success"
+                            :type="randomType()"
                         >
                             <slot name="item" v-bind="{item, index, _delete} as ItemType<T>"></slot>
                         </el-timeline-item>

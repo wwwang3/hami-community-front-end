@@ -4,7 +4,6 @@ import { useRoute, useRouter } from "vue-router"
 import { isEmpty } from '@/utils'
 import NotifyNavList from '@/components/notify/NotifyNavList.vue'
 import useNotifyStore, { NotifyRouteItem, NotifyRouteType } from '@/store/modules/notify.ts'
-import comment from '@/service/modules/comment.ts'
 
 
 const activeRoute = ref<NotifyRouteType>("/notify/reply")

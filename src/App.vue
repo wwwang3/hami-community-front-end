@@ -1,19 +1,10 @@
-
 <script setup lang="ts">
-import { computed, onBeforeMount, onMounted, reactive, ref, watch } from 'vue'
-import { $message } from '@/utils/message.ts'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import useUserStore from '@/store/modules/user.ts'
-import * as path from 'path'
-onBeforeMount(async () => {
-    console.log("app before mount")
-})
-const $route = useRoute()
 
+
+const $route = useRoute()
 const paths = ["/login", "/register", "/editor/drafts"]
-onMounted(() => {
-    $message.success("hello")
-})
 
 const showHeader = ref(true)
 watch(() => $route.path, (newVal, oldValue) => {
@@ -24,7 +15,7 @@ watch(() => $route.path, (newVal, oldValue) => {
         }
     }
     showHeader.value = true
-}, {immediate: true})
+}, { immediate: true })
 </script>
 
 <template>

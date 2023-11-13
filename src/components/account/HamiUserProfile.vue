@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref, Ref } from "vue"
+import { onMounted, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import { useRequest } from '@/hooks'
 import { AccountService } from '@/service/modules/user.ts'
@@ -47,7 +47,6 @@ const userProfileParam = reactive<UserProfileParam>({
 })
 
 const userProfile = ref<LoginProfile>()
-const avatar = ref(defaultAvatar)
 const avatarRef = ref<UploadInstance>()
 const userProfileForm = ref<FormInstance>()
 const userProfileFormRules = reactive<FormRules<typeof userProfileParam>>({
@@ -81,11 +80,6 @@ onMounted(async () => {
     }
 })
 
-//life cycle
-
-//watch
-
-//fun
 const updateProfile = async (el: FormInstance | undefined) => {
     //更新个人信息
     try {
@@ -106,10 +100,9 @@ const updateProfile = async (el: FormInstance | undefined) => {
 
 const updateAvatar = async (options: UploadRequestOptions) => {
     //更新头像
-    console.log(options)
     try {
         //返回头像地址
-        avatar.value = await handleUpload(options.file)
+        userProfileParam.avatar = await handleUpload(options.file)
         $message.success("上传成功")
         return Promise.resolve()
     } catch (e) {
@@ -210,7 +203,7 @@ const getChangedProp = (): UserProfileParam => {
                     >
                         <template #default>
                             <HamiLoading :loading="onUpload" text="上传中" style="border-radius: 50%; height: 120px;">
-                                <img :src="userProfileParam.avatar" alt="">
+                                <img :src="userProfileParam.avatar || defaultAvatar" alt="">
                             </HamiLoading>
                         </template>
                         <template #trigger>

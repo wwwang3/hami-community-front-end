@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, watch } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { computed, watch } from "vue"
+import { useRouter } from "vue-router"
 import defaultAvatar from "/assets/avatar.jpg"
 import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils/message.ts'
@@ -12,7 +12,6 @@ interface SpaceUserProps {
 }
 
 const $props = defineProps<SpaceUserProps>()
-//router, props, inject, provide
 const $router = useRouter()
 const userStore = useUserStore()
 
@@ -23,13 +22,11 @@ const link = computed(() => {
     return "/user/space/" + $props.user.userId
 })
 
-//watch
 watch(() => $props.user?.followed, (newVal, oldVal) => {
     state.value = newVal
 })
 
 
-//fun
 const handleFollow = () => {
     if (userStore.isSelf($props.user.userId)) {
         return
@@ -57,7 +54,10 @@ const handleClick = () => {
         <div class="user-card-container">
             <el-avatar :src="defaultAvatar" size="large" class="user-card-avatar"></el-avatar>
             <div class="user-card-body">
-                <div class="profile-item username">{{ user.username }}</div>
+                <div class="profile-item">
+                    <el-text class="username" truncated tag="span">{{ user.username }}</el-text>
+                    <el-tag v-if="user.tag" class="tag">{{ user.tag }}</el-tag>
+                </div>
                 <div class="work">
                     <div class="profile-item company">
                         <el-icon size="22" class="icon">
@@ -100,7 +100,7 @@ const handleClick = () => {
                     </div>
                     <div class="btn-group" v-if="!userStore.isSelf(user?.userId)">
                         <el-button type="info" @click="handleFollow" v-if="state" plain>取消关注</el-button>
-                       <el-button type="primary" @click="handleFollow" v-else>关注</el-button>
+                        <el-button type="primary" @click="handleFollow" v-else>关注</el-button>
                         <el-button type="primary" plain @click="handleChat">私信</el-button>
                     </div>
                     <el-button plain @click="handleClick" auto-insert-space v-else>设置</el-button>
@@ -159,6 +159,10 @@ const handleClick = () => {
             height: 24px;
             line-height: 24px;
             margin: 4px 0;
+            max-width: 200px;
+        }
+        .tag {
+            margin-left: 10px;
         }
 
         .work {
@@ -174,6 +178,7 @@ const handleClick = () => {
         .profile, .blog {
             max-width: 240px;
         }
+
         .blog {
             a {
                 display: flex;
@@ -198,6 +203,7 @@ const handleClick = () => {
             flex-direction: column;
             justify-content: space-between;
         }
+
         .btn-group {
             display: flex;
             justify-content: space-between;

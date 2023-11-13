@@ -1,10 +1,8 @@
 <script setup lang="ts">
-
 import { computed, onBeforeMount } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { ArrowLeft, Position, Postcard, Setting, User } from '@element-plus/icons-vue'
 import useUserStore from '@/store/modules/user.ts'
-import { $message } from '@/utils/message.ts'
 //interface
 
 //router, props, inject, provide

@@ -1,20 +1,16 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
-import { useRequest } from '@/hooks'
-import { UserInteractService } from '@/service/modules/interact.ts'
-import { AlarmClock, Clock, Delete, Search } from '@element-plus/icons-vue'
+import { computed, onMounted, ref } from "vue"
+import { ReadingRecordService } from '@/service/modules/interact.ts'
+import { AlarmClock, CircleClose, Delete, Search } from '@element-plus/icons-vue'
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { $message } from '@/utils/message.ts'
-import { ReadingRecordService } from '@/service/modules/interact.ts'
 import { isEmpty } from '@/utils'
 import { HamiScrollListInstance } from '@/components/types'
-//interface
 
-// @ts-ignore
 const readingRecordList = ref<HamiScrollListInstance<ReadingRecord>>()
 
 const keyword = ref("")
+
 onMounted(() => {
     readingRecordList.value?.init()
 })
@@ -23,7 +19,7 @@ const clearRecords = async () => {
         await $message.confirm("清空之后就什么都没有了哦~")
         await ReadingRecordService.clearReadingRecords()
         location.reload()
-    }  catch (e) {
+    } catch (e) {
         if (e === 'cancel') return
         $message.error("操作失败")
     }
@@ -31,7 +27,6 @@ const clearRecords = async () => {
 
 const handleDeleteRecord = async (item: ReadingRecord, index: number) => {
     try {
-        console.log(item, index)
         await ReadingRecordService.deleteReadingRecord(item.id)
         readingRecordList.value?.deleteItem(item, index)
         $message.success("删除成功")
@@ -49,7 +44,6 @@ const handleQuery = (current: number, size: number) => {
 }
 
 const handleSearch = async () => {
-    console.log("search")
     if (isEmpty(keyword.value)) {
         return
     }
@@ -59,6 +53,10 @@ const handleSearch = async () => {
 const highlight = computed(() => {
     return !isEmpty(keyword.value)
 })
+
+const clearKeyword = () => {
+    keyword.value = ''
+}
 
 </script>
 <template>
@@ -74,6 +72,9 @@ const highlight = computed(() => {
                 <div class="right-panel">
                     <el-input placeholder="请输入标题关键字" maxlength="8" v-model="keyword">
                         <template #suffix>
+                            <el-icon @click="clearKeyword" v-if="keyword.length > 0" class="clear">
+                                <CircleClose/>
+                            </el-icon>
                             <el-icon @click="handleSearch">
                                 <Search></Search>
                             </el-icon>
@@ -153,17 +154,21 @@ const highlight = computed(() => {
 
         .right-panel {
             display: flex;
+
             button {
                 width: 120px;
             }
+
             .el-input {
                 margin-right: 16px;
+                width: 200px;
             }
-            :deep(input) {
-                width: 100px;
-            }
+
             .el-icon {
                 cursor: pointer;
+            }
+            :deep(.clear) {
+                margin-right: 10px;
             }
         }
     }
