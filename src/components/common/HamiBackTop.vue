@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
-//interface
+import { computed } from "vue"
+
 interface BackTopProps {
     right?: number
     bottom?: number
@@ -22,13 +21,6 @@ const style  = computed(() => {
         "width": $props.size + "px"
     }
 })
-//custom var
-
-//life cycle
-
-//watch
-
-//fun
 
 </script>
 <template>
@@ -51,7 +43,4 @@ const style  = computed(() => {
 </template>
 
 <style scoped lang="less">
-    .back-top {
-
-    }
 </style>

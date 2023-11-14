@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, computed } from "vue"
+import { computed, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import useUserStore from '@/store/modules/user.ts'
 import { formatDateTime } from '@/utils'
-import { Calendar, Comment, View } from '@element-plus/icons-vue'
+import { Calendar, View } from '@element-plus/icons-vue'
 import { $message } from '@/utils/message.ts'
 import { EpPropMergeType } from 'element-plus/es/utils'
 import { useLike } from '@/hooks/userInteract.ts'
@@ -120,7 +120,6 @@ const handleBeforeEnter = () => {
                             </template>
                             <HamiUserCardHover :id="article.userId" v-if="showInfo"></HamiUserCardHover>
                         </el-popover>
-
                         <div class="ctime">
                             <el-icon size="16">
                                 <Calendar/>
@@ -136,17 +135,17 @@ const handleBeforeEnter = () => {
                     </div>
                 </div>
                 <div class="title-row">
-                    <router-link :to="link" class="title" v-if="!highlightTitle">
+                    <router-link :to="link" class="title ellipsis" v-if="!highlightTitle">
                         {{ article.title }}
                     </router-link>
-                    <router-link :to="link" class="title" v-else v-html="article.title">
+                    <router-link :to="link" class="title ellipsis" v-else v-html="article.title">
                     </router-link>
                 </div>
                 <router-link class="summary-row" :to="link">
-                   <span class="summary" v-if="!highlightSummary">
+                   <span class="summary ellipsis" v-if="!highlightSummary">
                         {{ article.summary }}
                    </span>
-                    <span v-else v-html="article.summary"></span>
+                    <span v-else v-html="article.summary" class="summary ellipsis"></span>
                 </router-link>
                 <div class="bottom">
                     <div class="stat">
@@ -214,7 +213,7 @@ const handleBeforeEnter = () => {
     }
 
     .entry.entry-border {
-        border-bottom: 1px solid var(--el-border-color-light);
+        border-bottom: 1px solid var(--el-border-color);
     }
 
     .entry.reverse {
@@ -238,7 +237,7 @@ const handleBeforeEnter = () => {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: var(--hami-text-1);
+        color: var(--hami-card-text-color);
         font-size: 14px;
         height: 21px;
 
@@ -258,7 +257,7 @@ const handleBeforeEnter = () => {
             align-items: center;
 
             .author:hover {
-                color: var(--hami-link-hover);
+                color: var(--hami-text-hover-color);
             }
         }
 
@@ -290,25 +289,18 @@ const handleBeforeEnter = () => {
 
     .title-row, .summary-row {
         :deep(em) {
-            color: var(--hami-red-1);
+            color: var(--hami-red-2);
             font-style: normal;
         }
     }
 
     .title {
-        display: block;
-        font-size: 18px;
-        font-weight: 700;
-        color: var(--hami-title);
-        line-clamp: 1;
-        margin: 4px 0;
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--hami-title-color);
+        margin: 2px 0;
         line-height: 24px;
         width: 100%;
-        display: -webkit-box;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 1;
     }
 
     .summary-row {
@@ -318,14 +310,10 @@ const handleBeforeEnter = () => {
     }
 
     .summary {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
         font-size: 14px;
         word-break: break-all;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        color: var(--hami-text);
+        color: var(--hami-text-color);
     }
 
     .bottom {
@@ -342,7 +330,7 @@ const handleBeforeEnter = () => {
         .item {
             display: flex;
             align-items: center;
-            color: var(--hami-text-5);
+            color: var(--hami-grey-2);
 
             &:not(:first-child) {
                 margin-left: 16px;
@@ -355,7 +343,7 @@ const handleBeforeEnter = () => {
             pointer-events: visible;
 
             &:hover {
-                color: var(--hami-text-blue);
+                color: var(--hami-icon-active-1);
             }
 
             .el-icon {
@@ -363,7 +351,7 @@ const handleBeforeEnter = () => {
             }
 
             &.active {
-                color: var(--hami-text-blue);
+                color: var(--hami-icon-active-1);
             }
         }
 
@@ -378,7 +366,7 @@ const handleBeforeEnter = () => {
             }
 
             &:hover {
-                color: var(--hami-text-blue);
+                color: var(--hami-icon-active-1);
             }
         }
     }
@@ -386,7 +374,6 @@ const handleBeforeEnter = () => {
     .tags {
         display: flex;
         align-items: center;
-        color: var(--hami-text-5);
 
         .tag-item {
             font-size: 12px;
@@ -407,7 +394,6 @@ const handleBeforeEnter = () => {
 
 .hami-article-card.border {
     border-bottom: 1px solid var(--el-border-color);
-    //padding-bottom: 10px;
 }
 
 </style>

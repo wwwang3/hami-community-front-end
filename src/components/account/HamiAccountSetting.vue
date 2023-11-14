@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRequest } from '@/hooks'
-import { AccountService} from '@/service/modules/user.ts'
+import { AccountService } from '@/service/modules/user.ts'
 import { $message } from '@/utils/message.ts'
 import { useTokenStore } from '@/store/modules/token.ts'
 import { useRouter } from 'vue-router'
-//interface
-//router, props, inject, provide
+import { onPPT } from '@/utils'
+
 const [onLoading, handleGetAccountInfo] = useRequest({
     run: (...params) => AccountService.getAccountInfo()
 })
-//custom var
+
 const account = ref<AccountInfo>({
     email: ''
 })
@@ -18,7 +18,7 @@ const account = ref<AccountInfo>({
 const onUpdatePassword = ref(false)
 const tokenStore = useTokenStore()
 const $router = useRouter()
-//life cycle
+
 onMounted(async () => {
     try {
         account.value = await handleGetAccountInfo(null) as AccountInfo
@@ -26,22 +26,19 @@ onMounted(async () => {
         $message.error("获取账号信息失败")
     }
 })
-//watch
 
-//fun
 const updateEmail = () => {
-    $message.notifyError("暂不支持")
+    onPPT()
 }
 const updatePassword = () => {
-    // $message.notifyError("暂不支持")
     onUpdatePassword.value = true
 }
 const deleteAccount = () => {
-    $message.notifyError("暂不支持")
+    onPPT()
 }
 
 const handleClick = () => {
-    $message.notifyError("暂不支持")
+    onPPT()
 }
 const handleSuccess = () => {
     //修改成功的回调
@@ -50,6 +47,7 @@ const handleSuccess = () => {
     tokenStore.clear()
     $router.replace("/")
 }
+
 const handleCancel = () => {
     onUpdatePassword.value = false
 }
@@ -125,6 +123,7 @@ const handleCancel = () => {
 </template>
 
 <style scoped lang="less">
+
 .hami-account-setting {
     min-height: 500px;
     padding: 20px 24px;
@@ -138,9 +137,8 @@ const handleCancel = () => {
     .account-header {
         font-size: 18px;
         font-weight: 700;
-        color: var(--hami-title);
+        color: var(--hami-title-color);
         margin-bottom: 24px;
-        //margin-bottom: 32px;
     }
 }
 
@@ -149,8 +147,9 @@ const handleCancel = () => {
 }
 
 .account-body {
+
     .setting-list {
-        // display: flex;
+
         .setting-item {
             display: flex;
             align-items: center;
@@ -159,7 +158,7 @@ const handleCancel = () => {
             .title {
                 width: 110px;
                 font-size: 18px;
-                color: var(--hami-title);
+                color: var(--hami-title-color);
             }
 
             .info-box {
@@ -172,21 +171,20 @@ const handleCancel = () => {
             }
 
             .info {
-                color: var(--hami-text-2);
+                color: var(--hami-grey-2);
                 min-width: 32px;
             }
 
             .action {
                 font-size: 18px;
-                color: var(--hami-text-blue);
+                color: var(--hami-blue-4);
                 cursor: pointer;
             }
 
             .action:hover {
-                color: #1b7ad8;
+                color: var(--hami-blue-5);
             }
         }
-
     }
 }
 

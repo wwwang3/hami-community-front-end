@@ -1,28 +1,21 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, watch } from "vue"
-import { useTokenStore } from '@/store/modules/token.ts'
-import useUserStore from '@/store/modules/user.ts'
-import { CateRoutePath, useCateStore } from '@/store/modules/category.ts'
-import { useRoute } from 'vue-router'
+import { computed, onMounted, ref, watch } from "vue"
 import { ArticleService } from '@/service/modules/article.ts'
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import HamiArticleCard from '@/components/article/HamiArticleCard.vue'
 import { HamiScrollListInstance } from '@/components/types'
-//interface
+
 interface IndexArticleProps {
     cateId: number
 }
 const $props = withDefaults(defineProps<IndexArticleProps>(), {
     cateId: -1
 })
-//router, props, inject, provide
-const tokenStore = useTokenStore()
-const userStore = useUserStore()
-const cateStore = useCateStore()
-const $route = useRoute()
+
 
 const articleList = ref<HamiScrollListInstance<Article>>()
-//life cycle
+
+
 onMounted(() => {
     articleList.value?.init()
 })

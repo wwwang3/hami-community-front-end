@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { computed, inject, onMounted, reactive, ref } from "vue"
-import { COMMENT_AREA_OWNER } from "@/store/keys.ts"
+import { computed, onMounted, reactive, ref } from "vue"
 import CommentService from "@/service/modules/comment.ts"
 import useUserStore from '@/store/modules/user.ts'
 import emoji from './emoji.ts'
 import HamiUserCardHover from '@/components/common/HamiUserCardHover.vue'
 import {
-    CommentApi, CommentInstance,
+    CommentApi,
+    CommentInstance,
     CommentUserApi,
     ConfigApi,
     ReplyApi,
     ReplyPageParamApi,
-    SubmitParamApi, throttle,
+    SubmitParamApi,
     UComment,
     UCommentNav,
     UCommentScroll,
@@ -69,7 +69,6 @@ const init = async () => {
         inited.value = false
         //获取用户登录用户数据
         let loginUser = await userStore.getProfile()
-        console.log(loginUser)
         commentConfig.user = {
             id: loginUser.userId,
             username: loginUser.username,
@@ -79,7 +78,6 @@ const init = async () => {
         //获取评论数据
         await handleMore()
     } catch (e) {
-        console.log(e)
         $message.error("获取失败")
         page.value.total = 0
         commentConfig.comments = []
@@ -147,7 +145,6 @@ const handleSort = async (latest: boolean) => {
     page.value.current = 1
     commentConfig.comments = await handleQueryComments(page.value.current, page.value.size)
 }
-
 
 const handleLike = async (id: string, finish: () => void) => {
     let itemId = parseInt(id)

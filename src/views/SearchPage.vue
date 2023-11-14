@@ -3,6 +3,7 @@ import { onMounted, ref, watch } from "vue"
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { isEmpty } from '@/utils'
 import { SearchService } from '@/service/modules/search.ts'
+import { HamiScrollListInstance } from '@/components/types'
 
 interface SearchProps {
     keyword: string
@@ -10,8 +11,8 @@ interface SearchProps {
 
 const $props = defineProps<SearchProps>()
 
-// @ts-ignore
-const searchArticleList = ref<InstanceType<typeof HamiScrollList> | null>(null)
+
+const searchArticleList = ref<HamiScrollListInstance<Article> | null>(null)
 
 
 onMounted(() => {

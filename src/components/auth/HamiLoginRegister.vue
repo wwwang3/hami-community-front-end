@@ -32,6 +32,7 @@ import { provide, ref, watch } from 'vue'
 import HamiLoginCard from '@/components/auth/HamiLoginCard.vue'
 import HamiRegisterCard from '@/components/auth/HamiRegisterCard.vue'
 import { useRoute, useRouter } from 'vue-router'
+import { LOGIN_REGISTER_SUCCESS } from '@/store/keys.ts'
 
 interface Props {
     mode?: string
@@ -45,7 +46,7 @@ const $props = withDefaults(defineProps<Props>(), {
     changeRoute: false
 })
 //登录或者注册成功的回调
-provide("success", (mode: string) => {
+provide<Function>(LOGIN_REGISTER_SUCCESS, (mode: "login" | "register") => {
     if (mode === "login") {
         //登录成功
         $router.replace("/")
@@ -101,7 +102,7 @@ const changeMode = (mode: string) => {
 
 .login-register-bottom {
     color: var(--hami-text-1);
-    font-size: var(--hami-text-size);
+    font-size: 15px;
     margin-bottom: 20px;
 
     .text {
@@ -119,7 +120,7 @@ const changeMode = (mode: string) => {
 
 .login-register-protocol {
     position: absolute;
-    font-size: var(--hami-text-size-small);
+    font-size: 13px;
     height: 24px;
     line-height: 24px;
     text-align: center;

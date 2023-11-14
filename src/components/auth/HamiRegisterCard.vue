@@ -76,15 +76,13 @@ import { inject, reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { isEmail } from '@/utils'
 import { $message } from '@/utils/message.ts'
-import { useRoute, useRouter } from 'vue-router'
 import { EditPen, Lock, Message, User } from '@element-plus/icons-vue'
 import { AuthService } from '@/service/modules/user.ts'
 import { validateAccount, validateEmail, validatePass, validateRePassword } from '@/utils/validator.ts'
 import { useCountdown, useRequest } from '@/hooks'
+import { LOGIN_REGISTER_SUCCESS } from '@/store/keys.ts'
 
-const $route = useRoute()
-const $router = useRouter()
-const success = inject("success") as Function
+const success = inject<Function>(LOGIN_REGISTER_SUCCESS) as Function
 const registerForm = ref<FormInstance>()
 const registerParam = reactive<RegisterParam>({
     username: '',
@@ -94,11 +92,12 @@ const registerParam = reactive<RegisterParam>({
     captcha: "",
 })
 //是否在注册中
-const [onRegister, doRegister] = useRequest({
-    run: (...params) => AuthService.register(...params as Parameters<typeof AuthService.register>)
+const [onRegister, doRegister] = useRequest<any, [RegisterParam]>({
+    run: (...params) => AuthService.register(...params)
 })
-const [onLoading, doGetCaptcha] = useRequest<void, Array<any>>({
-    run: (...params) => AuthService.getCaptcha(...params as Parameters<typeof AuthService.getCaptcha>)
+
+const [onLoading, doGetCaptcha] = useRequest<void, ["register" | "reset" | "update", string]>({
+    run: (...params) => AuthService.getCaptcha(...params)
 })
 const [captchaText, onProcess, startCountdown] = useCountdown({
     interval: 1000,
@@ -139,14 +138,16 @@ const register = async (el: FormInstance | undefined) => {
             .then(() => {
                 $message.success("注册成功")
                 setTimeout(() => {
-                    success("register")
+                    success?.call(window, "register")
                 }, 300)
             })
             .catch(e => {
                 $message.error(e)
             })
     } catch (e) {
-        console.log(e)
+        if (e !== 'cancel') {
+            $message.notifyError("注册失败")
+        }
     }
 }
 const getCaptcha = async () => {
@@ -173,8 +174,8 @@ const getCaptcha = async () => {
 .el-form-item {
     margin-bottom: 20px;
 }
+
 .hami-register-card-body {
-    //--el-component-size: 34px;
     margin: 10px 0;
 
     .el-input--large {
@@ -199,7 +200,6 @@ const getCaptcha = async () => {
 
     .captcha-button {
         width: 100%;
-        //height: 34px;
     }
 }
 

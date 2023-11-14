@@ -50,22 +50,24 @@ const handleClick = (m: string) => {
     padding: 20px 24px;
     background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);
-    color: var(--hami-text);
+    color: var(--hami-text-color);
     min-height: 500px;
+
     .common-setting-title {
         font-size: 18px;
         font-weight: 700;
-        color: var(--hami-title);
+        color: var(--hami-title-color);
     }
 
     .common-setting-body {
+
         .title {
-            color: var(--hami-text);
+            color: var(--hami-black-6);
             margin-bottom: 10px;
         }
 
         .tips {
-            color: var(--hami-gray);
+            color: var(--hami-grey-3);
             margin-bottom: 20px;
             font-size: 14px;
         }
@@ -78,7 +80,7 @@ const handleClick = (m: string) => {
                 border-radius: var(--hami-radius);
                 cursor: pointer;
                 width: 240px;
-                border: 1px solid var(--hami-border-gray);
+                border: 1px solid var(--hami-border-grey);
 
                 .i-skeleton {
                     padding: 10px 16px;
@@ -87,15 +89,18 @@ const handleClick = (m: string) => {
                         margin-top: 5px;
                     }
 
-                    border-bottom: 1px solid var(--hami-border-gray);
+                    border-bottom: 1px solid var(--hami-border-grey);
                 }
+
                 .i-skeleton.dark {
-                    background-color: #181818;
+                    background-color: var(--hami-black-3);
                     border-radius: var(--hami-radius) var(--hami-radius) 0 0;
+
                     :deep(.el-skeleton__item) {
-                        background-color: hsla(0,0%,100%,.2);;
+                        background-color: hsla(0, 0%, 100%, .2);;
                     }
                 }
+
                 .i-skeleton.light {
                     background-color: #fff;
                 }
@@ -110,14 +115,16 @@ const handleClick = (m: string) => {
             }
 
             .item:hover .radio {
-                background-color: #eaf2ff;
+                background-color: var(--hami-blue-8);
             }
 
             .item.active .radio {
-                background-color: #eaf2ff;
+                background-color: var(--hami-blue-8);
             }
+
             .skeleton-group {
                 display: flex;
+
                 .i-skeleton.dark {
                     border-top-left-radius: 0;
                 }

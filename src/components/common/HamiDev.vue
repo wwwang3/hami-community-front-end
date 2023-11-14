@@ -15,8 +15,8 @@
     height: 48px;
     padding: 6px 10px 6px 20px;
     font-size: 16px;
-    color: var(--hami-title);
-    background-color: #fff;
+    color: var(--hami-title-color);
+    background-color: var(--hami-card-bg);
     border-radius: var(--hami-radius);
 }
 

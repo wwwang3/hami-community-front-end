@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import HamiLoginRegister from '@/components/auth/HamiLoginRegister.vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -14,10 +14,6 @@ const $route = useRoute()
 
 const mode = computed(() => {
     return $route.fullPath === "/login" ? "login" : "register";
-})
-
-onMounted(() => {
-    console.log("login-register view")
 })
 
 </script>

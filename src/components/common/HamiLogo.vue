@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue"
-import logo2 from "/assets/hami-logo-2.png"
-import logo3 from "/assets/hami-logo-3.png"
+import { logo2, logo3 } from "@/store/images.ts"
 
-//interface
 interface LogoProps {
     size: "mini" | "small" | "normal" | "medium" | "large"
     type: "logo2" | "logo3"
@@ -12,7 +10,6 @@ interface LogoProps {
     height?: number
 }
 
-//router, props, inject, provide
 const $props = withDefaults(defineProps<LogoProps>(), {
     size: "normal",
     type: "logo3",
@@ -26,44 +23,41 @@ const logoStyle = computed(() => {
             height: $props.height === undefined ? "auto" : $props.height + "px"
         }
     }
+    let style;
     switch ($props.size) {
-        case "mini": {
-            return {
+        case "mini":
+            style = {
                 width: "76px",
                 height: "24px"
             }
-        }
-        case "small": {
-            return {
+            break
+        case "small":
+            style =  {
                 width: "101px",
                 height: "32px"
             }
-        }
-        case "normal": {
-            return {
+            break
+        case "normal":
+            style =  {
                 width: "152px",
                 height: "48px"
             }
-        }
-        case "medium": {
-            return {
+            break
+        case "medium":
+            style = {
                 width: "178px",
                 height: "56px"
             }
-        }
-        case "large": {
-            return {
+            break
+        case "large":
+            style =  {
                 width: "201px",
                 height: "64px"
             }
-        }
+            break
     }
+    return style;
 })
-//life cycle
-
-//watch
-
-//fun
 
 </script>
 <template>
@@ -71,7 +65,7 @@ const logoStyle = computed(() => {
         <el-image :src="logo3" :fit="fit" :style="logoStyle"></el-image>
     </template>
     <template v-if="type == 'logo2'">
-        <el-image :src="logo3" :fit="fit" :style="logoStyle"></el-image>
+        <el-image :src="logo2" :fit="fit" :style="logoStyle"></el-image>
     </template>
 </template>
 

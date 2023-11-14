@@ -1,26 +1,21 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
-import noDataImg from "/assets/nodata02.png"
-//interface
+import { noDataImg } from "@/store/images.ts"
+
 interface EmptyProps {
+    image?: any
     description?: string
+    imageSize?: number
 }
-//router, props, inject, provide
+
 const $props = withDefaults(defineProps<EmptyProps>(), {
-    description: "还没有数据"
+    description: "还没有数据",
+    image: noDataImg,
+    imageSize: 200
 })
-//custom var
-
-//life cycle
-
-//watch
-
-//fun
 
 </script>
 <template>
-    <el-empty :description="description" :image="noDataImg"></el-empty>
+    <el-empty :description="description" :image="image" :image-size="imageSize"></el-empty>
 </template>
 
 <style scoped lang="less">

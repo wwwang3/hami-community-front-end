@@ -183,7 +183,7 @@ const onPPT = () => {
             background-color: var(--hami-brand);
             padding: 0 10px;
             color: var(--hami-white);
-            font-size: var(--hami-text-size);
+            font-size: 15px;
             height: 40px;
             border-radius: var(--hami-radius);
             line-height: 40px;

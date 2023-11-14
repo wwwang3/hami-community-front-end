@@ -21,10 +21,10 @@
 </template>
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
-import { CommentApi, ElDropdown, ElDropdownItem, ElDropdownMenu, UIcon, UToast } from 'undraw-ui'
+import { CommentApi, ElDropdown, ElDropdownItem, ElDropdownMenu, UIcon } from 'undraw-ui'
 import useUserStore from '@/store/modules/user.ts'
 import { computed, inject } from 'vue'
-import { isEmpty } from '@/utils'
+import { isEmpty, onPPT } from '@/utils'
 import { COMMENT_AREA_OWNER } from '@/store/keys.ts'
 import { $message } from '@/utils/message.ts'
 
@@ -51,7 +51,7 @@ const onCommand = (command: any) => {
             emit('remove', props.comment)
             break
         case 'report':
-            $message.notifyError("暂不支持")
+            onPPT()
             break
         case 'copy':
             copy(props.comment.content)

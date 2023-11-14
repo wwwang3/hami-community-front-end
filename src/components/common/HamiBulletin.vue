@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ArrowRight } from '@element-plus/icons-vue'
-import { $message } from '@/utils'
+import { onPPT } from '@/utils'
 
 
 const handleClick = async () => {
-    $message.notifySuccess("开发中, 敬请期待")
+    onPPT()
 }
 </script>
 <template>
@@ -26,7 +26,7 @@ const handleClick = async () => {
         <div class="more-log" @click="handleClick">
             查看更多
             <el-icon size="16">
-                <ArrowRight />
+                <ArrowRight/>
             </el-icon>
         </div>
     </div>
@@ -36,36 +36,43 @@ const handleClick = async () => {
 
 .hami-bulletin {
     padding: 16px 20px 10px;
+
     .bulletin-title {
         display: flex;
         align-items: center;
-        color: var(--hami-brand);
+        color: var(--hami-blue-2);
+
         .text {
             font-size: 20px;
             margin-left: 6px;
         }
 
     }
+
     .bulletin-item-list {
         padding: 6px 0;
+
         .bulletin-item {
             line-height: 22px;
             height: 22px;
         }
     }
+
     .more-log {
         display: flex;
         font-size: 14px;
         align-items: center;
         cursor: pointer;
         height: 20px;
-        color: var(--hami-gray);
+        color: var(--hami-card-text-color);
+
         .el-icon {
             position: relative;
             top: 1px;
         }
+
         &:hover {
-            color: var(--hami-text-blue);
+            color: var(--hami-text-hover-color);
         }
     }
 }

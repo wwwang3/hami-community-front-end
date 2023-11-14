@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, provide, computed} from "vue"
+import { computed, onMounted, provide, ref, watch } from "vue"
 import { useRequest } from '@/hooks'
 import { UserService } from '@/service/modules/user.ts'
 import HamiUserData from '@/components/user/HamiUserData.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { TabsPaneContext } from 'element-plus'
 import useUserStore from '@/store/modules/user.ts'
+import { SPACE_USER } from '@/store/keys.ts'
+
 //interface
 interface UserSpaceProps {
     id: string
 }
+
 const $props = defineProps<UserSpaceProps>()
 const $router = useRouter()
 const $route = useRoute()
@@ -29,14 +32,14 @@ const prefix2 = computed(() => {
 
 const activeRoute = ref("articles")
 
-provide("SPACE_USER", user)
+provide(SPACE_USER, user)
 
 onMounted(() => {
     getAuthor()
 })
-//router, props, inject, provide
+
 watch(() => $props.id, (newVal, oldVal) => {
-     getAuthor()
+    getAuthor()
 })
 
 watch(() => $route.path, (newVal, oldVal) => {
@@ -56,7 +59,7 @@ const getAuthor = async () => {
     } finally {
     }
 }
-const handleClick = (pane:TabsPaneContext) => {
+const handleClick = (pane: TabsPaneContext) => {
     console.log(pane.paneName)
     $router.push("/user/space/" + $props.id + "/" + pane.paneName)
 }
@@ -99,10 +102,12 @@ const handleClick = (pane:TabsPaneContext) => {
     .user-space-body {
         flex: 1;
         min-height: 600px;
+
         .detail-block {
             background-color: var(--hami-bg);
             border-radius: var(--hami-radius);
         }
+
         :deep(.el-tabs__header) {
             margin: 0;
         }

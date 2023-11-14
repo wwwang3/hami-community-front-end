@@ -110,7 +110,7 @@ const header = computed(() => {
 
     :deep(.notify-nav) {
         min-width: 160px;
-        background-color: rgba(255, 255, 255, .8);
+        background-color: var(--hami-notify-nav-bg);
         font-size: 16px;
         font-weight: 700;
         padding: 10px 0;
@@ -120,7 +120,7 @@ const header = computed(() => {
             align-items: center;
             justify-content: center;
             height: 60px;
-            color: var(--hami-title-1);
+            color: var(--hami-title-color);
 
             i {
                 margin-right: 10px;
@@ -142,7 +142,7 @@ const header = computed(() => {
                 align-items: center;
                 position: relative;
                 justify-content: normal;
-                color: #6b757b;
+                color: var(--hami-grey-5);
                 margin-bottom: 6px;
                 cursor: pointer;
                 transition: color .3s;
@@ -170,14 +170,14 @@ const header = computed(() => {
 
             .nav-item:hover,
             .nav-item.active {
-                color: #2faee3;
+                color: var(--hami-blue-5);
             }
         }
     }
 
     .notify-body {
         padding: 10px;
-        background-color: rgba(255, 255, 255, .5);
+        background-color: var(--hami-notify-body-bg);
         flex: 1;
 
         .notify-body-header {
@@ -192,7 +192,7 @@ const header = computed(() => {
             justify-content: space-between;
             padding: 0 16px;
             font-size: 15px;
-            color: var(--hami-gray-5);
+            color: var(--hami-grey-4);
         }
 
         .notify-body-content {

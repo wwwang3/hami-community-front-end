@@ -137,7 +137,7 @@ const clearKeyword = () => {
         .left-panel {
             display: flex;
             align-items: center;
-            color: var(--hami-brand);
+            color: var(--hami-blue-2);
 
             i {
                 position: relative;
@@ -148,7 +148,7 @@ const clearKeyword = () => {
         .text {
             font-size: 20px;
             font-weight: 700;
-            color: var(--hami-text-9);
+            color: var(--hami-black-2);
             margin-left: 10px;
         }
 
@@ -167,6 +167,7 @@ const clearKeyword = () => {
             .el-icon {
                 cursor: pointer;
             }
+
             :deep(.clear) {
                 margin-right: 10px;
             }
@@ -190,7 +191,7 @@ const clearKeyword = () => {
             }
 
             &:hover {
-                color: var(--hami-text-blue);
+                color: var(--hami-blue-3);
             }
         }
 

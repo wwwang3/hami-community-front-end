@@ -1,25 +1,17 @@
 <script setup lang="ts">
-import { computed, onBeforeMount } from "vue"
+import { computed } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { ArrowLeft, Position, Postcard, Setting, User } from '@element-plus/icons-vue'
 import useUserStore from '@/store/modules/user.ts'
-//interface
 
-//router, props, inject, provide
 const $router = useRouter()
 const $route = useRoute()
 const userStore = useUserStore()
+
 const activeMode = computed(() => {
     return $route.fullPath
 })
-//custom var
 
-//life cycle
-onBeforeMount(async () => {
-})
-//watch
-
-//fun
 const changeMode = async (path: string) => {
     await $router.replace(path)
 }
@@ -72,7 +64,6 @@ const goBack = () => {
                 <router-view v-slot="{ Component }">
                     <Component :is="Component"></Component>
                 </router-view>
-                <!--                <router-view></router-view>-->
             </div>
         </div>
     </div>
@@ -93,7 +84,7 @@ const goBack = () => {
             width: 240px;
             display: flex;
             align-items: center;
-            color: var(--hami-text-blue);
+            color: var(--hami-blue-3);
             height: 32px;
             cursor: pointer;
 
@@ -122,18 +113,19 @@ const goBack = () => {
         min-height: 500px;
         max-height: 500px;
         background-color: var(--hami-bg);
-        border-radius: var(--hami-radius-medium);
+        border-radius: var(--hami-radius);
 
         .nav-item {
             display: flex;
             align-items: center;
             height: 48px;
             font-size: 16px;
-            border-radius: var(--hami-radius-medium);
+            border-radius: var(--hami-radius);
             cursor: pointer;
             margin-bottom: 6px;
             padding: 6px 0 6px 16px;
             transition: all .3s;
+            color: var(--hami-menu-text-color);
 
             .icon {
                 margin-right: 8px;
@@ -146,13 +138,13 @@ const goBack = () => {
         }
 
         .nav-item:hover {
-            color: var(--hami-text-blue);
-            background-color: var(--hami-bg-blue);
+            color: var(--hami-menu-active-text-color);
+            background-color: var(--hami-menu-active-bg);
         }
 
         .nav-item.active {
-            background: var(--hami-bg-blue);
-            color: var(--hami-text-blue);
+            background: var(--hami-menu-active-bg);
+            color: var(--hami-menu-active-text-color);
         }
     }
 

@@ -1,4 +1,6 @@
 import dayjs from './time'
+import { $message } from '@/utils/message.ts'
+
 export * from '@/utils/message.ts'
 
 export function isArray(value: any) {
@@ -91,4 +93,8 @@ export function calculate(...nums: number[]): number {
     return nums.reduce((pre, val, index) => {
         return pre + (isNumber(val) ? val : 0)
     }, 0)
+}
+
+export function onPPT() {
+    $message.notifySuccess("暂不支持✿ヽ(°▽°)ノ✿")
 }

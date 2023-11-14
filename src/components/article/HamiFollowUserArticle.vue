@@ -1,26 +1,19 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { onMounted, ref } from "vue"
+import { useRouter } from "vue-router"
 import { ArticleService } from '@/service/modules/article.ts'
 import useUserStore from '@/store/modules/user.ts'
 import fetchErrorImg from '../../../assets/load-error.685235d2.png'
-//interface
+
 
 const userStore = useUserStore()
 const $router = useRouter()
-//router, props, inject, provide
 const logined = ref(userStore.logined)
 const followUserArticleList = ref()
 onMounted(() => {
     followUserArticleList.value?.init()
 })
-//custom var
 
-//life cycle
-
-//watch
-
-//fun
 const handleQuery = (current: number, size: number) => {
     return ArticleService.listFollowUserUserArticles({
         pageNum: current,
@@ -56,20 +49,23 @@ const handleClick = () => {
 </template>
 
 <style scoped lang="less">
-    .hami-follow-user-articles {
-        .list-item {
-            border-radius: var(--hami-radius);
-            margin-top: 16px;
-            transition: all .3s;
-            &:first-child {
-                margin-top: 0;
-            }
-            &:hover {
-                box-shadow: var(--el-box-shadow);
-            }
-            &:last-child {
-                margin-bottom: 20px;
-            }
+.hami-follow-user-articles {
+    .list-item {
+        border-radius: var(--hami-radius);
+        margin-top: 16px;
+        transition: all .3s;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &:hover {
+            box-shadow: var(--el-box-shadow);
+        }
+
+        &:last-child {
+            margin-bottom: 20px;
         }
     }
+}
 </style>

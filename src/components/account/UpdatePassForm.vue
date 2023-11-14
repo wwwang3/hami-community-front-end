@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue"
-import { useRouter } from "vue-router"
 import { FormInstance, FormRules } from 'element-plus'
 import { validatePass } from '@/utils/validator.ts'
 import { useAutoLoading, useCountdown, useRequest } from '@/hooks'
 import { AuthService } from '@/service/modules/user.ts'
-import { isEmail, isEmpty } from '@/utils'
+import { isEmpty } from '@/utils'
 import { $message } from '@/utils/message.ts'
 import { EditPen, Lock, Message } from '@element-plus/icons-vue'
-//interface
+
 const $props = defineProps<{
     email: string,
 }>()
@@ -44,11 +43,10 @@ const [countdownText, onCountDown, startCountdown] = useCountdown({
 })
 
 const [onLoading, run] = useAutoLoading()
-//是否在注册中
-// const [onReset, process] = useAutoLoading()
-const [onReset, doResetPass] = useRequest({
+
+const [onReset, doResetPass] = useRequest<any, [ResetPassParam]>({
     loading: false,
-    run: params => AuthService.updatePassword(params)
+    run: (...params) => AuthService.updatePassword(...params)
 })
 const getCaptcha = async () => {
     if (isEmpty(resetPassParam.email)) {
@@ -62,7 +60,6 @@ const getCaptcha = async () => {
             startCountdown()
         })
         .catch(e => {
-            console.log(e)
             onCountDown.value = false
         })
 }
@@ -76,7 +73,10 @@ const handleResetPassword = async (el: FormInstance | undefined) => {
                 $emits("success")
             })
     } catch (e) {
-        console.log(e)
+        if (e === 'cancel') {
+            return
+        }
+        $message.error("操作失败")
     }
 }
 
@@ -149,6 +149,7 @@ const cancel = () => {
 }
 
 .captcha {
+
     :deep(.el-form-item__content) {
         display: flex;
         justify-content: space-between;
@@ -163,7 +164,6 @@ const cancel = () => {
         margin-left: 20px;
         min-width: 100px;
     }
-
 
 }
 </style>

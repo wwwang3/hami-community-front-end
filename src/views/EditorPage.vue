@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, onMounted, provide, reactive, ref, unref, watch } from "vue"
+import { computed, onBeforeMount, provide, ref, unref, watch } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import HamiMdEditor from '@/components/md/HamiMdEditor.vue'
 import { isEmpty } from '@/utils'
@@ -9,12 +9,12 @@ import { $message } from '@/utils/message.ts'
 import useUserStore from '@/store/modules/user.ts'
 import defaultAvatar from "/assets/avatar.jpg"
 import { ClickOutside as vClickOutside } from 'element-plus'
+import { DRAFT_REF, ON_PUBLISH_ARTICLE } from '@/store/keys.ts'
 
 const $route = useRoute()
 const $router = useRouter()
 const userStore = useUserStore()
 
-const userInfo = reactive<LoginProfile>(userStore.userInfo)
 const draftId = ref("")
 const draft = ref<ArticleDraftDetail>({
     id: -1,
@@ -58,12 +58,7 @@ onBeforeMount(async () => {
     await handleRouteChange()
 })
 
-onMounted(() => {
-    console.log("EditorPage loaded")
-})
-
 watch(() => $route.params, (newVal, oldVal) => {
-    console.log(newVal, oldVal)
     if ($route.path.includes("/editor/drafts") && !isEmpty($route.params) && !isEmpty($route.params.id)) {
         handleRouteChange()
     }
@@ -101,7 +96,7 @@ const handleRouteChange = async () => {
 }
 
 const toUserHome = () => {
-    $router.replace("/user/space/" + userInfo?.userId)
+    $router.replace("/user/space/" + userStore.userInfo?.userId)
 }
 
 const handleClose = () => {
@@ -114,8 +109,8 @@ const handleClickOutSide = () => {
 
 const [onProcess, process] = useAutoLoading()
 
-provide("ONPROCESS", onProcess)
-provide("DRAFT", draft)
+provide(ON_PUBLISH_ARTICLE, onProcess)
+provide(DRAFT_REF, draft)
 const handleSave = async () => {
     console.log(draft.value)
     let loading = $message.loading("更新中....")
@@ -225,9 +220,10 @@ const checkParam = () => {
                 <el-button type="primary" ref="buttonRef" v-click-outside="handleClickOutSide">{{ text }}</el-button>
                 <el-avatar
                     :size="56"
-                    :src="userInfo?.avatar || defaultAvatar" class="avatar"
+                    :src="userStore.userInfo?.avatar || defaultAvatar" class="avatar"
                     @click="toUserHome"
-                ></el-avatar>
+                >
+                </el-avatar>
             </div>
         </div>
         <HamiMdEditor v-if="!onLoading" v-model="draft.content"></HamiMdEditor>
@@ -266,7 +262,7 @@ const checkParam = () => {
         width: 60%;
         font-size: 24px;
         font-weight: 700;
-        --el-input-text-color: var(--hami-title);
+        --el-input-text-color: var(--hami-title-color);
     }
 
     :deep(.el-input__wrapper) {

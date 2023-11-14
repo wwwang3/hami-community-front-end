@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onBeforeMount, provide } from "vue"
+import { computed, onBeforeMount, provide, ref, watch } from "vue"
 import { useRequest } from '@/hooks'
 import { ArticleService } from '@/service/modules/article.ts'
 import { Calendar, Clock, View } from '@element-plus/icons-vue'
@@ -35,7 +35,6 @@ onBeforeMount(async () => {
 
 const mdId = "hami-md-viewer"
 const scrollElement = document.documentElement;
-const cateRoute = ref('/')
 
 const activeLikeType = computed(() => {
     return article.value?.liked ? "primary" : "info"
@@ -65,19 +64,19 @@ const viewTime = computed(() => {
     return Math.ceil((article.value?.content?.length || 0) / 275)
 })
 
-// const
 const userLink = computed(() => {
     return "/user/space/" + article.value?.author?.userId
 })
-//custom var
-//watch
+
+const cateRoute = computed(() => {
+    return cateStore.findCateRoure(article.value.category?.categoryId)
+})
+
 watch(() => $props.id, (newVal, oldVal) => {
     // articleId.value = parseInt($props.id)
-    console.log(newVal, oldVal)
     articleId.value = parseInt($props.id)
     getArticle()
 })
-//fun
 
 const [liked, processLike] = useLike(article.value?.liked)
 const [collected, processCollect] = useCollect(article.value?.collected)
@@ -124,7 +123,6 @@ const getArticle = async () => {
         article.value = await getArticleContent(articleId.value)
         liked.value = article.value.liked
         collected.value = article.value.collected
-        cateRoute.value = cateStore.findCateRoure(article.value.category.categoryId)
     } catch (e) {
         console.log(e)
     } finally {
@@ -136,18 +134,14 @@ const getArticle = async () => {
 <template>
     <div class="hami-article-content-page">
         <div class="article-content-container container" v-if="!onLoading">
-            <div class="main-content" >
+            <div class="main-content">
                 <div class="content-wrapper">
                     <div class="title">
                         {{ article.articleInfo?.title }}
                     </div>
-                    <div class="info">
-                        <el-text class="author" truncated>
-                            <router-link :to="userLink">
-                                {{ article.author?.username }}
-                            </router-link>
-                        </el-text>
-                    </div>
+                    <router-link :to="userLink" class="author">
+                        {{ article.author?.username }}
+                    </router-link>
                     <div class="meta-data">
                         <div class="ctime item">
                             <el-icon>
@@ -206,15 +200,17 @@ const getArticle = async () => {
                         <div class="tags">
                             <span>标签: </span>
                             <template v-for="tag in article.tags">
-                                <el-tag type="info" size="large">
+                                <el-tag size="default">
                                     {{ tag.tagName }}
                                 </el-tag>
                             </template>
                         </div>
                         <div class="category">
                             <span>分类: </span>
-                            <router-link class="item" :to="cateRoute">
-                                {{ article?.category?.categoryName }}
+                            <router-link :to="cateRoute">
+                                <el-tag type="danger">
+                                    {{ article?.category?.categoryName }}
+                                </el-tag>
                             </router-link>
                         </div>
                     </div>
@@ -284,6 +280,7 @@ const getArticle = async () => {
 
 <style scoped lang="less">
 .hami-article-content-page {
+
     .article-content-container {
         margin-top: 40px;
         display: flex;
@@ -310,18 +307,18 @@ const getArticle = async () => {
         .option-item {
             width: 48px;
             height: 48px;
-            background-color: #fff;
+            background-color: var(--hami-item-bg);
             border-radius: 50%;
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .04);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--hami-text-5);
+            color: var(--hami-item-text-color);
             transition: all .3s;
 
             &:hover {
-                color: var(--hami-text-6);
+                color: var(--hami-grey-7);
             }
 
             &:not(:last-child) {
@@ -337,7 +334,7 @@ const getArticle = async () => {
         }
 
         .like.active {
-            color: var(--hami-text-blue);
+            color: var(--hami-icon-active-1);
         }
 
         .collect.active {
@@ -359,16 +356,26 @@ const getArticle = async () => {
 
         .title {
             font-size: 30px;
-            color: var(--hami-title);
+            color: var(--hami-title-color);
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
 
-        .info {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            color: var(--hami-gray);
+        .author {
+            max-width: 160px;
+            color: var(--hami-black-5);
+            transition: all .3s;
+            font-size: 18px;
+            margin-bottom: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+            line-height: 32px;
+
+            &:hover {
+                color: var(--hami-text-hover-color);
+            }
         }
 
         .meta-data {
@@ -379,58 +386,43 @@ const getArticle = async () => {
                 margin-left: 10px;
             }
 
-            color: var(--hami-gray);
+            color: var(--hami-grey-3);
         }
 
         .item {
-            background: var(--hami-bg-blue);
+            background: var(--hami-blue-6);
             padding: 4px 8px;
-            font-size: 13px;
+            font-size: 14px;
             border-radius: var(--hami-radius-small);
             display: flex;
             align-items: center;
+
             .text {
                 margin-left: 5px;
-            }
-        }
-
-        .author {
-            max-width: 160px;
-            color: var(--hami-text);
-            transition: all .3s;
-            font-size: 18px;
-
-            &:hover {
-                color: var(--hami-link-hover);
             }
         }
 
         .content-bottom {
             display: flex;
             align-items: center;
-            height: 28px;
-            font-size: 14px;
+            margin-top: 5px;
         }
 
         .category {
             display: flex;
             align-items: center;
-            color: var(--hami-text);
             cursor: pointer;
             margin-left: 40px;
 
-            .item {
-                color: var(--hami-text-blue);
-                margin-left: 10px;
-                font-size: 16px;
+            a {
+                margin-left: 16px;
             }
         }
 
         .tags {
             display: flex;
             align-items: center;
-            //color: var(--hami-text-blue);
-            color: var(--hami-text);
+            color: var(--hami-text-color);
 
             .el-tag {
                 margin-left: 16px;
@@ -445,14 +437,14 @@ const getArticle = async () => {
 
         .user-info {
             padding: 16px 20px;
-            background-color: var(--hami-bg);
+            background-color: var(--hami-card-bg);
             border-radius: var(--hami-radius);
             margin-bottom: 20px;
         }
 
         .cate-log {
             padding: 16px 16px;
-            background-color: var(--hami-bg);
+            background-color: var(--hami-card-bg);
             border-radius: var(--hami-radius);
         }
     }
@@ -471,6 +463,7 @@ const getArticle = async () => {
 .md-editor-catalog-active > span {
     color: var(--el-menu-active-color);
 }
+
 .md-editor-catalog-link span:hover {
     color: var(--el-menu-hover-text-color);
 }

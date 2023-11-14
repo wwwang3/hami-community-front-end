@@ -4,7 +4,7 @@ import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router"
 import { isEmpty } from '@/utils'
 
 import published from "/assets/empty-channel.png"
-//router, props, inject, provide
+
 const article = reactive({
     title: "",
     id: ""
@@ -19,6 +19,7 @@ onMounted(() => {
         handleClick()
     }
 })
+
 onBeforeRouteLeave(() => {
     window.sessionStorage.removeItem("p_articleId")
     window.sessionStorage.removeItem("p_title")
@@ -34,7 +35,7 @@ const handleClick = () => {
     <div class="hami-published">
         <div class="hami-published-body">
             <img :src="published" alt="">
-            <router-link :to="'/article/' + article.id" class="title">《{{article.title}}》</router-link>
+            <router-link :to="'/article/' + article.id" class="title">《{{ article.title }}》</router-link>
             <div class="msg">发表成功! 有你的分享Hami会变得更好~</div>
             <el-button type="primary" @click="handleClick">回到首页</el-button>
         </div>
@@ -43,33 +44,36 @@ const handleClick = () => {
 
 <style scoped lang="less">
 .hami-published {
-    margin: 100px auto 0;
+    margin: 80px auto 0;
     width: 900px;
     padding: 20px;
     background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);
+
     .hami-published-body {
         min-height: 400px;
         text-align: center;
     }
+
     .title {
         display: block;
-        color: var(--hami-title);
+        color: var(--hami-title-color);
         font-size: 18px;
         height: 32px;
         line-height: 32px;
         text-align: center;
         cursor: pointer;
+
         &:hover {
-            color: var(--hami-link-hover);
+            color: var(--hami-text-hover-color);
         }
     }
+
     .msg {
-        color: var(--hami-text-2);
+        color: var(--hami-grey-2);
         font-size: 16px;
+        margin: 16px;
     }
-    button {
-        margin-top: 24px;
-    }
+
 }
 </style>

@@ -2,7 +2,7 @@
 import { useTokenStore } from '@/store/modules/token.ts'
 import useUserStore from '@/store/modules/user.ts'
 import { CateRoutePath, useCateStore } from '@/store/modules/category.ts'
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import HamiBulletin from '@/components/common/HamiBulletin.vue'
 import HamiCateNav from '@/components/common/HamiCateNav.vue'
 import HamiIndexArticle from '@/components/article/HamiIndexArticle.vue'
@@ -112,7 +112,7 @@ watch(() => $route.path, (newVal, oldVal) => {
 
         .right-card {
             box-shadow: var(--el-box-shadow);
-            background-color: var(--hami-bg);
+            background-color: var(--hami-card-bg);
             border-radius: var(--hami-radius);
             margin-bottom: 20px;
         }
@@ -149,7 +149,7 @@ watch(() => $route.path, (newVal, oldVal) => {
             cursor: pointer;
             line-height: 24px;
             font-size: 13px;
-            color: var(--hami-text-1);
+            color: var(--hami-grey-6);
         }
 
         .filing {
@@ -164,7 +164,4 @@ watch(() => $route.path, (newVal, oldVal) => {
         }
     }
 }
-</style>
-<style>
-
 </style>

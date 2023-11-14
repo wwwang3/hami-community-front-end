@@ -56,6 +56,7 @@ declare module 'vue' {
     HamiAccountSetting: typeof import('./../src/components/account/HamiAccountSetting.vue')['default']
     HamiArticleCard: typeof import('./../src/components/article/HamiArticleCard.vue')['default']
     HamiArticleCardV1: typeof import('./../src/components/article/HamiArticleCardV1.vue')['default']
+    HamiArticleDraftCard: typeof import('./../src/components/article/HamiArticleDraftCard.vue')['default']
     HamiBackTop: typeof import('./../src/components/common/HamiBackTop.vue')['default']
     HamiBulletin: typeof import('./../src/components/common/HamiBulletin.vue')['default']
     HamiCateNav: typeof import('./../src/components/common/HamiCateNav.vue')['default']

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { isEmpty } from '@/utils'
 
 export type CateRoutePath = "/" | "/recommend" | "/backend" | "/front-end" | "/android"
     | "/ios" | "/ai" | "/tool" |  "/coding" | "/reading" | "/follow"
@@ -23,13 +24,8 @@ export const useCateStore = defineStore("cate", () => {
     ]
 
     const findCateRoure = (cateId: number) => {
-        for (let ele in cates) {
-            // @ts-ignore
-            if (cates[ele] === cateId) {
-                return ele;
-            }
-        }
-        return "/"
+        let path = Object.entries(cates.value).find(item => item[1] == cateId)
+        return isEmpty(path) ? "/" : path![0]
     }
 
     return { cates, cateRoutes, findCateRoure}

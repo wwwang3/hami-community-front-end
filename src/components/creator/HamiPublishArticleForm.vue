@@ -10,6 +10,7 @@ import { useRequest } from '@/hooks'
 import { beforeUpload } from "@/utils/validator.ts"
 import { Close } from '@element-plus/icons-vue'
 import ImageService from '@/service/modules/image.ts'
+import { DRAFT_REF, ON_PUBLISH_ARTICLE } from '@/store/keys.ts'
 
 interface FormProps {
     buttonText?: string
@@ -31,9 +32,10 @@ const [onUpload, processUpload] = useRequest<string, [File]>({
 })
 const picRef = ref()
 
-//inject (inject真香 ^_^)
-const onProcess = inject("ONPROCESS", false)
-const draft = inject("DRAFT", {} as Ref<ArticleDraftDetail>)
+//inject
+const onProcess = inject(ON_PUBLISH_ARTICLE, false)
+const draft = inject(DRAFT_REF, {} as Ref<ArticleDraftDetail>)
+
 //事件
 const $emit = defineEmits<{
     (e: "close"): void,
@@ -41,7 +43,6 @@ const $emit = defineEmits<{
     (e: "ensure"): void
 }>()
 
-//life cycle
 onMounted(() => {
     initCategory()
     initTags()

@@ -41,12 +41,13 @@ import { $message } from '@/utils/message.ts'
 import HamiEye from '@/components/icon/HamiEyeIcon.vue'
 import { useTokenStore } from '@/store/modules/token.ts'
 import { useRequest } from '@/hooks'
+import { LOGIN_REGISTER_SUCCESS } from '@/store/keys.ts'
 
-const success = inject("success") as Function
+const success = inject<Function>(LOGIN_REGISTER_SUCCESS)
 const tokenStore = useTokenStore()
 
-const [onLogin, handleLogin] = useRequest({
-    run: (...params) => tokenStore.login(...params as Parameters<typeof tokenStore.login>)
+const [onLogin, handleLogin] = useRequest<string, [LoginParam]>({
+    run: (...params) => tokenStore.login(...params)
 })
 const showPass = ref(false)
 const loginForm = ref<FormInstance>()
@@ -81,7 +82,7 @@ const login = async (el: FormInstance | undefined) => {
             .then(() => {
                 $message.success("登录成功")
                 setTimeout(() => {
-                    success("login")
+                    success?.call(window, "login")
                 }, 1000)
             })
             .catch(e => {
@@ -110,7 +111,7 @@ const login = async (el: FormInstance | undefined) => {
 
     .forget-password {
         margin-left: 4px;
-        color: #00a1d6;
+        color: var(--hami-blue-5);
         font-size: 13px;
         cursor: pointer;
     }

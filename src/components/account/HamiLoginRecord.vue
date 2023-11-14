@@ -1,28 +1,26 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue"
-import { formatDateTime, isEmpty } from '@/utils'
+import { $message, calculateLocation, formatDateTime, isEmpty } from '@/utils'
 import { useRequest } from '@/hooks'
 import { AccountService } from '@/service/modules/user.ts'
 import HamiEmpty from '@/components/common/HamiEmpty.vue'
-import { calculateLocation } from "@/utils"
-//interface
+
 interface Page {
     current: number
     size: number
     total: number
 }
 
-//router, props, inject, provide
-
-//custom var
 const page = ref<Page>({
     current: 1,
     size: 8,
     total: 0
 })
+
 computed(() => {
     return page.value.current < Math.ceil(page.value.total / page.value.size)
 })
+
 const [onRequest, getLoginRecords] = useRequest<PageData<LoginRecord>, [any]>({
     run: (...params) => AccountService.getLoginRecords({
         pageSize: page.value.size,
@@ -31,7 +29,7 @@ const [onRequest, getLoginRecords] = useRequest<PageData<LoginRecord>, [any]>({
 })
 const records = ref<LoginRecord[]>([] as LoginRecord[])
 const inited = ref(false)
-//life cycle
+
 onMounted(async () => {
     try {
         inited.value = false
@@ -39,15 +37,13 @@ onMounted(async () => {
         page.value.total = pageData.total
         records.value = pageData.data as LoginRecord[]
     } catch (e) {
-        console.log(e)
+        $message.error("加载失败~")
         records.value = []
     } finally {
         inited.value = true
     }
 })
-//watch
 
-//fun
 
 const calculateIp = (ipInfo: IpInfo) => {
     console.log(ipInfo)
@@ -68,7 +64,6 @@ const handleChange = async (val: number) => {
 
 const formatTime = (time: number) => {
     let date = new Date(time)
-    // console.log(time)
     return formatDateTime(date)
 }
 
@@ -129,12 +124,13 @@ const formatTime = (time: number) => {
     padding: 20px 24px;
     background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);
-    color: var(--hami-text);
+    color: var(--hami-text-color);
     min-height: 500px;
+
     .login-record-title {
         font-size: 18px;
         font-weight: 700;
-        color: var(--hami-title);
+        color: var(--hami-title-color);
     }
 
     .login-record-body {
@@ -148,21 +144,18 @@ const formatTime = (time: number) => {
         }
 
         :deep(.login-record-header th.el-table__cell) {
-            background-color: var(--hami-bg-gray);
-            color: var(--hami-text-1)
+            background-color: var(--hami-white-1);
+            color: var(--hami-grey-6);
         }
 
         :deep(.el-table__body td.el-table__cell) {
-            //background-color: var(--hami-text-3);
-            color: var(--hami-text-2)
+            color: var(--hami-grey-2);
         }
 
-        //:deep()
     }
 
     .page {
         margin-top: 20px;
-
     }
 }
 </style>

@@ -1,10 +1,8 @@
 import { ref, Ref } from 'vue'
-import { isEmpty } from '@/utils'
 import { UserInteractService } from '@/service/modules/interact.ts'
 import { useAutoLoading } from '@/hooks/index.ts'
 import { loadUserStore } from '@/store/modules/user.ts'
 import { $message } from '@/utils/message.ts'
-import { User } from '@element-plus/icons-vue'
 
 const userStore = loadUserStore()
 

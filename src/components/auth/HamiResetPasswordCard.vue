@@ -8,11 +8,9 @@ import { FormInstance, FormRules } from 'element-plus'
 import { AuthService } from '@/service/modules/user.ts'
 import { useAutoLoading, useCountdown, useRequest } from '@/hooks'
 import { validateEmail, validatePass, validateRePassword } from '@/utils/validator.ts'
-//interface
 
-//router, props, inject, provide
 const $router = useRouter();
-//custom var
+
 const step = ref<number>(1)
 const resetPassForm = ref<FormInstance>()
 const resetPassParam = reactive<ResetPassParam>({
@@ -51,11 +49,10 @@ const [countdownText, onProcess, startCountdown] = useCountdown({
 })
 
 const [onLoading, run] = useAutoLoading()
-//是否在注册中
-// const [onReset, process] = useAutoLoading()
-const [onReset, doResetPass] = useRequest({
+
+const [onReset, doResetPass] = useRequest<any, [ResetPassParam]>({
     loading: false,
-    run: (...params) => AuthService.resetPassword(...params as Parameters<typeof AuthService.resetPassword>)
+    run: (...params) => AuthService.resetPassword(...params)
 })
 const getCaptcha = async () => {
     if (isEmpty(resetPassParam.email)) {
@@ -69,15 +66,10 @@ const getCaptcha = async () => {
             startCountdown()
         })
         .catch(e => {
-            console.log(e)
             onProcess.value = false
         })
 }
-//life cycle
 
-//watch
-
-//fun
 
 const checkEmail = async () => {
     if (!isEmail(resetPassParam.email)) {
@@ -104,7 +96,6 @@ const handleResetPassword = async (el: FormInstance | undefined) => {
         }, 1000)
     } catch (e) {
         if (typeof e === "string") {
-            console.log(1)
             $message.error(e)
         }
     }
@@ -228,7 +219,7 @@ const handleResetPassword = async (el: FormInstance | undefined) => {
     .reset-password-body {
         width: 540px;
         margin: 40px auto 0;
-        background-color: #ffffff;
+        background-color: var(--hami-bg);
         border-radius: var(--hami-radius-large);
         padding: 20px 20px 24px;
     }
@@ -240,11 +231,11 @@ const handleResetPassword = async (el: FormInstance | undefined) => {
         .email {
             font-size: inherit;
             line-height: 20px;
-            color: #18191c;
+            color: var(--hami-black-2);
         }
 
         .blue {
-            color: #1d7dfa;
+            color: var(--hami-blue-5);
             cursor: pointer;
         }
 
@@ -285,7 +276,6 @@ const handleResetPassword = async (el: FormInstance | undefined) => {
     .reset-button {
         button {
             width: 100%;
-
         }
     }
 }

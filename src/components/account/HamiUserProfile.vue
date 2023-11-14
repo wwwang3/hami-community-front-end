@@ -17,8 +17,7 @@ import {
 import { $message, isEmpty } from '@/utils'
 import useUserStore from '@/store/modules/user.ts'
 import ImageService from '@/service/modules/image.ts'
-//interface
-//router, props, inject, provide
+
 const $router = useRouter()
 
 const userStore = useUserStore()
@@ -231,7 +230,7 @@ const getChangedProp = (): UserProfileParam => {
     .user-profile-header {
         font-size: 18px;
         font-weight: 700;
-        color: var(--hami-title);
+        color: var(--hami-title-color);
     }
 
     .user-profile-body {
@@ -254,10 +253,11 @@ const getChangedProp = (): UserProfileParam => {
             .tip {
                 text-align: center;
                 font-size: 13px;
-                color: var(--hami-gray);
+                color: var(--hami-card-text-color);
                 width: 100%;
                 margin-top: 6px;
             }
+
             img {
                 width: 120px;
                 height: 120px;

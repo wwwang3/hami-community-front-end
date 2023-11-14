@@ -250,7 +250,7 @@ const randomType = (): NodeType => {
         height: 24px;
         line-height: 24px;
         text-align: center;
-        color: var(--hami-text-3);
+        color: var(--hami-black-3);
         font-size: 14px;
     }
 

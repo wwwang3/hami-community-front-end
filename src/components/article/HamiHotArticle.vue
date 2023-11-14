@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, watch, Ref } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { onMounted, ref, watch } from "vue"
+import { useRouter } from "vue-router"
 import HotImg from "/assets/hot.png"
-import HamiHotArticle from '@/components/article/HamiHotArticle.vue'
 import { ArticleService } from '@/service/modules/article.ts'
-import IndexPage from '@/views/IndexPage.vue'
 import { useRequest } from '@/hooks'
 import { isEmpty } from '@/utils'
 import { getRoutePrefix } from '@/router'
 import { Refresh } from '@element-plus/icons-vue'
-import PublishedPage from '@/views/PublishedPage.vue'
-//interface
 
 type IndexedHotArticle = HotArticle & {
     index: number
@@ -29,7 +25,7 @@ const [onLoading, listHotArticles] = useRequest({
 })
 
 const rotate = ref<number>(0)
-//router, props, inject, provide
+
 const cateId = ref<number>($props.cateId)
 
 const articleList = ref<IndexedHotArticle[]>()
@@ -39,21 +35,20 @@ const size = 6
 const pages = ref(1)
 
 const prefix = getRoutePrefix();
-//custom var
-//life cycle
 
 onMounted(async () => {
     await getHotArticles()
 })
-//watch
+
 watch(() => $props.cateId, (newVal, oldVal) => {
     cateId.value = newVal
     getHotArticles()
 })
+
 watch(current, (newVal, oldVal) => {
     subArticleList.value = getSubList()
 })
-//fun
+
 
 const handleClick = () => {
     if (onLoading.value || isEmpty(articleList.value)) {
@@ -112,9 +107,9 @@ const calculateHotIndex = (rank: number) => {
                         {{ item.index + 1 }}
                     </div>
                     <a :href="getRoute(item.articleId)">
-                        <el-text truncated class="title">
+                        <span class="title ellipsis">
                             {{ item.article.articleInfo.title }}
-                        </el-text>
+                        </span>
                         <span class="hot">
                             <el-icon class="hot-icon" :size="15">
                                 <svg class="icon" viewBox="0 0 1024 1024"
@@ -144,7 +139,7 @@ const calculateHotIndex = (rank: number) => {
         display: flex;
         justify-content: space-between;
         padding-bottom: 12px;
-        border-bottom: 1px solid var(--hami-border-gray);
+        border-bottom: 1px solid var(--el-border-color);
 
         .left, .right {
             display: flex;
@@ -161,7 +156,7 @@ const calculateHotIndex = (rank: number) => {
 
         .right {
             cursor: pointer;
-            color: var(--hami-gray);
+            color: var(--hami-text-color);
 
             .icon {
                 margin-right: 6px;
@@ -173,11 +168,11 @@ const calculateHotIndex = (rank: number) => {
 
         .right:hover {
             .icon {
-                color: var(--hami-text-blue);
+                color: var(--hami-text-hover-color);
             }
 
             .text {
-                color: var(--hami-text-blue);
+                color: var(--hami-text-hover-color);
             }
         }
     }
@@ -214,20 +209,24 @@ const calculateHotIndex = (rank: number) => {
 
             &:hover {
                 border-radius: var(--hami-radius-small);
-                background-color: var(--hami-gray-1);
+                background-color: var(--hami-white-2);
             }
+
             a {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 flex: 1;
             }
+
             .hot {
                 display: flex;
                 align-items: center;
+
                 .hot-icon {
                     color: #f64242;
                 }
+
                 .hot-index {
                     margin-left: 5px;
                 }
@@ -240,19 +239,14 @@ const calculateHotIndex = (rank: number) => {
             display: flex;
             align-items: center;
             height: 24px;
-            color: var(--hami-gray);
+            color: var(--hami-card-text-color);
             text-align: left;
         }
 
         .title {
-            color: var(--hami-text-7);
-            display: block;
-            max-width: 130px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
+            color: var(--hami-title-color);
             margin-left: 10px;
-            font-size: 18px;
+            font-size: 16px;
         }
     }
 }

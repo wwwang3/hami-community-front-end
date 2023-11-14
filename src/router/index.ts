@@ -244,6 +244,11 @@ const routes: RouteRecordRaw[] = [
         path: "/history",
         name: "HistoryPage",
         component: () => import("@/views/ReadingRecordPage.vue")
+    },
+    {
+        path: "/:catchAll(.*)",
+        name: "404",
+        component: () => import("@/components/common/HamiNotFound.vue")
     }
 ]
 
