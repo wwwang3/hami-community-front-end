@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, inject } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { computed, onMounted, ref } from "vue"
 import { TabPaneName } from 'element-plus'
 import { UserInteractService } from '@/service/modules/interact.ts'
 import FollowUserCard from '@/components/user/FollowUserCard.vue'
 import useUserStore from '@/store/modules/user.ts'
-import comment from '@/service/modules/comment.ts'
+
 //interface
 interface UserFollowProps {
     id: string
@@ -31,11 +30,7 @@ const followerLabel = computed(() => {
 onMounted(() => {
     userFollowingList.value?.init()
 })
-//life cycle
 
-//watch
-
-//fun
 const handleQueryFollower = (current: number, size: number) => {
     let param = {
         pageNum: current,

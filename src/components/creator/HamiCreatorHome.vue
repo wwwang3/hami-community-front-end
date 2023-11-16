@@ -10,6 +10,7 @@ const userStore = useUserStore()
 const userInfo = ref<LoginProfile>({} as LoginProfile)
 
 const inited = ref(false)
+
 onBeforeMount(async () => {
     try {
         inited.value = false
@@ -33,8 +34,7 @@ onBeforeMount(async () => {
                 :username="userInfo!.username"
             >
             </HamiUserCardV3>
-            <HamiUserStat :stat="userInfo.stat">
-            </HamiUserStat>
+            <HamiUserStat :stat="userInfo.stat"></HamiUserStat>
         </div>
     </div>
 </template>

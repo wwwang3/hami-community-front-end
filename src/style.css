@@ -26,7 +26,10 @@
     --hami-white-3: #e3e5e7;
     --hami-white-4: #f0f0f0;
     --hami-white-7: #cfd1d5;
+    --hami-white-8: #f4f5f5;
     --hami-pink-1: #FFD9E4;
+    --hami-pink-2: #fb7299;;
+    --hami-pink-3: #fc8bab;
     --hami-red-1: #f64242;
     --hami-red-2: #ff5132;
     --hami-red-3: #f56c6c;
@@ -43,18 +46,20 @@
     --hami-bg: #fff;
     --hami-frame-bg: #e5e6eb;
     --hami-card-bg: #fff;
+    --hami-text-common: #333;
     --hami-card-text-color: #8a919f;
     --hami-title-color: #252933;
     --hami-item-bg: #fff;
     --hami-item-text-color: #8a919f;
     --hami-card-hover-bg: var(--hami-white-2);
+    --hami-card-blue-bg-1: rgba(0, 174, 236, 0.1);
     --hami-text-color: #515767;
     --hami-text-hover-color: var(--hami-blue-3);
     --hami-icon-active-1: var(--hami-blue-1);
     --hami-menu-text-color: var(--hami-grey-7);
     --hami-menu-active-text-color: var(--hami-blue-1);
     --hami-menu-active-bg: var(--hami-blue-7);
-    --hami-border-grey: #e4e6eb;
+    --hami-border-grey: #cfd1d5;
 }
 
 :root {
@@ -126,4 +131,22 @@ li {
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
+}
+
+.notify-card {
+    cursor: pointer;
+    padding: 16px 10px;
+    min-height: 7rem;
+    background-color: var(--hami-card-bg);
+    border-radius: var(--hami-radius-small);
+    transition: all .3s;
+
+    &:hover {
+        box-shadow: var(--el-box-shadow);
+        background-color: var(--hami-card-hover-bg);
+    }
+
+    .entry {
+        display: flex;
+    }
 }

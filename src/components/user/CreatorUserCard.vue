@@ -56,7 +56,7 @@ const days = computed(() => {
 .hami-user-card-v3 {
     padding: 20px 24px;
     border-radius: var(--hami-radius);
-    background-color: var(--hami-bg);
+    background-color: var(--hami-card-bg);
     margin-bottom: 20px;
 
     .user-card-v3-container {
@@ -95,7 +95,7 @@ const days = computed(() => {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-                color: var(--hami-gray);
+                color: var(--hami-grey-1);
                 line-height: 28px;
                 height: 28px;
             }
@@ -105,7 +105,7 @@ const days = computed(() => {
                 align-items: center;
 
                 .count {
-                    color: var(--hami-text-3);
+                    color: var(--hami-black-3);
                     margin-right: 6px;;
                 }
             }
@@ -119,7 +119,7 @@ const days = computed(() => {
 
         .username {
             font-size: 20px;
-            color: var(--hami-text-3);
+            color: var(--hami-black-3);
             font-weight: 700;
             height: 24px;
             line-height: 24px;

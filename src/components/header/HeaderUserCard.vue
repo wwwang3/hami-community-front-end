@@ -153,7 +153,7 @@ const joinTime = computed(() => {
             .count {
                 font-size: 18px;
                 font-weight: 600;
-                color: var(--hami-text-9);
+                color: var(--hami-black-2);
             }
         }
     }
@@ -189,11 +189,10 @@ const joinTime = computed(() => {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 2px;
             padding: 0 14px;
             height: 38px;
             border-radius: 8px;
-            color: var(--hami-text-1);
+            color: var(--hami-grey-6);
             font-size: 14px;
             cursor: pointer;
             transition: background-color .3s;
@@ -201,6 +200,10 @@ const joinTime = computed(() => {
 
             &:hover {
                 background-color: #e3e5e7;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 4px;
             }
 
             .left-item {
@@ -244,6 +247,10 @@ const joinTime = computed(() => {
     .logout-icon {
         font-size: 18px;
         margin-right: 16px;
+    }
+
+    .el-divider {
+        margin: 18px 0;
     }
 }
 </style>

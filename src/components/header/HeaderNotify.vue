@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, onBeforeMount } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { onBeforeMount, ref } from "vue"
+import { useRouter } from "vue-router"
 import { Message } from '@element-plus/icons-vue'
-import { NotifyService } from '@/service/modules/notify.ts'
 import useNotifyStore, { NotifyRouteItem, NotifyRouteType } from '@/store/modules/notify.ts'
 import NotifyNavList from '@/components/notify/NotifyNavList.vue'
 
@@ -42,13 +41,13 @@ const handleClick = (item: NotifyRouteItem) => {
             width="160px"
             placement="bottom"
         >
-                <NotifyNavList v-model="activeRoute"
-                               item-class="notify-item"
-                               nav-class="notify-item-list"
-                               @click="handleClick"
-                >
+            <NotifyNavList v-model="activeRoute"
+                           item-class="notify-item"
+                           nav-class="notify-item-list"
+                           @click="handleClick"
+            >
 
-                </NotifyNavList>
+            </NotifyNavList>
         </el-popover>
     </div>
 </template>
@@ -70,6 +69,7 @@ const handleClick = (item: NotifyRouteItem) => {
 <style lang="less">
 .notify-item-list {
     padding: 12px 8px;
+
     .notify-item {
         width: 100%;
         padding: 6px 4px;
@@ -77,9 +77,10 @@ const handleClick = (item: NotifyRouteItem) => {
         font-size: 14px;
         height: 40px;
     }
+
     .notify-item:hover {
         background-color: var(--hami-card-hover);
-        color: var(--hami-link-hover);
+        color: var(--hami-text-hover-color);
         border-radius: var(--hami-radius-small);
     }
 }

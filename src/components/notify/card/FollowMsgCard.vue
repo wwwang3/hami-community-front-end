@@ -47,7 +47,7 @@ const handleFollow = async () => {
 
 </script>
 <template>
-    <div class="follow-notify-card">
+    <div class="notify-card follow-notify-card">
         <div class="entry">
             <router-link class="left-panel" :to="spaceLink">
                 <el-avatar :src="sender.image || defaultAvatar" :size="64"></el-avatar>
@@ -79,20 +79,8 @@ const handleFollow = async () => {
 
 <style scoped lang="less">
 .follow-notify-card {
-    cursor: pointer;
-    padding: 16px 10px;
-    min-height: 7rem;
-    background-color: var(--hami-bg);
-    border-radius: var(--hami-radius-small);
-    transition: all .3s;
-
-    &:hover {
-        box-shadow: var(--el-box-shadow);
-        background-color: var(--hami-bg-gray-1);
-    }
 
     .entry {
-        display: flex;
         align-items: center;
         justify-content: space-between;
     }
@@ -113,14 +101,14 @@ const handleFollow = async () => {
         }
 
         .username {
-            color: var(--hami-text);
+            color: var(--hami-text-common);
             max-width: 240px;
             font-weight: 600;
         }
 
         .title {
             font-weight: 400;
-            color: var(--hami-gray-4);
+            color: var(--hami-white-2);
             margin-left: 8px;
         }
 
@@ -131,7 +119,7 @@ const handleFollow = async () => {
         align-items: center;
         padding-top: 10px;
         font-size: 15px;
-        color: var(--hami-gray-2);
+        color: var(--hami-grey-1);
 
         .time {
             font-size: 14px;
@@ -142,11 +130,12 @@ const handleFollow = async () => {
             i {
                 margin-right: 4px;
             }
+
             pointer-events: auto;
             margin-left: 6px;
 
             &:hover {
-                color: var(--hami-blue-1);
+                color: var(--hami-blue-5);
             }
         }
     }

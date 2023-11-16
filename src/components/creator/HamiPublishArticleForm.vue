@@ -8,7 +8,7 @@ import { $message } from '@/utils/message.ts'
 import HamiLoading from '@/components/common/HamiLoading.vue'
 import { useRequest } from '@/hooks'
 import { beforeUpload } from "@/utils/validator.ts"
-import { Close } from '@element-plus/icons-vue'
+import { Close, Plus } from '@element-plus/icons-vue'
 import ImageService from '@/service/modules/image.ts'
 import { DRAFT_REF, ON_PUBLISH_ARTICLE } from '@/store/keys.ts'
 
@@ -122,7 +122,7 @@ const checkItem = () => {
                 <el-radio-group v-model="draft.categoryId" size="large" @change="handleChange">
                     <template v-for="cate in categoryList">
                         <el-radio-button :label="cate.id" class="cate-radio">
-                            {{ cate.name}}
+                            {{ cate.name }}
                         </el-radio-button>
                     </template>
                 </el-radio-group>

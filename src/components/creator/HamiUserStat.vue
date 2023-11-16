@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue"
 import { UserInteractService } from '@/service/modules/interact.ts'
-import { CaretTop } from '@element-plus/icons-vue'
 import { ifNull, isEmpty } from '@/utils'
 import HamiStatCard from '@/components/creator/HamiStatCard.vue'
 
@@ -76,7 +75,7 @@ const getUserDataGrowing = async () => {
             <div class="user-stat-item">
                 <HamiStatCard
                     title="文章收藏数"
-                    :value="stat.totalCollects"
+                    :value="stat?.totalCollects"
                     :incr="dataGrowing?.collect_incr">
                 </HamiStatCard>
             </div>
@@ -112,13 +111,13 @@ const getUserDataGrowing = async () => {
     }
 
     .user-stat-item {
-        background-color: var(--hami-bg-gray-1);
+        background-color: var(--hami-card-blue-bg-1);
         width: calc(33.33333% - 13.33333px);
         margin-right: 20px;
         margin-bottom: 20px;
         padding: 16px 20px;
         height: fit-content;
-        border-radius: var(--hami-radius-small);
+        border-radius: var(--hami-radius);
 
 
         &:nth-child(n+3) {

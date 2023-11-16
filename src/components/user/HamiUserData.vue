@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
+import { computed } from "vue"
 import { Star, View } from '@element-plus/icons-vue'
 import { formatDateTime } from '@/utils'
+
 //interface
 interface UserStatProps {
     stat: UserStat,
     ctime: number | undefined
 }
+
 const $props = defineProps<UserStatProps>()
 
 
@@ -45,7 +47,9 @@ const ctime = computed(() => {
                     </div>
                 </div>
                 <div class="stat-item">
-                    <el-icon class="icon" :size="16" color="#1296db"><Star /></el-icon>
+                    <el-icon class="icon" :size="16" color="#1296db">
+                        <Star/>
+                    </el-icon>
                     <div class="content">
                         <div class="text">文章被收藏</div>
                         <div class="count">{{ stat?.totalCollects }}</div>
@@ -76,85 +80,90 @@ const ctime = computed(() => {
 </template>
 
 <style scoped lang="less">
-    .data-container {
-        .block {
-            background-color: var(--hami-bg);
-            border-radius: var(--hami-radius);
-            padding: 20px 20px;
-            margin-bottom: 20px;
+.data-container {
+    .block {
+        background-color: var(--hami-card-bg);
+        border-radius: var(--hami-radius);
+        padding: 20px 20px;
+        margin-bottom: 20px;
+    }
+
+    .stat-block {
+        .stat-title {
+            font-size: 18px;
+            color: var(--hami-black-3);
+            line-height: 24px;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(230, 230, 231);
         }
 
-        .stat-block {
-            .stat-title {
-                font-size: 18px;
-                color: var(--hami-text-3);
-                line-height: 24px;
-                padding-bottom: 10px;
-                margin-bottom: 10px;
-                border-bottom: 1px solid rgba(230, 230, 231, .5);
-            }
-
-            .stat {
-                .stat-item {
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 8px;
-                    height: 25px;
-                }
-
-                .icon {
-                    height: 24px;
-                    width: 24px;
-                    margin-right: 8px;
-                    border-radius: 50%;
-                    background-color: #b4e1ec;
-                }
-
-                .stat-item:last-child {
-                    margin-bottom: 0;
-                }
-
-                .content {
-                    display: flex;
-                    height: 24px;
-
-                    .text {
-                        margin-right: 6px;
-                    }
-
-                    align-items: center;
-                }
-            }
-        }
-        .follow-block {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            .follow-item {
+        .stat {
+            .stat-item {
                 display: flex;
-                flex-direction: column;
-                justify-content: center;
                 align-items: center;
-                .count {
-                    font-size: 18px;
-                    color: #333;
-                    font-weight: 600;
-                    margin-top: 8px;
-                }
+                margin-bottom: 8px;
+                height: 25px;
             }
-        }
-        .other-block {
-            .block-item {
+
+            .icon {
+                height: 24px;
+                width: 24px;
+                margin-right: 8px;
+                border-radius: 50%;
+                background-color: #b4e1ec;
+            }
+
+            .stat-item:last-child {
+                margin-bottom: 0;
+            }
+
+            .content {
                 display: flex;
-                justify-content: space-between;
+                height: 24px;
+
+                .text {
+                    margin-right: 6px;
+                }
+
                 align-items: center;
-                padding: 16px 0;
-                border-bottom:  1px solid var(--hami-border-color-1);
-                color: var(--hami-text-4);
-            }
-            .block-item:first-child {
-                border-top:  1px solid var(--hami-border-color-1);
             }
         }
     }
+
+    .follow-block {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        .follow-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .count {
+                font-size: 18px;
+                color: #333;
+                font-weight: 600;
+                margin-top: 8px;
+            }
+        }
+    }
+
+    .other-block {
+        .block-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--hami-border-grey);
+            color: var(--hami-black-1);
+        }
+
+        .block-item:first-child {
+            border-top: 1px solid var(--hami-border-grey);
+        }
+    }
+}
 </style>

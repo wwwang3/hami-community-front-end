@@ -12,7 +12,7 @@ const $props = defineProps<SystemMsgProps>()
 
 </script>
 <template>
-    <div class="system-notify-card">
+    <div class="notify-card system-notify-card">
         <div class="entry">
             <el-avatar :src="favicon" :size="64" class="left-panel"></el-avatar>
             <div class="right-panel">
@@ -29,26 +29,14 @@ const $props = defineProps<SystemMsgProps>()
 
 <style scoped lang="less">
 .system-notify-card {
-    cursor: pointer;
-    padding: 16px 10px;
-    min-height: 7rem;
-    background-color: var(--hami-bg);
-    border-radius: var(--hami-radius-small);
-    transition: all .3s;
     margin-bottom: 10px;
 
     &:hover {
-        box-shadow: var(--el-box-shadow);
-        background-color: var(--hami-bg-gray-1);
 
         .delete {
             display: flex;
             align-items: center;
         }
-    }
-
-    .entry {
-        display: flex;
     }
 
     .left-panel {
@@ -66,7 +54,7 @@ const $props = defineProps<SystemMsgProps>()
         font-size: 16px;
         font-weight: 400;
         margin-top: 8px;
-        color: var(--hami-black-3);
+        color: var(--hami-black-5);
         line-height: 28px;
         display: -webkit-box;
         overflow: hidden;
@@ -80,7 +68,7 @@ const $props = defineProps<SystemMsgProps>()
         align-items: center;
         padding-top: 10px;
         font-size: 14px;
-        color: var(--hami-gray-2);
+        color: var(--hami-grey-1);
         height: 24px;
         box-sizing: content-box;
 
@@ -94,7 +82,7 @@ const $props = defineProps<SystemMsgProps>()
             margin-left: 6px;
 
             &:hover {
-                color: var(--hami-blue-1);
+                color: var(--hami-blue-5);
             }
         }
     }

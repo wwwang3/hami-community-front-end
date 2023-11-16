@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, watch, Ref } from "vue"
+import { ref, Ref, watch } from "vue"
 import { useRequest } from '@/hooks'
 import { UserService } from '@/service/modules/user.ts'
 import { isEmpty } from '@/utils'
@@ -39,7 +39,8 @@ watch(() => $props.id, async (newVal, oldVal) => {
     <el-skeleton animated :loading="onLoading" class="hami-user-card">
         <template #template>
             <div class="header">
-                <el-skeleton-item variant="image" style="border-radius: 50%; width: 54px; height: 54px"></el-skeleton-item>
+                <el-skeleton-item variant="image"
+                                  style="border-radius: 50%; width: 54px; height: 54px"></el-skeleton-item>
                 <div class="info">
                     <el-skeleton-item variant="p">
                         {{ user?.username }}
@@ -56,14 +57,17 @@ watch(() => $props.id, async (newVal, oldVal) => {
 <style scoped lang="less">
 .hami-user-card {
     padding: 16px;
+
     .header {
         display: flex;
         justify-content: space-between;
     }
+
     .info {
         margin-left: 10px;
         flex: 1;
     }
+
     :deep(.btn-group) {
         button {
             width: 120px;

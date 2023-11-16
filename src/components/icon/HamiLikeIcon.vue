@@ -10,13 +10,6 @@ const $props = withDefaults(defineProps<LikeIconProps>(), {
     size: 18,
     active: false
 })
-//custom var
-
-//life cycle
-
-//watch
-
-//fun
 
 </script>
 <template>
@@ -44,11 +37,13 @@ const $props = withDefaults(defineProps<LikeIconProps>(), {
 <style scoped lang="less">
 .hami-like-icon:not(.active) {
     &:hover {
-        color: var(--hami-text-blue);
+        color: var(--hami-blue-3);
     }
-    color: var(--hami-text-5);
+
+    color: var(--hami-grey-2);
 }
+
 .hami-like-icon.active {
-    color: var(--hami-text-blue);
+    color: var(--hami-blue-3);
 }
 </style>

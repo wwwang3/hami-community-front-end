@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, watch } from "vue"
+import { computed, watch } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import useUserStore from '@/store/modules/user.ts'
-import { useAction, useFollow } from '@/hooks/userInteract.ts'
-import { $message } from '@/utils/message.ts'
+import { useFollow } from '@/hooks/userInteract.ts'
+import { onPPT } from '@/utils'
 
-//interface
 interface UserCardProps {
     user: User
     profile?: boolean,
@@ -17,13 +16,10 @@ const $props = withDefaults(defineProps<UserCardProps>(), {
     profile: false,
     position: true
 })
-//router, props, inject, provide
 const $router = useRouter()
 const $route = useRoute
 const userStore = useUserStore()
-//custom var
 const [state, handleAction] = useFollow($props.user?.followed)
-//life cycle
 
 const link = computed(() => {
     return "/user/space/" + $props.user?.userId
@@ -50,7 +46,7 @@ const handleFollow = () => {
 }
 
 const handleChat = () => {
-    $message.notifySuccess("暂不支持, 敬请期待 _(≧∇≦」∠)_")
+    onPPT()
 }
 
 const hasText = () => {
@@ -113,18 +109,21 @@ const hasText = () => {
             margin-left: 10px;
 
             .username {
-                color: var(--hami-text);
+                color: var(--hami-black-6);
                 font-size: 17px;
                 font-weight: 600;
             }
+
             .job {
                 display: flex;
                 align-items: center;
                 font-size: 14px;
             }
+
             .profile {
                 font-size: 14px;
             }
+
             .at {
                 margin: 0 4px;
             }
@@ -146,7 +145,7 @@ const hasText = () => {
             }
 
             .text {
-                color: var(--hami-gray);
+                color: var(--hami-card-text-color);
                 font-size: 13px;
             }
         }

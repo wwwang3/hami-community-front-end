@@ -52,7 +52,7 @@ const handleSearch = (val: string) => {
 
 <style scoped lang="less">
     .u-search {
-        --u-bg-color-overlay: var(--hami-border-color-1);
+        --u-bg-color-overlay: var(--hami-border-grey);
         :deep(.search) {
             label > input[type=text] {
                 line-height: 28px;

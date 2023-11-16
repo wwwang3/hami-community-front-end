@@ -114,7 +114,7 @@ const handleClick = () => {
 .hami-user-card {
     padding: 30px;
     border-radius: var(--hami-radius-medium);
-    background-color: var(--hami-bg);
+    background-color: var(--hami-card-bg);
     margin-bottom: 20px;
 
     .user-card-container {
@@ -141,26 +141,27 @@ const handleClick = () => {
         .profile-item {
             display: flex;
             align-items: center;
-            color: var(--hami-gray);
+            color: var(--hami-grey-1);
 
             .content {
                 max-width: 160px;
                 line-height: 28px;
                 height: 28px;
                 margin-left: 6px;
-                color: var(--hami-gray);
+                color: var(--hami-grey-1);
             }
         }
 
         .username {
             font-size: 20px;
-            color: var(--hami-text-3);
+            color: var(--hami-black-3);
             font-weight: 700;
             height: 24px;
             line-height: 24px;
             margin: 4px 0;
             max-width: 200px;
         }
+
         .tag {
             margin-left: 10px;
         }
@@ -171,7 +172,7 @@ const handleClick = () => {
 
             .divider {
                 margin: 0 10px;
-                color: var(--hami-gray);
+                color: var(--hami-grey-1);
             }
         }
 
@@ -209,8 +210,6 @@ const handleClick = () => {
             justify-content: space-between;
         }
 
-
     }
 }
-
 </style>

@@ -47,10 +47,6 @@ const handleDelete = async (item: ArticleDraftDetail, index: number) => {
 <style scoped lang="less">
 .hami-creator-article {
     .creator-article-list-item {
-        //display: flex;
-        //align-items: center;
-        //justify-content: center;
-        //height: 32px;
         &:last-child {
             margin-bottom: 10px;
         }

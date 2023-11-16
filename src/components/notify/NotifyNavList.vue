@@ -55,7 +55,9 @@ const handleClick = (item: NotifyRouteItem) => {
                      :class="[itemClass, item.path === activeRoute ? activeClass : '']"
                 >
                     <span class="name">{{ item.name }}</span>
-                    <span class="count" v-if="notifyStore.notifyCountItem[item.type] > 0">{{ notifyStore.notifyCountItem[item.type] }}</span>
+                    <span class="count" v-if="notifyStore.notifyCountItem[item.type] > 0">{{
+                            notifyStore.notifyCountItem[item.type]
+                        }}</span>
                 </div>
             </template>
         </div>
@@ -69,18 +71,20 @@ const handleClick = (item: NotifyRouteItem) => {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         .name {
             display: inline-block;
             font-size: inherit;
         }
+
         .count {
             font-size: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background-color: var(--hami-red-3);
-            color: var(--hami-white);
+            background-color: var(--hami-red-1);
+            color: #fff;
             width: 18px;
             height: 18px;
         }

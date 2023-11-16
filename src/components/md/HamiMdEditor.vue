@@ -33,8 +33,7 @@ const mdConfig = reactive({
 })
 
 config({
-    editorExtensions: {
-    }
+    editorExtensions: {}
 })
 
 //fun
@@ -76,6 +75,7 @@ const handleError = async (e: { name: string, message: string }) => {
     :deep(.cm-editor) {
         font-size: 16px;
     }
+
     :deep(.md-editor) {
         height: calc(100vh - 64px);
     }

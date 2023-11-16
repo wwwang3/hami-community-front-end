@@ -290,6 +290,7 @@ const getArticle = async () => {
 
     .main-content {
         flex: 1;
+        max-width: calc(100% - 280px);
     }
 
     :deep(.el-affix--fixed .options) {
@@ -440,12 +441,14 @@ const getArticle = async () => {
             background-color: var(--hami-card-bg);
             border-radius: var(--hami-radius);
             margin-bottom: 20px;
+            box-shadow: var(--el-box-shadow);
         }
 
         .cate-log {
             padding: 16px 16px;
             background-color: var(--hami-card-bg);
             border-radius: var(--hami-radius);
+            box-shadow: var(--el-box-shadow);
         }
     }
 

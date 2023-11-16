@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, inject, Ref } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { inject, Ref } from "vue"
+import { useRouter } from "vue-router"
 import { useFollow } from '@/hooks/userInteract.ts'
 import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils/message.ts'
@@ -38,7 +38,7 @@ const handleFollow = async () => {
     }
 }
 
-const toUserSpace = ()  => {
+const toUserSpace = () => {
     return "/user/space/" + $props.user.userId
 }
 const hasText = () => {
@@ -75,34 +75,40 @@ const hasText = () => {
     cursor: pointer;
     padding: 16px 20px;
     min-height: 7rem;
+
     .entry {
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
+
     .left-panel {
         display: flex;
         align-items: center;
+
         .info {
             flex: 1;
             margin-left: 10px;
 
             .username {
-                color: var(--hami-text);
+                color: var(--hami-text-common);
                 max-width: 240px;
                 font-size: 17px;
                 font-weight: 600;
             }
+
             .job {
                 display: flex;
                 align-items: center;
                 font-size: 14px;
             }
+
             .at {
                 margin: 0 4px;
             }
         }
     }
+
     .right-panel {
         button {
             width: 120px;

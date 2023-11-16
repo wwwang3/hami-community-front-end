@@ -1,20 +1,18 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { onMounted, ref } from "vue"
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { ArticleDraftService } from '@/service/modules/article.ts'
 import { $message } from '@/utils/message.ts'
 import loadingError from "/assets/load-error.685235d2.png"
+import { HamiScrollListInstance } from '@/components/types'
 
-// @ts-ignore
-const creatorDraftList = ref<InstanceType<typeof HamiScrollList<ArticleDraftDetail>> | null>(null)
-//life cycle
+
+const creatorDraftList = ref<HamiScrollListInstance<ArticleDraftDetail>>()
+
 onMounted(() => {
     creatorDraftList.value?.init()
 })
-//watch
 
-//fun
 const handleQuery = (pageNum: number, pageSize: number): Promise<PageData<ArticleDraftDetail>> => {
     return ArticleDraftService.getDrafts(pageNum, pageSize)
 }
@@ -49,10 +47,6 @@ const handleDelete = async (item: ArticleDraftDetail, index: number) => {
 <style scoped lang="less">
 .hami-creator-article {
     .creator-article-list-item {
-        //display: flex;
-        //align-items: center;
-        //justify-content: center;
-        //height: 32px;
         &:last-child {
             margin-bottom: 10px;
         }

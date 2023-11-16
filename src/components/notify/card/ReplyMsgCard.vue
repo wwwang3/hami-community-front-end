@@ -74,7 +74,7 @@ const handleDelete = async (msg_id: number | string, $event: Event) => {
 
 </script>
 <template>
-    <div class="reply-notify-card">
+    <div class="notify-card reply-notify-card">
         <div class="entry">
             <router-link :to="spaceLink" class="left-panel">
                 <el-avatar :src="avatar || defaultAvatar" :size="64"></el-avatar>
@@ -123,22 +123,7 @@ const handleDelete = async (msg_id: number | string, $event: Event) => {
 
 <style scoped lang="less">
 .reply-notify-card {
-    cursor: pointer;
-    padding: 16px 10px;
-    min-height: 7rem;
-    background-color: var(--hami-bg);
-    border-radius: var(--hami-radius-small);
-    transition: all .3s;
     margin-bottom: 10px;
-
-    &:hover {
-        box-shadow: var(--el-box-shadow);
-        background-color: var(--hami-bg-gray-1);
-    }
-
-    .entry {
-        display: flex;
-    }
 
     .left-panel {
         display: flex;
@@ -167,19 +152,20 @@ const handleDelete = async (msg_id: number | string, $event: Event) => {
         }
 
         .username {
-            color: var(--hami-text);
+            color: var(--hami-text-common);
             font-weight: 600;
             margin-right: 6px;
         }
 
         .link:hover {
-            color: var(--hami-blue-1);
+            color: var(--hami-blue-5);
             text-decoration: underline;
         }
 
         .title {
-            color: var(--hami-brand);
+            color: var(--hami-blue-1);
         }
+
         .title:hover {
             text-decoration: underline;
         }
@@ -189,7 +175,7 @@ const handleDelete = async (msg_id: number | string, $event: Event) => {
         font-size: 16px;
         font-weight: 400;
         margin-top: 8px;
-        color: var(--hami-black-3);
+        color: var(--hami-black-5);
         line-height: 28px;
         display: -webkit-box;
         overflow: hidden;
@@ -211,7 +197,7 @@ const handleDelete = async (msg_id: number | string, $event: Event) => {
         }
 
         margin-top: 8px;
-        color: var(--hami-gray);
+        color: var(--hami-card-text-color);
         font-size: 16px;
         font-weight: 400;
         line-height: 28px;
@@ -229,7 +215,7 @@ const handleDelete = async (msg_id: number | string, $event: Event) => {
         align-items: center;
         padding-top: 10px;
         font-size: 14px;
-        color: var(--hami-gray-2);
+        color: var(--hami-grey-1);
         height: 24px;
         box-sizing: content-box;
 
@@ -243,7 +229,7 @@ const handleDelete = async (msg_id: number | string, $event: Event) => {
             margin-left: 6px;
 
             &:hover {
-                color: var(--hami-blue-1);
+                color: var(--hami-blue-5);
             }
         }
     }

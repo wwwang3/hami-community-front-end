@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { onMounted, ref } from "vue"
+import { useRoute } from "vue-router"
 import { useRequest } from '@/hooks'
 import { ArticleService } from '@/service/modules/article.ts'
+
 //interface
 interface UserArticleProps {
     id: string
@@ -22,13 +23,7 @@ onMounted(() => {
     console.log(userId)
     userArticleList.value?.init()
 })
-//custom var
 
-//life cycle
-
-//watch
-
-//fun
 const handleQuery = (current: number, size: number) => {
     return getUserArticles({
         pageNum: current,

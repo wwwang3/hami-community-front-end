@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, inject, Ref } from "vue"
-import { useRoute, useRouter } from "vue-router"
-import { useRequest } from '@/hooks'
-import { ArticleService } from '@/service/modules/article.ts'
+import { inject, onMounted, ref, Ref } from "vue"
+import { useRoute } from "vue-router"
 import { UserInteractService } from '@/service/modules/interact.ts'
 import { Delete } from '@element-plus/icons-vue'
 import { $message } from '@/utils/message.ts'
@@ -13,7 +11,6 @@ interface UserArticleProps {
     id: string
 }
 
-//router, props, inject, provide
 const $props = defineProps<UserArticleProps>()
 const $route = useRoute()
 const userId = ref(parseInt($props.id))
@@ -104,12 +101,12 @@ const isSelf = () => {
         }
 
         &:hover {
-            color: var(--hami-text-blue);
+            color: var(--hami-text-hover-color);
         }
     }
 
     .hami-article-card:hover {
-        background-color: #f7f8fa;;
+        background-color: var(--hami-card-hover-bg);
     }
 
     .hami-article-card:hover .option-item {

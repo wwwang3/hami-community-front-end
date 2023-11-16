@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue"
 import { useRouter } from "vue-router"
 import HamiLogo from '@/components/common/HamiLogo.vue'
 import HeaderAvatar from '@/components/header/HeaderAvatar.vue'
@@ -10,9 +9,6 @@ import { $message } from '@/utils'
 
 const $router = useRouter()
 const userStore = useUserStore()
-
-const activeNav = ref<string>("首页")
-
 
 const toCollect = () => {
     $router.push("/user/space/" + userStore.userInfo.userId + "/collects")
@@ -61,7 +57,6 @@ const onPPT = () => {
                     </a>
                     <div class="header-nav-item"
                          @click="handleAboutClick"
-                         :class="{active: '关于' === activeNav}"
                     >
                         关于Hami
                     </div>
@@ -112,7 +107,19 @@ const onPPT = () => {
                         </span>
                     </div>
                     <router-link to="/creator/home">
-                        <span class="creator">创作者中心</span>
+                        <div class="creator">
+                            <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                <path
+                                    d="M12.0824 10H14.1412C15.0508 10 15.7882 10.7374 15.7882 11.6471V12.8824C15.7882 13.792 15.0508 14.5294 14.1412 14.5294H3.84707C2.93743 14.5294 2.20001 13.792 2.20001 12.8824V11.6471C2.20001 10.7374 2.93743 10 3.84707 10H5.90589"
+                                    stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+                                    stroke-linejoin="round"></path>
+                                <path d="M8.99413 11.2353L8.99413 3.82353" stroke="currentColor" stroke-width="1.7"
+                                      stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M12.0823 6.29413L8.9941 3.20589L5.90587 6.29413" stroke="currentColor"
+                                      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            <span>创作者中心</span>
+                        </div>
                     </router-link>
                 </div>
             </div>
@@ -163,11 +170,11 @@ const onPPT = () => {
         }
 
         .header-nav-item.active {
-            color: var(--hami-blue);
+            color: var(--hami-text-hover-color);
         }
 
         .header-nav-item:hover {
-            color: var(--hami-link-hover);
+            color: var(--hami-text-hover-color);
         }
     }
 
@@ -180,20 +187,31 @@ const onPPT = () => {
         align-items: center;
 
         .creator {
-            background-color: var(--hami-brand);
             padding: 0 10px;
-            color: var(--hami-white);
-            font-size: 15px;
+            color: #fff;
+            background-color: var(--hami-pink-2);
+            font-size: 14px;
             height: 40px;
             border-radius: var(--hami-radius);
-            line-height: 40px;
             cursor: pointer;
             width: 120px;
+            display: flex;
+            align-items: center;
             text-align: center;
-            display: block;
+            line-height: 26px;
+            transition: background-color .3s;
+
+            svg {
+                margin-right: 3px;
+                vertical-align: middle;
+            }
+
+            span {
+                line-height: 26px;
+            }
 
             &:hover {
-                background-color: #0288d1;
+                background-color: var(--hami-pink-3);
             }
         }
 
@@ -215,7 +233,7 @@ const onPPT = () => {
             }
 
             &:hover {
-                color: var(--hami-link-hover);
+                color: var(--hami-text-hover-color);
             }
 
             .el-icon {
