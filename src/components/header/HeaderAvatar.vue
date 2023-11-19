@@ -2,7 +2,7 @@
 import { computed, onBeforeMount, ref } from "vue"
 import useUserStore from "@/store/modules/user.ts"
 import { useRouter } from 'vue-router'
-import defaultAvatar from "/assets/avatar.jpg"
+import { defaultAvatar } from "@/store/images.ts"
 import HeaderUserCard from '@/components/header/HeaderUserCard.vue'
 
 const $router = useRouter();

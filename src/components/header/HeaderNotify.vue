@@ -79,7 +79,7 @@ const handleClick = (item: NotifyRouteItem) => {
     }
 
     .notify-item:hover {
-        background-color: var(--hami-card-hover);
+        background-color: var(--hami-card-hover-bg);
         color: var(--hami-text-hover-color);
         border-radius: var(--hami-radius-small);
     }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue"
-import defaultAvatar from "/assets/avatar.jpg"
+import { defaultAvatar } from "@/store/images.ts"
 import dayjs from 'dayjs'
 
 //interface
@@ -9,7 +9,7 @@ interface CardInfoProps {
     username: string,
     followers: number,
     followings: number,
-    ctime: number
+    ctime: number | Date
 }
 
 const $props = defineProps<CardInfoProps>()

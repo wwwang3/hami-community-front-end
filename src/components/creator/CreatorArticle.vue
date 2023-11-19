@@ -3,7 +3,6 @@ import { onMounted, ref } from "vue"
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { ArticleDraftService } from '@/service/modules/article.ts'
 import { $message } from '@/utils/message.ts'
-import loadingError from "/assets/load-error.685235d2.png"
 import HamiArticleDraftCard from '@/components/article/HamiArticleDraftCard.vue'
 import { HamiScrollListInstance } from '@/components/types'
 
@@ -31,14 +30,11 @@ const handleDelete = async (item: ArticleDraftDetail, index: number) => {
 </script>
 <template>
     <div class="hami-creator-article">
-        <HamiScrollList :size="10" :query="handleQuery" ref="creatorArticleList">
+        <HamiScrollList :size="10" :query="handleQuery" ref="creatorArticleList" key-property="id">
             <template #item="{item, index, _delete}">
                 <div class="creator-article-list-item">
                     <HamiArticleDraftCard :draft="item" :index="index" @delete="handleDelete"></HamiArticleDraftCard>
                 </div>
-            </template>
-            <template #error>
-                <el-empty :image="loadingError" style="--el-empty-image-width: 200px" description="加载失败"></el-empty>
             </template>
         </HamiScrollList>
     </div>

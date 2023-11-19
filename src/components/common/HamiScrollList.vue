@@ -10,9 +10,7 @@ export default defineComponent({
 import { computed, nextTick, onMounted, reactive, ref } from "vue"
 import { useRequest } from '@/hooks'
 import { formatDateTime, isEmpty } from '@/utils'
-import noDataImg from "/assets/nodata02.png"
-import fetchErrorImg from "/assets/load-error.685235d2.png"
-
+import { noDataImg, loadErrorImg } from "@/store/images.ts"
 export interface ItemType<T> {
     item: T
     index: number
@@ -98,6 +96,10 @@ const showEmpty = computed(() => {
     return inited.value && dataList.length === 0
 })
 
+const showError = computed(() => {
+    return inited.value && !onLoadingMore.value
+})
+
 const timestampKey = computed(() => {
     return $props.timestampKey === undefined ? "ctime" : $props.timestampKey
 })
@@ -117,12 +119,10 @@ const _init = () => {
     let start = Date.now()
     processQuery(page.value.current, page.value.size)
         .then(pageData => {
-            console.log(pageData)
             page.value.total = pageData.total
             refreshData(pageData.data as any[])
         })
         .catch(e => {
-            console.error(e)
             loadingError.value = true
         })
         .finally(() => {
@@ -149,8 +149,6 @@ const handleScroll = async () => {
         let pageData: PageData<any> = await processQuery(page.value.current, page.value.size)
         refreshData(pageData.data as any[])
     } catch (e) {
-        //出错了
-        console.log(e)
         loadingError.value = true
     }
 }
@@ -200,9 +198,9 @@ const randomType = (): NodeType => {
             </template>
         </div>
         <el-skeleton :rows="3" animated :throttle="200" :loading="onLoadingMore"></el-skeleton>
-        <div v-show="loadingError">
+        <div v-show="showError">
             <slot name="error">
-                <el-empty :image="fetchErrorImg"
+                <el-empty :image="loadErrorImg"
                           style="--el-empty-image-width: 200px"
                           description="加载失败"
                           class="empty"

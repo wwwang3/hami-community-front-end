@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { $message, formatDateTime, isEmpty } from '@/utils'
-import defaultAvatar from "/assets/avatar.jpg"
+import { defaultAvatar } from "@/store/images.ts"
 import { Delete } from '@element-plus/icons-vue'
 import { NotifyService } from '@/service/modules/notify.ts'
 import { useEmojiParse } from 'undraw-ui'

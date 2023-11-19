@@ -2,8 +2,7 @@
 import { onMounted, reactive } from "vue"
 import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router"
 import { isEmpty } from '@/utils'
-
-import published from "/assets/empty-channel.png"
+import { publishedImg } from "@/store/images.ts"
 
 const article = reactive({
     title: "",
@@ -34,7 +33,7 @@ const handleClick = () => {
 <template>
     <div class="hami-published">
         <div class="hami-published-body">
-            <img :src="published" alt="">
+            <img :src="publishedImg" alt="">
             <router-link :to="'/article/' + article.id" class="title">《{{ article.title }}》</router-link>
             <div class="msg">发表成功! 有你的分享Hami会变得更好~</div>
             <el-button type="primary" @click="handleClick">回到首页</el-button>

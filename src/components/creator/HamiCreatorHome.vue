@@ -4,6 +4,7 @@ import { useRouter } from "vue-router"
 import useUserStore from '@/store/modules/user.ts'
 import HamiUserStat from '@/components/creator/HamiUserStat.vue'
 import HamiUserCardV3 from "@/components/user/CreatorUserCard.vue"
+import { defaultAvatar } from "@/store/images.ts"
 
 const $router = useRouter()
 const userStore = useUserStore()
@@ -27,11 +28,11 @@ onBeforeMount(async () => {
     <div class="hami-creator-home">
         <div class="creator-home" v-if="inited">
             <HamiUserCardV3
-                :avatar="userInfo!.avatar"
-                :ctime="userInfo!.ctime"
-                :followers="userInfo.stat!.totalFollowers"
-                :followings="userInfo.stat!.totalFollowings"
-                :username="userInfo!.username"
+                :avatar="userInfo?.avatar ?? defaultAvatar"
+                :ctime="userInfo?.ctime ?? new Date()"
+                :followers="userInfo?.stat?.totalFollowers ?? 0"
+                :followings="userInfo?.stat?.totalFollowings ?? 0"
+                :username="userInfo?.username"
             >
             </HamiUserCardV3>
             <HamiUserStat :stat="userInfo.stat"></HamiUserStat>

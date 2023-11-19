@@ -3,7 +3,7 @@ import { computed } from "vue"
 import { $message, formatDateTime } from '@/utils'
 import { useFollow } from '@/hooks/userInteract.ts'
 import useUserStore from '@/store/modules/user.ts'
-import defaultAvatar from "/assets/avatar.jpg"
+import { defaultAvatar } from "@/store/images.ts"
 import { Delete } from '@element-plus/icons-vue'
 import { useDeleteMsg } from '@/components/notify/hooks'
 

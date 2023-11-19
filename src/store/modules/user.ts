@@ -13,7 +13,7 @@ const useUserStore = defineStore("user", () => {
         blog: '',
         collects: 0,
         company: '',
-        ctime: 0,
+        ctime: Date.now(),
         followers: 0,
         followings: 0,
         likes: 0,

@@ -4,7 +4,7 @@ import { useRouter } from "vue-router"
 import { useRequest } from '@/hooks'
 import { AccountService } from '@/service/modules/user.ts'
 import HamiLoading from '@/components/common/HamiLoading.vue'
-import defaultAvatar from "/assets/avatar.jpg"
+import { defaultAvatar } from "@/store/images.ts"
 import {
     FormInstance,
     FormRules,

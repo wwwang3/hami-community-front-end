@@ -1,7 +1,14 @@
-import http, { FORM, FORM_DATA } from '@/service/http.ts'
+import http, { FORM } from '@/service/http.ts'
 
+const CaptchaType = {
+        "register": 0,
+        "reset": 1,
+        "update": 2
+}
 
 export const AuthService: AuthServiceApi = {
+
+
 
     login(params: LoginParam): Promise<LoginResult> {
         return http.post("/auth/login", { ...params }, {
@@ -15,11 +22,10 @@ export const AuthService: AuthServiceApi = {
         return http.post("/auth/logout")
     },
 
-    getCaptcha(type: "register" | "reset", email: string): Promise<any> {
-        console.log(type, email)
+    getCaptcha(type: "register" | "reset" | "update", email: string): Promise<any> {
         return http.get("/auth/captcha", {
             params: {
-                type: type,
+                type: CaptchaType[type],
                 email: email
             }
         })

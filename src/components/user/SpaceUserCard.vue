@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, watch } from "vue"
 import { useRouter } from "vue-router"
-import defaultAvatar from "/assets/avatar.jpg"
+import { defaultAvatar } from "@/store/images.ts"
 import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils/message.ts'
 import { useFollow } from '@/hooks/userInteract.ts'

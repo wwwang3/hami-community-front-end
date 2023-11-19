@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { formatDateTime } from '@/utils'
-
-import favicon from "/assets/favicon.png"
+import { favicon } from "@/store/images.ts"
 
 interface SystemMsgProps {
     notify: NotifyMsg

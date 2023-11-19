@@ -199,7 +199,7 @@ const joinTime = computed(() => {
             white-space: nowrap;
 
             &:hover {
-                background-color: #e3e5e7;
+                background-color: var(--hami-white-3);
             }
 
             &:not(:last-child) {
@@ -229,7 +229,7 @@ const joinTime = computed(() => {
         align-items: center;
         padding: 10px 14px;
         border-radius: 8px;
-        color: var(--hami-text-1);
+        color: var(--hami-grey-6);
         font-size: 14px;
         cursor: pointer;
         transition: background-color .3s;
@@ -241,7 +241,7 @@ const joinTime = computed(() => {
     }
 
     .logout-item:hover {
-        background-color: #e3e5e7;
+        background-color: var(--hami-white-3);
     }
 
     .logout-icon {
