@@ -147,6 +147,7 @@ const calculateHotIndex = (rank: number) => {
         }
 
         .left {
+            color: var(--hami-text-1);
             .hot-img {
                 width: 24px;
                 height: 24px;
@@ -156,7 +157,7 @@ const calculateHotIndex = (rank: number) => {
 
         .right {
             cursor: pointer;
-            color: var(--hami-text-color);
+            color: var(--hami-item-text-color);
 
             .icon {
                 margin-right: 6px;
@@ -239,7 +240,7 @@ const calculateHotIndex = (rank: number) => {
             display: flex;
             align-items: center;
             height: 24px;
-            color: var(--hami-card-text-color);
+            color: var(--hami-item-text-color);
             text-align: left;
         }
 

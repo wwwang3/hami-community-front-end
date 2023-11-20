@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, reactive } from "vue"
-import 'cropperjs/dist/cropper.css';
 import { config, MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import { toolbars } from '@/components/md/editorConfig.ts'

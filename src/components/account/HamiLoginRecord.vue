@@ -13,7 +13,7 @@ interface Page {
 
 const page = ref<Page>({
     current: 1,
-    size: 8,
+    size: 7,
     total: 0
 })
 
@@ -46,7 +46,6 @@ onMounted(async () => {
 
 
 const calculateIp = (ipInfo: IpInfo) => {
-    console.log(ipInfo)
     if (isEmpty(ipInfo)) {
         return "未知IP属地"
     }
@@ -54,7 +53,6 @@ const calculateIp = (ipInfo: IpInfo) => {
 }
 const handleChange = async (val: number) => {
     try {
-        console.log(page.value.current)
         let pageData = await getLoginRecords(null)
         records.value = pageData.data as LoginRecord[]
     } catch (e) {
@@ -75,7 +73,7 @@ const formatTime = (time: number) => {
         </div>
         <el-divider></el-divider>
         <div class="login-record-body">
-            <el-skeleton v-if="onRequest" :rows="5"></el-skeleton>
+            <el-skeleton v-if="onRequest" :rows="4"></el-skeleton>
             <transition name="el-fade-in-linear">
                 <el-table :data="records"
                           max-height="640"
@@ -124,7 +122,6 @@ const formatTime = (time: number) => {
     padding: 20px 24px;
     background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);
-    color: var(--hami-text-color);
     min-height: 500px;
 
     .login-record-title {

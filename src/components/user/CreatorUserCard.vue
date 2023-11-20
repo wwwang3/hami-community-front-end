@@ -105,7 +105,7 @@ const days = computed(() => {
                 align-items: center;
 
                 .count {
-                    color: var(--hami-black-3);
+                    color: var(--hami-text-3);
                     margin-right: 6px;;
                 }
             }
@@ -119,7 +119,7 @@ const days = computed(() => {
 
         .username {
             font-size: 20px;
-            color: var(--hami-black-3);
+            color: var(--hami-text-3);
             font-weight: 700;
             height: 24px;
             line-height: 24px;

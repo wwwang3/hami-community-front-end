@@ -194,7 +194,7 @@ const handleClick = (path: CateRoutePath) => {
         height: 42px;
         padding: 11px 16px;
         transition: all .3s;
-        color: var(--hami-text-color);
+        color: var(--hami-menu-text-color);
 
         .name {
             height: 20px;
@@ -203,7 +203,7 @@ const handleClick = (path: CateRoutePath) => {
 
     .icon {
         margin-right: 10px;
-        color: var(--hami-card-text-color);
+        color: var(--hami-item-text-color);
         height: 20px;
         display: flex;
         align-items: center;

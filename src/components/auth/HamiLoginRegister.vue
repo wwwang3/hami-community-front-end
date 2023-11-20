@@ -101,7 +101,7 @@ const changeMode = (mode: string) => {
 }
 
 .login-register-bottom {
-    color: var(--hami-text-1);
+    color: var(--hami-text-2);
     font-size: 15px;
     margin-bottom: 20px;
 

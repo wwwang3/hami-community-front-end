@@ -7,7 +7,7 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts" generic="T">
-import { computed, nextTick, onMounted, reactive, ref } from "vue"
+import { computed, nextTick, reactive, ref } from "vue"
 import { useRequest } from '@/hooks'
 import { formatDateTime, isEmpty } from '@/utils'
 import { noDataImg, loadErrorImg } from "@/store/images.ts"
@@ -61,6 +61,7 @@ const $props = withDefaults(defineProps<ScrollListProps>(), {
     showNoMore: false,
     immediateLoading: false,
     timeline: false,
+    timestampKey: "ctime",
 })
 
 const dataList = reactive<Array<any>>([])
@@ -97,18 +98,11 @@ const showEmpty = computed(() => {
 })
 
 const showError = computed(() => {
-    return inited.value && !onLoadingMore.value
+    return inited.value && !onLoadingMore.value && loadingError.value
 })
 
-const timestampKey = computed(() => {
-    return $props.timestampKey === undefined ? "ctime" : $props.timestampKey
-})
 
-//life cycle
-onMounted(() => {
-    console.debug("HamiScrollList mounted")
-})
-//watch
+
 const _init = () => {
     page.value.current = 1
     page.value.total = 0
@@ -146,13 +140,13 @@ const handleScroll = async () => {
     }
     page.value.current++
     try {
-        let pageData: PageData<any> = await processQuery(page.value.current, page.value.size)
-        refreshData(pageData.data as any[])
+        let pageData: PageData<T> = await processQuery(page.value.current, page.value.size)
+        refreshData(pageData.data ?? [])
     } catch (e) {
         loadingError.value = true
     }
 }
-const refreshData = (data: any[]) => {
+const refreshData = (data: T[]) => {
     nextTick(() => {
         if (!isEmpty(data)) {
             dataList.push(...data)
@@ -248,7 +242,7 @@ const randomType = (): NodeType => {
         height: 24px;
         line-height: 24px;
         text-align: center;
-        color: var(--hami-black-3);
+        color: var(--hami-text-3);
         font-size: 14px;
     }
 

@@ -1,3 +1,4 @@
-:root.dark {
+@import 'element-plus/theme-chalk/dark/css-vars.css';
+html.dark {
     --hami-card-text-color: #e7e4e4;;
 }

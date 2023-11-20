@@ -53,7 +53,7 @@ const $props = defineProps<SystemMsgProps>()
         font-size: 16px;
         font-weight: 400;
         margin-top: 8px;
-        color: var(--hami-black-5);
+        color: var(--hami-text-4);
         line-height: 28px;
         display: -webkit-box;
         overflow: hidden;

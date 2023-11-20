@@ -60,7 +60,7 @@ const up = (value: number) => {
     }
 
     .count {
-        color: var(--hami-black-4);
+        color: var(--hami-text-3);
         font-weight: 600;
         font-size: 32px;
         line-height: 42px;

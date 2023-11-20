@@ -154,7 +154,7 @@ const handleClick = () => {
 
         .username {
             font-size: 20px;
-            color: var(--hami-black-3);
+            color: var(--hami-text-3);
             font-weight: 700;
             height: 24px;
             line-height: 24px;

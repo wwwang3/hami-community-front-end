@@ -1,21 +1,18 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue"
-import { useRoute } from "vue-router"
 import { UserInteractService } from '@/service/modules/interact.ts'
+import { HamiScrollListInstance } from '@/components/types'
 
-//interface
 interface UserArticleProps {
     id: string
 }
 
 const $props = defineProps<UserArticleProps>()
-const $route = useRoute()
 const userId = ref($props.id)
-const userArticleList = ref()
+const userLikeArticleList = ref<HamiScrollListInstance<Article> | null>(null)
 
 onMounted(() => {
-    console.log(userId)
-    userArticleList.value?.init()
+    userLikeArticleList.value?.init()
 })
 
 const handleQuery = (current: number, size: number) => {
@@ -30,11 +27,10 @@ const handleQuery = (current: number, size: number) => {
 <template>
     <div class="hami-user-article-list">
         <HamiScrollList
-            ref="userArticleList"
+            ref="userLikeArticleList"
             :query="handleQuery"
             no-data-text="还没有文章"
             key-property="id"
-            :show-no-more="false"
         >
             <template #item="data">
                 <HamiArticleCard :article="data.item" border></HamiArticleCard>

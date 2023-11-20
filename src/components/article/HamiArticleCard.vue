@@ -5,7 +5,7 @@ import useUserStore from '@/store/modules/user.ts'
 import { formatDateTime } from '@/utils'
 import { Calendar, View } from '@element-plus/icons-vue'
 import { $message } from '@/utils/message.ts'
-import { EpPropMergeType } from 'element-plus/es/utils'
+// import { EpPropMergeType } from 'element-plus/es/utils'
 import { useLike } from '@/hooks/userInteract.ts'
 import HamiUserCardHover from '@/components/common/HamiUserCardHover.vue'
 
@@ -83,9 +83,8 @@ const handleLike = () => {
     })
 }
 const tagTypes = ["", "info", "danger", "warning", "success"]
-const getTagType = (id: number) => {
-    return tagTypes[id % tagTypes.length] as
-        EpPropMergeType<StringConstructor, "" | "info" | "danger" | "warning" | "success", unknown> | undefined
+const getTagType = (id: number): "success" | "info" | "warning" | "danger" | "" => {
+    return tagTypes[id % tagTypes.length] as "success" | "info" | "warning" | "danger" | ""
 }
 
 const toComment = () => {
@@ -298,7 +297,7 @@ const handleBeforeEnter = () => {
         font-size: 17px;
         font-weight: 600;
         color: var(--hami-title-color);
-        margin: 2px 0;
+        margin: 4px 0;
         line-height: 24px;
         width: 100%;
     }
@@ -313,14 +312,14 @@ const handleBeforeEnter = () => {
         -webkit-line-clamp: 3;
         font-size: 14px;
         word-break: break-all;
-        color: var(--hami-text-color);
+        color: var(--hami-card-text-color);
     }
 
     .bottom {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-top: 10px;
+        padding-top: 8px;
         height: 32px;
     }
 

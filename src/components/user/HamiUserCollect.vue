@@ -5,6 +5,8 @@ import { UserInteractService } from '@/service/modules/interact.ts'
 import { Delete } from '@element-plus/icons-vue'
 import { $message } from '@/utils/message.ts'
 import useUserStore from '@/store/modules/user.ts'
+import { SPACE_USER } from '@/store/keys.ts'
+import { HamiScrollListInstance } from '@/components/types'
 
 //interface
 interface UserArticleProps {
@@ -14,14 +16,13 @@ interface UserArticleProps {
 const $props = defineProps<UserArticleProps>()
 const $route = useRoute()
 const userId = ref(parseInt($props.id))
-const userArticleList = ref()
+const userCollectArticleList = ref<HamiScrollListInstance<Article> | null>(null)
 const userStore = useUserStore()
 
-const spaceUser = inject<Ref<User>>("SPACE_USER") as Ref<User>
+const spaceUser = inject<Ref<User>>(SPACE_USER) as Ref<User>
 
 onMounted(() => {
-    console.log(userId)
-    userArticleList.value?.init()
+    userCollectArticleList.value?.init()
 })
 
 const handleQuery = (current: number, size: number) => {
@@ -34,14 +35,13 @@ const handleQuery = (current: number, size: number) => {
 
 const handleCancelCollect = async (item: Article, index: number) => {
     let id = item.id
-    console.log(index, item)
     try {
         await $message.confirm("确定取消收藏吗?")
         let result = await UserInteractService.cancelCollect(id)
-        await userArticleList.value?.deleteItem(item, index)
+        await userCollectArticleList.value?.deleteItem(item, index)
         if (isSelf() && item.userId === userId.value) {
             //self && 取消收藏自己的文章
-            let stat = spaceUser.value?.stat
+            let stat = spaceUser?.value?.stat
             if (stat) {
                 stat.totalCollects--
             }
@@ -62,7 +62,7 @@ const isSelf = () => {
 <template>
     <div class="hami-user-article-list">
         <HamiScrollList
-            ref="userArticleList"
+            ref="userCollectArticleList"
             :query="handleQuery"
             no-data-text="还没有文章"
             key-property="id"

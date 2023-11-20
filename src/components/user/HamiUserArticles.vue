@@ -1,34 +1,25 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue"
-import { useRoute } from "vue-router"
-import { useRequest } from '@/hooks'
 import { ArticleService } from '@/service/modules/article.ts'
+import { HamiScrollListInstance } from '@/components/types'
 
 //interface
 interface UserArticleProps {
     id: string
 }
 
-const [onLoading, getUserArticles] = useRequest<PageData<Article>, [UserArticleParam]>({
-    loading: true,
-    run: (...params) => ArticleService.listUserArticles(...params)
-})
-//router, props, inject, provide
 const $props = defineProps<UserArticleProps>()
-const $route = useRoute()
-const userId = ref($props.id)
-const userArticleList = ref()
+const spaceUserArticleList = ref<HamiScrollListInstance<Article> | null>(null)
 
 onMounted(() => {
-    console.log(userId)
-    userArticleList.value?.init()
+    spaceUserArticleList.value?.init()
 })
 
 const handleQuery = (current: number, size: number) => {
-    return getUserArticles({
+    return ArticleService.listUserArticles({
         pageNum: current,
         pageSize: size,
-        userId: parseInt(userId.value)
+        userId: parseInt($props.id)
     })
 }
 
@@ -36,11 +27,10 @@ const handleQuery = (current: number, size: number) => {
 <template>
     <div class="hami-user-article-list">
         <HamiScrollList
-            ref="userArticleList"
+            ref="spaceUserArticleList"
             :query="handleQuery"
             no-data-text="还没有文章"
             key-property="id"
-            :show-no-more="false"
         >
             <template #item="data">
                 <HamiArticleCard :article="data.item" border :show-user="false"></HamiArticleCard>
@@ -50,7 +40,7 @@ const handleQuery = (current: number, size: number) => {
 </template>
 
 <style scoped lang="less">
-    .hami-user-article-list {
-        padding-bottom: 20px;
-    }
+.hami-user-article-list {
+    padding-bottom: 20px;
+}
 </style>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, watch } from "vue"
-import { useRoute, useRouter } from "vue-router"
 import useUserStore from '@/store/modules/user.ts'
 import { useFollow } from '@/hooks/userInteract.ts'
 import { onPPT } from '@/utils'
@@ -12,12 +11,12 @@ interface UserCardProps {
 }
 
 const $props = withDefaults(defineProps<UserCardProps>(), {
+    // @ts-ignore
     user: {},
     profile: false,
     position: true
 })
-const $router = useRouter()
-const $route = useRoute
+
 const userStore = useUserStore()
 const [state, handleAction] = useFollow($props.user?.followed)
 
@@ -109,7 +108,7 @@ const hasText = () => {
             margin-left: 10px;
 
             .username {
-                color: var(--hami-black-6);
+                color: var(--hami-text-1);
                 font-size: 17px;
                 font-weight: 600;
             }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, provide, ref, watch } from "vue"
+import { computed, provide, Ref, ref, watchEffect } from "vue"
 import { useRequest } from '@/hooks'
 import { UserService } from '@/service/modules/user.ts'
 import HamiUserData from '@/components/user/HamiUserData.vue'
@@ -32,47 +32,41 @@ const prefix2 = computed(() => {
 
 const activeRoute = ref("articles")
 
-provide<User>(SPACE_USER, user)
+provide<Ref<User>>(SPACE_USER, user)
 
-onMounted(() => {
-    getAuthor()
-})
-
-watch(() => $props.id, (newVal, oldVal) => {
-    getAuthor()
-})
-
-watch(() => $route.path, (newVal, oldVal) => {
+watchEffect(() => {
     let regex = /\/user\/space\/(\d+)(\/(articles|likes|collects|follows|""))?/
     let res = regex.exec($route.path)
     let route = res?.at(3)
-    activeRoute.value = route ? route : "articles"
-}, {
-    immediate: true
+    activeRoute.value = route || "articles"
 })
 
-const getAuthor = async () => {
+const getAuthor = async (id: number) => {
     try {
-        user.value = await getAuthorInfo(parseInt($props.id))
+        user.value = await getAuthorInfo(id)
     } catch (e) {
         console.log(e)
     } finally {
     }
 }
+
+watchEffect(async () => {
+    await getAuthor(parseInt($props.id))
+})
+
 const handleClick = (pane: TabsPaneContext) => {
-    console.log(pane.paneName)
     $router.push("/user/space/" + $props.id + "/" + pane.paneName)
 }
 </script>
 <template>
     <div class="hami-user-space">
-        <div class="user-space-container" v-if="!onLoading">
+        <div class="user-space-container">
             <div class="user-space-body">
                 <SpaceUserCard :user="user"></SpaceUserCard>
-                <div class="detail-block">
+                <div class="detail-block" v-if="!onLoading">
                     <el-tabs v-model="activeRoute" @tab-click="handleClick">
                         <el-tab-pane :label="prefix1 + '文章'" name="articles"></el-tab-pane>
-                        <el-tab-pane :label="prefix2+ '赞过'" name="likes"></el-tab-pane>
+                        <el-tab-pane :label="prefix2 + '赞过'" name="likes"></el-tab-pane>
                         <el-tab-pane :label="prefix1 + '收藏'" name="collects"></el-tab-pane>
                         <el-tab-pane label="关注" name="follows"></el-tab-pane>
                     </el-tabs>

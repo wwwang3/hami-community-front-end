@@ -87,7 +87,7 @@ const useUserStore = defineStore("user", () => {
         return Date.now() - start > time
     }
 
-    const isSelf = (userId: number) => {
+    const isSelf = (userId: number | undefined) => {
         return userId !== undefined && userInfo.value?.userId !== -1 && userId === userInfo.value?.userId
     }
 

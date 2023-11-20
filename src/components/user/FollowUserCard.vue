@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { inject, Ref } from "vue"
-import { useRouter } from "vue-router"
 import { useFollow } from '@/hooks/userInteract.ts'
 import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils/message.ts'
+import { SPACE_USER } from '@/store/keys.ts'
 
 //interface
 interface SimpleUserCardProps {
@@ -12,11 +12,9 @@ interface SimpleUserCardProps {
 
 const $props = defineProps<SimpleUserCardProps>()
 const userStore = useUserStore()
-const $router = useRouter()
-//router, props, inject, provide
 const [followed, handleAction] = useFollow($props.user?.followed)
 
-const spaceUser = inject<Ref<User>>("SPACE_USER") as Ref<User>
+const spaceUser = inject<Ref<User>>(SPACE_USER)
 const handleFollow = async () => {
     if (userStore.isSelf($props.user.userId)) {
         $message.error("自己不能关注自己~")
@@ -24,13 +22,15 @@ const handleFollow = async () => {
     }
     try {
         let state = await handleAction($props.user.userId)
-        if (userStore.isSelf(spaceUser.value?.userId)) {
+        if (userStore.isSelf(spaceUser?.value?.userId)) {
             //如果点开的页面是登录用户自己
-            let stat = spaceUser.value?.stat
-            if (state) {
-                stat.totalFollowings++;
-            } else {
-                stat.totalFollowings--;
+            let stat = spaceUser?.value?.stat
+            if (stat !== undefined) {
+                if (state) {
+                    stat.totalFollowings++;
+                } else {
+                    stat.totalFollowings--;
+                }
             }
         }
     } catch (e) {

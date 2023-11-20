@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive } from 'vue';
 import { MdPreview } from 'md-editor-v3';
 // preview.css相比style.css少了编辑器那部分样式
 import 'md-editor-v3/lib/preview.css';
+import useThemeStore from '@/store/modules/theme.ts'
 
+const themeStore = useThemeStore()
 const $props = defineProps({
     modelValue: {
         type: String,
@@ -35,7 +37,7 @@ const mdConfig = reactive({
 </script>
 
 <template>
-    <MdPreview :editorId="id" :modelValue="content" theme="light"/>
+    <MdPreview :editorId="id" :modelValue="content" :theme="themeStore.theme"/>
 </template>
 
 <style lang="less" scoped>

@@ -193,9 +193,7 @@ const getArticle = async () => {
                             <span class="text">阅读量: {{ article.stat?.views }}</span>
                         </div>
                     </div>
-                    <div class="content">
-                        <HamiMdViewer v-model="article.content"></HamiMdViewer>
-                    </div>
+                    <HamiMdViewer v-model="article.content"></HamiMdViewer>
                     <div class="content-bottom">
                         <div class="tags">
                             <span>标签: </span>
@@ -216,9 +214,7 @@ const getArticle = async () => {
                     </div>
                 </div>
                 <div class="comment-wrapper" id="hami-comment">
-                    <HamiComment :area-id="article.id" @change="handleCommentChange">
-
-                    </HamiComment>
+                    <HamiComment :area-id="article.id" @change="handleCommentChange"></HamiComment>
                 </div>
             </div>
             <div class="right-panel">
@@ -364,7 +360,7 @@ const getArticle = async () => {
 
         .author {
             max-width: 160px;
-            color: var(--hami-black-5);
+            color: var(--hami-text-4);
             transition: all .3s;
             font-size: 18px;
             margin-bottom: 10px;
@@ -410,9 +406,6 @@ const getArticle = async () => {
         }
 
         .category {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
             margin-left: 40px;
 
             a {
@@ -420,10 +413,14 @@ const getArticle = async () => {
             }
         }
 
-        .tags {
+        .category, .tags {
             display: flex;
             align-items: center;
-            color: var(--hami-text-color);
+            cursor: pointer;
+            color: var(--hami-text-common);
+        }
+
+        .tags {
 
             .el-tag {
                 margin-left: 16px;

@@ -12,7 +12,7 @@ import { useRoute, useRouter } from 'vue-router'
 const $router = useRouter()
 const $route = useRoute()
 
-const mode = computed(() => {
+const themeMode = computed(() => {
     return $route.fullPath === "/login" ? "login" : "register";
 })
 

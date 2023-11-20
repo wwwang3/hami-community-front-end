@@ -10,7 +10,6 @@ interface UserFollowProps {
     id: string
 }
 
-//router, props, inject, provide
 const $props = defineProps<UserFollowProps>()
 const userStore = useUserStore()
 
@@ -66,7 +65,6 @@ const handleChange = (name: TabPaneName) => {
                     :query="handleQueryFollowing"
                     no-data-text="还没有关注"
                     key-property="id"
-                    :show-no-more="false"
                 >
                     <template #item="{item, index, _delete}">
                         <FollowUserCard :user="item" />
@@ -79,7 +77,6 @@ const handleChange = (name: TabPaneName) => {
                     :query="handleQueryFollower"
                     no-data-text="还没有粉丝"
                     key-property="id"
-                    :show-no-more="false"
                 >
                     <template #item="data">
                         <FollowUserCard :user="data.item" />

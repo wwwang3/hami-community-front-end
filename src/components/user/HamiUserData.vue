@@ -91,7 +91,7 @@ const ctime = computed(() => {
     .stat-block {
         .stat-title {
             font-size: 18px;
-            color: var(--hami-black-3);
+            color: var(--hami-text-3);
             line-height: 24px;
             padding-bottom: 10px;
             margin-bottom: 10px;
@@ -121,6 +121,7 @@ const ctime = computed(() => {
             .content {
                 display: flex;
                 height: 24px;
+                color: var(--hami-text-2);
 
                 .text {
                     margin-right: 6px;
@@ -144,7 +145,7 @@ const ctime = computed(() => {
 
             .count {
                 font-size: 18px;
-                color: #333;
+                color: var(--hami-text-1);
                 font-weight: 600;
                 margin-top: 8px;
             }
@@ -158,7 +159,7 @@ const ctime = computed(() => {
             align-items: center;
             padding: 16px 0;
             border-bottom: 1px solid var(--hami-border-grey);
-            color: var(--hami-black-1);
+            color: var(--hami-text-1);
         }
 
         .block-item:first-child {

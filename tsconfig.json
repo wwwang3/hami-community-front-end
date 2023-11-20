@@ -19,7 +19,7 @@
       "element-plus/global"
     ],
     "skipLibCheck": true,
-    /* Bundler mode */
+    /* Bundler themeMode */
     "moduleResolution": "Node",
     "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
