@@ -179,10 +179,10 @@ const handleClick = (path: CateRoutePath) => {
 
 <style scoped lang="less">
 .nav-cate {
-    box-shadow: var(--el-box-shadow);
     padding: 10px;
     background-color: var(--hami-bg);
     border-radius: var(--hami-radius);
+    box-shadow: var(--el-box-shadow-dark);
 
     .nav-cate-item {
         display: flex;

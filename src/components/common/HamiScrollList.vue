@@ -36,6 +36,11 @@ interface ScrollListProps {
 interface ExposeProps {
     init: () => void,
     deleteItem: (item: T, index: number) => void,
+    /**
+     * 根据ID删除，id根据keyProperty确定
+     * @param id
+     */
+    delete: (id: string | number) => void
 }
 
 const slots = defineSlots<{
@@ -49,10 +54,12 @@ defineExpose<ExposeProps>({
     init() {
         _init()
     },
-    //todo 重构
     deleteItem(item: T, index: number): void {
         _delete(item, index)
     },
+    delete(id: string | number): void {
+        handleDelete(id)
+    }
 })
 
 const $props = withDefaults(defineProps<ScrollListProps>(), {
@@ -62,6 +69,7 @@ const $props = withDefaults(defineProps<ScrollListProps>(), {
     immediateLoading: false,
     timeline: false,
     timestampKey: "ctime",
+    keyProperty: "id"
 })
 
 const dataList = reactive<Array<any>>([])
@@ -102,7 +110,6 @@ const showError = computed(() => {
 })
 
 
-
 const _init = () => {
     page.value.current = 1
     page.value.total = 0
@@ -126,6 +133,16 @@ const _init = () => {
 }
 const _delete = async (item: any, index: number) => {
     if (dataList.length > 0) {
+        dataList.splice(index, 1)
+    }
+}
+
+const handleDelete = (id: string | number) => {
+    if (isEmpty(dataList)) return
+    if (!$props.keyProperty) return
+    // @ts-ignore
+    let index = dataList.findIndex(item => item[$props.keyProperty] == id)
+    if (index != -1) {
         dataList.splice(index, 1)
     }
 }
@@ -172,7 +189,7 @@ const randomType = (): NodeType => {
         >
             <template v-if="!timeline">
                 <template v-for="(item, index) in dataList"
-                          :key="keyProperty === undefined ? index : `${item[$props.keyProperty]}`">
+                          :key="item[keyProperty] ?? index">
                     <slot name="item" v-bind="{item, index, _delete} as ItemType<T>"></slot>
                 </template>
             </template>

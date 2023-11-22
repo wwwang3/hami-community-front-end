@@ -300,5 +300,12 @@ const convertToCommentUser = (user: User): CommentUserApi => {
         border-radius: var(--hami-radius);
         min-height: 300px;
     }
+
+    :deep(.nav__sort) {
+        background-color: var(--hami-item-bg);
+        .active {
+            background-color: var(--hami-menu-active-bg);
+        }
+    }
 }
 </style>

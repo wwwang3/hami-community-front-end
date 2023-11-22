@@ -76,7 +76,7 @@ const formatTime = (time: number) => {
             <el-skeleton v-if="onRequest" :rows="4"></el-skeleton>
             <transition name="el-fade-in-linear">
                 <el-table :data="records"
-                          max-height="640"
+                          max-height="320"
                           header-row-class-name="login-record-header"
                           stripe
                           v-if="!onRequest"
@@ -123,6 +123,11 @@ const formatTime = (time: number) => {
     background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);
     min-height: 500px;
+    height: 500px;
+
+    .el-divider {
+        margin: 23px 0;
+    }
 
     .login-record-title {
         font-size: 18px;
@@ -131,7 +136,6 @@ const formatTime = (time: number) => {
     }
 
     .login-record-body {
-        margin-top: 20px;
         display: flex;
         align-items: center;
         justify-content: center;

@@ -58,6 +58,7 @@
     --hami-card-blue-bg-1: rgba(0, 174, 236, 0.1);
     --hami-item-bg: #fff;
     --hami-item-text-color: #8a919f;
+    --hami-item-hover-bg: #f7f8fa;
     --hami-icon-active-1: var(--hami-blue-1);
     --hami-menu-text-color: var(--hami-grey-7);
     --hami-menu-active-text-color: var(--hami-blue-1);

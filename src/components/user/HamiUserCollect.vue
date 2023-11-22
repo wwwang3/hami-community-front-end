@@ -2,11 +2,12 @@
 import { inject, onMounted, ref, Ref } from "vue"
 import { useRoute } from "vue-router"
 import { UserInteractService } from '@/service/modules/interact.ts'
-import { Delete } from '@element-plus/icons-vue'
 import { $message } from '@/utils/message.ts'
 import useUserStore from '@/store/modules/user.ts'
 import { SPACE_USER } from '@/store/keys.ts'
 import { HamiScrollListInstance } from '@/components/types'
+import ArticleDeleteOperate from '@/components/article/ArticleDeleteOperate.vue'
+import { strToNum } from '@/utils'
 
 //interface
 interface UserArticleProps {
@@ -33,29 +34,27 @@ const handleQuery = (current: number, size: number) => {
     })
 }
 
-const handleCancelCollect = async (item: Article, index: number) => {
+const handleCancelCollect = async (item: Article, finish: () => void) => {
     let id = item.id
     try {
-        await $message.confirm("确定取消收藏吗?")
-        let result = await UserInteractService.cancelCollect(id)
-        await userCollectArticleList.value?.deleteItem(item, index)
+        await UserInteractService.cancelCollect(strToNum(id))
+        finish()
         if (isSelf() && item.userId === userId.value) {
             //self && 取消收藏自己的文章
             let stat = spaceUser?.value?.stat
+            userStore.userInfo.collects--;
             if (stat) {
                 stat.totalCollects--
             }
         }
-        $message.success("取消收藏成功")
     } catch (e) {
-        console.log(e)
-        if (e !== 'cancel') {
-            $message.error("取消收藏失败")
-        }
+        $message.error("操作失败")
     }
 }
 
+
 const isSelf = () => {
+    //进入到空间的是登录用户本人
     return userStore.isSelf(userId.value)
 }
 </script>
@@ -66,17 +65,16 @@ const isSelf = () => {
             :query="handleQuery"
             no-data-text="还没有文章"
             key-property="id"
-            :show-no-more="false"
         >
             <template #item="data">
                 <HamiArticleCard :article="data.item" border>
                     <template #item="article">
-                        <div class="option-item" @click="handleCancelCollect(article, data.index)" v-if="isSelf()">
-                            <el-icon size="13">
-                                <Delete/>
-                            </el-icon>
-                            <span class="text">删除</span>
-                        </div>
+                        <ArticleDeleteOperate
+                            msg="确定取消收藏吗?"
+                            :list-ref="userCollectArticleList"
+                            :article="article"
+                            @delete="handleCancelCollect" v-if="isSelf()">
+                        </ArticleDeleteOperate>
                     </template>
                 </HamiArticleCard>
             </template>
@@ -88,29 +86,8 @@ const isSelf = () => {
 .hami-user-article-list {
     padding-bottom: 20px;
 
-    .option-item {
-        display: flex;
-        align-items: center;
-        opacity: 0;
-        transition: opacity .3s;
-        margin-right: 6px;
-
-        .text {
-            font-size: 13px;
-            margin-left: 4px;
-        }
-
-        &:hover {
-            color: var(--hami-text-hover-color);
-        }
-    }
-
     .hami-article-card:hover {
         background-color: var(--hami-card-hover-bg);
-    }
-
-    .hami-article-card:hover .option-item {
-        opacity: 1;
     }
 }
 </style>

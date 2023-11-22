@@ -227,6 +227,10 @@ const getChangedProp = (): UserProfileParam => {
     border-radius: var(--hami-radius-medium);
     min-height: 540px;
 
+    .el-divider {
+        margin: 20px 0
+    }
+
     .user-profile-header {
         font-size: 18px;
         font-weight: 700;
@@ -240,71 +244,57 @@ const getChangedProp = (): UserProfileParam => {
         .profile-form {
             flex: 1;
 
-            .update-button {
-                text-align: center;
-            }
-        }
-
-        .profile-avatar {
-            min-width: 300px;
-            padding-left: 60px;
-            padding-top: 30px;
-
-            .tip {
-                text-align: center;
-                font-size: 13px;
-                color: var(--hami-card-text-color);
-                width: 100%;
-                margin-top: 6px;
-            }
-
-            img {
-                width: 120px;
-                height: 120px;
-                border-radius: 50%;
-            }
-
-            .upload {
-                display: flex;
-                flex-direction: column-reverse;
-                align-items: center;
-            }
-
-            .loading {
-                border-radius: 50%;
-            }
-
-            .upload-avatar {
-                margin-top: 16px;
-
-                button {
-                    border-radius: var(--hami-radius-medium);
+            .username, .position {
+                :deep(input) {
+                    font-size: 16px;
+                    letter-spacing: 1px;
                 }
             }
         }
-    }
-}
 
-
-.form {
-    margin: 10px 0;
-
-    .username, .position {
-        :deep(input) {
-            font-size: 16px;
-            letter-spacing: 1px;
+        .update-button {
+            text-align: center;
         }
     }
 
+    .profile-avatar {
+        min-width: 300px;
+        padding-left: 60px;
+        padding-top: 30px;
 
-    .button {
-        margin-top: 26px;
-
-        :deep(button) {
+        .tip {
+            text-align: center;
+            font-size: 13px;
+            color: var(--hami-card-text-color);
             width: 100%;
-            background: linear-gradient(135deg, #5efce8, #736efe);
-            border: none;
+            margin-top: 6px;
+        }
+
+        img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+        }
+
+        .upload {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+
+        .loading {
+            border-radius: 50%;
+        }
+
+        .upload-avatar {
+            margin-top: 16px;
+
+            button {
+                border-radius: var(--hami-radius-medium);
+            }
         }
     }
 }
+
+
 </style>

@@ -383,7 +383,7 @@ const getArticle = async () => {
                 margin-left: 10px;
             }
 
-            color: var(--hami-grey-3);
+            color: var(--hami-item-text-color);
         }
 
         .item {

@@ -77,7 +77,7 @@ const goBack = () => {
         max-width: 1200px;
         margin: 0 auto;
         background-color: var(--hami-bg);
-        border-radius: var(--hami-radius);
+        border-radius: var(--hami-radius-medium);
         padding: 6px 0 6px 20px;
 
         .content {
@@ -107,13 +107,12 @@ const goBack = () => {
     }
 
     .user-center-nav {
-        margin-right: 20px;
+        margin-right: 30px;
         padding: 16px 14px 20px;
-        width: 226px;
-        min-height: 500px;
-        max-height: 500px;
+        width: 220px;
+        height: 500px;
         background-color: var(--hami-bg);
-        border-radius: var(--hami-radius);
+        border-radius: var(--hami-radius-medium);
 
         .nav-item {
             display: flex;
@@ -150,6 +149,7 @@ const goBack = () => {
 
     .user-center-body {
         flex: 1;
+        max-width: calc(100% - 250px);
     }
 }
 </style>

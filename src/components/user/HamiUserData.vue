@@ -89,6 +89,7 @@ const ctime = computed(() => {
     }
 
     .stat-block {
+        height: 180px;
         .stat-title {
             font-size: 18px;
             color: var(--hami-text-3);

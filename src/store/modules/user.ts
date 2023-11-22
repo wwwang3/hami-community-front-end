@@ -11,11 +11,11 @@ const useUserStore = defineStore("user", () => {
     const userInfo = ref<LoginProfile>({
         avatar: '',
         blog: '',
-        collects: 0,
         company: '',
         ctime: Date.now(),
         followers: 0,
         followings: 0,
+        collects: 0,
         likes: 0,
         position: '',
         profile: '',

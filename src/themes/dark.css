@@ -1,4 +1,26 @@
 @import 'element-plus/theme-chalk/dark/css-vars.css';
 html.dark {
-    --hami-card-text-color: #e7e4e4;;
+    --hami-bg: #181818;
+    --hami-frame-bg: #000;
+    --hami-card-bg: #181818;
+    --hami-item-bg: rgb(255, 255, 255, 0.12);
+    --hami-item-hover-bg: rgba(255, 255, 255, 0.08);
+    --hami-title-color: rgba(255, 255, 255, .8);
+    --hami-text-1: rgba(255, 255, 255, .8);
+    --hami-text-4: rgba(255, 255, 255, .5);
+    /*--hami-text-common: ;*/
+    --hami-blue-6: rgba(30, 128, 255, 0.3);
+    --hami-menu-active-bg: rgba(30, 128, 255, 0.3);
+    --hami-menu-active-text-color: #4495ff;
+    --hami-menu-text-color: hsla(0, 0%, 100%, 0.6);
+    --el-box-shadow: 0 2px 10px 0px rgb(40, 100, 155);
+    /*--el-box-shadow: 0 0 10px 2px rgb(24, 24, 24);*/
+}
+
+html.dark .md-editor-dark {
+    --md-bk-color: var(--hami-bg);
+}
+
+html.dark .md-editor-dark article.default-theme {
+    --md-theme-code-block-bg-color: #252933;
 }

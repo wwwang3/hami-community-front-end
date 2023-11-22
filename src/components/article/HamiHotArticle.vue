@@ -210,7 +210,7 @@ const calculateHotIndex = (rank: number) => {
 
             &:hover {
                 border-radius: var(--hami-radius-small);
-                background-color: var(--hami-white-2);
+                background-color: var(--hami-item-hover-bg);
             }
 
             a {
@@ -218,6 +218,7 @@ const calculateHotIndex = (rank: number) => {
                 align-items: center;
                 justify-content: space-between;
                 flex: 1;
+                color: var(--hami-title-color);
             }
 
             .hot {
@@ -245,7 +246,6 @@ const calculateHotIndex = (rank: number) => {
         }
 
         .title {
-            color: var(--hami-title-color);
             margin-left: 10px;
             font-size: 16px;
         }

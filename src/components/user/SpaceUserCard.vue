@@ -113,7 +113,7 @@ const handleClick = () => {
 <style scoped lang="less">
 .hami-user-card {
     padding: 30px;
-    border-radius: var(--hami-radius-medium);
+    border-radius: var(--hami-radius);
     background-color: var(--hami-card-bg);
     margin-bottom: 20px;
 

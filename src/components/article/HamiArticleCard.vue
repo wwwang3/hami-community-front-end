@@ -114,7 +114,7 @@ const handleBeforeEnter = () => {
                                     class="link"
                                     v-if="showUser"
                                 >
-                                    <el-text class="author" truncated>{{ author.username }}</el-text>
+                                    <span class="author ellipsis">{{ author.username }}</span>
                                 </router-link>
                             </template>
                             <HamiUserCardHover :id="article.userId" v-if="showInfo"></HamiUserCardHover>
@@ -164,7 +164,7 @@ const handleBeforeEnter = () => {
                                     </path>
                                 </svg>
                             </el-icon>
-                            <span class="count">{{ stat.likes }}</span>
+                            <span class="count" v-show="stat.likes > 0">{{ stat.likes }}</span>
                         </div>
                         <div class="item comments" @click="toComment" v-if="comment">
                             <el-icon size="14">

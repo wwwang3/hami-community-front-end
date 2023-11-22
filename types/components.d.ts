@@ -7,9 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ArticleDeleteOperate: typeof import('./../src/components/article/ArticleDeleteOperate.vue')['default']
     CreatorArticle: typeof import('./../src/components/creator/CreatorArticle.vue')['default']
     CreatorDraft: typeof import('./../src/components/creator/CreatorDraft.vue')['default']
     CreatorUserCard: typeof import('./../src/components/user/CreatorUserCard.vue')['default']
+    DeleteOperate: typeof import('./../src/components/article/DeleteOperate.vue')['default']
     ElAffix: typeof import('element-plus/es')['ElAffix']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBacktop: typeof import('element-plus/es')['ElBacktop']
