@@ -32,21 +32,21 @@ watchEffect(() => {
             <div class="setting-items">
                 <el-radio-group v-model="modeName">
                     <div class="item" @click="handleClick('light')" :class="{active: modeName === '浅色模式'}">
-                        <el-skeleton class="i-skeleton light"/>
+                        <el-skeleton class="i-skeleton skeleton-light"/>
                         <div class="radio">
                             <el-radio label="浅色模式"></el-radio>
                         </div>
                     </div>
                     <div class="item" @click="handleClick('dark')" :class="{active: modeName === '深色模式'}">
-                        <el-skeleton class="i-skeleton dark"/>
+                        <el-skeleton class="i-skeleton skeleton-dark"/>
                         <div class="radio">
                             <el-radio label="深色模式"></el-radio>
                         </div>
                     </div>
                     <div class="item" @click="handleClick('auto')" :class="{active: modeName === '跟随系统'}">
                         <div class="skeleton-group">
-                            <el-skeleton class="i-skeleton"/>
-                            <el-skeleton class="i-skeleton dark"/>
+                            <el-skeleton class="i-skeleton skeleton-light"/>
+                            <el-skeleton class="i-skeleton skeleton-dark"/>
                         </div>
                         <div class="radio">
                             <el-radio label="跟随系统"></el-radio>
@@ -79,7 +79,7 @@ watchEffect(() => {
         }
 
         .tips {
-            color: var(--hami-grey-3);
+            color: var(--hami-item-text-color);
             margin-bottom: 20px;
             font-size: 14px;
         }
@@ -89,36 +89,10 @@ watchEffect(() => {
             justify-content: space-between;
 
             .item {
-                border-radius: var(--hami-radius);
                 cursor: pointer;
                 width: 240px;
                 border: 1px solid var(--hami-border-grey);
-
-                .i-skeleton {
-                    padding: 10px 16px;
-
-                    :deep(.el-skeleton__item):not(:first-child) {
-                        margin-top: 5px;
-                    }
-
-                    border-bottom: 1px solid var(--hami-border-grey);
-                }
-
-                .i-skeleton.dark {
-                    background-color: var(--hami-text-3);
-                    border-radius: var(--hami-radius) var(--hami-radius) 0 0;
-
-                    :deep(.el-skeleton__item) {
-                        background-color: hsla(0, 0%, 100%, .2);;
-                    }
-                }
-
-                .i-skeleton.light {
-                    background-color: #fff;
-                    :deep(.el-skeleton__item) {
-                        background-color: #f0f2f5;
-                    }
-                }
+                border-radius: 6px;
 
                 .radio {
                     padding: 10px 16px;
@@ -129,19 +103,47 @@ watchEffect(() => {
                 margin-right: 24px;
             }
 
-            .item:hover .radio {
-                background-color: var(--hami-blue-8);
+            .item.active, .item:hover {
+
+                .radio {
+                    background-color: var(--hami-blue-6);
+                }
+
             }
 
-            .item.active .radio {
-                background-color: var(--hami-blue-8);
+
+            .i-skeleton {
+                padding: 10px 16px;
+                border-bottom: 1px solid var(--hami-border-grey);
+
+                :deep(.el-skeleton__item):not(:first-child) {
+                    margin-top: 5px;
+                }
+
             }
+
+            .skeleton-light {
+                background-color: #fff;
+                border-radius: 6px 6px 0 0;
+                --el-skeleton-color: #e4e5e6;
+            }
+
+            .skeleton-dark {
+                background-color: #181818;
+                border-radius: 6px 6px 0 0;
+                --el-skeleton-color: hsla(0, 0%, 100%, .2);;
+            }
+
 
             .skeleton-group {
                 display: flex;
 
-                .i-skeleton.dark {
-                    border-top-left-radius: 0;
+                .skeleton-light {
+                    border-radius: 6px 0 0 0;
+                }
+
+                .skeleton-dark {
+                    border-radius: 0 6px 0 0;
                 }
             }
         }

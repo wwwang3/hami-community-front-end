@@ -31,31 +31,31 @@ const joinTime = computed(() => {
 </script>
 <template>
     <div class="hami-avatar-panel">
-        <div class="item username">{{ userInfo.username }}</div>
-        <div class="item tag" v-if="!isEmpty(userInfo.tag)">
-            <el-tag size="default">{{ userInfo.tag }}</el-tag>
+        <div class="item username">{{ userInfo?.username }}</div>
+        <div class="item tag" v-if="!isEmpty(userInfo?.tag)">
+            <el-tag size="default">{{ userInfo?.tag }}</el-tag>
         </div>
-        <el-text class="item profile" truncated v-if="!isEmpty(userInfo.profile)">{{ userInfo.profile }}</el-text>
+        <el-text class="item profile" truncated v-if="!isEmpty(userInfo?.profile)">{{ userInfo?.profile }}</el-text>
         <div class="item stats">
             <div class="stat-item">
-                <span class="count">{{ userInfo.followings }}</span>
+                <span class="count">{{ userInfo?.followings }}</span>
                 <span class="text">关注</span>
             </div>
             <div class="stat-item">
-                <span class="count">{{ userInfo.followers }}</span>
+                <span class="count">{{ userInfo?.followers }}</span>
                 <span class="text">粉丝</span>
             </div>
             <div class="stat-item">
-                <span class="count">{{ userInfo.collects }}</span>
+                <span class="count">{{ userInfo?.collects }}</span>
                 <span class="text">收藏</span>
             </div>
             <div class="stat-item">
-                <span class="count">{{ userInfo.likes }}</span>
+                <span class="count">{{ userInfo?.likes }}</span>
                 <span class="text">赞过</span>
             </div>
         </div>
         <div class="join-time">
-            <span>{{ joinTime }}</span>
+            <span class="ellipsis">{{ joinTime }}</span>
         </div>
         <div class="options">
             <div class="link-option" @click="gotoUserCenter">
@@ -105,6 +105,7 @@ const joinTime = computed(() => {
 <style scoped lang="less">
 .hami-avatar-panel {
     padding: 20px 18px 18px;
+
     .item {
         display: flex;
         align-items: center;
@@ -115,7 +116,7 @@ const joinTime = computed(() => {
         text-align: center;
         height: 32px;
         line-height: 32px;
-        background: linear-gradient(135deg,#79f1a4,#0e5cad);
+        background: linear-gradient(135deg, #79f1a4, #0e5cad);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
@@ -148,12 +149,12 @@ const joinTime = computed(() => {
 
             .text {
                 font-size: 14px;
+                color: var(--hami-card-text-color);
             }
 
             .count {
                 font-size: 18px;
                 font-weight: 600;
-                color: var(--hami-black-2);
             }
         }
     }
@@ -167,17 +168,11 @@ const joinTime = computed(() => {
         padding: 8px 12px;
         background-color: var(--hami-pink-1);
         border-radius: var(--hami-radius-medium);
-        background-size: cover;
-        transition: background-color .2s;
         letter-spacing: 1px;
 
         span {
             color: #FF6699;
-            display: -webkit-box;
-            line-clamp: 1;
-            text-overflow: ellipsis;
             white-space: nowrap;
-            overflow: hidden;
             line-height: 28px;
         }
     }
@@ -192,14 +187,13 @@ const joinTime = computed(() => {
             padding: 0 14px;
             height: 38px;
             border-radius: 8px;
-            color: var(--hami-grey-6);
+            color: var(--hami-card-text-color);
             font-size: 14px;
             cursor: pointer;
             transition: background-color .3s;
-            white-space: nowrap;
 
             &:hover {
-                background-color: var(--hami-white-3);
+                background-color: var(--hami-item-hover-bg);
             }
 
             &:not(:last-child) {
@@ -229,7 +223,7 @@ const joinTime = computed(() => {
         align-items: center;
         padding: 10px 14px;
         border-radius: 8px;
-        color: var(--hami-grey-6);
+        color: var(--hami-card-text-color);
         font-size: 14px;
         cursor: pointer;
         transition: background-color .3s;
@@ -241,7 +235,7 @@ const joinTime = computed(() => {
     }
 
     .logout-item:hover {
-        background-color: var(--hami-white-3);
+        background-color: var(--hami-item-hover-bg);
     }
 
     .logout-icon {

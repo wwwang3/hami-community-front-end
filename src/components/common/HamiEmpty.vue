@@ -15,9 +15,12 @@ const $props = withDefaults(defineProps<EmptyProps>(), {
 
 </script>
 <template>
-    <el-empty :description="description" :image="image" :image-size="imageSize"></el-empty>
+    <el-empty :description="description" :image="image" :image-size="imageSize" class="hami-empty"></el-empty>
 </template>
 
 <style scoped lang="less">
-
+.hami-empty {
+    background-color: var(--hami-bg);
+    border-radius: var(--hami-radius);
+}
 </style>

@@ -126,8 +126,8 @@ const cancel = () => {
             </el-button>
         </el-form-item>
         <div class="reset-button">
-            <el-button plain @click="cancel">取消</el-button>
-            <el-button type="primary" :loading="onReset" @click="handleResetPassword(resetPassForm)">
+            <el-button plain @click="cancel" type="info">取消</el-button>
+            <el-button type="danger" :loading="onReset" @click="handleResetPassword(resetPassForm)">
                 重置
             </el-button>
         </div>

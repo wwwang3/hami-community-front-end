@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import { SearchConfig, USearch } from 'undraw-ui'
 import { SearchService } from '@/service/modules/search.ts'
-//interface
+
 const config = ref<SearchConfig>({
     search: '', //可选输入框默认值
     keywords: ['斗罗大陆', '斗破苍穹', '吞噬星空', '凡人修仙传', '一念永恒'], // 搜索框关键字滚动

@@ -1,19 +1,15 @@
 <script setup lang="ts">
-import { useTokenStore } from '@/store/modules/token.ts'
-import useUserStore from '@/store/modules/user.ts'
 import { CateRoutePath, useCateStore } from '@/store/modules/category.ts'
 import { computed, ref, watch } from 'vue'
 import HamiBulletin from '@/components/common/HamiBulletin.vue'
 import HamiCateNav from '@/components/common/HamiCateNav.vue'
 import HamiIndexArticle from '@/components/article/HamiIndexArticle.vue'
 import HamiHotArticle from "@/components/article/HamiHotArticle.vue"
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
-const $router = useRouter()
+
 const $route = useRoute()
 
-const tokenStore = useTokenStore()
-const userStore = useUserStore()
 const cateStore = useCateStore()
 const isFollow = computed(() => {
     return $route.path === "/follow"
@@ -141,15 +137,15 @@ watch(() => $route.path, (newVal, oldVal) => {
             align-items: center;
         }
 
-        .list-item:hover {
-            color: #1d7dfa;
+        .item:hover, .list-item:hover {
+            color: var(--hami-text-hover-color);
         }
 
         .item, .list-item {
             cursor: pointer;
             line-height: 24px;
             font-size: 13px;
-            color: var(--hami-grey-6);
+            color: var(--hami-item-text-color);
         }
 
         .filing {

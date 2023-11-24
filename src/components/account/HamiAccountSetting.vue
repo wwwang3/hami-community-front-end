@@ -171,7 +171,7 @@ const handleCancel = () => {
             }
 
             .info {
-                color: var(--hami-grey-2);
+                color: var(--hami-item-text-color);
                 min-width: 32px;
             }
 
@@ -182,7 +182,7 @@ const handleCancel = () => {
             }
 
             .action:hover {
-                color: var(--hami-blue-5);
+                color: var(--hami-blue-3);
             }
         }
     }

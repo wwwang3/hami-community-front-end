@@ -3,6 +3,7 @@ import { computed, watch } from "vue"
 import useUserStore from '@/store/modules/user.ts'
 import { useFollow } from '@/hooks/userInteract.ts'
 import { onPPT } from '@/utils'
+import { defaultAvatar } from '@/store/images.ts'
 
 interface UserCardProps {
     user: User
@@ -57,7 +58,7 @@ const hasText = () => {
     <div class="hami-user-card">
         <router-link class="header" :to="link">
             <div class="avatar">
-                <el-avatar :size="54" :src="user?.avatar"></el-avatar>
+                <el-avatar :size="54" :src="user?.avatar || defaultAvatar"></el-avatar>
             </div>
             <div class="info">
                 <el-text class="username" truncated size="large" tag="div">

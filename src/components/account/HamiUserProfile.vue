@@ -207,7 +207,7 @@ const getChangedProp = (): UserProfileParam => {
                         </template>
                         <template #trigger>
                             <div class="upload-avatar">
-                                <el-button plain :disabled="onUpload">
+                                <el-button :disabled="onUpload" type="primary" plain>
                                     更换头像
                                 </el-button>
                             </div>
@@ -265,7 +265,7 @@ const getChangedProp = (): UserProfileParam => {
         .tip {
             text-align: center;
             font-size: 13px;
-            color: var(--hami-card-text-color);
+            color: var(--hami-item-text-color);
             width: 100%;
             margin-top: 6px;
         }

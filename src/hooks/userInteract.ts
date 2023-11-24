@@ -27,7 +27,6 @@ type ActionFun<TParams extends Array<any>> = (...params: TParams) => Promise<boo
 type ActionResult<T extends Array<any>> = [Ref<boolean>, ActionFun<T>]
 
 function check(onRequest: Ref<Boolean>, checkLogin: boolean) {
-    console.log(onRequest.value)
     if (checkLogin && !userStore.logined) {
         $message.notifyError("请登录后访问")
         return false

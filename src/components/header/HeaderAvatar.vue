@@ -77,12 +77,6 @@ const avatarMouseLeave = () => {
 </template>
 
 
-<style lang="less">
-.hami-avatar-wrap .hami-avatar-popper.el-popper {
-    padding: 24px 24px 18px;
-    border-radius: var(--hami-radius-medium);
-}
-</style>
 <style scoped lang="less">
 .hami-avatar-wrap {
     position: relative;
@@ -149,7 +143,7 @@ const avatarMouseLeave = () => {
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        background-color: #1d7dfa;
+        background-color: #409eff;
         color: #fff;
         display: flex;
         align-items: center;

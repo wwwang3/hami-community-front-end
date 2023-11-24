@@ -192,8 +192,7 @@ const handleClick = (path: CateRoutePath) => {
         cursor: pointer;
         margin-bottom: 6px;
         height: 42px;
-        padding: 11px 16px;
-        transition: all .3s;
+        padding: 10px 16px;
         color: var(--hami-menu-text-color);
 
         .name {
@@ -227,6 +226,7 @@ const handleClick = (path: CateRoutePath) => {
     .nav-cate-item.active, .nav-cate-item:hover {
         color: var(--hami-menu-active-text-color);
         background-color: var(--hami-menu-active-bg);
+        transition: background-color .3s;
 
         .icon {
             color: var(--hami-menu-active-text-color);

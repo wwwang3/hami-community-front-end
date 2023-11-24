@@ -132,7 +132,7 @@ const onPPT = () => {
     position: relative;
     z-index: 100;
     background: var(--hami-header-bg);
-    box-shadow: .1rem 0.1rem 0.2rem rgba(0, 0, 0, .1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
 
     .page-header-container {
         display: flex;
@@ -147,6 +147,7 @@ const onPPT = () => {
     .page-header-left, .page-header-right {
         display: flex;
         align-items: center;
+        color: var(--hami-text-common);
     }
 
     .page-header-logo {
@@ -160,7 +161,6 @@ const onPPT = () => {
 
         .header-nav-item {
             height: 60px;
-            color: #515767;
             padding: 0 1rem;
             margin: 0;
             display: flex;
@@ -175,6 +175,8 @@ const onPPT = () => {
 
         .header-nav-item:hover {
             color: var(--hami-text-hover-color);
+            transition: color .3s;
+            animation: jump .3s;
         }
     }
 

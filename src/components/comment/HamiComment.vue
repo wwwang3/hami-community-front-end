@@ -303,7 +303,9 @@ const convertToCommentUser = (user: User): CommentUserApi => {
 
     :deep(.nav__sort) {
         background-color: var(--hami-item-bg);
+
         .active {
+            border-radius: 2px;
             background-color: var(--hami-menu-active-bg);
         }
     }

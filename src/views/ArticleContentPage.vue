@@ -139,19 +139,19 @@ const getArticle = async () => {
                     <div class="title">
                         {{ article.articleInfo?.title }}
                     </div>
-                    <router-link :to="userLink" class="author">
+                    <router-link :to="userLink" class="author ellipsis">
                         {{ article.author?.username }}
                     </router-link>
                     <div class="meta-data">
-                        <div class="ctime item">
+                        <el-tag class="ctime item" size="large">
                             <el-icon>
                                 <Calendar/>
                             </el-icon>
                             <span class="text">
                                 {{ ctime }}
                             </span>
-                        </div>
-                        <div class="mtime item">
+                        </el-tag>
+                        <el-tag class="mtime item" size="large">
                             <el-icon>
                                 <svg viewBox="0 0 1024 1024"
                                      xmlns="http://www.w3.org/2000/svg" width="200" height="200">
@@ -164,8 +164,8 @@ const getArticle = async () => {
                                 </svg>
                             </el-icon>
                             <span class="text">{{ mtime }}</span>
-                        </div>
-                        <div class="words item">
+                        </el-tag>
+                        <el-tag class="words item" size="large">
                             <el-icon>
                                 <svg class="icon" viewBox="0 0 1024 1024"
                                      xmlns="http://www.w3.org/2000/svg" width="200" height="200">
@@ -179,19 +179,19 @@ const getArticle = async () => {
                             <span class="text">
                                 字数: {{ words }}
                             </span>
-                        </div>
-                        <div class="view-time item">
+                        </el-tag>
+                        <el-tag class="view-time item" size="large">
                             <el-icon>
                                 <Clock/>
                             </el-icon>
                             <span class="text">阅读时长: {{ viewTime }}分钟</span>
-                        </div>
-                        <div class="views item">
+                        </el-tag>
+                        <el-tag class="views item" size="large">
                             <el-icon>
                                 <View/>
                             </el-icon>
                             <span class="text">阅读量: {{ article.stat?.views }}</span>
-                        </div>
+                        </el-tag>
                     </div>
                     <HamiMdViewer v-model="article.content"></HamiMdViewer>
                     <div class="content-bottom">
@@ -360,14 +360,11 @@ const getArticle = async () => {
 
         .author {
             max-width: 160px;
-            color: var(--hami-text-4);
+            color: var(--hami-text-common);
             transition: all .3s;
             font-size: 18px;
             margin-bottom: 10px;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: block;
             line-height: 32px;
 
             &:hover {
@@ -378,24 +375,19 @@ const getArticle = async () => {
         .meta-data {
             display: flex;
             align-items: center;
-
-            .item:not(:first-child) {
-                margin-left: 10px;
+            justify-content: space-between;
+            .item {
+                --el-tag-font-size: 13px;
             }
 
-            color: var(--hami-item-text-color);
-        }
 
-        .item {
-            background: var(--hami-blue-6);
-            padding: 4px 8px;
-            font-size: 14px;
-            border-radius: var(--hami-radius-small);
-            display: flex;
-            align-items: center;
+            .el-icon {
+                margin-right: 5px;
+            }
 
-            .text {
-                margin-left: 5px;
+            :deep(.el-tag__content) {
+                display: inline-flex;
+                align-items: center;
             }
         }
 

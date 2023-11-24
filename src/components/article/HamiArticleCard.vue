@@ -329,7 +329,7 @@ const handleBeforeEnter = () => {
         .item {
             display: flex;
             align-items: center;
-            color: var(--hami-grey-2);
+            color: var(--hami-item-text-color);
 
             &:not(:first-child) {
                 margin-left: 16px;
