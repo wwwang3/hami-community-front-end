@@ -27,11 +27,13 @@ const article = ref<ArticleContent>({
     content: ''
 } as ArticleContent)
 
-provide<User>(COMMENT_AREA_OWNER, article.value.author)
 
 onBeforeMount(async () => {
     await getArticle()
 })
+
+provide<User>(COMMENT_AREA_OWNER, article.value?.author)
+
 
 const mdId = "hami-md-viewer"
 const scrollElement = document.documentElement;

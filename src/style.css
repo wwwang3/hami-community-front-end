@@ -49,7 +49,7 @@
     --hami-card-bg: #fff;
     --hami-card-text-color: #8a919f;
     --hami-card-hover-bg: #f7f8fa;
-    --hami-card-blue-bg-1: rgba(0, 174, 236, 0.1);
+    --hami-card-blue-bg-1: rgba(0, 174, 236, 0.08);
     --hami-frame-bg: #e5e6eb;
     --hami-text-1: #000;
     --hami-text-2: #18191C;
@@ -65,7 +65,7 @@
     --hami-menu-text-color: #515767;
     --hami-menu-active-text-color: var(--hami-blue-1);
     --hami-menu-active-bg: var(--hami-blue-7);
-    --hami-menu-active-bg-2: rgba(64, 158, 255, .1);
+    --hami-menu-active-bg-2: rgba(64, 158, 255, .3);
 }
 
 :root {

@@ -1,3 +1,10 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+    name: "CreatorUserCard"
+})
+</script>
 <script setup lang="ts">
 import { computed } from "vue"
 import { defaultAvatar } from "@/store/images.ts"
@@ -105,7 +112,7 @@ const days = computed(() => {
                 align-items: center;
 
                 .count {
-                    color: var(--hami-text-3);
+                    color: var(--hami-text-1);
                     margin-right: 6px;;
                 }
             }
@@ -119,7 +126,7 @@ const days = computed(() => {
 
         .username {
             font-size: 20px;
-            color: var(--hami-text-3);
+            color: var(--hami-text-1);
             font-weight: 700;
             height: 24px;
             line-height: 24px;

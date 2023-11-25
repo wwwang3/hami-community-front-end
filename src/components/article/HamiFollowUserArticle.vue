@@ -4,11 +4,12 @@ import { useRouter } from "vue-router"
 import { ArticleService } from '@/service/modules/article.ts'
 import useUserStore from '@/store/modules/user.ts'
 import { loadErrorImg2 } from '@/store/images.ts'
+import { HamiScrollListInstance } from '@/components/types'
 
 const userStore = useUserStore()
 const $router = useRouter()
 const logined = ref(userStore.logined)
-const followUserArticleList = ref()
+const followUserArticleList = ref<HamiScrollListInstance<Article>>()
 
 onMounted(() => {
     followUserArticleList.value?.init()
@@ -75,6 +76,5 @@ const handleClick = () => {
 .el-empty {
     background-color: var(--hami-card-bg);
     border-radius: var(--hami-radius);
-
 }
 </style>

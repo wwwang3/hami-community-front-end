@@ -4,6 +4,7 @@ import { config, MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import { toolbars } from '@/components/md/editorConfig.ts'
 import ImageService from '@/service/modules/image.ts'
+import useThemeStore from '@/store/modules/theme.ts'
 
 const $props = defineProps({
     modelValue: {
@@ -11,6 +12,8 @@ const $props = defineProps({
         required: true
     }
 })
+
+const themeStore = useThemeStore()
 
 const $emit = defineEmits<{
     (e: 'update:modelValue', value: string): void,
@@ -64,6 +67,7 @@ const handleError = async (e: { name: string, message: string }) => {
             :on-save="handleSave"
             :on-error="handleError"
             :toolbars="toolbars"
+            :theme="themeStore.theme"
         >
         </MdEditor>
     </div>

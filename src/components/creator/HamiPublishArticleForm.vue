@@ -72,7 +72,6 @@ const handleChange = () => {
 }
 const handleUploadPicture = async (options: UploadRequestOptions) => {
     //更新头像
-    console.log(options)
     try {
         //返回头像地址
         draft.value.picture = await processUpload(options.file)
@@ -193,7 +192,7 @@ const checkItem = () => {
             </el-form-item>
         </el-form>
         <div class="buttons">
-            <el-button plain type="info" class="save-draft" @click="handleSave" :disabled="onProcess">存草稿</el-button>
+            <el-button plain type="primary" class="save-draft" @click="handleSave" :disabled="onProcess">存草稿</el-button>
             <el-button color="#626aef" @click="handleEnsure" :disabled="onProcess">{{ buttonText }}</el-button>
         </div>
     </div>
@@ -225,7 +224,7 @@ const checkItem = () => {
 
         :deep(.el-radio-button__inner) {
             border: none;
-            background-color: #f4f5f5;
+            background-color: var(--hami-white-8);
             border-radius: var(--hami-radius);
             padding: 0 16px;
             text-align: center;
@@ -236,13 +235,13 @@ const checkItem = () => {
             display: inline-block;
 
             &:hover {
-                background-color: #e5e6eb;
+                background-color: var(--el-color-primary-light-7);
             }
         }
 
         :deep(.el-radio-button__original-radio:checked + .el-radio-button__inner) {
-            color: #1d7dfa;
-            background-color: #e8f3ff;
+            color: var(--el-color-primary);
+            background-color: var(--el-color-primary-light-7);
             box-shadow: none;
         }
     }
@@ -256,7 +255,7 @@ const checkItem = () => {
 
         :deep(.el-select .el-select-tags-wrapper .el-tag) {
             --el-tag-text-color: var(--el-color-primary);
-            --el-tag-bg-color: var(--el-color-primary-light-9);
+            --el-tag-bg-color: var(--el-color-primary-light-8);
             --el-tag-border-color: var(--el-color-primary-light-8);
             --el-tag-hover-color: var(--el-color-primary);
             background-color: var(--el-tag-bg-color);

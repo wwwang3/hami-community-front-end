@@ -23,6 +23,10 @@ const logout = async () => {
 const gotoUserCenter = async () => {
     await $router.replace("/account")
 }
+
+const gotoCreator = async () => {
+    await $router.replace("/creator/content")
+}
 const joinTime = computed(() => {
     let ctime = $props.userInfo.ctime
     let days = dayjs(Date.now()).diff(new Date(ctime), 'day');
@@ -71,7 +75,7 @@ const joinTime = computed(() => {
                     </el-icon>
                 </div>
             </div>
-            <div class="link-option">
+            <div class="link-option" @click="gotoCreator">
                 <div class="left-item">
                     <el-icon size="18">
                         <Edit/>
@@ -153,6 +157,7 @@ const joinTime = computed(() => {
             }
 
             .count {
+                color: var(--hami-text-1);
                 font-size: 18px;
                 font-weight: 600;
             }

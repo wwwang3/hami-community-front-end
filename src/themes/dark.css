@@ -3,12 +3,13 @@
 html.dark {
     --hami-blue-6: rgba(30, 128, 255, 0.3);
     --hami-white-1: rgba(229, 230, 235, 0.7);
+    --hami-white-8: rgba(244, 245, 245, 0.5);
 }
 
 html.dark {
     --hami-bg: #181818;
     --hami-frame-bg: #000;
-    --hami-header-bg: linear-gradient(135deg, #5f2c82, #49a09d);
+    --hami-header-bg: linear-gradient(25deg, #433f5c, #5a6380, #7189a6, #89b1ce);
     --hami-card-bg: #181818;
     --hami-item-bg: rgb(255, 255, 255, 0.12);
     --hami-item-hover-bg: rgba(255, 255, 255, 0.08);
@@ -19,6 +20,7 @@ html.dark {
     --hami-text-4: rgba(255, 255, 255, .5);
     --hami-text-common: rgba(229, 234, 243, 0.8);
     --hami-card-text-color: rgba(207, 211, 220, .8);
+    --hami-card-blue-bg-1: rgba(30, 88, 233, 0.3);
     --hami-card-hover-bg: hsla(0,0%,100%,0.08);;
     --hami-menu-active-bg: rgba(30, 128, 255, 0.3);
     --hami-menu-active-text-color: #4495ff;

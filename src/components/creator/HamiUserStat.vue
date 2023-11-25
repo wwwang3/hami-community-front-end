@@ -23,11 +23,7 @@ const follower_incr = computed(() => {
 onMounted(() => {
     getUserDataGrowing()
 })
-//life cycle
 
-//watch
-
-//fun
 const getUserDataGrowing = async () => {
     try {
         dataGrowing.value = await UserInteractService.getUserDataGrowing()
@@ -35,8 +31,6 @@ const getUserDataGrowing = async () => {
 
     }
 }
-
-
 </script>
 <template>
     <div class="hami-user-stat">
@@ -100,7 +94,7 @@ const getUserDataGrowing = async () => {
     .user-stat-title {
         padding: 20px;
         font-size: 18px;
-        color: var(--hami-title);
+        color: var(--hami-title-color);
         border-bottom: 1px solid var(--el-border-color);
     }
 

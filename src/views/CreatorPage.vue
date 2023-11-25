@@ -126,6 +126,10 @@ const handleClick = () => {
             margin-bottom: 3px;
         }
 
+        .el-menu-item:hover {
+            background-color: var(--hami-menu-active-bg);
+        }
+
         .el-menu-item.is-active {
             background-color: var(--hami-menu-active-bg);
             color: var(--hami-menu-active-text-color);
@@ -137,6 +141,7 @@ const handleClick = () => {
 
         :deep(.el-sub-menu__title:hover) {
             border-radius: var(--hami-radius-small);
+            background-color: var(--hami-menu-active-bg);
         }
 
         .el-sub-menu {

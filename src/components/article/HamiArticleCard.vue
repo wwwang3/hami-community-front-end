@@ -391,10 +391,6 @@ const handleBeforeEnter = () => {
     }
 }
 
-.hami-article-card.border {
-    border-bottom: 1px solid var(--el-border-color);
-}
-
 </style>
 <style>
 .card-dropdown {

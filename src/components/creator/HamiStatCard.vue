@@ -54,13 +54,13 @@ const up = (value: number) => {
 .hami-stat-card {
 
     .stat-title {
-        color: var(--hami-grey-6);
+        color: var(--hami-text-3);
         height: 24px;
         font-size: 14px;
     }
 
     .count {
-        color: var(--hami-text-3);
+        color: var(--hami-text-1);
         font-weight: 600;
         font-size: 32px;
         line-height: 42px;
@@ -78,7 +78,7 @@ const up = (value: number) => {
 
         .text {
             font-size: 13px;
-            color: var(--hami-grey-6);
+            color: var(--hami-grey-1);
         }
 
         .var-box {

@@ -2,6 +2,7 @@
 import { computed, onBeforeMount, provide, ref, unref, watch } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import HamiMdEditor from '@/components/md/HamiMdEditor.vue'
+import HamiPublishArticleForm from '@/components/creator/HamiPublishArticleForm.vue'
 import { isEmpty } from '@/utils'
 import { useAutoLoading, useRequest } from '@/hooks'
 import { ArticleDraftService } from '@/service/modules/article.ts'
@@ -292,7 +293,7 @@ const checkParam = () => {
 <style>
 .el-popover.publish-popover {
     padding: 20px !important;
-    border-radius: var(--hami-radius-medium) !important;
+    border-radius: var(--hami-radius) !important;
 
     .el-popover__title {
         font-size: 18px;

@@ -147,7 +147,7 @@ const onPPT = () => {
     .page-header-left, .page-header-right {
         display: flex;
         align-items: center;
-        color: var(--hami-text-common);
+        color: var(--hami-text-1);
     }
 
     .page-header-logo {
