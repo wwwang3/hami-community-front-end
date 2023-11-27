@@ -228,7 +228,7 @@ const randomType = (): NodeType => {
         </div>
         <div v-if="showEmpty && !loadingError">
             <slot name="empty">
-                <HamiEmpty :description="noDataText" :image="noDataImg"></HamiEmpty>
+                <HamiEmpty :description="noDataText" :image="noDataImg" :image-size="180"></HamiEmpty>
             </slot>
         </div>
         <el-backtop class="back-top" :right="60" :bottom="64">
@@ -261,10 +261,6 @@ const randomType = (): NodeType => {
         text-align: center;
         color: var(--hami-text-3);
         font-size: 14px;
-    }
-
-    :deep(.el-empty) {
-        --el-empty-image-width: 180px;
     }
 
     :deep(.el-skeleton) {

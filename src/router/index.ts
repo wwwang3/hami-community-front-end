@@ -90,7 +90,11 @@ const routes: RouteRecordRaw[] = [
     {
         path: "/published",
         name: "Published",
-        component: () => import("@/views/PublishedPage.vue")
+        component: () => import("@/views/PublishedPage.vue"),
+        props: route => ({
+            id: window.sessionStorage.getItem("p_article_id"),
+            title: window.sessionStorage.getItem("p_title")
+        })
     },
     {
         path: "/account",
@@ -219,7 +223,7 @@ const routes: RouteRecordRaw[] = [
             },
             {
                 path: "follow",
-                name: "Notifyfollow",
+                name: "NotifyFollow",
                 component: () => import("@/components/notify/HamiNotifyFollow.vue")
             },
             {

@@ -16,7 +16,7 @@ const isFollow = computed(() => {
 })
 
 const cateId = ref<number>(-1)
-const activePath = ref<string>("/recommend")
+const activePath = ref<CateRoutePath | string>("/recommend")
 
 const resolveRoute = (route: string) => {
     if (route in cateStore.cates) {
@@ -25,7 +25,7 @@ const resolveRoute = (route: string) => {
     }
 }
 
-watch(() => $route.path, (newVal, oldVal) => {
+watch(() => $route.path, (newVal) => {
     resolveRoute(newVal)
 }, {
     immediate: true

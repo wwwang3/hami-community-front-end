@@ -20,7 +20,7 @@ const $props = withDefaults(defineProps<EmptyProps>(), {
 
 <style scoped lang="less">
 .hami-empty {
-    background-color: var(--hami-bg);
-    border-radius: var(--hami-radius);
+    background-color: var(--hami-card-bg);
+    border-radius: var(--hami-radius-medium);
 }
 </style>

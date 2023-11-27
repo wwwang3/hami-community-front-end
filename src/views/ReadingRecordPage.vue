@@ -148,7 +148,7 @@ const clearKeyword = () => {
         .text {
             font-size: 20px;
             font-weight: 700;
-            color: var(--hami-black-2);
+            color: var(--hami-title-color);
             margin-left: 10px;
         }
 
@@ -196,7 +196,7 @@ const clearKeyword = () => {
         }
 
         .hami-article-card:hover {
-            background-color: #f7f8fa;
+            background-color: var(--hami-card-hover-bg);
             border-radius: var(--hami-radius);
         }
 

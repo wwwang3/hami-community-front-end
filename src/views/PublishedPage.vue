@@ -1,26 +1,29 @@
 <script setup lang="ts">
-import { onMounted, reactive } from "vue"
+import { onMounted } from "vue"
 import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router"
 import { isEmpty } from '@/utils'
 import { publishedImg } from "@/store/images.ts"
 
-const article = reactive({
-    title: "",
-    id: ""
-})
+interface Props {
+    id: string | number | undefined,
+    title: string | undefined
+}
+
+
+const $props = defineProps<Props>()
 const $router = useRouter()
 const $route = useRoute()
 
 onMounted(() => {
-    article.id = window.sessionStorage.getItem("p_articleId") || ""
-    article.title = window.sessionStorage.getItem("p_title") || ""
-    if (isEmpty(article.title) || isEmpty(article.id)) {
+    console.log($props)
+    if (isEmpty($props.id) || isEmpty($props.title)) {
+        console.warn("no article_id or title")
         handleClick()
     }
 })
 
 onBeforeRouteLeave(() => {
-    window.sessionStorage.removeItem("p_articleId")
+    window.sessionStorage.removeItem("p_article_id")
     window.sessionStorage.removeItem("p_title")
 })
 
@@ -34,7 +37,7 @@ const handleClick = () => {
     <div class="hami-published">
         <div class="hami-published-body">
             <img :src="publishedImg" alt="">
-            <router-link :to="'/article/' + article.id" class="title">《{{ article.title }}》</router-link>
+            <router-link :to="'/article/' + $props.id" class="title">《{{ $props.title }}》</router-link>
             <div class="msg">发表成功! 有你的分享Hami会变得更好~</div>
             <el-button type="primary" @click="handleClick">回到首页</el-button>
         </div>
@@ -52,6 +55,9 @@ const handleClick = () => {
     .hami-published-body {
         min-height: 400px;
         text-align: center;
+        img {
+            background-color: transparent;
+        }
     }
 
     .title {

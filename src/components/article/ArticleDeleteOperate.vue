@@ -6,21 +6,31 @@ import { $message } from '@/utils'
 interface DeleteOperateProps {
     article: Article
     listRef: HamiScrollListInstance<Article>
-    msg?: string
+    msg?: string,
+    showConfirm?: boolean
 }
 
-const $props = defineProps<DeleteOperateProps>()
+const $props = withDefaults(defineProps<DeleteOperateProps>(), {
+    msg: "确定删除该文章?",
+    showConfirm: false
+})
 const $emit = defineEmits<{
     (e: 'delete', article: Article, finish: () => void): void
 }>()
 
 const handleClick = () => {
-    $message.confirm($props.msg ?? "确定删除该文章?")
-        .then(() => {
-            $emit("delete", $props.article, () => {
-                $props.listRef?.delete($props.article.id)
-            })
-        }).catch(e => {})
+    if ($props.showConfirm) {
+        $message.confirm($props.msg ?? "确定删除该文章?")
+            .then(() => {
+                $emit("delete", $props.article, () => {
+                    $props.listRef?.delete($props.article.id)
+                })
+            }).catch(e => {})
+    } else {
+        $emit("delete", $props.article, () => {
+            $props.listRef?.delete($props.article.id)
+        })
+    }
 }
 
 </script>

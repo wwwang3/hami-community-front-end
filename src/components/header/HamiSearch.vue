@@ -23,7 +23,7 @@ const config = ref<SearchConfig>({
 
 const $router = useRouter()
 
-onMounted( () => {
+onMounted(() => {
     getHotSearchList()
 })
 
@@ -51,15 +51,17 @@ const handleSearch = (val: string) => {
 </template>
 
 <style scoped lang="less">
-    .u-search {
-        --u-bg-color-overlay: var(--hami-border-grey);
-        :deep(.search) {
-            label > input[type=text] {
-                line-height: 28px;
-            }
-            label::before, label::after {
-                line-height: 28px;
-            }
+.u-search {
+    --u-bg-color-overlay: var(--hami-border-grey);
+
+    :deep(.search) {
+        label > input[type=text] {
+            line-height: 28px;
+        }
+
+        label::before, label::after {
+            line-height: 28px;
         }
     }
+}
 </style>

@@ -30,7 +30,7 @@ onMounted(() => {
     right: 0;
     top: 0;
     bottom: 0;
-    background: linear-gradient(135deg, #f02fc2, #6094ea);
+    background: var(--hami-login-bg);
     height: 100%;
 }
 </style>

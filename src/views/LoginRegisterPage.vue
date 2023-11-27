@@ -7,12 +7,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import HamiLoginRegister from '@/components/auth/HamiLoginRegister.vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
-const $router = useRouter()
 const $route = useRoute()
 
-const themeMode = computed(() => {
+const mode = computed(() => {
     return $route.fullPath === "/login" ? "login" : "register";
 })
 
@@ -23,7 +22,7 @@ const themeMode = computed(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #65799b, #5e2563);
+    background: var(--hami-login-bg);
     position: fixed;
     left: 0;
     right: 0;

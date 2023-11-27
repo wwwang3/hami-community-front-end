@@ -183,7 +183,7 @@ const checkItem = () => {
             <el-form-item prop="summary" label="摘要:" style="width: 90%">
                 <el-input
                     type="textarea"
-                    :rows="6"
+                    :rows="7"
                     placeholder="请输入摘要"
                     v-model="draft.summary"
                     maxlength="160"

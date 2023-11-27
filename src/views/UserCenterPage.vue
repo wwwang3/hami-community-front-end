@@ -15,8 +15,9 @@ const activeMode = computed(() => {
 const changeMode = async (path: string) => {
     await $router.replace(path)
 }
+
 const goBack = () => {
-    $router.replace("/user/space/" + userStore.userInfo.userId)
+    $router.replace("/user/space/" + userStore.userInfo?.userId)
 }
 </script>
 <template>

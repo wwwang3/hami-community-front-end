@@ -73,6 +73,7 @@ const isSelf = () => {
                             msg="确定取消收藏吗?"
                             :list-ref="userCollectArticleList"
                             :article="article"
+                            show-confirm
                             @delete="handleCancelCollect" v-if="isSelf()">
                         </ArticleDeleteOperate>
                     </template>

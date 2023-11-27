@@ -65,7 +65,8 @@
                 </el-row>
             </el-form-item>
             <div class="register-button" @click="register(registerForm)">
-                <el-button type="primary" :disabled="onRegister">注册</el-button>
+                <el-button  :disabled="onRegister" color="#3f4197" v-if="themeStore.isDark">注册</el-button>
+                <el-button type="primary" :disabled="onRegister" v-else>注册</el-button>
             </div>
         </el-form>
     </div>
@@ -81,7 +82,9 @@ import { AuthService } from '@/service/modules/user.ts'
 import { validateAccount, validateEmail, validatePass, validateRePassword } from '@/utils/validator.ts'
 import { useCountdown, useRequest } from '@/hooks'
 import { LOGIN_REGISTER_SUCCESS } from '@/store/keys.ts'
+import useThemeStore from '@/store/modules/theme.ts'
 
+const themeStore = useThemeStore()
 const success = inject<Function>(LOGIN_REGISTER_SUCCESS) as Function
 const registerForm = ref<FormInstance>()
 const registerParam = reactive<RegisterParam>({
@@ -134,18 +137,14 @@ const registerRules = reactive<FormRules<typeof registerParam>>({
 const register = async (el: FormInstance | undefined) => {
     try {
         await el?.validate()
-        doRegister(registerParam)
-            .then(() => {
-                $message.success("注册成功")
-                setTimeout(() => {
-                    success?.call(window, "register")
-                }, 300)
-            })
-            .catch(e => {
-                $message.error(e)
-            })
+        await doRegister(registerParam)
+        $message.success("注册成功")
+        setTimeout(() => {
+            success?.call(window, "register")
+        }, 300)
     } catch (e) {
         if (e !== 'cancel') {
+            console.error(e)
             $message.notifyError("注册失败")
         }
     }
@@ -163,7 +162,7 @@ const getCaptcha = async () => {
             startCountdown()
         })
         .catch(e => {
-            console.log(e)
+            console.error(e)
             $message.error(e)
             onProcess.value = false
         })
@@ -172,7 +171,7 @@ const getCaptcha = async () => {
 
 <style scoped lang="less">
 .el-form-item {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .hami-register-card-body {
@@ -185,10 +184,8 @@ const getCaptcha = async () => {
     .register-button {
         margin-top: 22px;
 
-        :deep(button) {
+        button {
             width: 100%;
-            background: linear-gradient(135deg, #736efe, #5efce8);
-            border: none;
         }
     }
 

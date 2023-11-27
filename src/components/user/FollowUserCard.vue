@@ -4,6 +4,7 @@ import { useFollow } from '@/hooks/userInteract.ts'
 import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils/message.ts'
 import { SPACE_USER } from '@/store/keys.ts'
+import { defaultAvatar } from '@/store/images.ts'
 
 //interface
 interface SimpleUserCardProps {
@@ -49,7 +50,7 @@ const hasText = () => {
     <div class="hami-follow-user-card">
         <div class="entry">
             <router-link class="left-panel" :to="toUserSpace()">
-                <el-avatar :src="user.avatar" :size="64"></el-avatar>
+                <el-avatar :src="user.avatar || defaultAvatar" :size="64"></el-avatar>
                 <div class="info">
                     <el-text class="username" truncated size="large" tag="div">
                         {{ user?.username }}

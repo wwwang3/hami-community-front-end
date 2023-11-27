@@ -178,14 +178,14 @@ const handleEnsure = async () => {
             //跳转到发表成功页面
             draft.value.articleId = data.articleId
             $message.notifySuccess("发表成功")
-            window.sessionStorage.setItem("p_articleId", data.articleId + "")
+            window.sessionStorage.setItem("p_article_id", data.articleId + "")
             window.sessionStorage.setItem("p_title", draft.value.title)
             await $router.replace({
-                name: "Published",
+                name: "Published"
             })
         }
     } catch (e) {
-        console.log(e)
+        console.error(e)
     } finally {
         loading?.close()
     }

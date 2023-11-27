@@ -2,6 +2,7 @@
 import { computed } from "vue"
 import { Star, View } from '@element-plus/icons-vue'
 import { formatDateTime } from '@/utils'
+import useThemeStore from '@/store/modules/theme.ts'
 
 //interface
 interface UserStatProps {
@@ -10,12 +11,15 @@ interface UserStatProps {
 }
 
 const $props = defineProps<UserStatProps>()
-
+const themeStore = useThemeStore()
 
 const ctime = computed(() => {
     return formatDateTime($props.ctime as number, "YYYY-MM-DD")
 })
 
+const bg = computed(() => {
+    return themeStore.isDark ? "#3a2b6a" : "#E1EFFF"
+})
 
 </script>
 <template>
@@ -112,7 +116,7 @@ const ctime = computed(() => {
                 width: 24px;
                 margin-right: 8px;
                 border-radius: 50%;
-                background-color: #b4e1ec;
+                background-color: v-bind(bg);
             }
 
             .stat-item:last-child {

@@ -87,7 +87,7 @@ const header = computed(() => {
 <style lang="less" scoped>
 
 .hami-notify::before {
-    background: url("/assets/notify-bg.jpg") top/cover no-repeat fixed;;
+    background: var(--hami-notify-bg);
     content: '';
     position: fixed;
     left: 0;
@@ -99,6 +99,10 @@ const header = computed(() => {
 
 .hami-notify {
     margin-top: 10px;
+
+    :deep(.hami-empty) {
+        background-color: var(--hami-frame-bg) !important;
+    }
 
     .hami-notify-container {
         display: flex;
@@ -113,6 +117,7 @@ const header = computed(() => {
         font-size: 16px;
         font-weight: 700;
         padding: 10px 0;
+        border-top-left-radius: var(--hami-radius);
 
         .nav-header {
             display: flex;
@@ -175,15 +180,15 @@ const header = computed(() => {
     }
 
     .notify-body {
-        padding: 10px;
+        padding: 10px 12px;
         background-color: var(--hami-notify-body-bg);
         flex: 1;
+        border-top-right-radius: var(--hami-radius);
 
         .notify-body-header {
             border-radius: var(--hami-radius);
             background-color: var(--hami-bg);
             height: 42px;
-            -webkit-box-shadow: 0 2px 4px 0 rgba(121, 146, 185, 0.54);
             box-shadow: 0 2px 4px 0 rgba(121, 146, 185, 0.54);
             flex-shrink: 0;
             display: flex;
@@ -191,7 +196,7 @@ const header = computed(() => {
             justify-content: space-between;
             padding: 0 16px;
             font-size: 15px;
-            color: var(--hami-grey-4);
+            color: var(--hami-grey-2);
         }
 
         .notify-body-content {

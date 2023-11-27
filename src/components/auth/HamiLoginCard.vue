@@ -25,7 +25,12 @@
                 </el-input>
             </el-form-item>
             <div class="login-button">
-                <el-button type="primary" size="large" @click="login(loginForm)" :disabled="onLogin">
+                <el-button :color="color"
+                           plain
+                           :dark="themeStore.isDark"
+                           size="large" @click="login(loginForm)"
+                           :disabled="onLogin"
+                >
                     立即登录
                 </el-button>
             </div>
@@ -42,9 +47,11 @@ import HamiEye from '@/components/icon/HamiEyeIcon.vue'
 import { useTokenStore } from '@/store/modules/token.ts'
 import { useRequest } from '@/hooks'
 import { LOGIN_REGISTER_SUCCESS } from '@/store/keys.ts'
+import useThemeStore from '@/store/modules/theme.ts'
 
 const success = inject<Function>(LOGIN_REGISTER_SUCCESS)
 const tokenStore = useTokenStore()
+const themeStore = useThemeStore()
 
 const [onLogin, handleLogin] = useRequest<string, [LoginParam]>({
     run: (...params) => tokenStore.login(...params)
@@ -69,6 +76,9 @@ const loginRules = reactive<FormRules<LoginParam>>({
 })
 const type = computed(() => {
     return showPass.value ? "text" : "password"
+})
+const color = computed(() => {
+    return themeStore.isDark ? "#626aef" : "#409eff";
 })
 const handleChange = (open: boolean) => {
     showPass.value = open
@@ -119,11 +129,10 @@ const login = async (el: FormInstance | undefined) => {
     .login-button {
         margin-top: 26px;
 
-        :deep(button) {
+        button {
             width: 100%;
-            background: linear-gradient(135deg, #5efce8, #736efe);
-            border: none;
         }
     }
 }
+
 </style>

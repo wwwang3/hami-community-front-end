@@ -51,7 +51,12 @@ const handleQuery = (current: number, size: number) => {
                 :show-no-more="false"
             >
                 <template #item="{item, index, _delete}">
-                    <HamiArticleCard :article="item" highlight-summary highlight-title class="list-item">
+                    <HamiArticleCard
+                        :article="item"
+                        highlight-summary
+                        highlight-title
+                        class="list-item"
+                    >
                     </HamiArticleCard>
                 </template>
             </HamiScrollList>
@@ -67,12 +72,15 @@ const handleQuery = (current: number, size: number) => {
         border-radius: var(--hami-radius);
         margin-top: 16px;
         transition: all .3s;
+
         &:first-child {
             margin-top: 0;
         }
+
         &:hover {
             box-shadow: var(--el-box-shadow);
         }
+
         &:last-child {
             margin-bottom: 20px;
         }

@@ -1,7 +1,7 @@
 <template>
     <div class="hami-login-register-frame">
         <div class="login-register-header">
-            <img src="/assets/hami-logo-3.png" alt="" class="logo">
+            <el-image class="logo" :src="logo"></el-image>
         </div>
         <div class="login-register-body">
             <template v-if="frameMode === 'login'">
@@ -14,11 +14,11 @@
         <div class="login-register-bottom">
             <template v-if="frameMode === 'login'">
                 <el-divider>没有账号</el-divider>
-                <div @click="changeMode('register')" class="text option">立即注册</div>
+                <div @click="changeMode('register')" class="text">立即注册</div>
             </template>
             <template v-else>
                 <el-divider>已有账号</el-divider>
-                <div @click="changeMode('login')" class="text option">点我登录</div>
+                <div @click="changeMode('login')" class="text">点我登录</div>
             </template>
         </div>
         <div class="login-register-protocol">
@@ -28,11 +28,13 @@
 </template>
 
 <script setup lang="ts">
-import { provide, ref, watch } from 'vue'
+import { computed, provide, ref, watch } from 'vue'
 import HamiLoginCard from '@/components/auth/HamiLoginCard.vue'
 import HamiRegisterCard from '@/components/auth/HamiRegisterCard.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { LOGIN_REGISTER_SUCCESS } from '@/store/keys.ts'
+import { logo2, logo3 } from "@/store/images.ts"
+import useThemeStore from '@/store/modules/theme.ts'
 
 interface Props {
     mode?: string
@@ -40,11 +42,17 @@ interface Props {
 
 const $router = useRouter()
 const $route = useRoute()
+const themeStore = useThemeStore()
 
 const $props = withDefaults(defineProps<Props>(), {
     mode: "login",
     changeRoute: false
 })
+
+const logo = computed(() => {
+    return themeStore.isDark ? logo2 : logo3
+})
+
 //登录或者注册成功的回调
 provide<Function>(LOGIN_REGISTER_SUCCESS, (mode: "login" | "register") => {
     if (mode === "login") {
@@ -81,10 +89,10 @@ const changeMode = (mode: string) => {
 
 <style scoped lang="less">
 .hami-login-register-frame {
-    padding: 24px 32px 32px;
-    width: 400px;
-    background-color: #fff;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 10px 22px rgba(0, 0, 0, 0.16);
+    padding: 24px 32px;
+    width: 420px;
+    background-color: var(--el-bg-color);
+    box-shadow: var(--el-box-shadow-light);
     border-radius: var(--hami-radius-large);
     min-height: 420px;
     position: relative;
@@ -92,7 +100,7 @@ const changeMode = (mode: string) => {
 }
 
 .login-register-header {
-    margin: 10px 0 20px 0;
+    margin-bottom: 16px;
 
     .logo {
         height: 56px;
@@ -101,33 +109,30 @@ const changeMode = (mode: string) => {
 }
 
 .login-register-bottom {
-    color: var(--hami-text-2);
     font-size: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
+    color: var(--hami-text-1);
 
     .text {
         text-align: center;
         line-height: 22px;
         height: 22px;
-    }
-
-    .option {
-        color: var(--hami-title-color);
         cursor: pointer;
         font-size: 18px;
     }
+
 }
 
 .login-register-protocol {
-    position: absolute;
     font-size: 13px;
     height: 24px;
     line-height: 24px;
     text-align: center;
-    bottom: 16px;
+    color: var(--hami-text-1);
 
     .link {
-        color: var(--hami-blue);
+        color: var(--hami-text-hover-color);
     }
 }
+
 </style>

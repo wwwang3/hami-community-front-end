@@ -70,7 +70,7 @@ const avatarMouseLeave = () => {
         </template>
         <template v-else>
             <div class="login-button" @click="() => $router.replace('/login')">
-                登录
+                <span>登录</span>
             </div>
         </template>
     </div>
@@ -142,12 +142,20 @@ const avatarMouseLeave = () => {
     .login-button {
         width: 100%;
         height: 100%;
-        border-radius: 50%;
-        background-color: #409eff;
-        color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
+
+        span {
+            width: 44px;
+            height: 44px;
+            font-size: 14px;
+            border-radius: 50%;
+            background-color: var(--hami-blue-3);
+            color: #fff;
+            text-align: center;
+            line-height: 42px;
+        }
     }
 }
 

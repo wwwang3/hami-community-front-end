@@ -238,7 +238,7 @@ const handleBeforeEnter = () => {
         justify-content: space-between;
         color: var(--hami-card-text-color);
         font-size: 14px;
-        height: 21px;
+        height: 22px;
 
         .left-panel {
             display: flex;

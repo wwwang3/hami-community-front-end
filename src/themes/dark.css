@@ -3,15 +3,25 @@
 html.dark {
     --hami-blue-6: rgba(30, 128, 255, 0.3);
     --hami-white-1: rgba(229, 230, 235, 0.7);
-    --hami-white-8: rgba(244, 245, 245, 0.5);
+    --hami-white-8: rgba(244, 245, 245, 0.4);
+    --hami-blue-3: rgba(0, 127, 255, 0.8);;
+    /*transition: background-color .3s;*/
 }
 
 html.dark {
     --hami-bg: #181818;
     --hami-frame-bg: #000;
-    --hami-header-bg: linear-gradient(25deg, #433f5c, #5a6380, #7189a6, #89b1ce);
+    --hami-login-bg: linear-gradient(120deg, #4f50b0cc, #595eaacc, #606da4cc, #657b9dcc);
+    /*--hami-header-bg: linear-gradient(25deg, #433f5c, #5a6380, #7189a6, #89b1ce);*/
+    --hami-header-bg: var(--hami-bg-blue);
+    --hami-notify-bg: url("/assets/notify-dark-bg.jpeg") top/cover no-repeat fixed;
+    --hami-notify-nav-bg: rgba(15, 15, 15, .8);
+    --hami-notify-body-bg: rgba(15, 15, 15, .6);
     --hami-card-bg: #181818;
     --hami-item-bg: rgb(255, 255, 255, 0.12);
+}
+
+html.dark {
     --hami-item-hover-bg: rgba(255, 255, 255, 0.08);
     --hami-title-color: rgba(255, 255, 255, .9);
     --hami-text-1: rgba(255, 255, 255, .8);
@@ -21,7 +31,7 @@ html.dark {
     --hami-text-common: rgba(229, 234, 243, 0.8);
     --hami-card-text-color: rgba(207, 211, 220, .8);
     --hami-card-blue-bg-1: rgba(30, 88, 233, 0.3);
-    --hami-card-hover-bg: hsla(0,0%,100%,0.08);;
+    --hami-card-hover-bg: hsla(0, 0%, 100%, 0.08);;
     --hami-menu-active-bg: rgba(30, 128, 255, 0.3);
     --hami-menu-active-text-color: #4495ff;
     --hami-menu-text-color: hsla(0, 0%, 100%, 0.6);

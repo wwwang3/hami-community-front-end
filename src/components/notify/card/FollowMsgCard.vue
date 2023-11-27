@@ -108,36 +108,10 @@ const handleFollow = async () => {
 
         .title {
             font-weight: 400;
-            color: var(--hami-white-2);
+            color: var(--hami-title-color);
             margin-left: 8px;
         }
 
-    }
-
-    .option {
-        display: flex;
-        align-items: center;
-        padding-top: 10px;
-        font-size: 15px;
-        color: var(--hami-grey-1);
-
-        .time {
-            font-size: 14px;
-        }
-
-        .delete {
-
-            i {
-                margin-right: 4px;
-            }
-
-            pointer-events: auto;
-            margin-left: 6px;
-
-            &:hover {
-                color: var(--hami-blue-5);
-            }
-        }
     }
 
     .right-panel {
@@ -145,6 +119,9 @@ const handleFollow = async () => {
         button {
             width: 120px;
         }
+    }
+    .option {
+        margin-top: 4px;
     }
 }
 

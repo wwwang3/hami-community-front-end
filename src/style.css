@@ -30,6 +30,7 @@
     --hami-pink-1: #FFD9E4;
     --hami-pink-2: #fb7299;;
     --hami-pink-3: #fc8bab;
+    --hami-pink-4: #c65279;
     --hami-red-1: #f64242;
     --hami-red-2: #F56C6C;
     --hami-red-3: #f56c6c;
@@ -43,10 +44,8 @@
 }
 
 :root {
-    --hami-bg: #fff;
     --hami-border-grey: #cfd1d5;
     --hami-border-blue: rgba(30, 128, 255, 0.2);
-    --hami-card-bg: #fff;
     --hami-card-text-color: #8a919f;
     --hami-card-hover-bg: #f7f8fa;
     --hami-card-blue-bg-1: rgba(0, 174, 236, 0.08);
@@ -69,9 +68,14 @@
 }
 
 :root {
+    --hami-bg: #fff;
+    --hami-card-bg: #fff;
+    --hami-login-bg: linear-gradient(25deg, #192258, #2e4e7a, #3e7d9e, #4bafc3);
+    --hami-notify-bg: url("/assets/notify-bg.jpg") top/cover no-repeat fixed;
     --hami-notify-nav-bg: rgba(255, 255, 255, .8);
     --hami-notify-body-bg: rgba(255, 255, 255, .5);
     --hami-header-bg: linear-gradient(-225deg, #e3fdf5 0, #ffe6fa 100%);
+    --hami-bg-blue: rgba(8, 12, 40, 1);
 }
 
 body {
@@ -139,20 +143,3 @@ li {
     -webkit-box-orient: vertical;
 }
 
-.notify-card {
-    cursor: pointer;
-    padding: 16px 10px;
-    min-height: 7rem;
-    background-color: var(--hami-card-bg);
-    border-radius: var(--hami-radius-small);
-    transition: all .3s;
-
-    &:hover {
-        box-shadow: var(--el-box-shadow);
-        background-color: var(--hami-card-hover-bg);
-    }
-
-    .entry {
-        display: flex;
-    }
-}
