@@ -7,7 +7,7 @@ import { useTokenStore } from '@/store/modules/token.ts'
 import { useRouter } from 'vue-router'
 import { onPPT } from '@/utils'
 
-const [onLoading, handleGetAccountInfo] = useRequest({
+const [onLoading, handleGetAccountInfo] = useRequest<AccountInfo, [any]>({
     run: (...params) => AccountService.getAccountInfo()
 })
 
@@ -21,7 +21,7 @@ const $router = useRouter()
 
 onMounted(async () => {
     try {
-        account.value = await handleGetAccountInfo(null) as AccountInfo
+        account.value = await handleGetAccountInfo(null)
     } catch (e) {
         $message.error("获取账号信息失败")
     }

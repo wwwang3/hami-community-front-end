@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 
 
 const $route = useRoute()
-const paths = ["/login", "/register", "/editor/drafts"]
+const paths = ["/editor/drafts"]
 
 const showHeader = ref(true)
 watch(() => $route.path, (newVal, oldValue) => {

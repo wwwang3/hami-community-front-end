@@ -35,7 +35,7 @@ async function start() {
 
     app.mount("#app")
     let end = Date.now();
-    console.log(`start success. use: ${end - start}ms`)
+    console.log(`start Hami success. use: ${end - start}ms`)
 }
 
 await start()

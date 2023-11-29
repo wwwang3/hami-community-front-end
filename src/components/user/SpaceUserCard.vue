@@ -93,13 +93,13 @@ const handleClick = () => {
                             </svg>
                         </el-icon>
                         <a :href="user.blog" class="link" target="_blank" v-if="user.blog">
-                            <el-text truncated class="content">
+                            <span class="ellipsis content">
                                 {{ user.blog }}
-                            </el-text>
+                            </span>
                         </a>
                     </div>
                     <div class="btn-group" v-if="!userStore.isSelf(user?.userId)">
-                        <el-button type="info" @click="handleFollow" v-if="state" plain>取消关注</el-button>
+                        <el-button type="success" @click="handleFollow" v-if="state" plain>取消关注</el-button>
                         <el-button type="primary" @click="handleFollow" v-else>关注</el-button>
                         <el-button type="primary" plain @click="handleChat">私信</el-button>
                     </div>

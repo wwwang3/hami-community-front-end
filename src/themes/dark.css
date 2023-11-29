@@ -5,14 +5,12 @@ html.dark {
     --hami-white-1: rgba(229, 230, 235, 0.7);
     --hami-white-8: rgba(244, 245, 245, 0.4);
     --hami-blue-3: rgba(0, 127, 255, 0.8);;
-    /*transition: background-color .3s;*/
 }
 
 html.dark {
     --hami-bg: #181818;
     --hami-frame-bg: #000;
-    --hami-login-bg: linear-gradient(120deg, #4f50b0cc, #595eaacc, #606da4cc, #657b9dcc);
-    /*--hami-header-bg: linear-gradient(25deg, #433f5c, #5a6380, #7189a6, #89b1ce);*/
+    --hami-login-bg: linear-gradient(150deg, #4f50b0cc, #595eaacc, #606da4cc, #657b9dcc);
     --hami-header-bg: var(--hami-bg-blue);
     --hami-notify-bg: url("/assets/notify-dark-bg.jpeg") top/cover no-repeat fixed;
     --hami-notify-nav-bg: rgba(15, 15, 15, .8);

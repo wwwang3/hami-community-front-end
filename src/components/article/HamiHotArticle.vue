@@ -5,7 +5,6 @@ import HotImg from "/assets/hot.png"
 import { ArticleService } from '@/service/modules/article.ts'
 import { useRequest } from '@/hooks'
 import { isEmpty } from '@/utils'
-import { getRoutePrefix } from '@/router'
 import { Refresh } from '@element-plus/icons-vue'
 
 type IndexedHotArticle = HotArticle & {
@@ -34,7 +33,6 @@ const current = ref<number>(0)
 const size = 6
 const pages = ref(1)
 
-const prefix = getRoutePrefix();
 
 onMounted(async () => {
     await getHotArticles()
@@ -77,9 +75,6 @@ const getHotArticles = async () => {
 const getSubList = () => {
     return articleList.value?.slice(current.value * size, (current.value + 1) * size)
 }
-const getRoute = (id: number) => {
-    return prefix + "article/" + id
-}
 
 const calculateHotIndex = (rank: number) => {
     return Math.ceil(rank);
@@ -106,7 +101,7 @@ const calculateHotIndex = (rank: number) => {
                          :class="{'first': item.index === 0, 'second': item.index === 1, 'third': item.index === 2}">
                         {{ item.index + 1 }}
                     </div>
-                    <a :href="getRoute(item.articleId)">
+                    <router-link :to="'/article/' + item.articleId">
                         <span class="title ellipsis">
                             {{ item.article.articleInfo.title }}
                         </span>
@@ -122,7 +117,7 @@ const calculateHotIndex = (rank: number) => {
                             </el-icon>
                             <span class="hot-index">{{ calculateHotIndex(item.hotRank) }}</span>
                         </span>
-                    </a>
+                    </router-link>
                 </div>
             </template>
 
