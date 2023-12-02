@@ -141,6 +141,7 @@ const checkItem = () => {
                     no-match-text="空"
                     :teleported="false"
                     value-key="id"
+                    size="large"
                 >
                     <el-option
                         v-for="tag in tagList"
@@ -225,7 +226,6 @@ const checkItem = () => {
         :deep(.el-radio-button__inner) {
             border: none;
             background-color: var(--hami-white-8);
-            border-radius: var(--hami-radius);
             padding: 0 16px;
             text-align: center;
             font-size: 14px;

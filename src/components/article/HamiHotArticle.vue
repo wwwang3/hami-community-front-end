@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue"
-import { useRouter } from "vue-router"
 import HotImg from "/assets/hot.png"
 import { ArticleService } from '@/service/modules/article.ts'
 import { useRequest } from '@/hooks'
@@ -10,17 +9,18 @@ import { Refresh } from '@element-plus/icons-vue'
 type IndexedHotArticle = HotArticle & {
     index: number
 }
+
 const $props = defineProps({
     cateId: {
         default: -1,
         type: Number
     }
 })
-const $router = useRouter()
 
-const [onLoading, listHotArticles] = useRequest({
+
+const [onLoading, listHotArticles] = useRequest<Array<HotArticle>, [number]>({
     loading: false,
-    run: (...params) => ArticleService.listHotArticles(...params as Parameters<typeof ArticleService.listHotArticles>)
+    run: (...params) => ArticleService.listHotArticles(...params)
 })
 
 const rotate = ref<number>(0)
@@ -43,7 +43,7 @@ watch(() => $props.cateId, (newVal, oldVal) => {
     getHotArticles()
 })
 
-watch(current, (newVal, oldVal) => {
+watch(() => current.value, (newVal, oldVal) => {
     subArticleList.value = getSubList()
 })
 
@@ -66,7 +66,7 @@ const getHotArticles = async () => {
             return t
         });
         subArticleList.value = getSubList()
-        pages.value = articleList.value?.length / size
+        pages.value = articleList.value?.length / size ?? 1
     } catch (e) {
         console.log(e)
     }
@@ -143,6 +143,7 @@ const calculateHotIndex = (rank: number) => {
 
         .left {
             color: var(--hami-text-1);
+
             .hot-img {
                 width: 24px;
                 height: 24px;

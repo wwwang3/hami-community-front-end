@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue';
+import { computed } from 'vue';
 import { MdPreview } from 'md-editor-v3';
 // preview.css相比style.css少了编辑器那部分样式
 import 'md-editor-v3/lib/preview.css';
@@ -30,14 +30,16 @@ const content = computed({
         $emit("update:modelValue", value)
     }
 })
-const mdConfig = reactive({
-    showToolbarName: true
-})
 
 </script>
 
 <template>
-    <MdPreview :editorId="id" :modelValue="content" :theme="themeStore.theme"/>
+    <MdPreview
+        :editorId="id"
+        :modelValue="content"
+        :theme="themeStore.theme"
+        show-code-row-number
+    />
 </template>
 
 <style lang="less" scoped>

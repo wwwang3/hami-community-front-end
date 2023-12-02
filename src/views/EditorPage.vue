@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, provide, ref, unref, watch } from "vue"
 import { useRoute, useRouter } from "vue-router"
-import HamiMdEditor from '@/components/md/HamiMdEditor.vue'
-import HamiPublishArticleForm from '@/components/creator/HamiPublishArticleForm.vue'
 import { isEmpty } from '@/utils'
 import { useAutoLoading, useRequest } from '@/hooks'
 import { ArticleDraftService } from '@/service/modules/article.ts'
 import { $message } from '@/utils/message.ts'
 import useUserStore from '@/store/modules/user.ts'
-import defaultAvatar from "/assets/avatar.jpg"
 import { ClickOutside as vClickOutside } from 'element-plus'
 import { DRAFT_REF, ON_PUBLISH_ARTICLE } from '@/store/keys.ts'
+import { defaultAvatar } from "@/store/images.ts"
+import HamiMdEditor from '@/components/md/HamiMdEditor.vue'
+import HamiPublishArticleForm from '@/components/creator/HamiPublishArticleForm.vue'
 
 const $route = useRoute()
 const $router = useRouter()
@@ -114,7 +114,7 @@ provide(ON_PUBLISH_ARTICLE, onProcess)
 provide(DRAFT_REF, draft)
 const handleSave = async () => {
     console.log(draft.value)
-    let loading = $message.loading("更新中....")
+    let loading = $message.loading("保存中....")
     try {
         if (!hasDraftId()) {
             let data = await handleCreate();
@@ -126,7 +126,7 @@ const handleSave = async () => {
                 await $router.replace("/editor/drafts/" + draft.value.id)
             }
         } else {
-            let data = await handleUpdate();
+            let data = await handleUpdate()
             if (!isEmpty(data)) {
                 $message.success("更新成功")
             }
@@ -151,6 +151,10 @@ const handleCreate = async (): Promise<ArticleDraft> => {
 }
 
 const handleUpdate = async (): Promise<ArticleDraft> => {
+    if (onProcess.value) {
+        $message.notifyError("还没更新完~~")
+        return Promise.resolve(null)
+    }
     return process(ArticleDraftService.updateDraft({
         id: draft.value.id,
         summary: draft.value.summary,
@@ -191,6 +195,12 @@ const handleEnsure = async () => {
     }
 }
 
+const handleSaveDraft = (val: string, h: Promise<string>) => {
+    h.then(html => {
+        handleSave()
+    })
+}
+
 const hasDraftId = () => {
     return !isNaN(draft.value.id) && !isEmpty(draft.value.id) && draft.value.id !== -1
 }
@@ -227,7 +237,7 @@ const checkParam = () => {
                 </el-avatar>
             </div>
         </div>
-        <HamiMdEditor v-if="!onLoading" v-model="draft.content"></HamiMdEditor>
+        <HamiMdEditor v-if="!onLoading" v-model="draft.content" @save="handleSaveDraft"></HamiMdEditor>
         <el-popover
             ref="publishPopRef"
             :title="text"

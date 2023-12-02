@@ -4,7 +4,8 @@ html.dark {
     --hami-blue-6: rgba(30, 128, 255, 0.3);
     --hami-white-1: rgba(229, 230, 235, 0.7);
     --hami-white-8: rgba(244, 245, 245, 0.4);
-    --hami-blue-3: rgba(0, 127, 255, 0.8);;
+    --hami-blue-3: rgba(0, 127, 255, 0.8);
+    --hami-grey-4: #999;
 }
 
 html.dark {
@@ -51,4 +52,12 @@ html.dark .u-comment {
 
 html.dark .el-input, html.dark .el-textarea__inner {
     --el-input-text-color: var(--hami-card-text-color);
+}
+
+html.dark .nav__sort {
+    background-color: var(--hami-item-bg);
+}
+
+html.dark .nav__sort .item.active {
+    background-color: var(--hami-menu-active-bg);
 }

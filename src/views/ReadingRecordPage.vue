@@ -2,9 +2,9 @@
 import { computed, onMounted, ref } from "vue"
 import { ReadingRecordService } from '@/service/modules/interact.ts'
 import { AlarmClock, CircleClose, Delete, Search } from '@element-plus/icons-vue'
-import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { $message } from '@/utils/message.ts'
 import { isEmpty } from '@/utils'
+import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { HamiScrollListInstance } from '@/components/types'
 
 const readingRecordList = ref<HamiScrollListInstance<ReadingRecord>>()

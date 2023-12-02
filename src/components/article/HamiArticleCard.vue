@@ -2,12 +2,12 @@
 import { computed, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import useUserStore from '@/store/modules/user.ts'
-import { formatDateTime } from '@/utils'
+import { formatDateTime, strToNum } from '@/utils'
 import { Calendar, View } from '@element-plus/icons-vue'
 import { $message } from '@/utils/message.ts'
-// import { EpPropMergeType } from 'element-plus/es/utils'
 import { useLike } from '@/hooks/userInteract.ts'
 import HamiUserCardHover from '@/components/common/HamiUserCardHover.vue'
+import { TAG_NODES } from '@/store/modules/category.ts'
 
 //interface
 interface ArticleCardProps {
@@ -82,16 +82,17 @@ const handleLike = () => {
         $message.error("点赞失败")
     })
 }
-const tagTypes = ["", "info", "danger", "warning", "success"]
-const getTagType = (id: number): "success" | "info" | "warning" | "danger" | "" => {
-    return tagTypes[id % tagTypes.length] as "success" | "info" | "warning" | "danger" | ""
-}
 
 const toComment = () => {
     $router.push("/article/" + article.value.id + "#hami-comment")
 }
 const handleBeforeEnter = () => {
     showInfo.value = true
+}
+
+const getTagType = (index: number | number) => {
+    let i = strToNum(index)
+    return TAG_NODES[(isNaN(i) ? 0 : i) % TAG_NODES.length]
 }
 
 </script>

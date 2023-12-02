@@ -5,13 +5,14 @@ import { ArticleService } from '@/service/modules/article.ts'
 import { Calendar, Clock, View } from '@element-plus/icons-vue'
 import { $message } from '@/utils/message.ts'
 import { formatDateTime } from '@/utils'
-import HamiMdViewer from '@/components/md/HamiMdViewer.vue'
 import { MdCatalog } from 'md-editor-v3'
-import HamiUserCard from '@/components/common/HamiUserCard.vue'
 import { useCateStore } from '@/store/modules/category.ts'
 import { useCollect, useLike } from '@/hooks/userInteract.ts'
 import { COMMENT_AREA_OWNER } from '@/store/keys.ts'
+import HamiMdViewer from '@/components/md/HamiMdViewer.vue'
+import HamiUserCard from '@/components/common/HamiUserCard.vue'
 import HamiComment from '@/components/comment/HamiComment.vue'
+import HamiBackTop from '@/components/common/HamiBackTop.vue'
 
 
 const $props = defineProps<{
@@ -71,7 +72,7 @@ const userLink = computed(() => {
 })
 
 const cateRoute = computed(() => {
-    return cateStore.findCateRoure(article.value.category?.categoryId)
+    return cateStore.findCateRoute(article.value.category?.categoryId)
 })
 
 watch(() => $props.id, (newVal, oldVal) => {

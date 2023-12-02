@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import HamiNotifyList from '@/components/notify/HamiNotifyList.vue'
-import { ItemType } from '@/components/common/HamiScrollList.vue'
 import ReplyMsgCard from '@/components/notify/card/ReplyMsgCard.vue'
+import { ItemType } from '@/components/common/HamiScrollList.vue'
 </script>
 <template>
     <HamiNotifyList notify-type="reply">

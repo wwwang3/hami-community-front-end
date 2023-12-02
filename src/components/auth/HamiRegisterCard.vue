@@ -85,7 +85,7 @@ import { LOGIN_REGISTER_SUCCESS } from '@/store/keys.ts'
 import useThemeStore from '@/store/modules/theme.ts'
 
 const themeStore = useThemeStore()
-const success = inject<Function>(LOGIN_REGISTER_SUCCESS) as Function
+const success = inject<Function>(LOGIN_REGISTER_SUCCESS)
 const registerForm = ref<FormInstance>()
 const registerParam = reactive<RegisterParam>({
     username: '',

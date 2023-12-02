@@ -11,6 +11,9 @@ import { computed, nextTick, reactive, ref } from "vue"
 import { useRequest } from '@/hooks'
 import { formatDateTime, isEmpty } from '@/utils'
 import { noDataImg, loadErrorImg } from "@/store/images.ts"
+import HamiEmpty from '@/components/common/HamiEmpty.vue'
+import HamiBackTop from '@/components/common/HamiBackTop.vue'
+import { getRandomTagType, TIMELINE_TAG_NODES, TimelineTagType } from '@/store/modules/category.ts'
 export interface ItemType<T> {
     item: T
     index: number
@@ -174,12 +177,10 @@ const refreshData = (data: T[]) => {
 const formatTime = (time: number | Date) => {
     return formatDateTime(time, "YYYY-MM-DD")
 }
-
-type NodeType = "info" | "success"| "danger" | "warning"
-const nodeType = ["info", "success", "danger", "warning"]
-const randomType = (): NodeType => {
-    return nodeType[Math.floor(Math.random() * 4)] as NodeType
+const randomType = (): TimelineTagType => {
+    return TIMELINE_TAG_NODES[Math.floor(Math.random() * TIMELINE_TAG_NODES.length)]
 }
+
 </script>
 <template>
     <div class="hami-scroll-list">
@@ -211,12 +212,7 @@ const randomType = (): NodeType => {
         <el-skeleton :rows="3" animated :throttle="200" :loading="onLoadingMore"></el-skeleton>
         <div v-show="showError">
             <slot name="error">
-                <el-empty :image="loadErrorImg"
-                          style="--el-empty-image-width: 200px"
-                          description="加载失败"
-                          class="empty"
-                >
-                </el-empty>
+                <HamiEmpty :image="loadErrorImg" description="加载失败" :image-size="200"></HamiEmpty>
             </slot>
         </div>
         <div v-show="showNoMore && !hasMore && !showEmpty && !onLoadingMore">
@@ -231,22 +227,7 @@ const randomType = (): NodeType => {
                 <HamiEmpty :description="noDataText" :image="noDataImg" :image-size="180"></HamiEmpty>
             </slot>
         </div>
-        <el-backtop class="back-top" :right="60" :bottom="64">
-            <template #default>
-                <el-icon :size="18" color="#1d7dfa">
-                    <svg viewBox="0 0 1024 1024"
-                         xmlns="http://www.w3.org/2000/svg"
-                         data-spm-anchor-id="a313x.7781069.0.i0" width="200" height="200">
-                        <path
-                            d="M780.288 750.592H244.736V415.744C244.736 229.376 396.288 79.872 460.8 24.576c29.696-24.576 71.68-24.576 101.376 0 65.536 55.296 217.088 204.8 217.088 391.168v334.848z m-453.632-81.92h371.712V415.744c0-150.528-128-277.504-186.368-326.656-57.344 49.152-186.368 176.128-186.368 326.656v252.928zM509.952 87.04z"
-                            fill="#1d7dfa"></path>
-                        <path
-                            d="M326.656 750.592H148.48c-43.008 0-78.848-34.816-78.848-78.848v-76.8c0-26.624 13.312-51.2 34.816-65.536l221.184-146.432v367.616z m-175.104-81.92h92.16v-133.12l-92.16 61.44v71.68zM875.52 750.592H697.344V384l221.184 146.432c22.528 14.336 34.816 38.912 34.816 65.536v76.8c1.024 41.984-34.816 77.824-77.824 77.824z m-96.256-81.92h92.16v-71.68l-92.16-61.44v133.12zM513.024 489.472c-64.512 0-116.736-52.224-116.736-116.736S449.536 256 513.024 256s116.736 52.224 116.736 116.736-52.224 116.736-116.736 116.736z m0-151.552c-18.432 0-34.816 15.36-34.816 34.816s15.36 34.816 34.816 34.816 34.816-15.36 34.816-34.816S532.48 337.92 513.024 337.92zM512 1017.856c-22.528 0-40.96-18.432-40.96-40.96v-163.84c0-22.528 18.432-40.96 40.96-40.96s40.96 18.432 40.96 40.96v163.84c0 22.528-18.432 40.96-40.96 40.96zM351.232 953.344c-22.528 0-40.96-18.432-40.96-40.96v-66.56c0-22.528 18.432-40.96 40.96-40.96s40.96 18.432 40.96 40.96v66.56c0 22.528-18.432 40.96-40.96 40.96zM673.792 953.344c-22.528 0-40.96-18.432-40.96-40.96v-66.56c0-22.528 18.432-40.96 40.96-40.96s40.96 18.432 40.96 40.96v66.56c0 22.528-18.432 40.96-40.96 40.96z"
-                        ></path>
-                    </svg>
-                </el-icon>
-            </template>
-        </el-backtop>
+        <HamiBackTop :right="60" :bottom="64" :size="48" :icon-size="18"></HamiBackTop>
     </div>
 </template>
 
@@ -269,11 +250,5 @@ const randomType = (): NodeType => {
         padding: 20px;
         margin-bottom: 20px;
     }
-}
-</style>
-<style>
-.back-top {
-    width: 48px;
-    height: 48px;
 }
 </style>

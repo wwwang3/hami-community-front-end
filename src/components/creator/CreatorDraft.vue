@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue"
-import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { ArticleDraftService } from '@/service/modules/article.ts'
 import { $message } from '@/utils/message.ts'
-import { HamiScrollListInstance } from '@/components/types'
 import HamiArticleDraftCard from '@/components/article/HamiArticleDraftCard.vue'
+import HamiScrollList from '@/components/common/HamiScrollList.vue'
+import { HamiScrollListInstance } from '@/components/types'
 
 const creatorDraftList = ref<HamiScrollListInstance<ArticleDraftDetail>>()
 
@@ -33,7 +33,7 @@ const handleDelete = async (item: ArticleDraftDetail, index: number) => {
         <HamiScrollList :size="10" :query="handleQuery" ref="creatorDraftList">
             <template #item="{item, index, _delete}">
                 <div class="creator-article-list-item">
-                    <HamiArticleDraftCard :article="item" :index="index" @delete="handleDelete"></HamiArticleDraftCard>
+                    <HamiArticleDraftCard :draft="item" :index="index" @delete="handleDelete"></HamiArticleDraftCard>
                 </div>
             </template>
         </HamiScrollList>

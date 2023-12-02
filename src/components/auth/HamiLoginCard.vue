@@ -25,11 +25,13 @@
                 </el-input>
             </el-form-item>
             <div class="login-button">
-                <el-button :color="color"
-                           plain
-                           :dark="themeStore.isDark"
-                           size="large" @click="login(loginForm)"
-                           :disabled="onLogin"
+                <el-button
+                    :color="color"
+                    plain
+                    :dark="themeStore.isDark"
+                    size="large"
+                    @click="login(loginForm)"
+                    :disabled="onLogin"
                 >
                     立即登录
                 </el-button>

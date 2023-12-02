@@ -6,6 +6,7 @@ import { $message } from '@/utils/message.ts'
 import { useTokenStore } from '@/store/modules/token.ts'
 import { useRouter } from 'vue-router'
 import { onPPT } from '@/utils'
+import UpdatePassForm from '@/components/account/UpdatePassForm.vue'
 
 const [onLoading, handleGetAccountInfo] = useRequest<AccountInfo, [any]>({
     run: (...params) => AccountService.getAccountInfo()

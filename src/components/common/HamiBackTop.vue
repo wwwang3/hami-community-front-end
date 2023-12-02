@@ -17,19 +17,19 @@ const $props = withDefaults(defineProps<BackTopProps>(), {
 
 const style  = computed(() => {
     return {
-        "height": $props.size + "px",
-        "width": $props.size + "px"
+        "height": `${$props.size}px`,
+        "width": `${$props.size}px`
     }
 })
 
 </script>
 <template>
-    <el-backtop :style="style" :right="right" :bottom="right">
+    <el-backtop :style="style" :right="right" :bottom="bottom">
         <template #default>
             <el-icon :size="iconSize" color="#1d7dfa">
                 <svg viewBox="0 0 1024 1024"
                      xmlns="http://www.w3.org/2000/svg"
-                     data-spm-anchor-id="a313x.7781069.0.i0" width="200" height="200">
+                     width="200" height="200">
                     <path
                         d="M780.288 750.592H244.736V415.744C244.736 229.376 396.288 79.872 460.8 24.576c29.696-24.576 71.68-24.576 101.376 0 65.536 55.296 217.088 204.8 217.088 391.168v334.848z m-453.632-81.92h371.712V415.744c0-150.528-128-277.504-186.368-326.656-57.344 49.152-186.368 176.128-186.368 326.656v252.928zM509.952 87.04z"
                         fill="#1d7dfa"></path>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import HamiNotifyList from '@/components/notify/HamiNotifyList.vue'
-import { ItemType } from '@/components/common/HamiScrollList.vue'
 import FollowMsgCard from '@/components/notify/card/FollowMsgCard.vue'
+import { ItemType } from '@/components/common/HamiScrollList.vue'
 </script>
 <template>
     <HamiNotifyList notify-type="follow">

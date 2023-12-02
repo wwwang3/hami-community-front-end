@@ -5,6 +5,7 @@ import { ArticleService } from '@/service/modules/article.ts'
 import useUserStore from '@/store/modules/user.ts'
 import { loadErrorImg2 } from '@/store/images.ts'
 import { HamiScrollListInstance } from '@/components/types'
+import HamiArticleCard from '@/components/article/HamiArticleCard.vue'
 
 const userStore = useUserStore()
 const $router = useRouter()

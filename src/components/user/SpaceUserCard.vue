@@ -103,7 +103,7 @@ const handleClick = () => {
                         <el-button type="primary" @click="handleFollow" v-else>关注</el-button>
                         <el-button type="primary" plain @click="handleChat">私信</el-button>
                     </div>
-                    <el-button plain @click="handleClick" auto-insert-space v-else>设置</el-button>
+                    <el-button plain type="primary" @click="handleClick" auto-insert-space v-else>设置</el-button>
                 </div>
             </div>
         </div>
@@ -133,19 +133,20 @@ const handleClick = () => {
         .profile-item {
             display: flex;
             align-items: center;
-            color: var(--hami-grey-1);
+            color: var(--hami-card-text-color);
 
             .content {
                 max-width: 160px;
                 line-height: 28px;
                 height: 28px;
                 margin-left: 6px;
+                word-break: break-all;
             }
         }
 
         .username {
             font-size: 20px;
-            color: var(--hami-text-common);
+            color: var(--hami-text-1);
             font-weight: 700;
             height: 24px;
             line-height: 24px;

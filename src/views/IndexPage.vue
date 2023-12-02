@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { CateRoutePath, useCateStore } from '@/store/modules/category.ts'
 import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import HamiBulletin from '@/components/common/HamiBulletin.vue'
 import HamiCateNav from '@/components/common/HamiCateNav.vue'
 import HamiIndexArticle from '@/components/article/HamiIndexArticle.vue'
 import HamiHotArticle from "@/components/article/HamiHotArticle.vue"
-import { useRoute } from 'vue-router'
 
 
 const $route = useRoute()

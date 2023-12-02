@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, reactive } from "vue"
 import { config, MdEditor } from 'md-editor-v3';
+import { Emoji } from '@vavt/v3-extension';
 import 'md-editor-v3/lib/style.css';
+import '@vavt/v3-extension/lib/asset/Emoji.css';
 import { toolbars } from '@/components/md/editorConfig.ts'
 import ImageService from '@/service/modules/image.ts'
 import useThemeStore from '@/store/modules/theme.ts'
@@ -31,11 +33,11 @@ const content = computed({
 
 const editorId = "hami-md-editor-v3"
 const mdConfig = reactive({
-    showToolbarName: true
+    showToolbarName: false
 })
 
 config({
-    editorExtensions: {}
+    editorExtensions: {},
 })
 
 //fun
@@ -68,7 +70,11 @@ const handleError = async (e: { name: string, message: string }) => {
             :on-error="handleError"
             :toolbars="toolbars"
             :theme="themeStore.theme"
+            show-code-row-number
         >
+            <template #defToolbars>
+                <Emoji></Emoji>
+            </template>
         </MdEditor>
     </div>
 </template>
@@ -82,5 +88,18 @@ const handleError = async (e: { name: string, message: string }) => {
     :deep(.md-editor) {
         height: calc(100vh - 64px);
     }
+}
+</style>
+<style>
+.icon-mee-emoji:before {
+    content: "\e64a";
+}
+
+.emojis {
+    background-color: var(--hami-bg);
+}
+
+.emojis li {
+    height: auto;
 }
 </style>

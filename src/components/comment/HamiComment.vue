@@ -204,7 +204,6 @@ const handleQueryComments = async (current: number, size: number) => {
         articleId: $props.areaId,
         sort: sort.value
     })
-    console.log(data)
     page.value.total = data.total
     return convert(data.data as CommentInfo[])
 }
@@ -302,12 +301,7 @@ const convertToCommentUser = (user: User): CommentUserApi => {
     }
 
     :deep(.nav__sort) {
-        background-color: var(--hami-item-bg);
-
-        .active {
-            border-radius: 2px;
-            background-color: var(--hami-menu-active-bg);
-        }
+        border-radius: 2px;
     }
 }
 </style>

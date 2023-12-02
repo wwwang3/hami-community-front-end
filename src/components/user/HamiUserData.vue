@@ -109,6 +109,10 @@ const bg = computed(() => {
                 align-items: center;
                 margin-bottom: 8px;
                 height: 25px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
             }
 
             .icon {
@@ -119,9 +123,6 @@ const bg = computed(() => {
                 background-color: v-bind(bg);
             }
 
-            .stat-item:last-child {
-                margin-bottom: 0;
-            }
 
             .content {
                 display: flex;

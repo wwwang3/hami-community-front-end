@@ -1,9 +1,15 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { isEmpty } from '@/utils'
+import type { TagProps, TimelineItemProps } from 'element-plus'
 
 export type CateRoutePath = "/" | "/recommend" | "/backend" | "/front-end" | "/android"
-    | "/ios" | "/ai" | "/tool" |  "/coding" | "/reading" | "/follow"
+    | "/ios" | "/ai" | "/tool" | "/coding" | "/reading" | "/follow"
+
+export type TagType = TagProps['type']
+export type TimelineTagType = TimelineItemProps['type']
+
+export const TAG_NODES: Array<TagType> = ["" , "success", "warning", "info", "danger"]
+export const TIMELINE_TAG_NODES: Array<TimelineTagType> = ["success", "warning", "info", "primary", "danger"]
 
 export const useCateStore = defineStore("cate", () => {
     const cates = ref({
@@ -19,14 +25,15 @@ export const useCateStore = defineStore("cate", () => {
         "/coding": 10006,
         "/reading": 10007,
     })
-    const cateRoutes = [
+
+    const cateRoutes: Array<Exclude<CateRoutePath, "/follow">> = [
         "/", "/recommend", "/backend", "/front-end", "/android", "/ios", "/ai", "/tool", "/coding", "/reading"
     ]
 
-    const findCateRoure = (cateId: number) => {
+    const findCateRoute = (cateId: number | string): CateRoutePath => {
         let path = Object.entries(cates.value).find(item => item[1] == cateId)
-        return isEmpty(path) ? "/" : path![0]
+        return path === undefined ? "/" : path[0] as CateRoutePath
     }
 
-    return { cates, cateRoutes, findCateRoure}
+    return { cates, cateRoutes, findCateRoute }
 })

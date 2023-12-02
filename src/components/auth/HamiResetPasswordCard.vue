@@ -231,7 +231,7 @@ const handleResetPassword = async (el: FormInstance | undefined) => {
         .email {
             font-size: inherit;
             line-height: 20px;
-            color: var(--hami-black-2);
+            color: var(--hami-text-common);
         }
 
         .blue {

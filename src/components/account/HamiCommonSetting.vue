@@ -131,7 +131,7 @@ watchEffect(() => {
             .skeleton-dark {
                 background-color: #181818;
                 border-radius: 6px 6px 0 0;
-                --el-skeleton-color: hsla(0, 0%, 100%, .2);;
+                --el-skeleton-color: hsla(0, 0%, 100%, .2);
             }
 
 

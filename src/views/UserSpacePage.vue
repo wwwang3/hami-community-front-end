@@ -2,12 +2,12 @@
 import { computed, provide, Ref, ref, watchEffect } from "vue"
 import { useRequest } from '@/hooks'
 import { UserService } from '@/service/modules/user.ts'
-import HamiUserData from '@/components/user/HamiUserData.vue'
-import SpaceUserCard from '@/components/user/SpaceUserCard.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { TabsPaneContext } from 'element-plus'
 import useUserStore from '@/store/modules/user.ts'
 import { SPACE_USER } from '@/store/keys.ts'
+import HamiUserData from '@/components/user/HamiUserData.vue'
+import SpaceUserCard from '@/components/user/SpaceUserCard.vue'
 
 //interface
 interface UserSpaceProps {

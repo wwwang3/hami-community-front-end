@@ -2,10 +2,10 @@
 import { useRouter } from "vue-router"
 import HamiLogo from '@/components/common/HamiLogo.vue'
 import HeaderAvatar from '@/components/header/HeaderAvatar.vue'
-import useUserStore from '@/store/modules/user.ts'
 import HamiSearch from '@/components/header/HamiSearch.vue'
 import HeaderNotify from '@/components/header/HeaderNotify.vue'
 import HeaderThemeButton from '@/components/header/HeaderThemeButton.vue'
+import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils'
 
 const $router = useRouter()

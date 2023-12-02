@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue"
-import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { isEmpty } from '@/utils'
 import { SearchService } from '@/service/modules/search.ts'
+import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { HamiScrollListInstance } from '@/components/types'
 
 interface SearchProps {
