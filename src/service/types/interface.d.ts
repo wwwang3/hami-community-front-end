@@ -142,3 +142,9 @@ declare interface SearchServiceApi {
 
     getHotSearchList(): Promise<Array<string>>
 }
+
+declare interface RankServiceApi {
+    listHotArticle(cateId: string | number): Promise<Array<HotArticle>>
+
+    listHotAuthor(): Promise<Array<HotAuthor>>
+}

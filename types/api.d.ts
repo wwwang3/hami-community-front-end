@@ -285,3 +285,9 @@ declare interface DailyDataGrowing {
     follower_incr?: number
     cancel_follow_incr?: number
 }
+
+declare interface HotAuthor {
+    userId: number,
+    hotIndex: number,
+    user: User
+}

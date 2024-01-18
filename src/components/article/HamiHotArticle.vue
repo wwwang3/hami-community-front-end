@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue"
 import HotImg from "/assets/hot.png"
-import { ArticleService } from '@/service/modules/article.ts'
 import { useRequest } from '@/hooks'
 import { isEmpty } from '@/utils'
 import { Refresh } from '@element-plus/icons-vue'
+import { RankService } from '@/service/modules/rank.ts'
 
 type IndexedHotArticle = HotArticle & {
     index: number
@@ -20,7 +20,7 @@ const $props = defineProps({
 
 const [onLoading, listHotArticles] = useRequest<Array<HotArticle>, [number]>({
     loading: false,
-    run: (...params) => ArticleService.listHotArticles(...params)
+    run: (...params) => RankService.listHotArticle(...params)
 })
 
 const rotate = ref<number>(0)

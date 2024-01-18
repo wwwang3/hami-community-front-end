@@ -31,14 +31,18 @@ const handleFollow = () => {
     if (userStore.isSelf($props.user.userId)) {
         return
     }
-    handleAction($props.user.userId).then(active => {
-        let stat = $props.user!.stat
-        if (active) {
-            stat.totalFollowers++
-        } else {
-            stat.totalFollowers--;
-        }
-    })
+    handleAction($props.user.userId)
+        .then(active => {
+            let stat = $props.user!.stat
+            if (active) {
+                stat.totalFollowers++
+            } else {
+                stat.totalFollowers--;
+            }
+        })
+        .catch(e => {
+            console.log(e)
+        })
 }
 
 const handleChat = () => {

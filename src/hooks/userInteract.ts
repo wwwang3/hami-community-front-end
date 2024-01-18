@@ -79,21 +79,15 @@ export function useFollow(followed: boolean): ActionResult<[number]> {
     })
 }
 
-export function useLike(liked: boolean): ActionResult<[{
-    itemId: number,
-    itemType: 1 | 2
-}]> {
-    return useAction<[{
-        itemId: number,
-        itemType: 1 | 2
-    }]>({
+export function useLike(liked: boolean): ActionResult<[LikeItemParam]> {
+    return useAction<[LikeItemParam]>({
         checkLogin: true,
         active: liked,
         action: (...params) => {
-            return UserInteractService.like(...params as Parameters<typeof UserInteractService.like>)
+            return UserInteractService.like(...params)
         },
         cancel: (...params) => {
-            return UserInteractService.cancelLike(...params as Parameters<typeof UserInteractService.cancelLike>)
+            return UserInteractService.cancelLike(...params)
         }
     })
 }
@@ -103,10 +97,10 @@ export function useCollect(collectd: boolean): ActionResult<[number]> {
         checkLogin: true,
         active: collectd,
         action: (...params) => {
-            return UserInteractService.collect(...params as Parameters<typeof UserInteractService.collect>)
+            return UserInteractService.collect(...params)
         },
         cancel: (...params) => {
-            return UserInteractService.cancelCollect(...params as Parameters<typeof UserInteractService.cancelCollect>)
+            return UserInteractService.cancelCollect(...params)
         }
     })
 }
