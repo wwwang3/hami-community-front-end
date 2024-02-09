@@ -2,23 +2,17 @@ import http from '@/service/http.ts'
 
 
 export const CategoryService: CategoryServiceApi = {
-    getAllCategories(): Promise<Array<Category>> {
+    getAllCategory(): Promise<Array<Category>> {
         return http.get("/category/all")
     }
 }
-//@ts-ignore
-import type { Tag } from "/types/api"
+
 export const TagService: TagServiceApi = {
-    listTags(param: PageParam): Promise<PageData<Tag>> {
-        return http.get("/tag/query_list", {
-            params: {
-                pageNum: param.pageNum,
-                pageSize: param.pageSize
-            }
-        })
+    listTag(param: PageParam): Promise<PageData<Tag>> {
+        return http.post("/tag/query_list", param)
     },
 
-    getAllTags(): Promise<Array<Tag>> {
+    getAllTag(): Promise<Array<Tag>> {
         return http.get("/tag/all")
     }
 }

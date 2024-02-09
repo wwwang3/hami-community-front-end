@@ -7,11 +7,9 @@ export const ReadingRecordService: ReadingRecordServiceApi = {
     },
 
     deleteReadingRecord(record_id: number) {
-        let data = new FormData()
-        data.set("record_id", record_id + "")
-        return http.post("/interact/reading_record/delete", data, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
+        return http.post("/interact/reading_record/delete", null, {
+            params: {
+                "recordId": record_id
             }
         })
     },
@@ -64,15 +62,15 @@ export const UserInteractService: UserInteractApi = {
         return http.post("/interact/like/cancel", param)
     },
 
-    listCollectArticles(param: UserArticleParam): Promise<PageData<Article>> {
+    listCollectArticle(param: UserArticleParam): Promise<PageData<Article>> {
         return http.post("/interact/collect/query_list", param)
     },
 
-    listUserFollowing(param: UserArticleParam): Promise<PageData<User>> {
+    listUserFollowing(param: UserArticleParam): Promise<PageData<Author>> {
         return http.post("/interact/follow/following_list", param)
     },
 
-    listUserFollower(param: UserArticleParam): Promise<PageData<User>> {
+    listUserFollower(param: UserArticleParam): Promise<PageData<Author>> {
         return http.post("/interact/follow/follower_list", param)
     },
 

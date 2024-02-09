@@ -1,15 +1,16 @@
 import http from '@/service/http.ts'
 
 const CommentService: CommentServiceApi = {
-    listComment(param: CommentPageParam): Promise<PageData<CommentInfo>> {
+
+    listComment(param: CommentPageParam): Promise<PageData<Comment>> {
         return http.post("/comment/query_list", param)
     },
 
-    listReply(param: CommentPageParam): Promise<PageData<CommentInfo>> {
-        return http.post("/comment/reply/query_list")
+    listReply(param: CommentPageParam): Promise<PageData<Comment>> {
+        return http.post("/comment/reply/query_list", param)
     },
 
-    publishComment(param: CommentParam, reply: boolean = false): Promise<Comment> {
+    publishComment(param: CommentParam, reply: boolean = false): Promise<CommentInfo> {
         if (reply) {
             return this.submitReply(param)
         } else {
@@ -17,11 +18,11 @@ const CommentService: CommentServiceApi = {
         }
     },
 
-    submitComment(param: CommentParam): Promise<Comment> {
+    submitComment(param: CommentParam): Promise<CommentInfo> {
         return http.post("/comment/submit", param)
     },
 
-    submitReply(param: CommentParam): Promise<Comment> {
+    submitReply(param: CommentParam): Promise<CommentInfo> {
         return http.post("/comment/reply/submit", param)
     },
 

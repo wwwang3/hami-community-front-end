@@ -39,22 +39,19 @@ export const NotifyService: NotifyServiceApi = {
     deleteNotify(msg_id: number) {
         let data = new FormData()
         data.set("msg_id", msg_id + "")
-        return http.post("/notify/delete", data, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
+        return http.post("/notify/delete", null, {
+            params: {
+                "msgId": msg_id
             }
         })
     },
 
     doRead(msg_id: number) {
-        let data = new FormData()
-        data.set("msg_id", msg_id + "")
-        return http.post("/notify/read", data, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
+        return http.post("/notify/read", null, {
+            params: {
+                "msgId": msg_id
             }
         })
     }
-
 
 }

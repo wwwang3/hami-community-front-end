@@ -23,8 +23,8 @@ declare interface Comment {
     likes: number // 点赞数
     ctime: number // 评论时间
     reply?: Reply // 回复
-    user: User // 评论用户
-    replyUser?: User // 回复用户
+    user: Author // 评论用户
+    replyUser?: Author // 回复用户
     liked: boolean // 是否点赞
 }
 
@@ -59,5 +59,5 @@ declare interface CommentParam {
 declare type CommentPageParam = PageParam & {
     articleId: number,
     rootId?: number,
-    sort?: 0 | 1
+    sort?: 0 | 1 // 0: 按点赞数排序 1: 按时间排序
 }

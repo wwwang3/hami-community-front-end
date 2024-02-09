@@ -4,7 +4,7 @@ declare interface AuthServiceApi {
 
     logout(): Promise<any>,
 
-    getCaptcha(type: "register" | "reset" | "update", email: string): Promise<any>,
+    getCaptcha(param: CaptchaSendParam): Promise<any>,
 
     register(param: RegisterParam): Promise<any>
 
@@ -29,17 +29,39 @@ declare interface AccountServiceApi {
 
 declare interface UserServiceApi {
 
-    getAuthorInfo(user_id: number): Promise<User>
+    getAuthorInfo(userId: number): Promise<Author>
+
+}
+
+declare interface CategoryServiceApi {
+    getAllCategory(): Promise<Array<Category>>
+}
+
+declare interface TagServiceApi {
+    listTag(param: PageParam): Promise<PageData<Tag>>
+
+    getAllTag(): Promise<Array<Tag>>
+}
+
+declare interface ArticleServiceApi {
+
+    listNewestArticle(param: ArticleParam): Promise<PageData<Article>>
+
+    listFollowUserArticle(param: PageParam): Promise<PageData<Article>>
+
+    getArticleContent(id: number): Promise<Article>
+
+    listUserArticles(param: UserArticleParam): Promise<PageData<Article>>
 
 }
 
 declare interface ArticleDraftServiceApi {
 
-    getArticles(pageNum: number, pageSize: number): Promise<PageData<ArticleDraftDetail>>
+    listArticle(page: PageParam): Promise<PageData<ArticleDraft>>
 
-    getDrafts(pageNum: number, pageSize: number): Promise<PageData<ArticleDraftDetail>>
+    listDraft(page: PageParam): Promise<PageData<ArticleDraft>>
 
-    getArticleDraft(id: number): Promise<ArticleDraftDetail>
+    getArticleDraft(id: number): Promise<ArticleDraft>
 
     createDraft(param: ArticleDraftParam): Promise<ArticleDraft>
 
@@ -50,16 +72,6 @@ declare interface ArticleDraftServiceApi {
     deleteDraft(id: number): Promise<any>
 
     deleteArticle(id: number): Promise<any>
-}
-
-declare interface CategoryServiceApi {
-    getAllCategories(): Promise<Array<Category>>
-}
-
-declare interface TagServiceApi {
-    listTags(param: PageParam): Promise<PageData<Tag>>
-
-    getAllTags(): Promise<Array<Tag>>
 }
 
 declare interface UserInteractApi {
@@ -76,34 +88,34 @@ declare interface UserInteractApi {
 
     cancelCollect(articleId: number): Promise<any>
 
-    listCollectArticles(param: UserArticleParam): Promise<PageData<Article>>
+    listCollectArticle(param: UserArticleParam): Promise<PageData<Article>>
 
     listUserLikeArticle(param: UserArticleParam): Promise<PageData<Article>>
 
-    listUserFollowing(param: UserArticleParam): Promise<PageData<User>>
+    listUserFollowing(param: UserArticleParam): Promise<PageData<Author>>
 
-    listUserFollower(param: UserArticleParam): Promise<PageData<User>>
+    listUserFollower(param: UserArticleParam): Promise<PageData<Author>>
 
     getUserDataGrowing(): Promise<DailyDataGrowing>
 
 }
 
 declare interface CommentServiceApi {
-    listComment(param: CommentPageParam): Promise<PageData<CommentInfo>>
+    listComment(param: CommentPageParam): Promise<PageData<Comment>>
 
-    listReply(param: CommentPageParam): Promise<PageData<CommentInfo>>
+    listReply(param: CommentPageParam): Promise<PageData<Comment>>
 
-    publishComment(param: CommentParam, reply: boolean = false): Promise<Comment>
+    publishComment(param: CommentParam, reply: boolean = false): Promise<CommentInfo>
 
-    submitComment(param: CommentParam): Promise<Comment>
+    submitComment(param: CommentParam): Promise<CommentInfo>
 
-    submitReply(param: CommentParam): Promise<Comment>
+    submitReply(param: CommentParam): Promise<CommentInfo>
 
     deleteComment(id: number): Promise<any>
 }
 
 declare interface ImageServiceApi {
-    upload(image: File, type: "comment" | "avatar" | "article" | string): Promise<string>
+    upload(param: ImageUploadParam): Promise<string>
 }
 
 declare interface NotifyServiceApi {

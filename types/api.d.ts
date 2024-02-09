@@ -3,7 +3,7 @@
  */
 declare interface ImageUploadParam {
     image: File // 图片
-    type: 'article-picture' | 'avatar' // 类型
+    type: 'article-picture' | 'avatar' | 'comment'// 类型
 }
 
 /**
@@ -68,4 +68,9 @@ declare interface IpInfo {
      * 运营商
      */
     isp: string;
+}
+
+declare interface IdParam {
+    id: number | string
+    type: number
 }

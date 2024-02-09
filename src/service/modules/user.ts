@@ -1,6 +1,6 @@
 import http, { FORM } from '@/service/http.ts'
 
-const CaptchaType = {
+export const CaptchaType = {
         "register": 0,
         "reset": 1,
         "update": 2
@@ -8,10 +8,8 @@ const CaptchaType = {
 
 export const AuthService: AuthServiceApi = {
 
-
-
     login(params: LoginParam): Promise<LoginResult> {
-        return http.post("/auth/login", { ...params }, {
+        return http.post("/auth/login", params, {
             headers: {
                 'Content-Type': FORM
             }
@@ -22,40 +20,27 @@ export const AuthService: AuthServiceApi = {
         return http.post("/auth/logout")
     },
 
-    getCaptcha(type: "register" | "reset" | "update", email: string): Promise<any> {
+    getCaptcha(captcha: CaptchaSendParam): Promise<any> {
         return http.get("/auth/captcha", {
             params: {
-                type: CaptchaType[type],
-                email: email
+                email: captcha.email,
+                type: captcha.type
             }
         })
     },
 
     register(param: RegisterParam) {
-        return http.post("/auth/register", {
-            username: param.username,
-            email: param.email,
-            password: param.password,
-            captcha: param.captcha
-        })
+        return http.post("/auth/register", param)
     },
 
-    //无需登录访问
+    // 无需登录访问
     resetPassword(param: ResetPassParam): Promise<any> {
-        return http.post("/auth/reset-pass", {
-            email: param.email,
-            password: param.password,
-            captcha: param.captcha
-        })
+        return http.post("/auth/reset-pass", param)
     },
 
-    //登录访问
-    updatePassword(params: ResetPassParam): Promise<any> {
-        return http.post("/auth/update-pass", {
-            email: params.email,
-            password: params.password,
-            captcha: params.captcha
-        })
+    // 登录访问
+    updatePassword(param: ResetPassParam): Promise<any> {
+        return http.post("/auth/update-pass", param)
     },
 }
 
@@ -84,7 +69,7 @@ export const AccountService: AccountServiceApi = {
 
 export const UserService: UserServiceApi = {
 
-    getAuthorInfo(user_id: number): Promise<User> {
-        return http.get("/user/info/" + user_id)
+    getAuthorInfo(user_id: number): Promise<Author> {
+        return http.get(`/user/info/${user_id}`)
     },
 }

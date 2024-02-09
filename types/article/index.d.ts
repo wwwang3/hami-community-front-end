@@ -39,13 +39,13 @@ declare interface Article {
     collected: boolean // 当前登录用户是否收藏该文章
 }
 
-type SearchParam = PageParam & {
+declare type SearchParam = PageParam & {
     keyword?: string
     type?: number
 }
 
 declare type ArticleParam = PageParam & {
-    cateId: number
+    cateId?: number
 }
 
 declare type UserArticleParam = PageParam & {
