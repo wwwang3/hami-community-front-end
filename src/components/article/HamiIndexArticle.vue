@@ -31,9 +31,9 @@ const showCate = computed(() => {
 //fun
 const getArticles = async (pageNum: number, pageSize: number): Promise<PageData<Article>> => {
     return new Promise((resolve, reject) => {
-        let promise = ArticleService.listNewestArticles({
-            pageNum: pageNum,
-            pageSize: pageSize,
+        let promise = ArticleService.listNewestArticle({
+            current: pageNum,
+            size: pageSize,
             cateId: $props.cateId
         })
         setTimeout(() => {

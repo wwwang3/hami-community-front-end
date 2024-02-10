@@ -3,58 +3,19 @@ import { RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[] = [
     {
         path: "/",
+        alias: "/recommend",
         name: "Index",
         component: () => import("@/views/IndexPage.vue"),
     },
     {
-        path: "/recommend",
-        name: "IndexRecommend",
+        path: "/:activePath(recommend|backend|front-end|android|ios|ai|tool|coding|reading|follow)",
+        name: "IndexPage",
+        props: true,
         component: () => import("@/views/IndexPage.vue"),
     },
     {
-        path: "/backend",
-        name: "IndexBackend",
-        component: () => import("@/views/IndexPage.vue"),
-    },
-    {
-        path: "/front-end",
-        name: "IndexFrontend",
-        component: () => import("@/views/IndexPage.vue"),
-    },
-    {
-        path: "/android",
-        name: "IndexAndroid",
-        component: () => import("@/views/IndexPage.vue"),
-    },
-    {
-        path: "/ios",
-        name: "IndexIOS",
-        component: () => import("@/views/IndexPage.vue"),
-    },
-    {
-        path: "/ai",
-        name: "IndexAi",
-        component: () => import("@/views/IndexPage.vue"),
-    },
-    {
-        path: "/tool",
-        name: "IndexTool",
-        component: () => import("@/views/IndexPage.vue"),
-    },
-    {
-        path: "/coding",
-        name: "IndexCoding",
-        component: () => import("@/views/IndexPage.vue"),
-    },
-    {
-        path: "/reading",
-        name: "IndexReading",
-        component: () => import("@/views/IndexPage.vue"),
-    },
-    {
-        path: "/follow",
-        name: "IndexFollow",
-        component: () => import("@/views/IndexPage.vue"),
+        path: "/:activePath",
+        redirect: "/",
     },
     {
         path: "/article/:id(\\d+)",
@@ -65,11 +26,13 @@ const routes: RouteRecordRaw[] = [
     {
         path: "/login",
         name: "Login",
+        props: {mode: "login"},
         component: () => import("@/views/LoginRegisterPage.vue"),
     },
     {
         path: "/register",
         name: "Register",
+        props: {mode: "register"},
         component: () => import("@/views/LoginRegisterPage.vue"),
     },
     {
@@ -187,8 +150,15 @@ const routes: RouteRecordRaw[] = [
         ]
     },
     {
-        path: "/editor/drafts/:id",
+        path: "/editor/drafts/:draftId(\\d+)",
         name: "EditorPage",
+        props: true,
+        component: () => import("@/views/EditorPage.vue"),
+    },
+    {
+        path: "/editor/drafts/new",
+        name: "EditorPage",
+        props: {draftId: "new"},
         component: () => import("@/views/EditorPage.vue"),
     },
     {

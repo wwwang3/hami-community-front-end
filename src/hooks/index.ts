@@ -1,4 +1,4 @@
-import { computed, ComputedRef, reactive, Ref, ref, nextTick} from "vue"
+import { reactive, Ref, ref } from "vue"
 import { isEmpty } from '@/utils'
 import { UnwrapNestedRefs } from '@vue/reactivity'
 
@@ -90,7 +90,7 @@ type ScrollPage<T, P extends Array<any>> = {
     size: number
     total: number
     init: (...params: P) => void
-    hasNext: ComputedRef<boolean>
+    hasNext: boolean
     next: (...params: P) => Promise<Array<T>>
 }
 type UsePageProps<T, P extends Array<any>> = {
@@ -105,23 +105,21 @@ export function useScrollPage<T, P extends any[] = any[]>(props: UsePageProps<T,
     const page = ref({
         current: 1,
         size: Math.max(5, size),
-        total: 0
+        total: 0,
+        hasNext: true
     } as ScrollPage<T, P>) as Ref<ScrollPage<T, P>>
     const onRequest = ref(false)
     const inited = ref(false)
     const dataList = reactive<Array<T>>([])
 
-    page.value.hasNext = computed(() => {
-        return page.value.current < Math.ceil(page.value.total / page.value.size)
-    })
     page.value.init = async (...params: P) => {
         //初始化 调用此方法才会开始分页
         inited.value = false
         _initProps()
         try {
             let data: PageData<T> = await queryNext({
-                pageNum: page.value.current,
-                pageSize: page.value.size
+                current: page.value.current,
+                size: page.value.size
             }, ...params)
             page.value.total = data.total
             _refreshData(data.data)
@@ -129,7 +127,7 @@ export function useScrollPage<T, P extends any[] = any[]>(props: UsePageProps<T,
         } catch (e) {
             return Promise.reject(e)
         } finally {
-            inited.value = false
+            inited.value = true
         }
     }
     page.value.next = async (...params: P): Promise<Array<T>> => {
@@ -139,8 +137,8 @@ export function useScrollPage<T, P extends any[] = any[]>(props: UsePageProps<T,
         page.value.current++
         try {
             let data: PageData<T> = await queryNext({
-                pageNum: page.value.current,
-                pageSize: page.value.size
+                current: page.value.current,
+                size: page.value.size
             }, ...params)
             _refreshData(data.data)
             if (isEmpty(data.data)) {
@@ -174,6 +172,12 @@ export function useScrollPage<T, P extends any[] = any[]>(props: UsePageProps<T,
             //@ts-ignore
             dataList.push(...data)
         }
+        page.value.hasNext = calcHasNext(data)
+    }
+
+    const calcHasNext = (data: T[] | null) => {
+        if (page.value.total === -1) return !isEmpty(data)
+        return page.value.current < Math.ceil(page.value.total / page.value.size)
     }
     return [onRequest, page, dataList as UnwrapNestedRefs<T>[]]
 }

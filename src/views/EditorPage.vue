@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, provide, ref, unref, watch } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { computed, onMounted, provide, ref, Ref, unref, watch } from "vue"
+import { useRouter } from "vue-router"
 import { isEmpty } from '@/utils'
 import { useAutoLoading, useRequest } from '@/hooks'
 import { ArticleDraftService } from '@/service/modules/article.ts'
@@ -12,26 +12,31 @@ import { defaultAvatar } from "@/store/images.ts"
 import HamiMdEditor from '@/components/md/HamiMdEditor.vue'
 import HamiPublishArticleForm from '@/components/creator/HamiPublishArticleForm.vue'
 
-const $route = useRoute()
 const $router = useRouter()
 const userStore = useUserStore()
 
-const draftId = ref("")
-const draft = ref<ArticleDraftDetail>({
+const $props = defineProps({
+    draftId: {
+        type: String,
+        default: -1
+    }
+})
+
+const draft = ref<ArticleDraft>({
     id: -1,
     articleId: -1,
     userId: -1,
     categoryId: -1,
-    tags: [],
+    tagIds: [],
     content: '',
     picture: '',
     summary: '',
     title: '',
-    ctime: undefined,
-    mtime: undefined,
+    ctime: Date.now(),
+    mtime: Date.now(),
     state: 0
 })
-const [onLoading, getDraft] = useRequest<ArticleDraftDetail, [number]>({
+const [onLoading, getDraft] = useRequest<ArticleDraft, [number]>({
     run: (...params) => ArticleDraftService.getArticleDraft(...params)
 })
 
@@ -55,39 +60,35 @@ const text = computed(() => {
 })
 
 
-onBeforeMount(async () => {
-    await handleRouteChange()
+onMounted(() => {
+    handleRouteChange()
 })
 
-watch(() => $route.params, (newVal, oldVal) => {
-    if ($route.path.includes("/editor/drafts") && !isEmpty($route.params) && !isEmpty($route.params.id)) {
-        handleRouteChange()
-    }
+watch(() => $props.draftId, (_newVal, _oldVal) => {
+    handleRouteChange()
 })
 
 //fun
 const handleRouteChange = async () => {
-    let params = $route.params
-    draftId.value = params.id as string
-    if (draftId.value === "new") {
+    if ($props.draftId === "new") {
         draft.value = {
             id: -1,
             articleId: -1,
             userId: -1,
             categoryId: -1,
-            tags: [],
+            tagIds: [],
             content: '',
             picture: '',
             summary: '',
             title: '',
-            ctime: undefined,
-            mtime: undefined,
+            ctime: Date.now(),
+            mtime: Date.now(),
             state: 0
-        } as ArticleDraftDetail
+        }
     } else {
         const loading = $message.loading("加载中...")
         try {
-            draft.value = await getDraft(parseInt(draftId.value)) as ArticleDraftDetail
+            draft.value = await getDraft(parseInt($props.draftId))
         } catch (e) {
             $message.notifyError(e as string)
         } finally {
@@ -110,8 +111,9 @@ const handleClickOutSide = () => {
 
 const [onProcess, process] = useAutoLoading()
 
-provide(ON_PUBLISH_ARTICLE, onProcess)
-provide(DRAFT_REF, draft)
+provide<Ref<Boolean>>(ON_PUBLISH_ARTICLE, onProcess)
+provide<Ref<ArticleDraft>>(DRAFT_REF, draft)
+
 const handleSave = async () => {
     console.log(draft.value)
     let loading = $message.loading("保存中....")
@@ -119,11 +121,8 @@ const handleSave = async () => {
         if (!hasDraftId()) {
             let data = await handleCreate();
             if (!isEmpty(data)) {
-                draft.value.id = data.id
-                draft.value.articleId = data.articleId
-                draftId.value = "" + draft.value.id
                 $message.success("保存草稿成功")
-                await $router.replace("/editor/drafts/" + draft.value.id)
+                await $router.replace("/editor/drafts/" + data.id)
             }
         } else {
             let data = await handleUpdate()
@@ -132,7 +131,7 @@ const handleSave = async () => {
             }
         }
     } catch (e) {
-        console.log(e)
+        console.error(e)
         $message.error("保存失败")
     } finally {
         loading?.close()
@@ -144,7 +143,7 @@ const handleCreate = async (): Promise<ArticleDraft> => {
         summary: draft.value.summary,
         picture: draft.value.picture,
         title: draft.value.title,
-        tagIds: draft.value.tags === null ? null : draft.value.tags.map(t => t.id),
+        tagIds: draft.value.tagIds,
         categoryId: draft.value.categoryId,
         content: draft.value.content
     }))
@@ -153,25 +152,25 @@ const handleCreate = async (): Promise<ArticleDraft> => {
 const handleUpdate = async (): Promise<ArticleDraft> => {
     if (onProcess.value) {
         $message.notifyError("还没更新完~~")
-        return Promise.resolve(null)
+        return Promise.resolve({} as ArticleDraft)
     }
     return process(ArticleDraftService.updateDraft({
         id: draft.value.id,
         summary: draft.value.summary,
         picture: draft.value.picture,
         title: draft.value.title,
-        tagIds: draft.value.tags === null ? null : draft.value.tags.map(t => t.id),
+        tagIds: draft.value.tagIds,
         categoryId: draft.value.categoryId,
         content: draft.value.content
     }))
 }
 
 const handleEnsure = async () => {
-    //发表文章
+    // 发表文章
     if (!checkParam()) return
     let loading = $message.loading("请稍后...")
     try {
-        //先保存
+        // 先保存
         await handleSave()
         if (!hasDraftId()) {
             $message.notifyError("系统错误")
@@ -179,7 +178,7 @@ const handleEnsure = async () => {
         }
         let data = await process(ArticleDraftService.publishArticle(draft.value.id))
         if (!isEmpty(data) || isEmpty(data.articleId)) {
-            //跳转到发表成功页面
+            // 跳转到发表成功页面
             draft.value.articleId = data.articleId
             $message.notifySuccess("发表成功")
             window.sessionStorage.setItem("p_article_id", data.articleId + "")
@@ -195,8 +194,8 @@ const handleEnsure = async () => {
     }
 }
 
-const handleSaveDraft = (val: string, h: Promise<string>) => {
-    h.then(html => {
+const handleSaveDraft = (_val: string, h: Promise<string>) => {
+    h.then(_html => {
         handleSave()
     })
 }

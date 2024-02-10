@@ -5,16 +5,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import HamiLoginRegister from '@/components/auth/HamiLoginRegister.vue'
-import { useRoute } from 'vue-router'
 
-const $route = useRoute()
+type ModeType = {
+    mode: "login" | "register"
+}
 
-const mode = computed(() => {
-    return $route.fullPath === "/login" ? "login" : "register";
+const $props = withDefaults(defineProps<ModeType>(), {
+    mode: "login"
 })
-
 </script>
 
 <style lang="less" scoped>

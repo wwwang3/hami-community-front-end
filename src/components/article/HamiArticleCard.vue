@@ -41,9 +41,9 @@ const userStore = useUserStore()
 
 //custom var
 const article = ref<ArticleInfo>($props.article.articleInfo)
-const author = ref<User>($props.article.author)
-const category = ref<CategoryDTO>($props.article.category)
-const tags = ref<TagDTO[]>($props.article.tags)
+const author = ref<Author>($props.article.author)
+const category = ref<Category>($props.article.category)
+const tags = ref<Tag[]>($props.article.tags)
 const stat = ref<ArticleStat>($props.article.stat)
 
 const link = computed(() => {
@@ -90,7 +90,7 @@ const handleBeforeEnter = () => {
     showInfo.value = true
 }
 
-const getTagType = (index: number | number) => {
+const getTagType = (index: number) => {
     let i = strToNum(index)
     return TAG_NODES[(isNaN(i) ? 0 : i) % TAG_NODES.length]
 }
@@ -127,7 +127,7 @@ const getTagType = (index: number | number) => {
                             <span class="text">{{ ctime }}</span>
                         </div>
                         <span class="category" v-if="showCate">
-                        {{ category.categoryName }}
+                        {{ category.name }}
                     </span>
                     </div>
                     <div class="right-panel">
@@ -183,8 +183,8 @@ const getTagType = (index: number | number) => {
                     </div>
                     <div class="tags">
                         <template v-for="tag in tags">
-                            <el-tag class="tag-item" :type="getTagType(tag.tagId)" size="small">
-                                {{ tag.tagName }}
+                            <el-tag class="tag-item" :type="getTagType(tag.id)" size="small">
+                                {{ tag.name }}
                             </el-tag>
                         </template>
                     </div>

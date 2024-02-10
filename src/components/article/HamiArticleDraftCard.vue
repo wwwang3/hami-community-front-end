@@ -5,7 +5,7 @@ import { $message } from '@/utils/message.ts'
 import { MoreFilled } from '@element-plus/icons-vue'
 
 interface CardProps {
-    draft: ArticleDraftDetail,
+    draft: ArticleDraft,
     index: number
 }
 
@@ -13,7 +13,7 @@ const $router = useRouter()
 const $route = useRoute()
 const $props = defineProps<CardProps>()
 const $emit = defineEmits<{
-    (e: "delete", item: ArticleDraftDetail, index: number): any
+    (e: "delete", item: ArticleDraft, index: number): any
 }>()
 //watch
 const handleEdit = async () => {
@@ -55,11 +55,11 @@ const handleDelete = async () => {
             </div>
             <div class="card-body">
                 <div class="ctime" v-if="!isEmpty($props.draft.ctime)">
-                    创建时间: {{ formatDateTime($props.draft.ctime as Date) }}
+                    创建时间: {{ formatDateTime($props.draft.ctime) }}
                 </div>
                 <div class="divider" v-if="!isEmpty($props.draft.ctime) && !isEmpty($props.draft.mtime)">·</div>
                 <div class="mtime" v-if="!isEmpty($props.draft.mtime)">
-                    最后更新于: {{ formatDateTime($props.draft.mtime as Date) }}
+                    最后更新于: {{ formatDateTime($props.draft.mtime) }}
                 </div>
             </div>
         </div>

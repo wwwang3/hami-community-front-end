@@ -12,15 +12,15 @@ onMounted(() => {
     frameMode.value = $route.matched[1]!.path;
 })
 
-watch(() => $route.path, (newValue, oldValue) => {
+watch(() => $route.path, (newValue, _) => {
     if (newValue.includes("/creator/")) {
         let matched: RouteLocationMatched[] = $route.matched
         frameMode.value = matched[1]!.path
     }
 })
 
-const handleSelect = (index: string, indexPath: string[], item: MenuItemClicked,
-                      routeResult?: Promise<void | NavigationFailure> | undefined): any => {
+const handleSelect = (index: string, _indexPath: string[], _item: MenuItemClicked,
+                      _routeResult?: Promise<void | NavigationFailure> | undefined): any => {
     $router.push(index)
 }
 

@@ -2,7 +2,7 @@
 
 declare type NotifyType = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
 
-declare interface Info {
+declare interface NotifyInfo {
     id: number // 关联的对象ID
     name: string // 关联对象的名称
     image: string // 图片
@@ -15,9 +15,9 @@ declare interface NotifyMsg {
     ctime: number // 消息创建时间
     state: 0 | 1 // 消息状态
     type: NotifyType // 消息类型
-    sender: Info // 消息发送者
-    relatedInfo: Info // 关联的对象信息
-    itemInfo: Info // 消息内容
+    sender: NotifyInfo // 消息发送者
+    relatedInfo: NotifyInfo // 关联的对象信息
+    itemInfo: NotifyInfo // 消息内容
 }
 
 declare interface NotifyCountMap {

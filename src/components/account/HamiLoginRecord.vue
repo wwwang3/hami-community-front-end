@@ -21,11 +21,8 @@ computed(() => {
     return page.value.current < Math.ceil(page.value.total / page.value.size)
 })
 
-const [onRequest, getLoginRecords] = useRequest<PageData<LoginRecord>, [any]>({
-    run: (...params) => AccountService.getLoginRecords({
-        pageSize: page.value.size,
-        pageNum: page.value.current
-    })
+const [onRequest, getLoginRecords] = useRequest<PageData<LoginRecord>, [PageParam]>({
+    run: (...params) => AccountService.getLoginRecords(...params)
 })
 const records = ref<LoginRecord[]>([] as LoginRecord[])
 const inited = ref(false)
@@ -33,7 +30,10 @@ const inited = ref(false)
 onMounted(async () => {
     try {
         inited.value = false
-        let pageData = await getLoginRecords(null)
+        let pageData = await getLoginRecords({
+            current: page.value.size,
+            size: page.value.current
+        })
         page.value.total = pageData.total
         records.value = pageData.data as LoginRecord[]
     } catch (e) {
@@ -51,9 +51,12 @@ const calculateIp = (ipInfo: IpInfo) => {
     }
     return isEmpty(ipInfo.ip) ? "未知IP属地" : ipInfo.ip
 }
-const handleChange = async (val: number) => {
+const handleChange = async (_val: number) => {
     try {
-        let pageData = await getLoginRecords(null)
+        let pageData = await getLoginRecords({
+            current: page.value.size,
+            size: page.value.current
+        })
         records.value = pageData.data as LoginRecord[]
     } catch (e) {
         records.value = []

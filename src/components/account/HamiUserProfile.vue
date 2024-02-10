@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from "vue"
-import { useRouter } from "vue-router"
 import { useRequest } from '@/hooks'
 import { AccountService } from '@/service/modules/user.ts'
 import HamiLoading from '@/components/common/HamiLoading.vue'
@@ -18,13 +17,12 @@ import { $message, isEmpty } from '@/utils'
 import useUserStore from '@/store/modules/user.ts'
 import ImageService from '@/service/modules/image.ts'
 
-const $router = useRouter()
 
 const userStore = useUserStore()
 
 const [onLoading, getProfile] = useRequest<LoginProfile, []>({
     loading: true,
-    run: (...params) => userStore.getProfile()
+    run: (..._params) => userStore.getProfile()
 })
 
 const [onUpdate, handleUpdateProfile] = useRequest<any, [UserProfileParam]>({
@@ -32,8 +30,8 @@ const [onUpdate, handleUpdateProfile] = useRequest<any, [UserProfileParam]>({
     run: (...params) => AccountService.updateUserProfile(...params)
 })
 
-const [onUpload, handleUpload] = useRequest<string, [File]>({
-    run: (...params) => ImageService.upload(...params, 'avatar')
+const [onUpload, handleUpload] = useRequest<string, [ImageUploadParam]>({
+    run: (...params) => ImageService.upload(...params)
 })
 
 const userProfileParam = reactive<UserProfileParam>({
@@ -101,7 +99,10 @@ const updateAvatar = async (options: UploadRequestOptions) => {
     //更新头像
     try {
         //返回头像地址
-        userProfileParam.avatar = await handleUpload(options.file)
+        userProfileParam.avatar = await handleUpload({
+            image: options.file,
+            type: "avatar"
+        })
         $message.success("上传成功")
         return Promise.resolve()
     } catch (e) {
@@ -118,7 +119,6 @@ const handleExceed: UploadProps['onExceed'] = async (files) => {
 }
 
 const handleBeforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
-    console.log(rawFile)
     if (!/^.*\.(jpg|jpeg|png|webp)$/i.test(rawFile.name)) {
         $message.error("只支持png, jpg, webp等格式")
         return false
@@ -132,7 +132,7 @@ const handleBeforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
 const getChangedProp = (): UserProfileParam => {
     let profile = {} as UserProfileParam
     Object.keys(userProfileParam)
-        .forEach((key, index) => {
+        .forEach((key, _index) => {
             // @ts-ignore
             if (userProfileParam[key] !== userProfile.value![key]) {
                 // @ts-ignore

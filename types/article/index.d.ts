@@ -31,7 +31,7 @@ declare interface Article {
     id: number // 文章ID
     userId: number // 作者ID
     articleInfo: ArticleInfo // 文章基本信息
-    author: User // 作者信息
+    author: Author // 作者信息
     category: Category // 分类信息
     tags: Tag[] // 标签列表
     stat: ArticleStat // 文章数据

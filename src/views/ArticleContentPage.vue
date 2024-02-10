@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, provide, ref, watch } from "vue"
+import { computed, onBeforeMount, provide, Ref, ref, watch } from "vue"
 import { useRequest } from '@/hooks'
 import { ArticleService } from '@/service/modules/article.ts'
 import { Calendar, Clock, View } from '@element-plus/icons-vue'
@@ -18,32 +18,33 @@ import HamiBackTop from '@/components/common/HamiBackTop.vue'
 const $props = defineProps<{
     id: string
 }>()
-const [onLoading, getArticleContent] = useRequest({
+const [onLoading, getArticleContent] = useRequest<Article, [number]>({
     loading: true,
-    run: (...params) => ArticleService.getArticleContent(...params as Parameters<typeof ArticleService.getArticleContent>)
+    run: (...params) => ArticleService.getArticleContent(...params)
 })
 const cateStore = useCateStore()
 const articleId = ref<number>(parseInt($props.id))
-const article = ref<ArticleContent>({
-    content: ''
-} as ArticleContent)
+const article = ref<Article>() as Ref<Article>
 
 
 onBeforeMount(async () => {
     await getArticle()
 })
 
-provide<User>(COMMENT_AREA_OWNER, article.value?.author)
+provide<Author | undefined>(COMMENT_AREA_OWNER, article.value?.author)
 
 
 const mdId = "hami-md-viewer"
 const scrollElement = document.documentElement;
 
+const content = computed<string>(() => {
+    return article.value?.articleInfo?.content || ""
+})
+
 const activeLikeType = computed(() => {
     return article.value?.liked ? "primary" : "info"
 })
 
-const inited = ref(false)
 const activeCollectType = computed(() => {
     return article.value?.collected ? "primary" : "info"
 })
@@ -59,12 +60,12 @@ const mtime = computed(() => {
 })
 
 const words = computed(() => {
-    let count = article.value?.content?.length || 0
+    let count = content.value.length
     return count > 1000 ? (count / 1000).toFixed(1) + "k" : count
 })
 
 const viewTime = computed(() => {
-    return Math.ceil((article.value?.content?.length || 0) / 275)
+    return Math.ceil((content.value.length || 0) / 275)
 })
 
 const userLink = computed(() => {
@@ -72,12 +73,13 @@ const userLink = computed(() => {
 })
 
 const cateRoute = computed(() => {
-    return cateStore.findCateRoute(article.value.category?.categoryId)
+    return cateStore.findCateRoute(article.value?.category?.id)
 })
 
-watch(() => $props.id, (newVal, oldVal) => {
+// @ts-ignore
+watch(() => $props.id, (newVal, _) => {
     // articleId.value = parseInt($props.id)
-    articleId.value = parseInt($props.id)
+    articleId.value = parseInt(newVal)
     getArticle()
 })
 
@@ -96,6 +98,7 @@ const handleLike = () => {
             article.value.liked = false
         }
     }).catch(e => {
+        console.error(e)
         $message.error("点赞失败")
     })
 }
@@ -111,6 +114,7 @@ const handleCollect = () => {
             }
         })
         .catch(e => {
+            console.error(e)
             $message.error("收藏失败")
         })
 }
@@ -127,7 +131,7 @@ const getArticle = async () => {
         liked.value = article.value.liked
         collected.value = article.value.collected
     } catch (e) {
-        console.log(e)
+        console.error(e)
     } finally {
         loading?.close()
     }
@@ -196,13 +200,13 @@ const getArticle = async () => {
                             <span class="text">阅读量: {{ article.stat?.views }}</span>
                         </el-tag>
                     </div>
-                    <HamiMdViewer v-model="article.content"></HamiMdViewer>
+                    <HamiMdViewer v-model="content"></HamiMdViewer>
                     <div class="content-bottom">
                         <div class="tags">
                             <span>标签: </span>
                             <template v-for="tag in article.tags">
                                 <el-tag size="default">
-                                    {{ tag.tagName }}
+                                    {{ tag.name }}
                                 </el-tag>
                             </template>
                         </div>
@@ -210,7 +214,7 @@ const getArticle = async () => {
                             <span>分类: </span>
                             <router-link :to="cateRoute">
                                 <el-tag type="danger">
-                                    {{ article?.category?.categoryName }}
+                                    {{ article?.category.name}}
                                 </el-tag>
                             </router-link>
                         </div>

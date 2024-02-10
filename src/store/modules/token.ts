@@ -43,8 +43,8 @@ export const useTokenStore = defineStore("token", () => {
         } catch (e) {
             return Promise.reject(e)
         } finally {
-            //退出登录失败, token出了问题
-            //管tmd, 全给他移除了, 重新登录去
+            // 退出登录失败, token出了问题
+            // 管tmd, 全给他移除了, 重新登录去
             clear()
         }
     }

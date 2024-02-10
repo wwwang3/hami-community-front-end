@@ -54,12 +54,15 @@ const getCaptcha = async () => {
     }
     //禁用按钮
     onCountDown.value = true
-    run(AuthService.getCaptcha("update", resetPassParam.email))
+    run(AuthService.getCaptcha({
+        email: resetPassParam.email,
+        type: 2
+    }))
         .then(() => {
             $message.success("发送成功")
             startCountdown()
         })
-        .catch(e => {
+        .catch(_ => {
             onCountDown.value = false
         })
 }

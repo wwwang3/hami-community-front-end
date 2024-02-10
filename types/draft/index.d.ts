@@ -9,7 +9,7 @@ declare interface ArticleDraft {
     articleId: number // 文章ID
     userId: number // 作者ID
     categoryId: number // 分类ID
-    tagIds: Array<number> // 标签ID
+    tagIds: number[] // 标签ID
     title: string // 标题
     summary: string // 简介
     content: string //内容
@@ -22,7 +22,7 @@ declare interface ArticleDraft {
 }
 
 declare interface ArticleDraftParam {
-    id: number // 草稿ID
+    id?: number // 草稿ID
     categoryId: number // 分类ID
     tagIds: Array<number> // 标签ID
     title: string // 标题

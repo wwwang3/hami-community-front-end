@@ -48,7 +48,10 @@ const handleSave = async (value: string, h: Promise<string>) => {
 const handleUploadImg = async (files: Array<File>, callback: (urls: Array<string>) => void) => {
     const res = await Promise.all(
         files.map((file) => {
-            return ImageService.upload(file, 'article')
+            return ImageService.upload({
+                image: file,
+                type: 'article-picture'
+            })
         })
     );
 

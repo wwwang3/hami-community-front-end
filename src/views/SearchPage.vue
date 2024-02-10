@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue"
-import { isEmpty } from '@/utils'
 import { SearchService } from '@/service/modules/search.ts'
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { HamiScrollListInstance } from '@/components/types'
@@ -21,7 +20,7 @@ onMounted(() => {
 })
 
 watch(() => $props.keyword, (newVal: string, oldVal: string) => {
-    if (isEmpty(newVal)) {
+    if (newVal.length < 2) {
         return
     } else {
         searchArticleList.value?.init()
@@ -29,9 +28,12 @@ watch(() => $props.keyword, (newVal: string, oldVal: string) => {
 })
 
 const handleQuery = (current: number, size: number) => {
+    if ($props.keyword.length < 2) {
+        return Promise.reject("关键字最少两个字符~")
+    }
     return SearchService.searchArticle({
-        pageNum: current,
-        pageSize: size,
+        current: current,
+        size: size,
         keyword: $props.keyword
     })
 }

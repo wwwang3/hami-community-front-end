@@ -27,14 +27,14 @@ const publishForm = ref<FormInstance>()
 const tagList = reactive<Array<Tag>>([] as Array<Tag>)
 const categoryList = reactive<Array<Category>>([] as Array<Category>)
 
-const [onUpload, processUpload] = useRequest<string, [File]>({
-    run: (...params) => ImageService.upload(...params, "article-picture")
+const [onUpload, processUpload] = useRequest<string, [ImageUploadParam]>({
+    run: (...params) => ImageService.upload(...params)
 })
 const picRef = ref()
 
 //inject
 const onProcess = inject(ON_PUBLISH_ARTICLE, false)
-const draft = inject(DRAFT_REF, {} as Ref<ArticleDraftDetail>)
+const draft = inject(DRAFT_REF, {} as Ref<ArticleDraft>)
 
 //事件
 const $emit = defineEmits<{
@@ -51,7 +51,7 @@ onMounted(() => {
 //fun
 const initCategory = async () => {
     try {
-        let data = await CategoryService.getAllCategories()
+        let data = await CategoryService.getAllCategory()
         categoryList.push(...data)
     } catch (e) {
         console.log(e)
@@ -60,7 +60,7 @@ const initCategory = async () => {
 const initTags = async () => {
     try {
         //全查出来算了 也就几十个
-        let data = await TagService.getAllTags()
+        let data = await TagService.getAllTag()
         tagList.push(...data)
     } catch (e) {
         console.log(e)
@@ -74,7 +74,10 @@ const handleUploadPicture = async (options: UploadRequestOptions) => {
     //更新头像
     try {
         //返回头像地址
-        draft.value.picture = await processUpload(options.file)
+        draft.value.picture = await processUpload({
+            image: options.file,
+            type: "article-picture",
+        })
         $message.success("上传成功")
         return Promise.resolve()
     } catch (e) {
@@ -103,7 +106,7 @@ const checkItem = () => {
         $message.notifyError("请选择分类")
         return false
     }
-    if (isEmpty(draft.value.tags)) {
+    if (isEmpty(draft.value.tagIds)) {
         $message.notifyError("请选择1-3个标签")
         return false
     }
@@ -134,7 +137,7 @@ const checkItem = () => {
             <el-form-item prop="tags" label="标签:" class="tags">
                 <el-select
                     placeholder="请选择标签"
-                    v-model="draft.tags as Array<Tag>"
+                    v-model="draft.tagIds"
                     multiple
                     :multiple-limit="3"
                     filterable

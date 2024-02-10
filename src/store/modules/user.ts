@@ -3,7 +3,6 @@ import { isEmpty } from '@/utils'
 import { computed, ref } from 'vue'
 import store from '@/store'
 import { AccountService } from '@/service/modules/user.ts'
-import { loadTokenStore } from '@/store/modules/token.ts'
 import { useRequest } from '@/hooks'
 
 const useUserStore = defineStore("user", () => {
@@ -11,24 +10,33 @@ const useUserStore = defineStore("user", () => {
     const userInfo = ref<LoginProfile>({
         avatar: '',
         blog: '',
+        collects: 0,
         company: '',
         ctime: Date.now(),
         followers: 0,
         followings: 0,
-        collects: 0,
         likes: 0,
         position: '',
         profile: '',
-        stat: undefined,
+        stat: {
+            totalArticles: 0,
+            totalCollects: 0,
+            totalComments: 0,
+            totalFollowers: 0,
+            totalFollowings: 0,
+            totalLikes: 0,
+            totalViews: 0,
+            userId: -1
+        },
         tag: '',
         userId: -1,
         username: ''
     })
     const inited = ref(false)
-    const tokenStore = loadTokenStore()
+    // const tokenStore = loadTokenStore()
 
     const [onLoading, process] = useRequest<LoginProfile, any[]>({
-        run: (...params) => AccountService.getLoginProfile()
+        run: (..._params) => AccountService.getLoginProfile()
     })
     const getProfile = async (): Promise<LoginProfile> => {
         console.log("start to get profile")
@@ -71,7 +79,7 @@ const useUserStore = defineStore("user", () => {
 
     const sync = async (): Promise<void> => {
         const start = Date.now()
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _reject) => {
             const timer = setInterval(() => {
                 //加载过了 或者超时
                 if ((inited.value && !onLoading.value) || timeout(start, 3000)) {

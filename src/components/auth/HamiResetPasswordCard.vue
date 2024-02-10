@@ -9,11 +9,15 @@ import { AuthService } from '@/service/modules/user.ts'
 import { useAutoLoading, useCountdown, useRequest } from '@/hooks'
 import { validateEmail, validatePass, validateRePassword } from '@/utils/validator.ts'
 
+interface ResetPassFormParam extends ResetPassParam {
+    rePassword: string
+}
+
 const $router = useRouter();
 
 const step = ref<number>(1)
 const resetPassForm = ref<FormInstance>()
-const resetPassParam = reactive<ResetPassParam>({
+const resetPassParam = reactive<ResetPassFormParam>({
     email: "",
     password: "",
     rePassword: "",
@@ -54,13 +58,13 @@ const [onReset, doResetPass] = useRequest<any, [ResetPassParam]>({
     loading: false,
     run: (...params) => AuthService.resetPassword(...params)
 })
-const getCaptcha = async () => {
+const getCaptcha = () => {
     if (isEmpty(resetPassParam.email)) {
         return
     }
     //禁用按钮
     onProcess.value = true
-    run(AuthService.getCaptcha("reset", resetPassParam.email))
+    run(AuthService.getCaptcha({email: resetPassParam.email, type: 1}))
         .then(() => {
             $message.success("发送成功")
             startCountdown()

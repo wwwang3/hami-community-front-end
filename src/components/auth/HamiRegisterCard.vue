@@ -65,7 +65,7 @@
                 </el-row>
             </el-form-item>
             <div class="register-button" @click="register(registerForm)">
-                <el-button  :disabled="onRegister" color="#3f4197" v-if="themeStore.isDark">注册</el-button>
+                <el-button :disabled="onRegister" color="#3f4197" v-if="themeStore.isDark">注册</el-button>
                 <el-button type="primary" :disabled="onRegister" v-else>注册</el-button>
             </div>
         </el-form>
@@ -84,10 +84,14 @@ import { useCountdown, useRequest } from '@/hooks'
 import { LOGIN_REGISTER_SUCCESS } from '@/store/keys.ts'
 import useThemeStore from '@/store/modules/theme.ts'
 
+interface RegisterFormParam extends RegisterParam {
+    rePassword: string
+}
+
 const themeStore = useThemeStore()
 const success = inject<Function>(LOGIN_REGISTER_SUCCESS)
 const registerForm = ref<FormInstance>()
-const registerParam = reactive<RegisterParam>({
+const registerParam = reactive<RegisterFormParam>({
     username: '',
     email: '',
     password: '',
@@ -99,7 +103,7 @@ const [onRegister, doRegister] = useRequest<any, [RegisterParam]>({
     run: (...params) => AuthService.register(...params)
 })
 
-const [onLoading, doGetCaptcha] = useRequest<void, ["register" | "reset" | "update", string]>({
+const [onLoading, doGetCaptcha] = useRequest<void, [CaptchaSendParam]>({
     run: (...params) => AuthService.getCaptcha(...params)
 })
 const [captchaText, onProcess, startCountdown] = useCountdown({
@@ -156,7 +160,10 @@ const getCaptcha = async () => {
     }
     //禁用按钮
     onProcess.value = true
-    doGetCaptcha("register", registerParam.email)
+    doGetCaptcha({
+        email: registerParam.email,
+        type: 0
+    })
         .then(() => {
             $message.success("发送成功")
             startCountdown()

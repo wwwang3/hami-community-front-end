@@ -9,11 +9,13 @@ import { onPPT } from '@/utils'
 import UpdatePassForm from '@/components/account/UpdatePassForm.vue'
 
 const [onLoading, handleGetAccountInfo] = useRequest<AccountInfo, [any]>({
-    run: (...params) => AccountService.getAccountInfo()
+    run: (..._params) => AccountService.getAccountInfo()
 })
 
 const account = ref<AccountInfo>({
-    email: ''
+    account: '',
+    email: '',
+    id: -1,
 })
 
 const onUpdatePassword = ref(false)
@@ -31,9 +33,11 @@ onMounted(async () => {
 const updateEmail = () => {
     onPPT()
 }
+
 const updatePassword = () => {
     onUpdatePassword.value = true
 }
+
 const deleteAccount = () => {
     onPPT()
 }
@@ -41,6 +45,7 @@ const deleteAccount = () => {
 const handleClick = () => {
     onPPT()
 }
+
 const handleSuccess = () => {
     //修改成功的回调
     onUpdatePassword.value = false

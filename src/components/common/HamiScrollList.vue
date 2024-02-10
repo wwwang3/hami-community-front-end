@@ -1,6 +1,4 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
-
 export default defineComponent({
     name: "HamiScrollList"
 })
@@ -9,11 +7,11 @@ export default defineComponent({
 <script setup lang="ts" generic="T">
 import { computed, nextTick, reactive, ref } from "vue"
 import { useRequest } from '@/hooks'
-import { formatDateTime, isEmpty } from '@/utils'
+import { $message, formatDateTime, isEmpty } from '@/utils'
 import { noDataImg, loadErrorImg } from "@/store/images.ts"
 import HamiEmpty from '@/components/common/HamiEmpty.vue'
 import HamiBackTop from '@/components/common/HamiBackTop.vue'
-import { getRandomTagType, TIMELINE_TAG_NODES, TimelineTagType } from '@/store/modules/category.ts'
+import { TIMELINE_TAG_NODES, TimelineTagType } from '@/store/modules/category.ts'
 export interface ItemType<T> {
     item: T
     index: number
@@ -127,6 +125,9 @@ const _init = () => {
             refreshData(pageData.data as any[])
         })
         .catch(e => {
+            if (typeof e === "string") {
+                $message.error(e)
+            }
             loadingError.value = true
         })
         .finally(() => {
@@ -134,7 +135,7 @@ const _init = () => {
             console.log(`init finish, cost: ${Date.now() - start}ms`)
         })
 }
-const _delete = async (item: any, index: number) => {
+const _delete = async (_item: any, index: number) => {
     if (dataList.length > 0) {
         dataList.splice(index, 1)
     }

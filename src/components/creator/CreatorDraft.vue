@@ -6,17 +6,19 @@ import HamiArticleDraftCard from '@/components/article/HamiArticleDraftCard.vue'
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { HamiScrollListInstance } from '@/components/types'
 
-const creatorDraftList = ref<HamiScrollListInstance<ArticleDraftDetail>>()
+const creatorDraftList = ref<HamiScrollListInstance<ArticleDraft>>()
 
 onMounted(() => {
     creatorDraftList.value?.init()
 })
 
-const handleQuery = (pageNum: number, pageSize: number): Promise<PageData<ArticleDraftDetail>> => {
-    return ArticleDraftService.getDrafts(pageNum, pageSize)
+const handleQuery = (current: number, size: number): Promise<PageData<ArticleDraft>> => {
+    return ArticleDraftService.listDraft({
+        current, size
+    })
 }
 
-const handleDelete = async (item: ArticleDraftDetail, index: number) => {
+const handleDelete = async (item: ArticleDraft, index: number) => {
     //删除草稿
     try {
         await ArticleDraftService.deleteDraft(item.id)

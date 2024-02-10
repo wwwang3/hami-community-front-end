@@ -17,9 +17,9 @@ onMounted(() => {
 })
 
 const handleQuery = (current: number, size: number) => {
-    return ArticleService.listFollowUserUserArticles({
-        pageNum: current,
-        pageSize: size
+    return ArticleService.listFollowUserArticle({
+        current: current,
+        size: size
     })
 }
 

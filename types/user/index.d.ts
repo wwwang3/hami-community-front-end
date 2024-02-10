@@ -1,4 +1,5 @@
 declare interface UserProfile {
+    account?: string // 账号名
     userId: number // 作者ID
     username: string // 用户名
     avatar: string // 头像

@@ -67,8 +67,8 @@ export function ifNull<T = any>(val1: any, val2: any): T {
  * @param time 时间
  * @param format 格式
  */
-export function formatDateTime(time: string | number | Date, format: string = "YYYY-MM-DD HH:mm:ss") {
-    return isEmpty(time) ? "N/A" : dayjs(new Date(time)).format(format)
+export function formatDateTime(time: string | number | Date | undefined, format: string = "YYYY-MM-DD HH:mm:ss") {
+    return isEmpty(time) ? "N/A" : dayjs(new Date(time!)).format(format)
 }
 
 export function calculateLocation(ipInfo: IpInfo) {

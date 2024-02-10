@@ -6,8 +6,8 @@ import { onPPT } from '@/utils'
 import { defaultAvatar } from '@/store/images.ts'
 
 interface UserCardProps {
-    user: User
-    profile?: boolean,
+    user: Author
+    profile?: boolean
     position?: boolean
 }
 

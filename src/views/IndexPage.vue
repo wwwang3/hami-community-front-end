@@ -1,32 +1,26 @@
 <script setup lang="ts">
-import { CateRoutePath, useCateStore } from '@/store/modules/category.ts'
+import type { CateRoutePath } from '@/store/modules/category.ts'
+import { useCateStore } from '@/store/modules/category.ts'
 import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
 import HamiBulletin from '@/components/common/HamiBulletin.vue'
 import HamiCateNav from '@/components/common/HamiCateNav.vue'
 import HamiIndexArticle from '@/components/article/HamiIndexArticle.vue'
 import HamiHotArticle from "@/components/article/HamiHotArticle.vue"
 
-
-const $route = useRoute()
+const $props = withDefaults(defineProps<{
+    activePath: CateRoutePath
+}>(), {
+    activePath: "/recommend"
+})
 
 const cateStore = useCateStore()
 const isFollow = computed(() => {
-    return $route.path === "/follow"
+    return $props.activePath === "/follow"
 })
 
 const cateId = ref<number>(-1)
-const activePath = ref<CateRoutePath | string>("/recommend")
-
-const resolveRoute = (route: string) => {
-    if (route in cateStore.cates) {
-        activePath.value = route === "/" ? "/recommend" : route
-        cateId.value = cateStore.cates[route as CateRoutePath]
-    }
-}
-
-watch(() => $route.path, (newVal) => {
-    resolveRoute(newVal)
+watch(() => $props.activePath, (newVal, _) => {
+    cateId.value = cateId.value = cateStore.cates[newVal]
 }, {
     immediate: true
 })

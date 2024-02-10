@@ -12,9 +12,9 @@ interface SpaceUserProps {
 
 const $props = defineProps<SpaceUserProps>()
 //router, props, inject, provide
-const user = ref<User>() as Ref<User>
+const user = ref<Author>() as Ref<Author>
 
-const [onLoading, getUser] = useRequest<User, [number]>({
+const [onLoading, getUser] = useRequest<Author, [number]>({
     loading: true,
     run: (...params) => UserService.getAuthorInfo(...params)
 })
@@ -27,8 +27,8 @@ const init = async () => {
     }
 }
 
-watch(() => $props.id, async (newVal, oldVal) => {
-    if (!isEmpty($props.id)) {
+watch(() => $props.id, async (newVal, _oldVal) => {
+    if (!isEmpty(newVal)) {
         await init()
     }
 }, {

@@ -37,8 +37,8 @@ const handleDeleteRecord = async (item: ReadingRecord, index: number) => {
 
 const handleQuery = (current: number, size: number) => {
     return ReadingRecordService.listReadingRecord({
-        pageSize: size,
-        pageNum: current,
+        current: size,
+        size: current,
         keyword: keyword.value
     })
 }

@@ -97,11 +97,11 @@ const publishComment = async ({ content, parentId, files, finish, reply }: Submi
         const commentParam: CommentParam = {
             articleId: $props.areaId,
             content: content,
-            contentImg: contentImg,
+            pictures: contentImg,
             rootId: parentId,
             parentId: reply?.id
         }
-        let comment = await CommentService.publishComment(commentParam, !isEmpty(reply))
+        let comment: CommentInfo = await CommentService.publishComment(commentParam, !isEmpty(reply))
         finish({
             id: comment.id,
             parentId: comment.rootId,
@@ -109,7 +109,7 @@ const publishComment = async ({ content, parentId, files, finish, reply }: Submi
             address: calculateLocation(comment.ipInfo),
             content: comment.content,
             likes: comment.likes,
-            contentImg: contentImg,
+            contentImg: contentImg.join("||"),
             createTime: formatDateTime(Date.now()),
             user: {
                 username: commentConfig.user.username,
@@ -127,12 +127,12 @@ const publishComment = async ({ content, parentId, files, finish, reply }: Submi
     }
 }
 
-const uploadImg = async (files: File[] | undefined) => {
-    if (isEmpty(files)) return undefined
-    let requests = files!.map(async (file, index) => {
-        return ImageService.upload(file, 'comment')
+const uploadImg = async (files: File[] | undefined): Promise<string[]> => {
+    if (isEmpty(files)) return Promise.resolve([])
+    let requests = files!.map(async (file, _index) => {
+        return ImageService.upload({ image: file, type: 'comment' })
     });
-    return (await Promise.all(requests)).join("||")
+    return (await Promise.all(requests))
 }
 
 const handleMore = async () => {
@@ -199,34 +199,34 @@ const handleShowInfo = async (uid: string, finish: Function) => {
 
 const handleQueryComments = async (current: number, size: number) => {
     let data = await CommentService.listComment({
-        pageNum: current,
-        pageSize: size,
+        current: current,
+        size: size,
         articleId: $props.areaId,
         sort: sort.value
     })
     page.value.total = data.total
-    return convert(data.data as CommentInfo[])
+    return convert(data.data)
 }
 
 const handleQueryReply = async (rootId: number, current: number, size: number = 10) => {
     let data = await CommentService.listReply({
-        pageNum: current,
-        pageSize: size,
+        current: current,
+        size: size,
         articleId: $props.areaId,
         rootId: rootId
     })
-    let reply = convert(data.data as CommentInfo[])
+    let reply = convert(data.data)
     return {
         total: data.total,
         list: reply
     }
 }
 
-const convert = (comments: CommentInfo[] | null): CommentApi[] | [] => {
+const convert = (comments: Comment[] | null): CommentApi[] | [] => {
     if (isEmpty(comments)) {
         return []
     }
-    return comments!.map((value: CommentInfo, index: number) => {
+    return comments!.map((value: Comment, _index: number) => {
         if (value.liked) {
             commentConfig.user.likeIds.push(value.id as never)
         }
@@ -241,21 +241,21 @@ const convert = (comments: CommentInfo[] | null): CommentApi[] | [] => {
     })
 }
 
-const convertToComment = (comment: CommentInfo): CommentApi => {
+const convertToComment = (comment: Comment): CommentApi => {
     return {
         id: comment.id,
         parentId: comment.rootId,
         uid: comment.userId,
         address: calculateLocation(comment.ipInfo),
         content: comment.content,
-        contentImg: comment.contentImg,
+        contentImg: comment.pictures?.join("||"),
         createTime: formatDateTime(comment.ctime),
         likes: comment.likes,
         user: convertToCommentUser(comment.user)
     }
 }
 
-const convertToCommentUser = (user: User): CommentUserApi => {
+const convertToCommentUser = (user: Author): CommentUserApi => {
     return {
         avatar: user.avatar,
         homeLink: "/user/space/" + user.userId,

@@ -11,7 +11,7 @@ const $router = useRouter()
 const $route = useRoute()
 const notifyStore = useNotifyStore()
 
-watch(() => $route.fullPath, (newVal) => {
+watch(() => $route.fullPath, (newVal, _) => {
     let value = notifyStore.notifyRoutes.find(item => item.path === newVal)
     if (isEmpty(value) || activeRoute.value === value?.path) {
         return
