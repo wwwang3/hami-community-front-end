@@ -5,12 +5,15 @@ const routes: RouteRecordRaw[] = [
         path: "/",
         alias: "/recommend",
         name: "Index",
+        props: {activePath: "/recommend"},
         component: () => import("@/views/IndexPage.vue"),
     },
     {
         path: "/:activePath(recommend|backend|front-end|android|ios|ai|tool|coding|reading|follow)",
         name: "IndexPage",
-        props: true,
+        props: (route) => ({
+            activePath: "/" + route.params.activePath
+        }),
         component: () => import("@/views/IndexPage.vue"),
     },
     {

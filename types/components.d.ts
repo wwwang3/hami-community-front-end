@@ -59,6 +59,8 @@ declare module 'vue' {
     HamiAccountSetting: typeof import('./../src/components/account/HamiAccountSetting.vue')['default']
     HamiArticleCard: typeof import('./../src/components/article/HamiArticleCard.vue')['default']
     HamiArticleDraftCard: typeof import('./../src/components/article/HamiArticleDraftCard.vue')['default']
+    HamiAuthorCard: typeof import('./../src/components/common/HamiAuthorCard.vue')['default']
+    HamiAuthorRank: typeof import('./../src/components/article/HamiAuthorRank.vue')['default']
     HamiBackTop: typeof import('./../src/components/common/HamiBackTop.vue')['default']
     HamiBulletin: typeof import('./../src/components/common/HamiBulletin.vue')['default']
     HamiCateNav: typeof import('./../src/components/common/HamiCateNav.vue')['default']
@@ -116,6 +118,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SpaceUserCard: typeof import('./../src/components/user/SpaceUserCard.vue')['default']
+    StatItem: typeof import('./../src/components/common/StatItem.vue')['default']
     SystemMsgCard: typeof import('./../src/components/notify/card/SystemMsgCard.vue')['default']
     UpdatePassForm: typeof import('./../src/components/account/UpdatePassForm.vue')['default']
   }

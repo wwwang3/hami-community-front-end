@@ -74,3 +74,9 @@ declare interface IdParam {
     id: number | string
     type: number
 }
+
+declare interface Page {
+    current: number
+    size: number
+    total: number
+}

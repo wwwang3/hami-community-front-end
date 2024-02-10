@@ -9,6 +9,7 @@ import loadErrorImg from "/assets/load-error.png"
 import loadErrorImg2 from "/assets/load-error2.png"
 import publishedImg from "/assets/empty-channel.png"
 import favicon from "/assets/favicon.png"
+import AuthorRankImg from "/assets/author.png"
 
 export {
     noDataImg,
@@ -21,5 +22,6 @@ export {
     loadErrorImg2,
     publishedImg,
     defaultAvatar,
-    favicon
+    favicon,
+    AuthorRankImg
 }

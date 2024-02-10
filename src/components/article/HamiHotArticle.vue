@@ -18,7 +18,7 @@ const $props = defineProps({
 })
 
 
-const [onLoading, listHotArticles] = useRequest<Array<HotArticle>, [number]>({
+const [onLoading, listHotArticles] = useRequest<Array<HotArticle>, [number | null]>({
     loading: false,
     run: (...params) => RankService.listHotArticle(...params)
 })
@@ -27,8 +27,8 @@ const rotate = ref<number>(0)
 
 const cateId = ref<number>($props.cateId)
 
-const articleList = ref<IndexedHotArticle[]>()
-const subArticleList = ref<IndexedHotArticle[]>()
+const articleList = ref<IndexedHotArticle[]>([])
+const subArticleList = ref<IndexedHotArticle[]>([])
 const current = ref<number>(0)
 const size = 6
 const pages = ref(1)
@@ -59,7 +59,7 @@ const handleClick = () => {
 const getHotArticles = async () => {
     try {
         current.value = 0
-        let articles = await listHotArticles(cateId.value)
+        let articles = await listHotArticles(cateId.value === -1 ? null : cateId.value)
         articleList.value = articles.map((article, index) => {
             let t = article as IndexedHotArticle
             t.index = index
@@ -127,7 +127,6 @@ const calculateHotIndex = (rank: number) => {
 
 <style scoped lang="less">
 .hami-hot-article {
-    width: 256px;
     padding: 16px 16px 10px;
 
     .hot-article-title {

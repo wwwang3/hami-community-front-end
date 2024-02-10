@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import type { CateRoutePath } from '@/store/modules/category.ts'
 import { useCateStore } from '@/store/modules/category.ts'
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import HamiBulletin from '@/components/common/HamiBulletin.vue'
 import HamiCateNav from '@/components/common/HamiCateNav.vue'
 import HamiIndexArticle from '@/components/article/HamiIndexArticle.vue'
 import HamiHotArticle from "@/components/article/HamiHotArticle.vue"
+import HamiAuthorRank from '@/components/article/HamiAuthorRank.vue'
 
 const $props = withDefaults(defineProps<{
     activePath: CateRoutePath
@@ -19,11 +20,30 @@ const isFollow = computed(() => {
 })
 
 const cateId = ref<number>(-1)
+const rightPanel = ref<HTMLElement | null>(null)
+const scrollTop = ref(0)
+const sticky = ref(false)
+
+onMounted(() => {
+    window.addEventListener("scroll", handleScroll, {passive: true})
+    onUnmounted(() => {
+        window.removeEventListener("scroll", handleScroll)
+    })
+})
+
 watch(() => $props.activePath, (newVal, _) => {
     cateId.value = cateId.value = cateStore.cates[newVal]
 }, {
     immediate: true
 })
+
+watch(() => scrollTop.value, (newVal, _) => {
+    sticky.value = !!(rightPanel.value && newVal > rightPanel.value!.offsetHeight + 20);
+})
+
+const handleScroll = () => {
+    scrollTop.value = window.scrollY
+}
 
 </script>
 <template>
@@ -42,18 +62,27 @@ watch(() => $props.activePath, (newVal, _) => {
                     <HamiIndexArticle :cate-id="cateId"></HamiIndexArticle>
                 </template>
             </div>
-            <div class="right-panel">
+            <div class="right-panel" ref="rightPanel">
                 <div class="right-card">
                     <div class="welcome">欢迎使用Hami</div>
                 </div>
                 <div class="right-card">
                     <HamiBulletin></HamiBulletin>
                 </div>
-                <el-affix :offset="60">
+                <div class="right-card">
+                    <HamiHotArticle :cate-id="cateId"></HamiHotArticle>
+                </div>
+                <div class="right-card">
+                    <HamiAuthorRank></HamiAuthorRank>
+                </div>
+                <div class="sticky-card" v-show="sticky">
                     <div class="right-card">
                         <HamiHotArticle :cate-id="cateId"></HamiHotArticle>
                     </div>
-                </el-affix>
+                    <div class="right-card">
+                        <HamiAuthorRank></HamiAuthorRank>
+                    </div>
+                </div>
                 <div class="right-card">
                     <div class="more-list">
                         <div class="list-wrap">
@@ -153,5 +182,11 @@ watch(() => $props.activePath, (newVal, _) => {
             margin-left: 4px;
         }
     }
+}
+.sticky-card {
+    max-width: 280px;
+    position: fixed;
+    top: 60px;
+    transition: all .6s;
 }
 </style>

@@ -156,7 +156,7 @@ declare interface SearchServiceApi {
 }
 
 declare interface RankServiceApi {
-    listHotArticle(cateId: string | number): Promise<Array<HotArticle>>
+    listHotArticle(cateId: string | number | null): Promise<Array<HotArticle>>
 
     listHotAuthor(): Promise<Array<HotAuthor>>
 }
