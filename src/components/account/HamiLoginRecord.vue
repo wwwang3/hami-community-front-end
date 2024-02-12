@@ -22,7 +22,7 @@ computed(() => {
 })
 
 const [onRequest, getLoginRecords] = useRequest<PageData<LoginRecord>, [PageParam]>({
-    run: (...params) => AccountService.getLoginRecords(...params)
+    run: (...params) => AccountService.listLoginRecord(...params)
 })
 const records = ref<LoginRecord[]>([] as LoginRecord[])
 const inited = ref(false)
@@ -31,8 +31,8 @@ onMounted(async () => {
     try {
         inited.value = false
         let pageData = await getLoginRecords({
-            current: page.value.size,
-            size: page.value.current
+            current: page.value.current,
+            size: page.value.size
         })
         page.value.total = pageData.total
         records.value = pageData.data as LoginRecord[]

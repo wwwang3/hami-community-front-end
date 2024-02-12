@@ -33,6 +33,7 @@
     --hami-border-grey: #cfd1d5;
     --hami-border-blue: rgba(30, 128, 255, 0.2);
     --hami-card-text-color: #8a919f;
+    --hami-card-text-color-2: var(--hami-grey-6);
     --hami-card-hover-bg: #f7f8fa;
     --hami-card-blue-bg-1: rgba(0, 174, 236, 0.08);
     --hami-text-1: #000;

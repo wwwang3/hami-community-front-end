@@ -83,6 +83,13 @@ const header = computed(() => {
 </template>
 
 <style lang="less">
+html.dark {
+    .hami-notify {
+        .hami-empty {
+            background-color: var(--hami-frame-bg);
+        }
+    }
+}
 </style>
 <style lang="less" scoped>
 
@@ -99,10 +106,6 @@ const header = computed(() => {
 
 .hami-notify {
     margin-top: 10px;
-
-    :deep(.hami-empty) {
-        background-color: var(--hami-frame-bg) !important;
-    }
 
     .hami-notify-container {
         display: flex;

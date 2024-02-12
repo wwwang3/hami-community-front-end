@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from "vue"
-import { useRoute, useRouter } from "vue-router"
-import useUserStore from '@/store/modules/user.ts'
+import { useRouter } from "vue-router"
 import { formatDateTime, strToNum } from '@/utils'
 import { Calendar, View } from '@element-plus/icons-vue'
 import { $message } from '@/utils/message.ts'
 import { useLike } from '@/hooks/userInteract.ts'
-import HamiUserCardHover from '@/components/common/HamiUserCardHover.vue'
+import HamiHoverAuthorCard from '@/components/common/HamiHoverAuthorCard.vue'
 import { TAG_NODES } from '@/store/modules/category.ts'
 
 //interface
@@ -22,7 +21,8 @@ interface ArticleCardProps {
 }
 
 const $slots = defineSlots<{
-    item(props: Article): any,
+    top(props: Article): any,
+    bottom(props: Article): any,
 }>()
 
 const $props = withDefaults(defineProps<ArticleCardProps>(), {
@@ -34,14 +34,9 @@ const $props = withDefaults(defineProps<ArticleCardProps>(), {
     showCate: true,
     showUser: true
 })
-//router, props, inject, provide
-const $route = useRoute()
 const $router = useRouter()
-const userStore = useUserStore()
-
-//custom var
 const article = ref<ArticleInfo>($props.article.articleInfo)
-const author = ref<Author>($props.article.author)
+const author = ref<User>($props.article.author)
 const category = ref<Category>($props.article.category)
 const tags = ref<Tag[]>($props.article.tags)
 const stat = ref<ArticleStat>($props.article.stat)
@@ -118,7 +113,7 @@ const getTagType = (index: number) => {
                                     <span class="author ellipsis">{{ author.username }}</span>
                                 </router-link>
                             </template>
-                            <HamiUserCardHover :id="article.userId" v-if="showInfo"></HamiUserCardHover>
+                            <HamiHoverAuthorCard :id="article.userId" v-if="showInfo"></HamiHoverAuthorCard>
                         </el-popover>
                         <div class="ctime">
                             <el-icon size="16">
@@ -126,12 +121,10 @@ const getTagType = (index: number) => {
                             </el-icon>
                             <span class="text">{{ ctime }}</span>
                         </div>
-                        <span class="category" v-if="showCate">
-                        {{ category.name }}
-                    </span>
+                        <span class="category" v-if="showCate">{{ category.name }}</span>
                     </div>
                     <div class="right-panel">
-                        <slot v-bind="$props.article" name="item"></slot>
+                        <slot v-bind="$props.article" name="top"></slot>
                     </div>
                 </div>
                 <div class="title-row">
@@ -188,6 +181,7 @@ const getTagType = (index: number) => {
                             </el-tag>
                         </template>
                     </div>
+                    <slot name="bottom" v-bind="$props.article"></slot>
                 </div>
             </div>
             <div class="article-picture" v-if="article.picture">
@@ -394,19 +388,5 @@ const getTagType = (index: number) => {
 
 </style>
 <style>
-.card-dropdown {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 100px !important;
 
-    .el-button + .el-button {
-        margin-left: 0;
-        margin-top: 4px;
-    }
-
-    .el-button {
-        width: 80px;
-    }
-}
 </style>

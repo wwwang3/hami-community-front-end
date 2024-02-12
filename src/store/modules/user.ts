@@ -103,7 +103,35 @@ const useUserStore = defineStore("user", () => {
         return !isEmpty(userInfo.value) && !isEmpty(userInfo.value?.userId) && userInfo.value?.userId !== -1
     })
 
-    return { logined, getProfile, sync, userInfo, isSelf }
+    const clear = () => {
+        userInfo.value = {
+            avatar: '',
+            blog: '',
+            collects: 0,
+            company: '',
+            ctime: Date.now(),
+            followers: 0,
+            followings: 0,
+            likes: 0,
+            position: '',
+            profile: '',
+            stat: {
+                totalArticles: 0,
+                totalCollects: 0,
+                totalComments: 0,
+                totalFollowers: 0,
+                totalFollowings: 0,
+                totalLikes: 0,
+                totalViews: 0,
+                userId: -1
+            },
+            userId: -1,
+            username: ''
+        }
+        inited.value = false
+    }
+
+    return { logined, getProfile, userInfo, isSelf, clear}
 })
 
 export function loadUserStore() {

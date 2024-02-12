@@ -22,14 +22,14 @@ declare interface AccountServiceApi {
 
     getAccountInfo(): Promise<AccountInfo>
 
-    getLoginRecords(param: PageParam): Promise<PageData<LoginRecord>>
+    listLoginRecord(param: PageParam): Promise<PageData<LoginRecord>>
 
     updateUserProfile(params: UserProfileParam): Promise<any>
 }
 
 declare interface UserServiceApi {
 
-    getAuthorInfo(userId: number): Promise<Author>
+    getAuthorInfo(userId: number): Promise<User>
 
 }
 
@@ -92,9 +92,9 @@ declare interface UserInteractApi {
 
     listUserLikeArticle(param: UserArticleParam): Promise<PageData<Article>>
 
-    listUserFollowing(param: UserArticleParam): Promise<PageData<Author>>
+    listUserFollowing(param: UserArticleParam): Promise<PageData<User>>
 
-    listUserFollower(param: UserArticleParam): Promise<PageData<Author>>
+    listUserFollower(param: UserArticleParam): Promise<PageData<User>>
 
     getUserDataGrowing(): Promise<DailyDataGrowing>
 

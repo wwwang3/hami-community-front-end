@@ -7,6 +7,7 @@ import { useTokenStore } from '@/store/modules/token.ts'
 import { useRouter } from 'vue-router'
 import { onPPT } from '@/utils'
 import UpdatePassForm from '@/components/account/UpdatePassForm.vue'
+import useUserStore from '@/store/modules/user.ts'
 
 const [onLoading, handleGetAccountInfo] = useRequest<AccountInfo, [any]>({
     run: (..._params) => AccountService.getAccountInfo()
@@ -20,6 +21,7 @@ const account = ref<AccountInfo>({
 
 const onUpdatePassword = ref(false)
 const tokenStore = useTokenStore()
+const userStore = useUserStore()
 const $router = useRouter()
 
 onMounted(async () => {
@@ -50,6 +52,7 @@ const handleSuccess = () => {
     //修改成功的回调
     onUpdatePassword.value = false
     //退出
+    userStore.clear()
     tokenStore.clear()
     $router.replace("/")
 }

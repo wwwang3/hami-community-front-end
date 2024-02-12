@@ -17,8 +17,8 @@ onMounted(() => {
 
 const handleQuery = (current: number, size: number) => {
     return UserInteractService.listUserLikeArticle({
-        pageNum: current,
-        pageSize: size,
+        current: current,
+        size: size,
         userId: parseInt(userId.value)
     })
 }

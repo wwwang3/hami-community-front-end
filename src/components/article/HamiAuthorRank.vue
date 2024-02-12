@@ -29,22 +29,26 @@ const pages = computed(() => {
 onMounted(async () => {
     try {
         userRankList.value = await getUserRankList()
+        page.value.total = userRankList.value.length
         subRankList.value = getSubList()
     } catch (e) {
 
     }
 })
 const refreshUserRank = () => {
-    if (onLoading.value || isEmpty(userRankList)) {
+    if (onLoading.value || isEmpty(userRankList.value)) {
         return
     }
     page.value.current = (pages.value === 0) ? 1 : (page.value.current + 1) % pages.value
+    console.log(pages.value)
     rotate.value += 360
     subRankList.value = getSubList()
 }
 
 const getSubList = () => {
-    return userRankList.value.slice(page.value.current * page.value.size, (page.value.current + 1) * page.value.size)
+    let current = page.value.current
+    let size = page.value.size
+    return userRankList.value.slice((current - 1) * size, current * size)
 }
 
 </script>
@@ -55,7 +59,7 @@ const getSubList = () => {
                 <el-image :src="AuthorRankImg" class="rank-icon"></el-image>
                 <span>作者榜</span>
             </div>
-            <div class="right">
+            <div class="right" @click="refreshUserRank">
                 <el-icon class="icon" size="18" :style="{'transform': `rotate(${rotate}deg)`}">
                     <Refresh/>
                 </el-icon>
@@ -67,12 +71,9 @@ const getSubList = () => {
                 <li class="rank-item">
                     <HamiAuthorCard
                         :author="item.author"
-                        :show-opt="false"
-                        :show-stat="false"
+                        show-tag
                         :avatar-size="32"
-                    >
-
-                    </HamiAuthorCard>
+                    />
                 </li>
             </template>
         </div>
@@ -121,7 +122,7 @@ const getSubList = () => {
         margin-top: 2px;
 
         .rank-item {
-            padding: 10px;
+            padding: 6px 10px;
             border-radius: var(--hami-radius-small);
 
             &:hover {

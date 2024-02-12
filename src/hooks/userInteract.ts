@@ -22,9 +22,9 @@ type ActionStateProps<T extends Array<any>> = {
     cancel: (...params: T) => Promise<any>
 }
 
-type ActionFun<TParams extends Array<any>> = (...params: TParams) => Promise<boolean>;
+export type ActionFun<TParams extends Array<any>> = (...params: TParams) => Promise<boolean>;
 
-type ActionResult<T extends Array<any>> = [Ref<boolean>, ActionFun<T>]
+export type ActionResult<T extends Array<any>> = [Ref<boolean>, ActionFun<T>]
 
 function check(onRequest: Ref<Boolean>, checkLogin: boolean) {
     if (checkLogin && !userStore.logined) {
@@ -59,6 +59,9 @@ export function useAction<T extends any[] = any[]>(props: ActionStateProps<T>): 
             }
             return Promise.resolve(_active.value)
         } catch (e) {
+            if (typeof e === "string") {
+                $message.error(e)
+            }
             return Promise.reject(e)
         }
     }

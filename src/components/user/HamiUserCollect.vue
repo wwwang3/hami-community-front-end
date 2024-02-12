@@ -27,9 +27,9 @@ onMounted(() => {
 })
 
 const handleQuery = (current: number, size: number) => {
-    return UserInteractService.listCollectArticles({
-        pageNum: current,
-        pageSize: size,
+    return UserInteractService.listCollectArticle({
+        current: current,
+        size: size,
         userId: userId.value
     })
 }
@@ -68,7 +68,7 @@ const isSelf = () => {
         >
             <template #item="data">
                 <HamiArticleCard :article="data.item" border>
-                    <template #item="article">
+                    <template #top="article">
                         <ArticleDeleteOperate
                             msg="确定取消收藏吗?"
                             :list-ref="userCollectArticleList"

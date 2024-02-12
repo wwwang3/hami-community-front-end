@@ -10,9 +10,9 @@ import { useCateStore } from '@/store/modules/category.ts'
 import { useCollect, useLike } from '@/hooks/userInteract.ts'
 import { COMMENT_AREA_OWNER } from '@/store/keys.ts'
 import HamiMdViewer from '@/components/md/HamiMdViewer.vue'
-import HamiUserCard from '@/components/common/HamiUserCard.vue'
 import HamiComment from '@/components/comment/HamiComment.vue'
 import HamiBackTop from '@/components/common/HamiBackTop.vue'
+import HamiAuthorCard from '@/components/common/HamiAuthorCard.vue'
 
 
 const $props = defineProps<{
@@ -31,7 +31,7 @@ onBeforeMount(async () => {
     await getArticle()
 })
 
-provide<Author | undefined>(COMMENT_AREA_OWNER, article.value?.author)
+provide<User | undefined>(COMMENT_AREA_OWNER, article.value?.author)
 
 
 const mdId = "hami-md-viewer"
@@ -226,7 +226,13 @@ const getArticle = async () => {
             </div>
             <div class="right-panel">
                 <div class="user-info">
-                    <HamiUserCard :user="article.author"></HamiUserCard>
+                    <HamiAuthorCard
+                        v-if="!onLoading"
+                        :author="article.author"
+                        show-tag
+                        show-opt
+                        show-stat
+                    />
                 </div>
                 <el-affix :offset="100">
                     <div class="cate-log">

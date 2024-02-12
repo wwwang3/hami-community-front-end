@@ -23,8 +23,8 @@ declare interface Comment {
     likes: number // 点赞数
     ctime: number // 评论时间
     reply?: Reply // 回复
-    user: Author // 评论用户
-    replyUser?: Author // 回复用户
+    user: User // 评论用户
+    replyUser?: User // 回复用户
     liked: boolean // 是否点赞
 }
 

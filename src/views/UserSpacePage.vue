@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, provide, Ref, ref, watchEffect } from "vue"
+import { computed, onUnmounted, provide, Ref, ref, watchEffect } from "vue"
 import { useRequest } from '@/hooks'
 import { UserService } from '@/service/modules/user.ts'
 import { useRoute, useRouter } from 'vue-router'
@@ -7,7 +7,7 @@ import { TabsPaneContext } from 'element-plus'
 import useUserStore from '@/store/modules/user.ts'
 import { SPACE_USER } from '@/store/keys.ts'
 import HamiUserData from '@/components/user/HamiUserData.vue'
-import SpaceUserCard from '@/components/user/SpaceUserCard.vue'
+import HamiSpaceUserCard from '@/components/common/HamiSpaceUserCard.vue'
 
 //interface
 interface UserSpaceProps {
@@ -19,11 +19,14 @@ const $router = useRouter()
 const $route = useRoute()
 const userStore = useUserStore()
 
-const user = ref<User>({} as User)
 const [onLoading, getAuthorInfo] = useRequest<User, [number]>({
     loading: true,
     run: (...params) => UserService.getAuthorInfo(...params)
 })
+
+const user = ref<User>({} as User)
+provide<Ref<User>>(SPACE_USER, user)
+
 const prefix1 = computed(() => {
     return !userStore.isSelf(parseInt($props.id)) ? "他的" : ""
 })
@@ -32,10 +35,7 @@ const prefix2 = computed(() => {
 })
 
 const activeRoute = ref("articles")
-
-provide<Ref<User>>(SPACE_USER, user)
-
-watchEffect(() => {
+const stopRouteWatch = watchEffect(() => {
     let regex = /\/user\/space\/(\d+)(\/(articles|likes|collects|follows|""))?/
     let res = regex.exec($route.path)
     let route = res?.at(3)
@@ -51,8 +51,13 @@ const getAuthor = async (id: number) => {
     }
 }
 
-watchEffect(async () => {
+const stopIdWatch = watchEffect(async () => {
     await getAuthor(parseInt($props.id))
+})
+
+onUnmounted(() => {
+    stopRouteWatch()
+    stopIdWatch()
 })
 
 const handleClick = (pane: TabsPaneContext) => {
@@ -63,7 +68,9 @@ const handleClick = (pane: TabsPaneContext) => {
     <div class="hami-user-space">
         <div class="user-space-container">
             <div class="user-space-body">
-                <SpaceUserCard :user="user"></SpaceUserCard>
+                <div class="user-space-card">
+                    <HamiSpaceUserCard :author="user" :avatar-size="90" show-tag></HamiSpaceUserCard>
+                </div>
                 <div class="detail-block" v-if="!onLoading">
                     <el-tabs v-model="activeRoute" @tab-click="handleClick">
                         <el-tab-pane :label="prefix1 + '文章'" name="articles"></el-tab-pane>
@@ -85,6 +92,13 @@ const handleClick = (pane: TabsPaneContext) => {
 
 .hami-user-space {
     margin-top: 40px;
+
+    .user-space-card {
+        padding: 30px;
+        border-radius: var(--hami-radius);
+        background-color: var(--hami-card-bg);
+        margin-bottom: 20px;
+    }
 
     .user-space-container {
         position: relative;

@@ -12,7 +12,7 @@ declare interface UserProfile {
 }
 
 
-declare interface Author extends UserProfile {
+declare interface User extends UserProfile {
     stat: UserStat // 用户数据
     followed: boolean // 当前登录用户是否关注该作者
 }

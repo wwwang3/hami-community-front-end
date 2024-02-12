@@ -160,7 +160,7 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: "/editor/drafts/new",
-        name: "EditorPage",
+        name: "DefaultEditorPage",
         props: {draftId: "new"},
         component: () => import("@/views/EditorPage.vue"),
     },

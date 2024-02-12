@@ -32,7 +32,7 @@ const resetRules = reactive<FormRules<typeof resetPassParam>>({
         min: 6,
         max: 6,
         message: "请输入六位验证码",
-        trigger: "blur"
+        trigger: "change"
     }]
 })
 
@@ -62,8 +62,9 @@ const getCaptcha = async () => {
             $message.success("发送成功")
             startCountdown()
         })
-        .catch(_ => {
+        .catch(e => {
             onCountDown.value = false
+            $message.error(e)
         })
 }
 
@@ -164,8 +165,9 @@ const cancel = () => {
     }
 
     .captcha-button {
-        margin-left: 20px;
-        min-width: 100px;
+        margin-left: 16px;
+        width: 100px;
+        //min-width: 100px;
     }
 
 }

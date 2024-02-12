@@ -32,8 +32,8 @@ onMounted(() => {
 
 const handleQueryFollower = (current: number, size: number) => {
     let param = {
-        pageNum: current,
-        pageSize: size,
+        current: current,
+        size: size,
         userId: parseInt($props.id)
     }
     return UserInteractService.listUserFollower(param)
@@ -41,8 +41,8 @@ const handleQueryFollower = (current: number, size: number) => {
 
 const handleQueryFollowing = (current: number, size: number) => {
     let param = {
-        pageNum: current,
-        pageSize: size,
+        current: current,
+        size: size,
         userId: parseInt($props.id)
     }
     return UserInteractService.listUserFollowing(param)

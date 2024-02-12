@@ -8,5 +8,5 @@ declare interface HotArticle {
 declare interface HotAuthor {
     authorId: number // 作者Id
     hotIndex: number // 热度
-    author: Author // 作者
+    author: User // 作者
 }

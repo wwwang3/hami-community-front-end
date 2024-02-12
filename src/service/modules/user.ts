@@ -50,10 +50,8 @@ export const AccountService: AccountServiceApi = {
         return http.get("/account/info")
     },
 
-    getLoginRecords(param: PageParam): Promise<PageData<LoginRecord>> {
-        return http.get("/account/login/log", {
-            params: param
-        })
+    listLoginRecord(param: PageParam): Promise<PageData<LoginRecord>> {
+        return http.post("/account/login/log", param)
     },
 
     updateUserProfile(params: UserProfileParam): Promise<any> {
@@ -69,7 +67,7 @@ export const AccountService: AccountServiceApi = {
 
 export const UserService: UserServiceApi = {
 
-    getAuthorInfo(user_id: number): Promise<Author> {
+    getAuthorInfo(user_id: number): Promise<User> {
         return http.get(`/user/info/${user_id}`)
     },
 }

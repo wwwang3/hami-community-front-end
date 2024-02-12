@@ -45,7 +45,7 @@ const handleQuery = (current: number, size: number) => {
         <div class="container">
             <HamiScrollList
                 ref="searchArticleList"
-                :size="20"
+                :size="10"
                 :query="handleQuery"
                 no-data-text="暂无文章"
                 key-property="id"

@@ -192,7 +192,8 @@ const joinTime = computed(() => {
             padding: 0 14px;
             height: 38px;
             border-radius: 8px;
-            color: var(--hami-card-text-color);
+            //color: var(--hami-card-text-color);
+            color: var(--hami-card-text-color-2);
             font-size: 14px;
             cursor: pointer;
             transition: background-color .3s;

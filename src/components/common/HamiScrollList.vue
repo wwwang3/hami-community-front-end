@@ -26,19 +26,19 @@ interface Page {
 }
 
 interface ScrollListProps {
-    size?: number,
+    size?: number
     noDataText?: string
-    keyProperty?: string | undefined,
-    showNoMore?: boolean,
-    immediateLoading?: boolean,
-    timeline?: boolean,
-    timestampKey?: string, //timeline为true时, 需要指定timestamp-key
+    keyProperty?: string | undefined
+    showNoMore?: boolean
+    immediateLoading?: boolean
+    timeline?: boolean
+    timestampKey?: string //timeline为true时, 需要指定timestamp-key
     query: (pageNum: number, pageSize: number) => Promise<PageData<T>>
 }
 
 interface ExposeProps {
-    init: () => void,
-    deleteItem: (item: T, index: number) => void,
+    init: () => void
+    deleteItem: (item: T, index: number) => void
     /**
      * 根据ID删除，id根据keyProperty确定
      * @param id
@@ -85,7 +85,7 @@ const [onLoadingMore, processQuery] = useRequest<PageData<T>, [number, number]>(
 const inited = ref(false)
 const page = ref<Page>({
     current: 1,
-    size: $props.size < 5 ? 5 : $props.size,
+    size: Math.max(5, Math.min($props.size, 20)),
     total: 0
 })
 const loadingError = ref(false)
@@ -93,9 +93,14 @@ const loadingError = ref(false)
 /**
  * 是否还有更多数据
  */
-const hasMore = computed(() => {
+const hasMore = ref(true)
+
+const calcHasMore = (data: any[]) => {
+    if (page.value.total === -1) {
+        return !isEmpty(data) && data.length == page.value.size
+    }
     return page.value.current < Math.ceil(page.value.total / page.value.size)
-})
+}
 
 /**
  * 禁止滚动
@@ -120,6 +125,7 @@ const _init = () => {
     inited.value = false
     dataList.splice(0, dataList.length)
     onLoadingMore.value = true
+    hasMore.value = true
     let start = Date.now()
     processQuery(page.value.current, page.value.size)
         .then(pageData => {
@@ -170,6 +176,7 @@ const handleScroll = async () => {
     }
 }
 const refreshData = (data: T[]) => {
+    hasMore.value = calcHasMore(data)
     nextTick(() => {
         if (!isEmpty(data)) {
             dataList.push(...data)

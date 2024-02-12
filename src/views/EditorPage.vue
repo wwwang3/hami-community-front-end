@@ -18,7 +18,7 @@ const userStore = useUserStore()
 const $props = defineProps({
     draftId: {
         type: String,
-        default: -1
+        default: "-1"
     }
 })
 

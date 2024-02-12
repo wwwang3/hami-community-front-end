@@ -3,7 +3,6 @@ import { computed, onMounted, reactive, ref } from "vue"
 import CommentService from "@/service/modules/comment.ts"
 import useUserStore from '@/store/modules/user.ts'
 import emoji from './emoji.ts'
-import HamiUserCardHover from '@/components/common/HamiUserCardHover.vue'
 import {
     CommentApi,
     CommentInstance,
@@ -22,6 +21,7 @@ import { $message } from '@/utils/message.ts'
 import ImageService from '@/service/modules/image.ts'
 import { UserInteractService } from '@/service/modules/interact.ts'
 import Operate from '@/components/comment/Operate.vue'
+import HamiHoverAuthorCard from '@/components/common/HamiHoverAuthorCard.vue'
 
 interface CommentProps {
     areaId: number
@@ -255,7 +255,7 @@ const convertToComment = (comment: Comment): CommentApi => {
     }
 }
 
-const convertToCommentUser = (user: Author): CommentUserApi => {
+const convertToCommentUser = (user: User): CommentUserApi => {
     return {
         avatar: user.avatar,
         homeLink: "/user/space/" + user.userId,
@@ -283,7 +283,7 @@ const convertToCommentUser = (user: Author): CommentUserApi => {
                     <u-comment-nav v-model="latest" @sorted="handleSort"></u-comment-nav>
                 </template>
                 <template #card="scope">
-                    <HamiUserCardHover :id="scope.id"></HamiUserCardHover>
+                    <HamiHoverAuthorCard :id="scope.id"></HamiHoverAuthorCard>
                 </template>
                 <template #operate="scope">
                     <Operate :comment="scope" @remove="remove"/>

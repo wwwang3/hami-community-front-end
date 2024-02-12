@@ -1,8 +1,8 @@
 import { InjectionKey } from '@vue/runtime-core'
 import { Ref } from 'vue'
 
-export const SPACE_USER: InjectionKey<Ref<Author>> = Symbol("SPACE_USER")
-export const COMMENT_AREA_OWNER: InjectionKey<Author | undefined> = Symbol("COMMENT_AREA_OWNER")
+export const SPACE_USER: InjectionKey<Ref<User>> = Symbol("SPACE_USER")
+export const COMMENT_AREA_OWNER: InjectionKey<User | undefined> = Symbol("COMMENT_AREA_OWNER")
 export const LOGIN_USER = "LOGIN_USER"
 
 export const NOTIFY_STORE = "NOTIFY_STORE"

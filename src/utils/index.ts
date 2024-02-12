@@ -99,6 +99,6 @@ export function strToNum(val: string | number): number {
     return typeof val === "string" ? parseInt(val) : val
 }
 
-export function onPPT() {
-    $message.notifySuccess("暂不支持✿ヽ(°▽°)ノ✿")
+export function onPPT(title?: string) {
+    $message.notifySuccess("暂不支持✿ヽ(°▽°)ノ✿", title)
 }

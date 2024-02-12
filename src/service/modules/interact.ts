@@ -66,11 +66,11 @@ export const UserInteractService: UserInteractApi = {
         return http.post("/interact/collect/query_list", param)
     },
 
-    listUserFollowing(param: UserArticleParam): Promise<PageData<Author>> {
+    listUserFollowing(param: UserArticleParam): Promise<PageData<User>> {
         return http.post("/interact/follow/following_list", param)
     },
 
-    listUserFollower(param: UserArticleParam): Promise<PageData<Author>> {
+    listUserFollower(param: UserArticleParam): Promise<PageData<User>> {
         return http.post("/interact/follow/follower_list", param)
     },
 

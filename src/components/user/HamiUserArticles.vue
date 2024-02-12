@@ -17,8 +17,8 @@ onMounted(() => {
 
 const handleQuery = (current: number, size: number) => {
     return ArticleService.listUserArticles({
-        pageNum: current,
-        pageSize: size,
+        current: current,
+        size: size,
         userId: parseInt($props.id)
     })
 }

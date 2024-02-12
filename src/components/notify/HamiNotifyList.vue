@@ -28,8 +28,8 @@ watch(() => $props.notifyType, (newVal) => {
 
 const handleQuery = async (current: number, size: number) => {
     return NotifyService.queryNotify($props.notifyType, {
-        pageNum: current,
-        pageSize: size
+        current: current,
+        size: size
     })
 }
 </script>

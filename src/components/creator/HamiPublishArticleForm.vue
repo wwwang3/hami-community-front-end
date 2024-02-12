@@ -143,15 +143,13 @@ const checkItem = () => {
                     filterable
                     no-match-text="空"
                     :teleported="false"
-                    value-key="id"
                     size="large"
                 >
                     <el-option
                         v-for="tag in tagList"
                         :key="tag.id"
                         :label="tag.name"
-                        :value="tag"
-                        :id="tag.id"
+                        :value="tag.id"
                     >
                     </el-option>
                 </el-select>

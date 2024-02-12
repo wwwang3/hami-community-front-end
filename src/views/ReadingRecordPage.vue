@@ -37,16 +37,13 @@ const handleDeleteRecord = async (item: ReadingRecord, index: number) => {
 
 const handleQuery = (current: number, size: number) => {
     return ReadingRecordService.listReadingRecord({
-        current: size,
-        size: current,
-        keyword: keyword.value
+        current: current,
+        size: size,
+        keyword: keyword.value || undefined
     })
 }
 
 const handleSearch = async () => {
-    if (isEmpty(keyword.value)) {
-        return
-    }
     readingRecordList.value.init()
 }
 
@@ -56,6 +53,7 @@ const highlight = computed(() => {
 
 const clearKeyword = () => {
     keyword.value = ''
+    readingRecordList.value.init()
 }
 
 </script>
@@ -70,17 +68,20 @@ const clearKeyword = () => {
                     <span class="text">阅读记录</span>
                 </div>
                 <div class="right-panel">
-                    <el-input placeholder="请输入标题关键字" maxlength="8" v-model="keyword">
+                    <el-input placeholder="请输入标题关键字" maxlength="8" v-model="keyword" class="search-item">
                         <template #suffix>
                             <el-icon @click="clearKeyword" v-if="keyword.length > 0" class="clear">
                                 <CircleClose/>
                             </el-icon>
-                            <el-icon @click="handleSearch">
-                                <Search></Search>
-                            </el-icon>
+                            <el-button
+                                type="info"
+                                :icon="Search"
+                                @click="handleSearch"
+                                :disabled="keyword.length <= 1" size="small" class="search-btn">
+                            </el-button>
                         </template>
                     </el-input>
-                    <el-button type="primary" plain @click="clearRecords">清空记录</el-button>
+                    <el-button type="primary" plain @click="clearRecords" class="clear-item">清空记录</el-button>
                 </div>
             </div>
             <div class="reading-record-body">
@@ -102,7 +103,7 @@ const clearKeyword = () => {
                             border
                             :highlight-title="highlight"
                         >
-                            <template #item="article">
+                            <template #top="article">
                                 <div class="option-item" @click="handleDeleteRecord(item, index)">
                                     <el-icon size="14">
                                         <Delete/>
@@ -155,13 +156,16 @@ const clearKeyword = () => {
         .right-panel {
             display: flex;
 
-            button {
-                width: 120px;
-            }
-
-            .el-input {
+            .search-item {
                 margin-right: 16px;
                 width: 200px;
+                position: relative;
+            }
+
+            .clear-btn {
+                button {
+                    width: 120px;
+                }
             }
 
             .el-icon {

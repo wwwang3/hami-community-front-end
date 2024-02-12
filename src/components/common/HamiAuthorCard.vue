@@ -8,7 +8,7 @@ import { AvatarProps } from 'element-plus/es/components/avatar/src/avatar'
 import StatItem from "@/components/common/StatItem.vue"
 
 interface AuthorCardProps {
-    author: Author
+    author: User
     avatarSize?: AvatarProps['size']
     showTag?: boolean
     showStat?: boolean
@@ -18,12 +18,12 @@ interface AuthorCardProps {
 const $props = withDefaults(defineProps<AuthorCardProps>(), {
     // @ts-ignore
     author: {},
-    showTag: true,
-    showStat: true,
-    showOpt: true,
+    icon: false,
+    profile: false,
+    showTag: false,
+    showStat: false,
+    showOpt: false,
     avatarSize: 'default'
-    // profile: false,
-    // position: true
 })
 
 const userStore = useUserStore()
@@ -62,29 +62,43 @@ const handleFollow = () => {
 }
 
 const handleChat = () => {
-    onPPT()
+    onPPT("提示")
 }
+
+const baseLink = computed(() => {
+    return "/user/" + $props.author?.userId
+})
 
 </script>
 <template>
     <div class="hami-author-card">
         <router-link class="author-card-header" :to="link">
-            <div class="left">
+            <div class="header-left">
                 <el-avatar :src="author.avatar || defaultAvatar" :size="avatarSize"></el-avatar>
             </div>
-            <div class="right">
-                <div class="top">
+            <div class="header-right">
+                <div class="account-box">
                     <div class="username">{{ author?.username }}</div>
-                    <el-tag class="tag" v-if="showTag && author?.tag"></el-tag>
+                    <el-tag class="tag" v-if="showTag && author?.tag" size="small">{{ author.tag }}</el-tag>
                 </div>
                 <div class="info-box">
-                    <div class="description ellipsis">{{ description }}</div>
+                    <div class="info-box-left">
+                        <div class="description ellipsis">{{ description }}</div>
+                    </div>
+                    <div class="info-box-right"></div>
                 </div>
             </div>
         </router-link>
         <div class="stat-box" v-if="showStat">
-            <StatItem :value="author?.stat?.totalFollowings" label="关注"/>
-            <StatItem :value="author?.stat?.totalFollowers" label="粉丝"/>
+            <router-link :to="baseLink + '/articles'">
+                <StatItem :value="author?.stat?.totalArticles" label="文章"/>
+            </router-link>
+            <router-link :to="baseLink + '/follows'">
+                <StatItem :value="author?.stat?.totalFollowings" label="关注"/>
+            </router-link>
+            <router-link :to="baseLink + '/follows'">
+                <StatItem :value="author?.stat?.totalFollowers" label="粉丝"/>
+            </router-link>
         </div>
         <el-divider direction="horizontal" v-if="showOpt && showStat"></el-divider>
         <div class="opt-box" v-if="showOpt && !userStore.isSelf(author?.userId)">
@@ -98,26 +112,52 @@ const handleChat = () => {
 <style scoped lang="less">
 .hami-author-card {
 
+    .el-divider {
+        margin: 14px 0;
+    }
+
     .author-card-header {
         display: flex;
         align-items: center;
         width: 100%;
         margin-bottom: 5px;
 
-        .left {
+        .header-left {
             margin-right: 10px;
+            flex: 0 0 auto;
         }
 
-        .username {
-            color: var(--hami-text-1);
-            font-size: 17px;
-            font-weight: 600;
+        .header-right {
+            margin-right: 10px;
+            flex: 1;
+
+            .account-box {
+                display: flex;
+                align-items: center;
+
+                .username {
+                    color: var(--hami-text-1);
+                    font-size: 17px;
+                    font-weight: 600;
+                }
+
+                .tag {
+                    margin-left: 4px;
+                }
+            }
+
+            .info-box {
+                display: flex;
+                justify-content: space-between;
+
+                .description {
+                    color: var(--hami-card-text-color);
+                    font-size: 14px;
+                }
+            }
+
         }
 
-        .info-box {
-            color: var(--hami-card-text-color);
-            font-size: 14px;
-        }
     }
 
     .stat-box {
