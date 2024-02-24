@@ -33,7 +33,7 @@ interface ScrollListProps {
     immediateLoading?: boolean
     timeline?: boolean
     timestampKey?: string //timeline为true时, 需要指定timestamp-key
-    query: (pageNum: number, pageSize: number) => Promise<PageData<T>>
+    query: (current: number, size: number) => Promise<PageData<T>>
 }
 
 interface ExposeProps {
@@ -177,11 +177,9 @@ const handleScroll = async () => {
 }
 const refreshData = (data: T[]) => {
     hasMore.value = calcHasMore(data)
-    nextTick(() => {
-        if (!isEmpty(data)) {
-            dataList.push(...data)
-        }
-    })
+    if (!isEmpty(data)) {
+        dataList.push(...data)
+    }
 }
 
 const formatTime = (time: number | Date) => {

@@ -3,16 +3,15 @@ import { ref, Ref, watch } from "vue"
 import { useRequest } from '@/hooks'
 import { UserService } from '@/service/modules/user.ts'
 import { isEmpty } from '@/utils'
-import HamiAuthorCard from '@/components/common/HamiAuthorCard.vue'
+import CommonUserCard from '@/components/user/CommonUserCard.vue'
 
-//interface
 interface SpaceUserProps {
     id: number | undefined
 }
 
 const $props = defineProps<SpaceUserProps>()
-//router, props, inject, provide
-const author = ref<User>() as Ref<User>
+
+const user = ref<User>() as Ref<User>
 
 const [onLoading, getUser] = useRequest<User, [number]>({
     loading: true,
@@ -21,7 +20,7 @@ const [onLoading, getUser] = useRequest<User, [number]>({
 
 const init = async () => {
     try {
-        author.value = await getUser(<number>$props.id)
+        user.value = await getUser(<number>$props.id)
     } catch (e) {
 
     }
@@ -50,9 +49,9 @@ watch(() => $props.id, async (newVal, _oldVal) => {
         </template>
     </el-skeleton>
     <div class="hover-card">
-        <HamiAuthorCard
+        <CommonUserCard
             v-if="!onLoading"
-            :author="author"
+            :user="user"
             show-tag
             show-opt
             show-stat

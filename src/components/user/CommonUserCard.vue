@@ -7,17 +7,17 @@ import { defaultAvatar } from '@/store/images.ts'
 import { AvatarProps } from 'element-plus/es/components/avatar/src/avatar'
 import StatItem from "@/components/common/StatItem.vue"
 
-interface AuthorCardProps {
-    author: User
+interface CommonUserCardProps {
+    user: User
     avatarSize?: AvatarProps['size']
     showTag?: boolean
     showStat?: boolean
     showOpt?: boolean
 }
 
-const $props = withDefaults(defineProps<AuthorCardProps>(), {
+const $props = withDefaults(defineProps<CommonUserCardProps>(), {
     // @ts-ignore
-    author: {},
+    user: {},
     icon: false,
     profile: false,
     showTag: false,
@@ -27,19 +27,19 @@ const $props = withDefaults(defineProps<AuthorCardProps>(), {
 })
 
 const userStore = useUserStore()
-const [state, handleAction] = useFollow($props.author?.followed)
+const [state, handleAction] = useFollow($props.user?.followed)
 
 const link = computed(() => {
-    return "/user/space/" + $props.author?.userId
+    return "/user/space/" + $props.user?.userId
 })
 
 const description = computed(() => {
-    if ($props.author?.position && $props.author?.company) {
-        return $props.author.position + " @" + $props.author.company
-    } else if ($props.author?.position) {
-        return $props.author.position
-    } else if ($props.author?.company) {
-        return $props.author.company
+    if ($props.user?.position && $props.user?.company) {
+        return $props.user.position + " @" + $props.user.company
+    } else if ($props.user?.position) {
+        return $props.user.position
+    } else if ($props.user?.company) {
+        return $props.user.company
     } else {
         return "作者暂无简介"
     }
@@ -47,12 +47,12 @@ const description = computed(() => {
 
 //fun
 const handleFollow = () => {
-    if (userStore.isSelf($props.author.userId)) {
+    if (userStore.isSelf($props.user.userId)) {
         $message.success("你时时刻刻都在关注你自己~")
         return
     }
-    handleAction($props.author.userId).then((active: boolean) => {
-        let stat = $props.author!.stat
+    handleAction($props.user.userId).then((active: boolean) => {
+        let stat = $props.user!.stat
         if (active) {
             stat.totalFollowers++
         } else {
@@ -66,20 +66,20 @@ const handleChat = () => {
 }
 
 const baseLink = computed(() => {
-    return "/user/" + $props.author?.userId
+    return "/user/" + $props.user?.userId
 })
 
 </script>
 <template>
-    <div class="hami-author-card">
-        <router-link class="author-card-header" :to="link">
+    <div class="hami-user-card">
+        <router-link class="user-card-header" :to="link">
             <div class="header-left">
-                <el-avatar :src="author.avatar || defaultAvatar" :size="avatarSize"></el-avatar>
+                <el-avatar :src="user.avatar || defaultAvatar" :size="avatarSize"></el-avatar>
             </div>
             <div class="header-right">
                 <div class="account-box">
-                    <div class="username">{{ author?.username }}</div>
-                    <el-tag class="tag" v-if="showTag && author?.tag" size="small">{{ author.tag }}</el-tag>
+                    <div class="username">{{ user?.username }}</div>
+                    <el-tag class="tag" v-if="showTag && user?.tag" size="small">{{ user.tag }}</el-tag>
                 </div>
                 <div class="info-box">
                     <div class="info-box-left">
@@ -91,17 +91,17 @@ const baseLink = computed(() => {
         </router-link>
         <div class="stat-box" v-if="showStat">
             <router-link :to="baseLink + '/articles'">
-                <StatItem :value="author?.stat?.totalArticles" label="文章"/>
+                <StatItem :value="user?.stat?.totalArticles" label="文章"/>
             </router-link>
             <router-link :to="baseLink + '/follows'">
-                <StatItem :value="author?.stat?.totalFollowings" label="关注"/>
+                <StatItem :value="user?.stat?.totalFollowings" label="关注"/>
             </router-link>
             <router-link :to="baseLink + '/follows'">
-                <StatItem :value="author?.stat?.totalFollowers" label="粉丝"/>
+                <StatItem :value="user?.stat?.totalFollowers" label="粉丝"/>
             </router-link>
         </div>
         <el-divider direction="horizontal" v-if="showOpt && showStat"></el-divider>
-        <div class="opt-box" v-if="showOpt && !userStore.isSelf(author?.userId)">
+        <div class="opt-box" v-if="showOpt && !userStore.isSelf(user?.userId)">
             <el-button type="info" @click="handleFollow" v-if="state" plain>取消关注</el-button>
             <el-button type="primary" @click="handleFollow" v-else>关注</el-button>
             <el-button type="primary" plain @click="handleChat">私信</el-button>
@@ -110,13 +110,13 @@ const baseLink = computed(() => {
 </template>
 
 <style scoped lang="less">
-.hami-author-card {
+.hami-user-card {
 
     .el-divider {
         margin: 14px 0;
     }
 
-    .author-card-header {
+    .user-card-header {
         display: flex;
         align-items: center;
         width: 100%;

@@ -22,14 +22,13 @@ async function loadLoginUser()  {
 async function start() {
     const app = createApp(App)
     let start = Date.now();
-    //加载Pinia
+    // 加载Pinia
     loadStore(app)
-    //加载其他ui库
+    // 加载其他ui库
     loadPlugins(app)
-    //加载登录用户
+    // 加载登录用户
     let loginUser = await loadLoginUser()
-    console.log(loginUser)
-    //注册路由
+    // 注册路由
     registerRouter(app)
     await router.isReady()
 
@@ -38,4 +37,12 @@ async function start() {
     console.log(`start Hami success. use: ${end - start}ms`)
 }
 
-await start()
+start().then(() => {
+    console.log("###Welcome to Hami###")
+    console.log("  _  _     ___   __  __    ___\n" +
+        " | || |   /   \\ |  \\/  |  |_ _|\n" +
+        " | __ |   | - | | |\\/| |   | |\n" +
+        " |_||_|   |_|_| |_|__|_|  |___|")
+}).catch(err => {
+    console.error(err)
+})

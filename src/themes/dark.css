@@ -31,6 +31,7 @@ html.dark {
     --hami-card-text-color: rgba(207, 211, 220, .8);
     --hami-card-text-color-2: rgba(207, 211, 220, .8);
     --hami-card-blue-bg-1: rgba(30, 88, 233, 0.3);
+    --hami-card-blue-bg-2: #1f2a38;
     --hami-card-hover-bg: hsla(0, 0%, 100%, 0.08);;
     --hami-menu-active-bg: rgba(30, 128, 255, 0.3);
     --hami-menu-active-text-color: #4495ff;

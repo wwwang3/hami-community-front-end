@@ -2,7 +2,7 @@
 import type { CateRoutePath } from '@/store/modules/category.ts'
 import { useCateStore } from '@/store/modules/category.ts'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-import HamiBulletin from '@/components/common/HamiBulletin.vue'
+import HamiBulletin from '@/components/system/HamiBulletin.vue'
 import HamiCateNav from '@/components/common/HamiCateNav.vue'
 import HamiIndexArticle from '@/components/article/HamiIndexArticle.vue'
 import HamiHotArticle from "@/components/article/HamiHotArticle.vue"
@@ -50,7 +50,7 @@ const handleScroll = () => {
     <div class="hami-index-page">
         <div class="hami-index-container container">
             <div class="left-panel">
-                <el-affix :offset="60">
+                <el-affix :offset="40">
                     <HamiCateNav :active-path="activePath"></HamiCateNav>
                 </el-affix>
             </div>
@@ -186,7 +186,7 @@ const handleScroll = () => {
 .sticky-card {
     max-width: 280px;
     position: fixed;
-    top: 60px;
+    top: 40px;
     transition: all .6s;
 }
 </style>

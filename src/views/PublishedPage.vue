@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from "vue"
-import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router"
+import { onBeforeRouteLeave, useRouter } from "vue-router"
 import { isEmpty } from '@/utils'
 import { publishedImg } from "@/store/images.ts"
 
@@ -12,7 +12,6 @@ interface Props {
 
 const $props = defineProps<Props>()
 const $router = useRouter()
-const $route = useRoute()
 
 onMounted(() => {
     console.log($props)

@@ -42,5 +42,8 @@ export default defineConfig({
         host: true,
         port: 8305
     },
-    envDir: "env"
+    envDir: "env",
+    build: {
+        outDir: "dist"
+    }
 })

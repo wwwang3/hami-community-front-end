@@ -1,10 +1,32 @@
 <script setup lang="ts">
 import { ArrowRight } from '@element-plus/icons-vue'
-import { onPPT } from '@/utils'
+import { BulletinService } from '@/service/modules/system.ts'
+import { onMounted, Ref, ref } from 'vue'
+import HamiBulletinList from '@/components/system/HamiBulletinList.vue'
+import { useRequest } from '@/hooks'
 
+const showBulletinList = ref(false)
+const bulletin = ref<Bulletin>() as Ref<Bulletin>
 
-const handleClick = async () => {
-    onPPT()
+const [loading, getNewestBulletin] = useRequest<Bulletin, []>({
+    loading: true,
+    run: (..._params) => BulletinService.getNewBulletin()
+})
+
+onMounted(async () => {
+    try {
+        bulletin.value = await getNewestBulletin()
+    } catch (e) {
+        console.error(e)
+    }
+})
+
+const handleClick = () => {
+    showBulletinList.value = true
+}
+
+const handleClose = () => {
+    // showBulletinList.value = false
 }
 </script>
 <template>
@@ -20,8 +42,9 @@ const handleClick = async () => {
             </el-icon>
             <span class="text">公告</span>
         </div>
-        <div class="bulletin-item-list">
-            <el-text class="bulletin-item" truncated>Hami-v0.0.1发布啦</el-text>
+        <el-skeleton v-if="loading" :loading="loading" animated></el-skeleton>
+        <div class="new-bulletin" v-else>
+            <BulletinCard :bulletin="bulletin"></BulletinCard>
         </div>
         <div class="more-log" @click="handleClick">
             查看更多
@@ -30,12 +53,40 @@ const handleClick = async () => {
             </el-icon>
         </div>
     </div>
+    <el-drawer v-model="showBulletinList" @close="handleClose" modal-class="bulletin-modal" size="360">
+        <template #header>
+            <h4 class="title">Hami公告</h4>
+        </template>
+        <HamiBulletinList></HamiBulletinList>
+    </el-drawer>
 </template>
+
+<style>
+
+.bulletin-modal {
+    .title {
+        margin: 12px 0;
+    }
+
+    .el-drawer {
+        border-radius: var(--hami-radius);
+        background-color: var(--hami-bg);
+        margin: 0.625rem;
+        height: calc(100% - 1.25rem) !important;
+        box-shadow: var(--el-box-shadow-light);
+    }
+
+    .el-drawer__header {
+        margin-bottom: 10px;
+    }
+}
+</style>
 
 <style scoped lang="less">
 
 .hami-bulletin {
-    padding: 16px 20px 10px;
+    padding: 12px 16px 10px;
+    max-height: 220px;
 
     .bulletin-title {
         display: flex;
@@ -49,13 +100,17 @@ const handleClick = async () => {
 
     }
 
-    .bulletin-item-list {
+    .new-bulletin {
         padding: 6px 0;
 
-        .bulletin-item {
-            line-height: 22px;
-            height: 22px;
+        :deep(.hami-bulletin-card) {
+            .bulletin-body {
+                overflow: hidden;
+                height: 100px;
+                //max-height: 100px;
+            }
         }
+
     }
 
     .more-log {

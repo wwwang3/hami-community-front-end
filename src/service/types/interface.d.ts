@@ -160,3 +160,11 @@ declare interface RankServiceApi {
 
     listHotAuthor(): Promise<Array<HotAuthor>>
 }
+
+declare interface BulletinServiceApi {
+
+    listBulletin(param: PageParam): Promise<PageData<Bulletin>>
+
+    getNewBulletin(): Promise<Bulletin>
+
+}

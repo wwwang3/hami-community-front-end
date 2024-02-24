@@ -7,9 +7,8 @@ import { TabsPaneContext } from 'element-plus'
 import useUserStore from '@/store/modules/user.ts'
 import { SPACE_USER } from '@/store/keys.ts'
 import HamiUserData from '@/components/user/HamiUserData.vue'
-import HamiSpaceUserCard from '@/components/common/HamiSpaceUserCard.vue'
+import SpaceUserCard from '@/components/user/SpaceUserCard.vue'
 
-//interface
 interface UserSpaceProps {
     id: string
 }
@@ -42,11 +41,15 @@ const stopRouteWatch = watchEffect(() => {
     activeRoute.value = route || "articles"
 })
 
+const stopTitleWatch = watchEffect(() => {
+    document.title = user.value.username + '的个人空间'
+})
+
 const getAuthor = async (id: number) => {
     try {
         user.value = await getAuthorInfo(id)
     } catch (e) {
-        console.log(e)
+        console.error(e)
     } finally {
     }
 }
@@ -58,6 +61,8 @@ const stopIdWatch = watchEffect(async () => {
 onUnmounted(() => {
     stopRouteWatch()
     stopIdWatch()
+    stopTitleWatch()
+    document.title = 'Hami'
 })
 
 const handleClick = (pane: TabsPaneContext) => {
@@ -69,7 +74,7 @@ const handleClick = (pane: TabsPaneContext) => {
         <div class="user-space-container">
             <div class="user-space-body">
                 <div class="user-space-card">
-                    <HamiSpaceUserCard :author="user" :avatar-size="90" show-tag></HamiSpaceUserCard>
+                    <SpaceUserCard :user="user" :avatar-size="90" show-tag></SpaceUserCard>
                 </div>
                 <div class="detail-block" v-if="!onLoading">
                     <el-tabs v-model="activeRoute" @tab-click="handleClick">

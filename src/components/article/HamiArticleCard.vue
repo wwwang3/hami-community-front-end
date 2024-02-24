@@ -36,7 +36,7 @@ const $props = withDefaults(defineProps<ArticleCardProps>(), {
 })
 const $router = useRouter()
 const article = ref<ArticleInfo>($props.article.articleInfo)
-const author = ref<User>($props.article.author)
+const user = ref<User>($props.article.author)
 const category = ref<Category>($props.article.category)
 const tags = ref<Tag[]>($props.article.tags)
 const stat = ref<ArticleStat>($props.article.stat)
@@ -73,7 +73,7 @@ const handleLike = () => {
             stat.value.likes--
             $props.article.liked = false
         }
-    }).catch(e => {
+    }).catch(_e => {
         $message.error("点赞失败")
     })
 }
@@ -103,6 +103,7 @@ const getTagType = (index: number) => {
                             placement="top"
                             @before-enter="handleBeforeEnter"
                             :show-after="300"
+                            v-if="showInfo"
                         >
                             <template #reference>
                                 <router-link
@@ -110,10 +111,10 @@ const getTagType = (index: number) => {
                                     class="link"
                                     v-if="showUser"
                                 >
-                                    <span class="author ellipsis">{{ author.username }}</span>
+                                    <span class="author ellipsis">{{ user.username }}</span>
                                 </router-link>
                             </template>
-                            <HamiHoverAuthorCard :id="article.userId" v-if="showInfo"></HamiHoverAuthorCard>
+                            <HamiHoverAuthorCard :id="article.userId"></HamiHoverAuthorCard>
                         </el-popover>
                         <div class="ctime">
                             <el-icon size="16">

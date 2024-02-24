@@ -80,3 +80,12 @@ declare interface Page {
     size: number
     total: number
 }
+
+declare interface  Bulletin {
+    id: number
+    title: string
+    content: string
+    ctime: number | Date
+    mtime: number | Date
+    deleted: 0 | 1
+}

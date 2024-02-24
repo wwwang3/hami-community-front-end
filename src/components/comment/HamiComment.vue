@@ -53,14 +53,14 @@ const disable = computed(() => {
 
 const commentConfig = reactive<ConfigApi>({
     comments: [],
-    total: page.value.total,
     user: {} as UserApi,
     emoji: emoji,
     aTarget: '_blank',
+    showLevel: false,
+    replyShowSize: 5
 })
 
 onMounted(async () => {
-    console.log(emoji)
     await init()
 })
 
@@ -75,7 +75,7 @@ const init = async () => {
             avatar: loginUser.avatar,
             likeIds: []
         }
-        //获取评论数据
+        // 获取评论数据
         await handleMore()
     } catch (e) {
         $message.error("获取失败")
@@ -83,7 +83,6 @@ const init = async () => {
         commentConfig.comments = []
     } finally {
         inited.value = true
-        commentConfig.total = page.value.total
     }
 }
 
@@ -102,7 +101,8 @@ const publishComment = async ({ content, parentId, files, finish, reply }: Submi
             parentId: reply?.id
         }
         let comment: CommentInfo = await CommentService.publishComment(commentParam, !isEmpty(reply))
-        finish({
+        let root = commentConfig.comments.find(item => item.id == comment.rootId)
+        let convertedComment = {
             id: comment.id,
             parentId: comment.rootId,
             uid: comment.userId,
@@ -118,7 +118,23 @@ const publishComment = async ({ content, parentId, files, finish, reply }: Submi
                 homeLink: "/user/space/" + commentConfig.user.id
             },
             reply: null
-        })
+        }
+        if (isEmpty(root)) {
+            // root
+            finish(convertedComment)
+        } else if (isEmpty(root!.reply)) {
+            root!.reply = {
+                total: 1,
+                list: [convertedComment]
+            }
+            // @ts-ignore
+            finish(null)
+        } else {
+            root!.reply!.list.push(convertedComment)
+            root!.reply!.total += 1
+            // @ts-ignore
+            finish(null)
+        }
         page.value.total++
         $emit('change', 1)
         $message.success("评论成功")
@@ -141,7 +157,7 @@ const handleMore = async () => {
     commentConfig.comments.push(...comments)
 }
 
-const handleSort = async (latest: boolean) => {
+const handleSort = async (_latest: boolean) => {
     page.value.current = 1
     commentConfig.comments = await handleQueryComments(page.value.current, page.value.size)
 }
@@ -153,8 +169,8 @@ const handleLike = async (id: string, finish: () => void) => {
         itemType: 2
     }
     try {
-        if (commentConfig.user.likeIds.findIndex(value => value == itemId) != -1) {
-            //点赞
+        if (commentConfig.user?.likeIds?.findIndex(value => value == itemId) != -1) {
+            // 点赞
             await UserInteractService.cancelLike(param)
         } else {
             await UserInteractService.like(param)
@@ -175,7 +191,7 @@ const remove = async (comment: CommentApi) => {
         $emit("change", 1 + ifNull(comment.reply?.total, 0))
     } catch (e) {
         if (e !== 'cancel') {
-            console.log(e)
+            console.error(e)
             $message.error("操作失败")
         }
     }
@@ -186,12 +202,11 @@ const handleReplyPage = async (param: ReplyPageParamApi) => {
         let reply = await handleQueryReply(parseInt(param.parentId), param.pageNum, param.pageSize)
         param.finish(reply)
     } catch (e) {
-        console.log(e)
+        console.error(e)
     }
 }
 
 const handleShowInfo = async (uid: string, finish: Function) => {
-    console.log(uid)
     finish({
         id: parseInt(uid)
     })
@@ -228,7 +243,7 @@ const convert = (comments: Comment[] | null): CommentApi[] | [] => {
     }
     return comments!.map((value: Comment, _index: number) => {
         if (value.liked) {
-            commentConfig.user.likeIds.push(value.id as never)
+            commentConfig.user?.likeIds?.push(value.id as never)
         }
         let comment = convertToComment(value)
         let reply = value.reply
@@ -271,13 +286,13 @@ const convertToCommentUser = (user: User): CommentUserApi => {
             <u-comment
                 ref="commentRef"
                 :config="commentConfig"
+                upload
+                page
+                relative-time
                 @submit="publishComment"
                 @like="handleLike"
                 @reply-page="handleReplyPage"
                 @show-info="handleShowInfo"
-                upload
-                page
-                relative-time
             >
                 <template #default>
                     <u-comment-nav v-model="latest" @sorted="handleSort"></u-comment-nav>

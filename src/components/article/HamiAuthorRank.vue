@@ -5,7 +5,7 @@ import { useRequest } from '@/hooks'
 import { isEmpty } from '@/utils'
 import { AuthorRankImg } from "@/store/images.ts"
 import { Refresh } from '@element-plus/icons-vue'
-import HamiAuthorCard from '@/components/common/HamiAuthorCard.vue'
+import CommonUserCard from '@/components/user/CommonUserCard.vue'
 
 const userRankList = ref<HotAuthor[]>([])
 const subRankList = ref<HotAuthor[]>([])
@@ -40,7 +40,6 @@ const refreshUserRank = () => {
         return
     }
     page.value.current = (pages.value === 0) ? 1 : (page.value.current + 1) % pages.value
-    console.log(pages.value)
     rotate.value += 360
     subRankList.value = getSubList()
 }
@@ -67,10 +66,10 @@ const getSubList = () => {
             </div>
         </div>
         <div class="author-rank-list">
-            <template v-for="(item, index) in subRankList">
+            <template v-for="item in subRankList">
                 <li class="rank-item">
-                    <HamiAuthorCard
-                        :author="item.author"
+                    <CommonUserCard
+                        :user="item.author"
                         show-tag
                         :avatar-size="32"
                     />
@@ -91,6 +90,7 @@ const getSubList = () => {
         color: var(--hami-text-1);
         padding-bottom: 12px;
         border-bottom: 1px solid var(--el-border-color);
+        margin-bottom: 4px;
 
         .rank-icon {
             width: 24px;
@@ -119,7 +119,6 @@ const getSubList = () => {
     }
 
     .author-rank-list {
-        margin-top: 2px;
 
         .rank-item {
             padding: 6px 10px;
