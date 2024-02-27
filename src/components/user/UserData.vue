@@ -38,7 +38,7 @@ const bg = computed(() => {
                     </el-icon>
                     <div class="content">
                         <div class="text">文章被点赞</div>
-                        <div class="count">{{ stat?.totalLikes }}</div>
+                        <HamiNumber :value="stat?.totalLikes" class="count"></HamiNumber>
                     </div>
                 </div>
                 <div class="stat-item">
@@ -47,7 +47,7 @@ const bg = computed(() => {
                     </el-icon>
                     <div class="content">
                         <div class="text">文章被阅读</div>
-                        <div class="count">{{ stat?.totalViews }}</div>
+                        <HamiNumber :value="stat?.totalViews" class="count"></HamiNumber>
                     </div>
                 </div>
                 <div class="stat-item">
@@ -56,21 +56,19 @@ const bg = computed(() => {
                     </el-icon>
                     <div class="content">
                         <div class="text">文章被收藏</div>
-                        <div class="count">{{ stat?.totalCollects }}</div>
+                        <HamiNumber :value="stat?.totalViews" class="count"></HamiNumber>
                     </div>
                 </div>
             </div>
         </div>
         <div class="block follow-block">
-            <div class="follow-item">
-                <div class="text">关注了</div>
-                <div class="count">{{ stat?.totalFollowings }}</div>
-            </div>
+            <StatItem label="关注了" :value="stat?.totalFollowings" reversed center></StatItem>
+            <!--            <div class="follow-item">-->
+            <!--                <div class="text">关注了</div>-->
+            <!--                <div class="count">{{ stat?.totalFollowings }}</div>-->
+            <!--            </div>-->
             <el-divider direction="vertical" style="height: 32px"></el-divider>
-            <div class="follow-item">
-                <div class="text">关注者</div>
-                <div class="count">{{ stat?.totalFollowers }}</div>
-            </div>
+            <StatItem label="关注者" :value="stat?.totalFollowers" reversed center></StatItem>
         </div>
         <div class="other-block">
             <div class="block-item">
@@ -88,14 +86,15 @@ const bg = computed(() => {
     .block {
         background-color: var(--hami-card-bg);
         border-radius: var(--hami-radius);
-        padding: 20px 20px;
-        margin-bottom: 20px;
+        padding: 1.34rem 1.34rem;
+        margin-bottom: 1.34rem;
     }
 
     .stat-block {
         height: 180px;
+
         .stat-title {
-            font-size: 18px;
+            font-size: 1.2rem;
             color: var(--hami-text-3);
             line-height: 24px;
             padding-bottom: 10px;
@@ -143,11 +142,8 @@ const bg = computed(() => {
         align-items: center;
         justify-content: space-around;
 
-        .follow-item {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .hami-stat-item {
+            cursor: pointer;
 
             .count {
                 font-size: 18px;

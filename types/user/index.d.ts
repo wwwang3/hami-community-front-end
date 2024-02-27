@@ -62,12 +62,12 @@ declare interface ResetPassParam {
 }
 
 declare interface UserProfileParam {
-    username: string // 用户名
-    profile: string // 个性签名
-    position: string // 职位
-    blog: string // 个人主页
-    company: string // 公司
-    avatar: string // 头像
+    username?: string // 用户名
+    profile?: string // 个性签名
+    position?: string // 职位
+    blog?: string // 个人主页
+    company?: string // 公司
+    avatar?: string // 头像
 }
 
 declare interface CaptchaSendParam {

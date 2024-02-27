@@ -167,7 +167,6 @@ const cancel = () => {
     .captcha-button {
         margin-left: 16px;
         width: 100px;
-        //min-width: 100px;
     }
 
 }

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue"
 import { ArticleService } from '@/service/modules/article.ts'
-import HamiScrollList from '@/components/common/HamiScrollList.vue'
-import HamiArticleCard from '@/components/article/HamiArticleCard.vue'
+import HamiScrollList, { ItemType } from '@/components/common/HamiScrollList.vue'
 import { HamiScrollListInstance } from '@/components/types'
 
 interface IndexArticleProps {
@@ -43,37 +42,21 @@ const getArticles = async (pageNum: number, pageSize: number): Promise<PageData<
 }
 </script>
 <template>
-    <div class="hami-recommend-list">
-        <HamiScrollList
-            :size="20"
-            no-data-text="还没有文章"
-            key-property="id"
-            :query="getArticles"
-            ref="articleList"
-            immediate-loading
-        >
-            <template #item="{item, index, _delete}">
-                <HamiArticleCard :article="item" :show-cate="showCate" class="list-item"></HamiArticleCard>
-            </template>
-        </HamiScrollList>
-    </div>
+    <HamiScrollList
+        :size="20"
+        no-data-text="还没有文章"
+        key-property="id"
+        :query="getArticles"
+        ref="articleList"
+        immediate-loading
+    >
+        <template #item="{item, index, _delete}: ItemType<Article>">
+            <!--                <HamiArticleCard :article="item" :show-cate="showCate" class="list-item"></HamiArticleCard>-->
+            <IndexArticleCard :article="item" :reverse="item.id % 3 === 0"></IndexArticleCard>
+        </template>
+    </HamiScrollList>
 </template>
 
 <style scoped lang="less">
-    .hami-recommend-list {
-        .list-item {
-            border-radius: var(--hami-radius);
-            margin-top: 16px;
-            transition: all .3s;
-            &:first-child {
-                margin-top: 0;
-            }
-            &:hover {
-                box-shadow: var(--el-box-shadow);
-            }
-            &:last-child {
-                margin-bottom: 20px;
-            }
-        }
-    }
+
 </style>

@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from "vue"
 import { UserInteractService } from '@/service/modules/interact.ts'
 import { ifNull, isEmpty } from '@/utils'
-import HamiStatCard from '@/components/creator/HamiStatCard.vue'
+import HamiStatCard from '@/components/creator/CreatorStatCard.vue'
 
 //interface
 interface UserStatProps {

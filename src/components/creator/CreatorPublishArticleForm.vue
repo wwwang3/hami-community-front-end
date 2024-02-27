@@ -234,6 +234,7 @@ const checkItem = () => {
             width: 90px;
             height: 30px;
             display: inline-block;
+            border-radius: var(--hami-radius);
 
             &:hover {
                 background-color: var(--el-color-primary-light-7);

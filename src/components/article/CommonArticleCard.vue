@@ -5,7 +5,7 @@ import { formatDateTime, strToNum } from '@/utils'
 import { Calendar, View } from '@element-plus/icons-vue'
 import { $message } from '@/utils/message.ts'
 import { useLike } from '@/hooks/userInteract.ts'
-import HamiHoverAuthorCard from '@/components/common/HamiHoverAuthorCard.vue'
+import HamiHoverAuthorCard from '@/components/common/HoverAuthorCard.vue'
 import { TAG_NODES } from '@/store/modules/category.ts'
 
 //interface
@@ -103,18 +103,19 @@ const getTagType = (index: number) => {
                             placement="top"
                             @before-enter="handleBeforeEnter"
                             :show-after="300"
-                            v-if="showInfo"
+                            v-if="showUser"
                         >
                             <template #reference>
                                 <router-link
                                     :to="userLink"
                                     class="link"
-                                    v-if="showUser"
                                 >
                                     <span class="author ellipsis">{{ user.username }}</span>
                                 </router-link>
                             </template>
-                            <HamiHoverAuthorCard :id="article.userId"></HamiHoverAuthorCard>
+                            <template v-if="showInfo" #default>
+                                <HamiHoverAuthorCard :id="article.userId"></HamiHoverAuthorCard>
+                            </template>
                         </el-popover>
                         <div class="ctime">
                             <el-icon size="16">

@@ -71,6 +71,43 @@ export function formatDateTime(time: string | number | Date | undefined, format:
     return isEmpty(time) ? "N/A" : dayjs(new Date(time!)).format(format)
 }
 
+export function formatRelativeTime(time: string | number | Date) {
+    // 将时间戳转换为JavaScript Date对象
+    let date = new Date(time);
+
+    // 计算与当前时间的差异（单位：毫秒）
+    let differenceInMs = Date.now() - date.getTime();
+    // 计算差异对应的各个时间单位
+    let seconds = Math.floor(differenceInMs / 1000);
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
+    let days = Math.floor(hours / 24);
+
+    // 根据差异生成相对时间描述
+    if (days > 13) {
+        // 超过14天显示具体日期
+        return formatDateTime(date, "YYYY-MM-DD")
+    } else if (days === 1) {
+        return "昨天";
+    } else if (days >= 2) {
+        return days + "天前";
+    } else if (hours >= 1) {
+        return hours + "小时前";
+    } else if (minutes >= 1) {
+        return minutes + "分钟前";
+    } else {
+        return "刚刚";
+    }
+}
+
+export function formatNumber(num: number | undefined) {
+    if (num === undefined) return 0
+    if (num > 1000) {
+        return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+    }
+    return num + ''
+}
+
 export function calculateLocation(ipInfo: IpInfo) {
     if (isEmpty(ipInfo)) return "未知"
     let location = ""

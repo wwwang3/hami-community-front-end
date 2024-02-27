@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue"
 import { ArticleDraftService } from '@/service/modules/article.ts'
 import { $message } from '@/utils/message.ts'
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
-import HamiArticleDraftCard from '@/components/article/HamiArticleDraftCard.vue'
+import HamiArticleDraftCard from '@/components/article/ArticleDraftCard.vue'
 import { HamiScrollListInstance } from '@/components/types'
 
 const creatorArticleList = ref<HamiScrollListInstance<ArticleDraft>>()

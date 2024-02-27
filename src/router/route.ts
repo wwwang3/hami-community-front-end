@@ -64,22 +64,22 @@ const routes: RouteRecordRaw[] = [
             {
                 path: "profile",
                 name: "AccountUserProfile",
-                component: () => import("@/components/account/HamiUserProfile.vue")
+                component: () => import("@/components/account/UserProfile.vue")
             },
             {
                 path: "setting",
                 name: "AccountSetting",
-                component: () => import("@/components/account/HamiAccountSetting.vue")
+                component: () => import("@/components/account/AccountSetting.vue")
             },
             {
                 path: "common",
                 name: "AccountCommonSetting",
-                component: () => import("@/components/account/HamiCommonSetting.vue")
+                component: () => import("@/components/account/CommonSetting.vue")
             },
             {
                 path: "record",
                 name: "AccountLoginRecord",
-                component: () => import("@/components/account/HamiLoginRecord.vue")
+                component: () => import("@/components/account/LoginRecordList.vue")
             },
         ]
     },
@@ -90,34 +90,34 @@ const routes: RouteRecordRaw[] = [
         children: [
             {
                 path: "",
-                name: "UserSpaceDefault",
+                name: "UserSpace",
                 props: true,
-                component: () => import("@/components/user/HamiUserArticles.vue")
+                component: () => import("@/components/user/UserArticleList.vue")
 
             },
             {
                 path: "articles",
                 name: "UserArticle",
                 props: true,
-                component: () => import("@/components/user/HamiUserArticles.vue")
+                component: () => import("@/components/user/UserArticleList.vue")
             },
             {
                 path: "likes",
                 name: "UserLike",
                 props: true,
-                component: () => import("@/components/user/HamiUserLike.vue")
+                component: () => import("@/components/user/UserThumbup.vue")
             },
             {
                 path: "collects",
                 name: "UserCollect",
                 props: true,
-                component: () => import("@/components/user/HamiUserCollect.vue")
+                component: () => import("@/components/user/UserCollectList.vue")
             },
             {
                 path: "follows",
                 name: "UserFollow",
                 props: true,
-                component: () => import("@/components/user/HamiUserFollow.vue")
+                component: () => import("@/components/user/UserFollow.vue")
             }
         ]
     },
@@ -133,22 +133,22 @@ const routes: RouteRecordRaw[] = [
             {
                 path: "home",
                 name: "CreatorHome",
-                component: () => import("@/components/creator/HamiCreatorHome.vue")
+                component: () => import("@/components/creator/CreatorHome.vue")
             },
             {
                 path: "content",
                 name: "CreatorContent",
-                component: () => import("@/components/creator/HamiCreatorContent.vue"),
+                component: () => import("@/components/creator/CreatorContent.vue"),
             },
             {
                 path: "tool/import",
                 name: "CreatorTool",
-                component: () => import("@/components/creator/HamiCreatorTool.vue")
+                component: () => import("@/components/creator/CreatorTool.vue")
             },
             {
                 path: "help/question",
                 name: "CreatorHelpQuestion",
-                component: () => import("@/components/creator/HamiCreatorHelp.vue")
+                component: () => import("@/components/creator/CreatorHelp.vue")
             }
         ]
     },
@@ -177,27 +177,27 @@ const routes: RouteRecordRaw[] = [
             {
                 path: "reply",
                 name: "NotifyReply",
-                component: () => import("@/components/notify/HamiNotifyReply.vue")
+                component: () => import("@/components/notify/NotifyReply.vue")
             },
             {
                 path: "love",
                 name: "NotifyLove",
-                component: () => import("@/components/notify/HamiNotifyLove.vue")
+                component: () => import("@/components/notify/NotifyLove.vue")
             },
             {
                 path: "follow",
                 name: "NotifyFollow",
-                component: () => import("@/components/notify/HamiNotifyFollow.vue")
+                component: () => import("@/components/notify/NotifyFollow.vue")
             },
             {
                 path: "im",
                 name: "NotifyIM",
-                component: () => import("@/components/notify/HamiNotifyIM.vue")
+                component: () => import("@/components/notify/NotifyIM.vue")
             },
             {
                 path: "system",
                 name: "NotifySystem",
-                component: () => import("@/components/notify/HamiNotifySystem.vue")
+                component: () => import("@/components/notify/NotifySystem.vue")
             }
         ]
     },

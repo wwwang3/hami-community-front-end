@@ -12,7 +12,8 @@ html.dark {
     --hami-bg: #181818;
     --hami-frame-bg: #000;
     --hami-login-bg: linear-gradient(150deg, #4f50b0cc, #595eaacc, #606da4cc, #657b9dcc);
-    --hami-header-bg: var(--hami-bg-blue);
+    /*--hami-header-bg: var(--hami-bg-blue);*/
+    --hami-header-bg: linear-gradient(to right, rgba(47, 128, 185, 0.87), rgba(120, 21, 227, 0.87));
     --hami-notify-bg: url("/assets/notify-dark-bg.jpeg") top/cover no-repeat fixed;
     --hami-notify-nav-bg: rgba(15, 15, 15, .8);
     --hami-notify-body-bg: rgba(15, 15, 15, .6);
@@ -38,6 +39,11 @@ html.dark {
     --hami-menu-text-color: hsla(0, 0%, 100%, 0.6);
     --hami-border-grey: #636466;
     --el-box-shadow: 0 2px 10px 0px rgb(40, 100, 155);
+}
+
+html.dark {
+    --color-9: #c0c0c0;
+    --color-10: #999;
 }
 
 html.dark .md-editor-dark {

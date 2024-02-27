@@ -78,7 +78,7 @@ const baseLink = computed(() => {
             </div>
             <div class="header-right">
                 <div class="account-box">
-                    <div class="username">{{ user?.username }}</div>
+                    <div class="ellipsis username">{{ user?.username }}</div>
                     <el-tag class="tag" v-if="showTag && user?.tag" size="small">{{ user.tag }}</el-tag>
                 </div>
                 <div class="info-box">
@@ -91,13 +91,13 @@ const baseLink = computed(() => {
         </router-link>
         <div class="stat-box" v-if="showStat">
             <router-link :to="baseLink + '/articles'">
-                <StatItem :value="user?.stat?.totalArticles" label="文章"/>
+                <StatItem :value="user?.stat?.totalArticles" label="文章" center />
             </router-link>
             <router-link :to="baseLink + '/follows'">
-                <StatItem :value="user?.stat?.totalFollowings" label="关注"/>
+                <StatItem :value="user?.stat?.totalFollowings" label="关注" center />
             </router-link>
             <router-link :to="baseLink + '/follows'">
-                <StatItem :value="user?.stat?.totalFollowers" label="粉丝"/>
+                <StatItem :value="user?.stat?.totalFollowers" label="粉丝" center />
             </router-link>
         </div>
         <el-divider direction="horizontal" v-if="showOpt && showStat"></el-divider>
@@ -164,9 +164,6 @@ const baseLink = computed(() => {
         display: flex;
         justify-content: space-around;
 
-        :deep(.stat-item) {
-            align-items: center;
-        }
     }
 
     .opt-box {

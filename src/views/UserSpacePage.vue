@@ -6,7 +6,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { TabsPaneContext } from 'element-plus'
 import useUserStore from '@/store/modules/user.ts'
 import { SPACE_USER } from '@/store/keys.ts'
-import HamiUserData from '@/components/user/HamiUserData.vue'
+import HamiUserData from '@/components/user/UserData.vue'
 import SpaceUserCard from '@/components/user/SpaceUserCard.vue'
 
 interface UserSpaceProps {

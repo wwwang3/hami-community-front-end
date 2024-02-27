@@ -91,19 +91,20 @@ const updateProfile = async (el: FormInstance | undefined) => {
             location.reload()
         }, 1000)
     } catch (e) {
-        console.log(e)
+        $message.error("更新失败━━━∑(ﾟ□ﾟ*川━")
     }
 }
 
 const updateAvatar = async (options: UploadRequestOptions) => {
-    //更新头像
+    // 更新头像
     try {
-        //返回头像地址
+        // 返回头像地址
         userProfileParam.avatar = await handleUpload({
             image: options.file,
             type: "avatar"
         })
         $message.success("上传成功")
+        await updateProfile(userProfileForm.value)
         return Promise.resolve()
     } catch (e) {
         return Promise.reject(e)
@@ -213,7 +214,6 @@ const getChangedProp = (): UserProfileParam => {
                             </div>
                         </template>
                     </el-upload>
-                    <div class="tip">点击下方保存修改后生效</div>
                 </div>
             </div>
         </div>
@@ -282,7 +282,7 @@ const getChangedProp = (): UserProfileParam => {
             align-items: center;
         }
 
-        .loading {
+        :deep(.hami-loading) {
             border-radius: 50%;
         }
 

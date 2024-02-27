@@ -181,7 +181,7 @@ const handleClick = (path: CateRoutePath) => {
 .nav-cate {
     padding: 10px;
     background-color: var(--hami-bg);
-    border-radius: var(--hami-radius);
+    border-radius: var(--hami-radius-medium);
     box-shadow: var(--el-box-shadow-dark);
 
     .nav-cate-item {

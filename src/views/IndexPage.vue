@@ -2,11 +2,11 @@
 import type { CateRoutePath } from '@/store/modules/category.ts'
 import { useCateStore } from '@/store/modules/category.ts'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-import HamiBulletin from '@/components/system/HamiBulletin.vue'
+import HamiBulletin from '@/components/system/BulletinFrame.vue'
 import HamiCateNav from '@/components/common/HamiCateNav.vue'
-import HamiIndexArticle from '@/components/article/HamiIndexArticle.vue'
-import HamiHotArticle from "@/components/article/HamiHotArticle.vue"
-import HamiAuthorRank from '@/components/article/HamiAuthorRank.vue'
+import HamiIndexArticle from '@/components/article/IndexArticleList.vue'
+import HamiHotArticle from "@/components/article/HotArticle.vue"
+import HamiAuthorRank from '@/components/article/AuthorRank.vue'
 
 const $props = withDefaults(defineProps<{
     activePath: CateRoutePath
@@ -25,7 +25,7 @@ const scrollTop = ref(0)
 const sticky = ref(false)
 
 onMounted(() => {
-    window.addEventListener("scroll", handleScroll, {passive: true})
+    window.addEventListener("scroll", handleScroll, { passive: true })
     onUnmounted(() => {
         window.removeEventListener("scroll", handleScroll)
     })
@@ -47,8 +47,8 @@ const handleScroll = () => {
 
 </script>
 <template>
-    <div class="hami-index-page">
-        <div class="hami-index-container container">
+    <div class="hami-index-container container">
+        <div class="hami-index-columns">
             <div class="left-panel">
                 <el-affix :offset="40">
                     <HamiCateNav :active-path="activePath"></HamiCateNav>
@@ -111,23 +111,31 @@ const handleScroll = () => {
 </template>
 
 <style scoped lang="less">
-.hami-index-page {
-    margin-top: 40px;
+.hami-index-container {
+    max-width: 1280px;
+    margin: 40px auto 0;
+}
 
-    .hami-index-container {
-        max-width: 1280px;
-        display: flex;
-        justify-content: space-between;
+.hami-index-columns {
+    display: flex;
+    justify-content: center;
+    margin: -0.75rem;
+
+    .main-panel {
+        flex: 1;
+        width: 0;
+        padding: 0 .7rem;
     }
 
     .left-panel {
-        min-width: 180px;
-        max-height: 500px;
+        width: 14rem;
+        padding: 0 .7rem;
     }
 
     .right-panel {
-        max-width: 280px;
+        width: 18rem;
         height: fit-content;
+        padding: 0 .7rem;
 
         .right-card {
             box-shadow: var(--el-box-shadow);
@@ -135,11 +143,6 @@ const handleScroll = () => {
             border-radius: var(--hami-radius);
             margin-bottom: 20px;
         }
-    }
-
-    .main-panel {
-        flex: 1;
-        margin: 0 24px;
     }
 
     .welcome {
@@ -182,9 +185,13 @@ const handleScroll = () => {
             margin-left: 4px;
         }
     }
+
 }
+
 .sticky-card {
-    max-width: 280px;
+    width: 18rem;
+    padding: 0 1.4rem 0 0;
+    box-sizing: border-box;
     position: fixed;
     top: 40px;
     transition: all .6s;

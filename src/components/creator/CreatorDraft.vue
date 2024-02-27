@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue"
 import { ArticleDraftService } from '@/service/modules/article.ts'
 import { $message } from '@/utils/message.ts'
-import HamiArticleDraftCard from '@/components/article/HamiArticleDraftCard.vue'
+import HamiArticleDraftCard from '@/components/article/ArticleDraftCard.vue'
 import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import { HamiScrollListInstance } from '@/components/types'
 

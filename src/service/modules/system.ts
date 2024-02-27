@@ -15,4 +15,4 @@ class BulletinServiceImpl implements BulletinServiceApi {
 
 }
 
-export const BulletinService = new BulletinServiceImpl()
+export const BulletinService: BulletinServiceApi = new BulletinServiceImpl()

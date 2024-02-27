@@ -10,7 +10,7 @@ import { ClickOutside as vClickOutside } from 'element-plus'
 import { DRAFT_REF, ON_PUBLISH_ARTICLE } from '@/store/keys.ts'
 import { defaultAvatar } from "@/store/images.ts"
 import HamiMdEditor from '@/components/md/HamiMdEditor.vue'
-import HamiPublishArticleForm from '@/components/creator/HamiPublishArticleForm.vue'
+import HamiPublishArticleForm from '@/components/creator/CreatorPublishArticleForm.vue'
 
 const $router = useRouter()
 const userStore = useUserStore()

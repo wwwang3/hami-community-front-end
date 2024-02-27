@@ -17,7 +17,7 @@ const page = ref<Page>({
     total: 0
 })
 
-computed(() => {
+const hasMore = computed(() => {
     return page.value.current < Math.ceil(page.value.total / page.value.size)
 })
 
@@ -51,11 +51,12 @@ const calculateIp = (ipInfo: IpInfo) => {
     }
     return isEmpty(ipInfo.ip) ? "未知IP属地" : ipInfo.ip
 }
+
 const handleChange = async (_val: number) => {
     try {
         let pageData = await getLoginRecords({
-            current: page.value.size,
-            size: page.value.current
+            current: page.value.current,
+            size: page.value.size
         })
         records.value = pageData.data as LoginRecord[]
     } catch (e) {

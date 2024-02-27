@@ -29,8 +29,8 @@
 
 <script setup lang="ts">
 import { computed, provide, ref, watch } from 'vue'
-import HamiLoginCard from '@/components/auth/HamiLoginCard.vue'
-import HamiRegisterCard from '@/components/auth/HamiRegisterCard.vue'
+import HamiLoginCard from '@/components/auth/LoginCard.vue'
+import HamiRegisterCard from '@/components/auth/RegisterCard.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { LOGIN_REGISTER_SUCCESS } from '@/store/keys.ts'
 import { logo2, logo3 } from "@/store/images.ts"

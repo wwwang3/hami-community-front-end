@@ -2,7 +2,7 @@
 import { onBeforeMount, ref } from "vue"
 import { useRouter } from "vue-router"
 import useUserStore from '@/store/modules/user.ts'
-import HamiUserStat from '@/components/creator/HamiUserStat.vue'
+import HamiUserStat from '@/components/creator/CreatorUserStat.vue'
 import CreatorUserCard from "@/components/user/CreatorUserCard.vue"
 import { defaultAvatar } from "@/store/images.ts"
 

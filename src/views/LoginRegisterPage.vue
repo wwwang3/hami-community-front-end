@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import HamiLoginRegister from '@/components/auth/HamiLoginRegister.vue'
+import HamiLoginRegister from '@/components/auth/LoginRegisterFrame.vue'
 
 type ModeType = {
     mode: "login" | "register"

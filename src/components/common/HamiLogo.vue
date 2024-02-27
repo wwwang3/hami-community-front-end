@@ -17,10 +17,10 @@ const $props = withDefaults(defineProps<LogoProps>(), {
 })
 //custom var
 const logoStyle = computed(() => {
-    if ($props.width !== undefined || $props.height !== undefined) {
+    if ($props.width || $props.height) {
         return {
-            width: $props.width === undefined ? "auto" : $props.width + "px",
-            height: $props.height === undefined ? "auto" : $props.height + "px"
+            width: $props.width ? $props.width + "px" : "auto",
+            height: $props.height ? $props.height + "px" : "auto"
         }
     }
     let style;

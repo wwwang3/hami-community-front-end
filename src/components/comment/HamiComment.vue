@@ -21,7 +21,7 @@ import { $message } from '@/utils/message.ts'
 import ImageService from '@/service/modules/image.ts'
 import { UserInteractService } from '@/service/modules/interact.ts'
 import Operate from '@/components/comment/Operate.vue'
-import HamiHoverAuthorCard from '@/components/common/HamiHoverAuthorCard.vue'
+import HamiHoverAuthorCard from '@/components/common/HoverAuthorCard.vue'
 
 interface CommentProps {
     areaId: number

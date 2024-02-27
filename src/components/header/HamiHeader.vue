@@ -2,14 +2,16 @@
 import { useRouter } from "vue-router"
 import HamiLogo from '@/components/common/HamiLogo.vue'
 import HeaderAvatar from '@/components/header/HeaderAvatar.vue'
-import HamiSearch from '@/components/header/HamiSearch.vue'
+import HamiSearch from '@/components/header/HeaderSearch.vue'
 import HeaderNotify from '@/components/header/HeaderNotify.vue'
 import HeaderThemeButton from '@/components/header/HeaderThemeButton.vue'
 import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils'
+import useThemeStore from '@/store/modules/theme.ts'
 
 const $router = useRouter()
 const userStore = useUserStore()
+const themeStore = useThemeStore()
 
 const toCollect = () => {
     $router.push("/user/space/" + userStore.userInfo.userId + "/collects")
@@ -37,7 +39,7 @@ const onPPT = () => {
         <div class="page-header-container">
             <div class="page-header-left">
                 <router-link class="page-header-logo" to="/">
-                    <HamiLogo fit="fill" size="small" type="logo3"></HamiLogo>
+                    <HamiLogo fit="fill" size="small" :type="themeStore.isDark ? 'logo3' : 'logo2'"></HamiLogo>
                 </router-link>
                 <div class="page-header-nav">
                     <router-link class="header-nav-item" to="/"

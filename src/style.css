@@ -1,77 +1,18 @@
-:root {
-    --hami-blue-1: #1e80ff;
-    --hami-blue-2: #0396ff;
-    --hami-blue-3: #007fff;
-    --hami-blue-4: #4495ff;
-    --hami-blue-5: #2faee3;
-    --hami-blue-6: #e8f3ff;
-    --hami-blue-7: #ecf5ff;
-    --hami-blue-8: #eaf2ff;
-    --hami-grey-1: #999;
-    --hami-grey-2: #909090;
-    --hami-grey-4: #666;
-    --hami-grey-5: #6b757b;
-    --hami-grey-6: #61666d;
-    --hami-grey-7: #515767;
-    --hami-white-1: #e5e6eb;
-    --hami-white-8: #f4f5f5;
-    --hami-pink-1: #FFD9E4;
-    --hami-pink-2: #fb7299;;
-    --hami-pink-3: #fc8bab;
-    --hami-pink-4: #c65279;
-    --hami-red-1: #f64242;
-    --hami-red-2: #F56C6C;
-    --hami-purple-1: #8312e8;
-    --hami-yellow-1: #ffb800;
-    --hami-radius-small: 4px;
-    --hami-radius: 6px;
-    --hami-radius-medium: 12px;
-    --hami-radius-large: 16px;
-}
 
-:root {
-    --hami-border-grey: #cfd1d5;
-    --hami-border-blue: rgba(30, 128, 255, 0.2);
-    --hami-card-text-color: #8a919f;
-    --hami-card-text-color-2: var(--hami-grey-6);
-    --hami-card-hover-bg: #f7f8fa;
-    --hami-card-blue-bg-1: rgba(0, 174, 236, 0.08);
-    --hami-card-blue-bg-2: var(--hami-blue-7);
-    --hami-text-1: #000;
-    --hami-text-2: #18191C;
-    --hami-text-3: #181818;
-    --hami-text-4: #252933;
-    --hami-text-common: #303133;
-    --hami-title-color: #252933;
-    --hami-text-hover-color: #4495ff;
-    --hami-item-bg: #fff;
-    --hami-item-text-color: #8a919f;
-    --hami-item-hover-bg: #e3e5e7;
-    --hami-icon-active-1: var(--hami-blue-1);
-    --hami-menu-text-color: #515767;
-    --hami-menu-active-text-color: var(--hami-blue-1);
-    --hami-menu-active-bg: var(--hami-blue-7);
-    --hami-menu-active-bg-2: rgba(64, 158, 255, .3);
-}
-
-:root {
-    --hami-bg: #fff;
-    --hami-bg-blue: rgba(8, 12, 40);
-    --hami-card-bg: #fff;
-    --hami-frame-bg: #e5e6eb;
-    --hami-login-bg: linear-gradient(25deg, #192258, #2e4e7a, #3e7d9e, #4bafc3);
-    --hami-notify-bg: url("/assets/notify-bg.jpg") top/cover no-repeat fixed;
-    --hami-notify-nav-bg: rgba(255, 255, 255, .8);
-    --hami-notify-body-bg: rgba(255, 255, 255, .5);
-    --hami-header-bg: linear-gradient(-225deg, #e3fdf5 0, #ffe6fa 100%);
+html {
+    font-size: 15px;
 }
 
 body {
     margin: 0;
+    font-size: 1rem;
     background-color: var(--hami-frame-bg);
-    letter-spacing: 0.5px;
     line-height: normal;
 }
+
+/*body,button,input,select,textarea {*/
+/*    font-family: -apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif*/
+/*}*/
 
 body::before {
     content: '';
@@ -83,7 +24,14 @@ body::before {
     height: 100%;
 }
 
-*, :after, :before {
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+}
+
+:after, :before {
     box-sizing: border-box;
 }
 
@@ -129,5 +77,35 @@ li {
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
+}
+
+[class*=" ri-"], [class^=ri-] {
+    transition: all .3s;
+}
+
+.hami-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+.thumb-up, .star {
+    cursor: pointer;
+    transition: color .3s;
+}
+
+.star.active {
+    color: var(--hami-icon-active-2) !important;
+}
+
+.thumb-up:hover {
+    color: var(--hami-icon-active-1);
+}
+
+.thumb-up.active {
+    color: var(--hami-icon-active-1) !important;
+    cursor: pointer;
 }
 

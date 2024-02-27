@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HamiResetPasswordCard from '@/components/auth/HamiResetPasswordCard.vue'
+import HamiResetPasswordCard from '@/components/auth/ResetPasswordFrame.vue'
 import { useTokenStore } from '@/store/modules/token.ts'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'

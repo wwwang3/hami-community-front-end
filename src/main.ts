@@ -1,4 +1,6 @@
 import "./style.css";
+import "./themes/light.css"
+import "./themes/dark.css"
 import App from "./App.vue";
 import { createApp } from "vue";
 import { loadPlugins } from '@/plugins'
@@ -6,7 +8,6 @@ import { loadStore } from '@/store'
 import router, { registerRouter } from '@/router'
 import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils/message.ts'
-import "./themes/dark.css"
 
 async function loadLoginUser()  {
     let loading = $message.loading("正在进入Hami...")

@@ -2,7 +2,7 @@
 import { ArrowRight } from '@element-plus/icons-vue'
 import { BulletinService } from '@/service/modules/system.ts'
 import { onMounted, Ref, ref } from 'vue'
-import HamiBulletinList from '@/components/system/HamiBulletinList.vue'
+import HamiBulletinList from '@/components/system/BulletinList.vue'
 import { useRequest } from '@/hooks'
 
 const showBulletinList = ref(false)
