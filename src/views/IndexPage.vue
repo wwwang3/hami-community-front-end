@@ -2,11 +2,11 @@
 import type { CateRoutePath } from '@/store/modules/category.ts'
 import { useCateStore } from '@/store/modules/category.ts'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-import HamiBulletin from '@/components/system/BulletinFrame.vue'
+import BulletinFrame from '@/components/system/BulletinFrame.vue'
 import HamiCateNav from '@/components/common/HamiCateNav.vue'
-import HamiIndexArticle from '@/components/article/IndexArticleList.vue'
-import HamiHotArticle from "@/components/article/HotArticle.vue"
-import HamiAuthorRank from '@/components/article/AuthorRank.vue'
+import IndexArticleList from '@/components/article/IndexArticleList.vue'
+import HotArticle from "@/components/article/HotArticle.vue"
+import AuthorRank from '@/components/article/AuthorRank.vue'
 
 const $props = withDefaults(defineProps<{
     activePath: CateRoutePath
@@ -59,7 +59,7 @@ const handleScroll = () => {
                     <HamiFollowUserArticle></HamiFollowUserArticle>
                 </template>
                 <template v-else>
-                    <HamiIndexArticle :cate-id="cateId"></HamiIndexArticle>
+                    <IndexArticleList :cate-id="cateId"></IndexArticleList>
                 </template>
             </div>
             <div class="right-panel" ref="rightPanel">
@@ -67,20 +67,20 @@ const handleScroll = () => {
                     <div class="welcome">欢迎使用Hami</div>
                 </div>
                 <div class="right-card">
-                    <HamiBulletin></HamiBulletin>
+                    <BulletinFrame></BulletinFrame>
                 </div>
                 <div class="right-card">
-                    <HamiHotArticle :cate-id="cateId"></HamiHotArticle>
+                    <HotArticle :cate-id="cateId"></HotArticle>
                 </div>
                 <div class="right-card">
-                    <HamiAuthorRank></HamiAuthorRank>
+                    <AuthorRank></AuthorRank>
                 </div>
                 <div class="sticky-card" v-show="sticky">
                     <div class="right-card">
-                        <HamiHotArticle :cate-id="cateId"></HamiHotArticle>
+                        <HotArticle :cate-id="cateId"></HotArticle>
                     </div>
                     <div class="right-card">
-                        <HamiAuthorRank></HamiAuthorRank>
+                        <AuthorRank></AuthorRank>
                     </div>
                 </div>
                 <div class="right-card">
@@ -170,7 +170,7 @@ const handleScroll = () => {
         .item, .list-item {
             cursor: pointer;
             line-height: 24px;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--hami-item-text-color);
         }
 

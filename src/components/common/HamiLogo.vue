@@ -3,7 +3,7 @@ import { computed } from "vue"
 import { logo2, logo3 } from "@/store/images.ts"
 
 interface LogoProps {
-    size: "mini" | "small" | "normal" | "medium" | "large"
+    size?: "mini" | "small" | "normal" | "medium" | "large"
     type: "logo2" | "logo3"
     fit: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
     width?: number

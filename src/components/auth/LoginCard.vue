@@ -1,8 +1,8 @@
 <template>
     <div class="hami-login-card">
         <el-form :model="loginParam" ref="loginForm" :rules="loginRules" label-width="80px" size="large"
-                 @submit.native.prevent class="hami-login-card-body">
-            <el-form-item label="" label-width="0" prop="account" class="login-account">
+                 @submit.native.prevent class="hami-login-card-body" label-position="top">
+            <el-form-item  label-width="0" prop="account" class="login-account">
                 <el-input v-model="loginParam.account" size="large" type="text" placeholder="用户名/邮箱" clearable>
                     <template #prefix>
                         <el-icon style="font-size: 15px">
@@ -11,7 +11,7 @@
                     </template>
                 </el-input>
             </el-form-item>
-            <el-form-item label="" label-width="0" prop="password" class="login-password">
+            <el-form-item  label-width="0" prop="password" class="login-password">
                 <el-input v-model="loginParam.password" size="large" :type="type" placeholder="密码">
                     <template #prefix>
                         <el-icon style="font-size: 15px">

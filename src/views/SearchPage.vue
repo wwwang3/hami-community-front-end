@@ -19,7 +19,7 @@ onMounted(() => {
     searchArticleList.value?.init()
 })
 
-watch(() => $props.keyword, (newVal: string, oldVal: string) => {
+watch(() => $props.keyword, (newVal: string, _oldVal: string) => {
     if (newVal.length < 2) {
         return
     } else {
@@ -53,13 +53,13 @@ const handleQuery = (current: number, size: number) => {
                 :show-no-more="false"
             >
                 <template #item="{item, index, _delete}">
-                    <HamiArticleCard
+                    <CommonArticleCard
                         :article="item"
                         highlight-summary
                         highlight-title
                         class="list-item"
                     >
-                    </HamiArticleCard>
+                    </CommonArticleCard>
                 </template>
             </HamiScrollList>
         </div>

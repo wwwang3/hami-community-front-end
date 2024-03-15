@@ -10,10 +10,6 @@ body {
     line-height: normal;
 }
 
-/*body,button,input,select,textarea {*/
-/*    font-family: -apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif*/
-/*}*/
-
 body::before {
     content: '';
     position: fixed;

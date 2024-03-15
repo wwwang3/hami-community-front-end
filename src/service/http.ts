@@ -52,10 +52,9 @@ function createInstance() {
                 return Promise.reject(apiData.msg)
         }
     }, (error): Promise<string> => {
-        // let response = error as AxiosResponse
-        //网络错误等
-        $message.error((error as AxiosError).message)
-        return Promise.reject("error")
+        // 网络错误等
+        // $message.error((error as AxiosError).message)
+        return Promise.reject((error as AxiosError).message)
     })
 
     return instance

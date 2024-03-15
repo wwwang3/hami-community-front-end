@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router"
-import HamiLogo from '@/components/common/HamiLogo.vue'
+import HeaderNav from '@/components/header/HeaderNav.vue'
 import HeaderAvatar from '@/components/header/HeaderAvatar.vue'
 import HamiSearch from '@/components/header/HeaderSearch.vue'
 import HeaderNotify from '@/components/header/HeaderNotify.vue'
@@ -37,34 +37,7 @@ const onPPT = () => {
 <template>
     <div class="hami-page-header">
         <div class="page-header-container">
-            <div class="page-header-left">
-                <router-link class="page-header-logo" to="/">
-                    <HamiLogo fit="fill" size="small" :type="themeStore.isDark ? 'logo3' : 'logo2'"></HamiLogo>
-                </router-link>
-                <div class="page-header-nav">
-                    <router-link class="header-nav-item" to="/"
-                    >
-                        首页
-                    </router-link>
-                    <div class="header-nav-item"
-                         @click="onPPT"
-                    >
-                        沸点
-                    </div>
-                    <a
-                        href="https://github.com/wwwang3/hami-community"
-                        target="_blank"
-                        class="header-nav-item"
-                    >
-                        项目地址
-                    </a>
-                    <div class="header-nav-item"
-                         @click="handleAboutClick"
-                    >
-                        关于Hami
-                    </div>
-                </div>
-            </div>
+            <HeaderNav></HeaderNav>
             <div class="page-header-right">
                 <div class="page-header-search">
                     <HamiSearch></HamiSearch>

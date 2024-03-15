@@ -52,7 +52,7 @@ const getArticles = async (pageNum: number, pageSize: number): Promise<PageData<
     >
         <template #item="{item, index, _delete}: ItemType<Article>">
             <!--                <HamiArticleCard :article="item" :show-cate="showCate" class="list-item"></HamiArticleCard>-->
-            <IndexArticleCard :article="item" :reverse="item.id % 3 === 0"></IndexArticleCard>
+            <IndexArticleCard :article="item" :reverse="item.id % 3 === 0" :show-cate="showCate"></IndexArticleCard>
         </template>
     </HamiScrollList>
 </template>

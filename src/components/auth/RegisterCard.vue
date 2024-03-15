@@ -182,14 +182,18 @@ const getCaptcha = async () => {
 }
 
 .hami-register-card-body {
-    margin: 10px 0;
+    margin: 0.67rem 0;
+
+    .el-form-item {
+        margin-bottom: 1.33rem;
+    }
 
     .el-input--large {
-        font-size: 16px;
+        font-size: 1.01rem;
     }
 
     .register-button {
-        margin-top: 22px;
+        margin-top: 1.46rem;
 
         button {
             width: 100%;

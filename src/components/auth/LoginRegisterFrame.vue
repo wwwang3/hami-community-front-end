@@ -1,7 +1,9 @@
 <template>
     <div class="hami-login-register-frame">
         <div class="login-register-header">
-            <el-image class="logo" :src="logo"></el-image>
+            <router-link to="/">
+                <el-image class="logo" :src="logo"></el-image>
+            </router-link>
         </div>
         <div class="login-register-body">
             <template v-if="frameMode === 'login'">
@@ -89,8 +91,8 @@ const changeMode = (mode: string) => {
 
 <style scoped lang="less">
 .hami-login-register-frame {
-    padding: 24px 32px;
-    width: 420px;
+    padding: 1.6rem 2.1rem;
+    width: 444px;
     background-color: var(--el-bg-color);
     box-shadow: var(--el-box-shadow-light);
     border-radius: var(--hami-radius-large);
@@ -101,6 +103,8 @@ const changeMode = (mode: string) => {
 
 .login-register-header {
     margin-bottom: 16px;
+    width: 100%;
+    text-align: center;
 
     .logo {
         height: 56px;
@@ -109,7 +113,7 @@ const changeMode = (mode: string) => {
 }
 
 .login-register-bottom {
-    font-size: 15px;
+    font-size: 1rem;
     margin-bottom: 12px;
     color: var(--hami-text-1);
 
@@ -118,7 +122,7 @@ const changeMode = (mode: string) => {
         line-height: 22px;
         height: 22px;
         cursor: pointer;
-        font-size: 18px;
+        font-size: 1.2rem;
     }
 
 }

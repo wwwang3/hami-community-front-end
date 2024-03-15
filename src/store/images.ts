@@ -3,6 +3,7 @@ import noDataImg from "/assets/nodata02.png"
 import img404 from "/assets/very_sorry.png"
 import logo2 from "/assets/hami-logo-2.png"
 import logo3 from "/assets/hami-logo-3.png"
+import logo4 from "/assets/hami-logo-4.svg"
 import notifyImg from "/assets/notify-bg.jpg"
 import hotImg from "/assets/hot.png"
 import loadErrorImg from "/assets/load-error.png"
@@ -16,6 +17,7 @@ export {
     img404,
     logo2,
     logo3,
+    logo4,
     notifyImg,
     hotImg,
     loadErrorImg,

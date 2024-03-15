@@ -1,6 +1,7 @@
 import "./style.css";
 import "./themes/light.css"
 import "./themes/dark.css"
+import "./style/device.less"
 import App from "./App.vue";
 import { createApp } from "vue";
 import { loadPlugins } from '@/plugins'
