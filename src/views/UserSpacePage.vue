@@ -66,6 +66,9 @@ onUnmounted(() => {
 })
 
 const handleClick = (pane: TabsPaneContext) => {
+    window.scrollTo({
+        top: 0
+    })
     $router.push("/user/space/" + $props.id + "/" + pane.paneName)
 }
 </script>
@@ -73,10 +76,10 @@ const handleClick = (pane: TabsPaneContext) => {
     <div class="hami-user-space">
         <div class="user-space-container">
             <div class="user-space-body">
-                <div class="user-space-card">
+                <div class="user-space-card card">
                     <SpaceUserCard :user="user" :avatar-size="90" show-tag></SpaceUserCard>
                 </div>
-                <div class="detail-block" v-if="!onLoading">
+                <div class="detail-block card" v-if="!onLoading">
                     <el-tabs v-model="activeRoute" @tab-click="handleClick">
                         <el-tab-pane :label="prefix1 + '文章'" name="articles"></el-tab-pane>
                         <el-tab-pane :label="prefix2 + '赞过'" name="likes"></el-tab-pane>
@@ -118,7 +121,7 @@ const handleClick = (pane: TabsPaneContext) => {
         min-height: 600px;
 
         .detail-block {
-            background-color: var(--hami-bg);
+            //background-color: var(--hami-bg);
             border-radius: var(--hami-radius);
         }
 
@@ -133,9 +136,13 @@ const handleClick = (pane: TabsPaneContext) => {
         max-width: 260px;
     }
 
+
 }
 </style>
 <style>
+html.dark .el-tabs__header {
+    opacity: .8;
+}
 #tab-articles {
     padding-left: 20px;
 }

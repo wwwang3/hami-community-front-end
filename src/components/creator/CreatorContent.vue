@@ -25,7 +25,7 @@ const handleClick = (pane: TabsPaneContext, ev: Event) => {
 }
 </script>
 <template>
-    <div class="hami-creator-content">
+    <div class="card hami-creator-content">
         <el-tabs v-model="activeMode" class="content-tabs"
                  @tab-click="handleClick">
             <el-tab-pane label="文章" name="article">
@@ -44,8 +44,6 @@ const handleClick = (pane: TabsPaneContext, ev: Event) => {
 
 <style scoped lang="less">
 .hami-creator-content {
-    background-color: var(--hami-bg);
-    border-radius: var(--hami-radius);
 
     .content-tabs {
         --el-tabs-header-height: 56px;

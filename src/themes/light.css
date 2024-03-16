@@ -29,11 +29,14 @@
     --hami-radius-large: 16px;
     --color-9: #ebeef5;
     --color-10: #606266;
+    --color-11: #5d93db;
+    --color-12: #080c28;
+    --color-13: silver;
 }
 :root {
     --hami-border-grey: #cfd1d5;
     --hami-border-blue: rgba(30, 128, 255, 0.2);
-    --hami-card-text-color: #8a919f;
+    --hami-card-text-color: #606266;
     --hami-card-text-color-2: var(--hami-grey-6);
     --hami-card-hover-bg: #f7f8fa;
     --hami-card-blue-bg-1: rgba(0, 174, 236, 0.08);
@@ -43,7 +46,7 @@
     --hami-text-3: #181818;
     --hami-text-4: #252933;
     --hami-text-common: #303133;
-    --hami-title-color: #252933;
+    --hami-title-color: #333;
     --hami-text-hover-color: #4495ff;
     --hami-item-bg: #fff;
     --hami-item-text-color: #8a919f;
@@ -54,6 +57,7 @@
     --hami-menu-active-text-color: var(--hami-blue-1);
     --hami-menu-active-bg: var(--hami-blue-7);
     --hami-menu-active-bg-2: rgba(64, 158, 255, .3);
+    --hami-comment-bg: rgba(243, 248, 255, .8);
 }
 
 :root {
@@ -66,4 +70,8 @@
     --hami-notify-nav-bg: rgba(255, 255, 255, .8);
     --hami-notify-body-bg: rgba(255, 255, 255, .5);
     --hami-header-bg: linear-gradient(-225deg, #e3fdf5 0, #ffe6fa 100%);
+}
+
+html:not(.dark) .hami-page-header {
+    box-shadow: var(--el-box-shadow);
 }

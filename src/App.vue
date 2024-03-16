@@ -20,10 +20,8 @@ watch(() => $route.path, (newVal, oldValue) => {
 </script>
 
 <template>
-    <div id="hami">
-        <HamiHeader v-show="showHeader"></HamiHeader>
-        <router-view></router-view>
-    </div>
+    <HamiHeader v-show="showHeader"></HamiHeader>
+    <router-view></router-view>
 </template>
 
 <style lang="less">

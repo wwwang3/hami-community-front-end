@@ -10,11 +10,14 @@ const $props = defineProps({
 })
 const $router = useRouter()
 const handleClick = (path: CateRoutePath) => {
+    window.scrollTo({
+        top: 0
+    })
     $router.replace(path)
 }
 </script>
 <template>
-    <div class="nav-cate">
+    <div class="nav-cate card">
         <div class="nav-cate-item" @click="handleClick('/follow')"
              :class="{active: activePath === '/follow'}">
             <el-icon class="icon">
@@ -180,9 +183,6 @@ const handleClick = (path: CateRoutePath) => {
 <style scoped lang="less">
 .nav-cate {
     padding: 10px;
-    background-color: var(--hami-bg);
-    border-radius: var(--hami-radius-medium);
-    box-shadow: var(--el-box-shadow-dark);
 
     .nav-cate-item {
         display: flex;

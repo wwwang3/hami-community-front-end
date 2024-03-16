@@ -16,10 +16,10 @@ const routes: RouteRecordRaw[] = [
         }),
         component: () => import("@/views/IndexPage.vue"),
     },
-    {
-        path: "/:activePath",
-        redirect: "/",
-    },
+    // {
+    //     path: "/:activePath",
+    //     redirect: "/",
+    // },
     {
         path: "/article/:id(\\d+)",
         name: "ArticleContent",

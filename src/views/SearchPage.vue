@@ -15,7 +15,6 @@ const searchArticleList = ref<HamiScrollListInstance<Article> | null>(null)
 
 
 onMounted(() => {
-    console.log($props)
     searchArticleList.value?.init()
 })
 
@@ -66,14 +65,28 @@ const handleQuery = (current: number, size: number) => {
     </div>
 </template>
 
+
+<style lang="less">
+html.dark {
+    .hami-search-page {
+        .list-item {
+            background-color: var(--hami-bg);
+            opacity: .8;
+        }
+    }
+}
+</style>
 <style scoped lang="less">
 .hami-search-page {
     margin-top: 40px;
+    position: relative;
 
     .list-item {
         border-radius: var(--hami-radius);
         margin-top: 16px;
         transition: all .3s;
+        position: relative;
+        z-index: 10;
 
         &:first-child {
             margin-top: 0;

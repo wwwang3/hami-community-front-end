@@ -50,6 +50,14 @@ const handleSearch = (val: string) => {
     <u-search :config="config" @submit="handleSearch"></u-search>
 </template>
 
+<style>
+html.dark {
+    .card-box {
+        border-left: 1px solid var(--hami-border-grey);
+        border-bottom: 1px solid var(--hami-border-grey);
+    }
+}
+</style>
 <style scoped lang="less">
 .u-search {
     --u-bg-color-overlay: var(--hami-border-grey);

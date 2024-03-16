@@ -21,14 +21,14 @@ watchEffect(() => {
 
 </script>
 <template>
-    <div class="hami-common-setting">
+    <div class="card hami-common-setting">
         <div class="common-setting-title">通用设置</div>
         <el-divider></el-divider>
         <div class="common-setting-body">
             <div class="title">页面设置</div>
-            <div class="tips">
-                该设置仅在当前浏览器生效，目前已支持部分核心页面，更多页面适配持续进行中，如有建议可点击页面右下角反馈
-            </div>
+            <!--            <div class="tips">-->
+            <!--                该设置仅在当前浏览器生效，目前已支持部分核心页面，更多页面适配持续进行中，如有建议可点击页面右下角反馈-->
+            <!--            </div>-->
             <div class="setting-items">
                 <el-radio-group v-model="modeName">
                     <div class="item" @click="handleClick('light')" :class="{active: modeName === '浅色模式'}">

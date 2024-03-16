@@ -82,6 +82,15 @@ const handleError = async (e: { name: string, message: string }) => {
     </div>
 </template>
 
+<style lang="less">
+html.dark {
+
+    #hami-md-editor-v3 {
+        background-color: var(--hami-bg);
+    }
+}
+</style>
+
 <style scoped lang="less">
 .hami-markdown-editor {
     :deep(.cm-editor) {

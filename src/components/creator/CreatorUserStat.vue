@@ -113,7 +113,6 @@ const getUserDataGrowing = async () => {
         height: fit-content;
         border-radius: var(--hami-radius);
 
-
         &:nth-child(n+3) {
             margin-bottom: 0;
         }

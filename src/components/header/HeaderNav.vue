@@ -28,33 +28,6 @@
                 </div>
             </div>
         </div>
-        <div class="header-nav small">
-            <router-link class="header-logo" to="/">
-                <el-image :src="logo4"></el-image>
-            </router-link>
-            <div class="header-nav-list">
-                <el-dropdown trigger="click">
-                    <span class="header-nav-item active">{{ activeNav }}</span>
-                    <template #dropdown>
-                        <el-dropdown-menu>
-                            <el-dropdown-item>
-                                <router-link class="header-nav-item" to="/">首页</router-link>
-                            </el-dropdown-item>
-                            <el-dropdown-item>
-                                <div class="header-nav-item" @click="onPPT">沸点</div>
-                            </el-dropdown-item>
-                            <el-dropdown-item>
-                                <a href="https://github.com/wwwang3/hami-community" target="_blank"
-                                   class="header-nav-item">项目地址</a>
-                            </el-dropdown-item>
-                            <el-dropdown-item>
-                                <div class="header-nav-item" @click="handleAboutClick">关于Hami</div>
-                            </el-dropdown-item>
-                        </el-dropdown-menu>
-                    </template>
-                </el-dropdown>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -65,7 +38,6 @@ import useUserStore from '@/store/modules/user.ts'
 import { $message } from '@/utils'
 import useThemeStore from '@/store/modules/theme.ts'
 import { ref } from 'vue'
-import { logo4 } from '@/store/images.ts'
 
 const $router = useRouter()
 const userStore = useUserStore()
@@ -73,7 +45,7 @@ const themeStore = useThemeStore()
 const activeNav = ref('首页')
 
 const handleAboutClick = () => {
-    $message.alert("作者喜欢吃哈密瓜, 所以叫Hami ✿ヽ(°▽°)ノ✿", "关于Hami")
+    $message.success("作者喜欢吃哈密瓜, 所以叫Hami ✿ヽ(°▽°)ノ✿")
 }
 
 const onPPT = () => {
@@ -82,8 +54,6 @@ const onPPT = () => {
 </script>
 
 <style scoped lang="less">
-@import "@/style/device";
-
 .page-header-nav {
     display: flex;
     align-items: center;
@@ -95,6 +65,7 @@ const onPPT = () => {
     }
 
     .header-nav {
+        display: flex;
         align-items: center;
     }
 
@@ -139,26 +110,6 @@ const onPPT = () => {
     animation: jump .3s;
 }
 
-
-@media (max-width: @mobile-max-width) {
-    .header-nav.small {
-        display: flex;
-    }
-
-    .header-nav {
-        display: none;
-    }
-}
-
-@media (min-width: @laptop-min-width) {
-    .header-nav {
-        display: flex;
-    }
-
-    .header-nav.small {
-        display: none;
-    }
-}
 
 @keyframes jump {
     0% {

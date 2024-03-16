@@ -66,6 +66,7 @@ const handleClose = () => {
 .bulletin-modal {
     .title {
         margin: 12px 0;
+        color: var(--hami-title-color);
     }
 
     .el-drawer {
@@ -94,20 +95,23 @@ const handleClose = () => {
         color: var(--hami-blue-2);
 
         .text {
-            font-size: 20px;
-            margin-left: 6px;
+            font-size: 1.25rem;
+            margin-left: 0.43rem;
         }
 
     }
 
     .new-bulletin {
-        padding: 6px 0;
+        padding: 6px 0 0 0;
 
         :deep(.hami-bulletin-card) {
             .bulletin-body {
-                overflow: hidden;
+                overflow: scroll;
                 height: 100px;
-                //max-height: 100px;
+            }
+
+            ::-webkit-scrollbar {
+                width: 0
             }
         }
 
@@ -115,7 +119,7 @@ const handleClose = () => {
 
     .more-log {
         display: flex;
-        font-size: 14px;
+        font-size: .9rem;
         align-items: center;
         cursor: pointer;
         height: 20px;

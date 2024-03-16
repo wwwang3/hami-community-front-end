@@ -31,7 +31,7 @@ const goBack = () => {
             </div>
         </div>
         <div class="user-center-container">
-            <div class="user-center-nav">
+            <div class="card user-center-nav">
                 <div class="nav-item" :class="{active: activeMode === '/account/profile'}"
                      @click="changeMode('/account/profile')">
                     <el-icon class="icon" size="18">
@@ -109,10 +109,9 @@ const goBack = () => {
 
     .user-center-nav {
         margin-right: 30px;
-        padding: 16px 14px 20px;
-        width: 220px;
+        padding: 1.2rem 1.2rem 1.5rem;
+        width: 210px;
         height: 500px;
-        background-color: var(--hami-bg);
         border-radius: var(--hami-radius-medium);
 
         .nav-item {

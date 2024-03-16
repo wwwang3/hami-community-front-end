@@ -30,14 +30,15 @@ const showCate = computed(() => {
 //fun
 const getArticles = async (pageNum: number, pageSize: number): Promise<PageData<Article>> => {
     return new Promise((resolve, reject) => {
-        let promise = ArticleService.listNewestArticle({
+        ArticleService.listNewestArticle({
             current: pageNum,
             size: pageSize,
             cateId: $props.cateId
+        }).then(data => {
+            setTimeout(() => {
+                resolve(data)
+            }, 500)
         })
-        setTimeout(() => {
-            resolve(promise)
-        }, 1000)
     })
 }
 </script>
@@ -51,7 +52,6 @@ const getArticles = async (pageNum: number, pageSize: number): Promise<PageData<
         immediate-loading
     >
         <template #item="{item, index, _delete}: ItemType<Article>">
-            <!--                <HamiArticleCard :article="item" :show-cate="showCate" class="list-item"></HamiArticleCard>-->
             <IndexArticleCard :article="item" :reverse="item.id % 3 === 0" :show-cate="showCate"></IndexArticleCard>
         </template>
     </HamiScrollList>

@@ -142,7 +142,7 @@ const getArticle = async () => {
     <div class="hami-article-content-page">
         <div class="article-content-container container" v-if="!onLoading">
             <div class="main-content">
-                <div class="content-wrapper">
+                <div class="content-wrapper card">
                     <div class="title">
                         {{ article.articleInfo?.title }}
                     </div>
@@ -220,12 +220,12 @@ const getArticle = async () => {
                         </div>
                     </div>
                 </div>
-                <div class="comment-wrapper" id="hami-comment">
+                <div class="comment-wrapper card" id="hami-comment">
                     <HamiComment :area-id="article.id" @change="handleCommentChange"></HamiComment>
                 </div>
             </div>
             <div class="right-panel">
-                <div class="user-info">
+                <div class="user-info card">
                     <CommonUserCard
                         v-if="!onLoading"
                         :user="article.author"
@@ -235,7 +235,7 @@ const getArticle = async () => {
                     />
                 </div>
                 <el-affix :offset="100">
-                    <div class="cate-log">
+                    <div class="cate-log card">
                         <MdCatalog :editorId="mdId" :scrollElement="scrollElement"/>
                     </div>
                 </el-affix>
@@ -320,9 +320,8 @@ const getArticle = async () => {
     .content-wrapper {
         padding: 30px 36px;
         border-radius: var(--hami-radius);
-        background-color: var(--hami-bg);
+        //background-color: var(--hami-bg);
         margin-bottom: 20px;
-        box-shadow: var(--el-box-shadow);
 
         .title {
             font-size: 30px;
@@ -408,6 +407,7 @@ const getArticle = async () => {
 
         .cate-log {
             padding: 16px 16px;
+            color: var(--hami-card-text-color);
             background-color: var(--hami-card-bg);
             border-radius: var(--hami-radius);
             box-shadow: var(--el-box-shadow);
@@ -415,7 +415,6 @@ const getArticle = async () => {
     }
 
     .comment-wrapper {
-        background-color: var(--hami-bg);
         margin-top: 20px;
         border-radius: var(--hami-radius);
         min-height: 100px;

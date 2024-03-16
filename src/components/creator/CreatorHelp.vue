@@ -3,7 +3,7 @@ import HamiDev from '@/components/common/HamiDev.vue'
 </script>
 <template>
     <div class="hami-creator-help">
-        <HamiDev></HamiDev>
+        <HamiDev class="card"></HamiDev>
     </div>
 </template>
 

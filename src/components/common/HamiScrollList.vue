@@ -164,7 +164,7 @@ const handleRun = (...params: [number, number]) => {
 }
 
 const handleScroll = async () => {
-    if (onLoadingMore.value || !hasMore.value) {
+    if (onLoadingMore.value || !hasMore.value || disableScroll.value) {
         return
     }
     page.value.current++

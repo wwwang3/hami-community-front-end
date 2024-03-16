@@ -5,7 +5,6 @@ import { ArticleService } from '@/service/modules/article.ts'
 import useUserStore from '@/store/modules/user.ts'
 import { loadErrorImg2 } from '@/store/images.ts'
 import { HamiScrollListInstance } from '@/components/types'
-import HamiArticleCard from '@/components/article/CommonArticleCard.vue'
 
 const userStore = useUserStore()
 const $router = useRouter()
@@ -38,7 +37,7 @@ const handleClick = () => {
             v-if="logined"
         >
             <template #item="data">
-                <HamiArticleCard :article="data.item" class="list-item"></HamiArticleCard>
+                <IndexArticleCard :article="data.item" class="list-item"></IndexArticleCard>
             </template>
         </HamiScrollList>
         <template v-else>

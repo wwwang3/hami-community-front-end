@@ -180,3 +180,8 @@ export function useScrollPage<T, P extends any[] = any[]>(props: UsePageProps<T,
     }
     return [onRequest, page, dataList as UnwrapNestedRefs<T>[]]
 }
+
+
+export function useInfiniteScroll() {
+
+}

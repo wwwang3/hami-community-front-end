@@ -163,6 +163,7 @@ const handleLike = () => {
     overflow: hidden;
     background-color: var(--hami-card-bg);
     margin-bottom: 1.4rem;
+    color: var(--hami-card-text-color);
 
     &:hover {
         .img {
@@ -193,7 +194,6 @@ const handleLike = () => {
             min-height: 2.4em;
             max-height: 4.8em;
             word-break: break-all;
-            color: var(--color-10);
             font-size: 1.1rem;
             font-weight: 300;
             text-indent: 1.5em;
@@ -204,7 +204,6 @@ const handleLike = () => {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: var(--color-10);
 
             .meta-main {
                 display: flex;

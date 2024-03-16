@@ -42,6 +42,7 @@ watch(() => scrollTop.value, (newVal, _) => {
 })
 
 const handleScroll = () => {
+    console.log(window.scrollY, window.screenY)
     scrollTop.value = window.scrollY
 }
 
@@ -50,9 +51,10 @@ const handleScroll = () => {
     <div class="hami-index-container container">
         <div class="hami-index-columns">
             <div class="left-panel">
-                <el-affix :offset="40">
+                <HamiCateNav :active-path="activePath"></HamiCateNav>
+                <div class="sticky-card" v-show="sticky">
                     <HamiCateNav :active-path="activePath"></HamiCateNav>
-                </el-affix>
+                </div>
             </div>
             <div class="main-panel">
                 <template v-if="isFollow">
@@ -63,27 +65,27 @@ const handleScroll = () => {
                 </template>
             </div>
             <div class="right-panel" ref="rightPanel">
-                <div class="right-card">
+                <div class="card right-card">
                     <div class="welcome">欢迎使用Hami</div>
                 </div>
-                <div class="right-card">
+                <div class="card right-card">
                     <BulletinFrame></BulletinFrame>
                 </div>
-                <div class="right-card">
+                <div class="card right-card">
                     <HotArticle :cate-id="cateId"></HotArticle>
                 </div>
-                <div class="right-card">
+                <div class="card right-card">
                     <AuthorRank></AuthorRank>
                 </div>
                 <div class="sticky-card" v-show="sticky">
-                    <div class="right-card">
+                    <div class="card right-card">
                         <HotArticle :cate-id="cateId"></HotArticle>
                     </div>
-                    <div class="right-card">
+                    <div class="card right-card">
                         <AuthorRank></AuthorRank>
                     </div>
                 </div>
-                <div class="right-card">
+                <div class="card right-card">
                     <div class="more-list">
                         <div class="list-wrap">
                             <div class="list-item">用户协议</div>
@@ -96,7 +98,7 @@ const handleScroll = () => {
                         </div>
                         <div class="item filing">
                             <el-link href="https://beian.miit.gov.cn/#/Integrated/index"
-                                     :underline="false">
+                                     :underline="false" target="_blank">
                                 湘ICP备2022022447号-1
                             </el-link>
                         </div>
@@ -124,12 +126,14 @@ const handleScroll = () => {
     .main-panel {
         flex: 1;
         width: 0;
+        height: auto;
         padding: 0 .7rem;
     }
 
     .left-panel {
         width: 14rem;
         padding: 0 .7rem;
+        min-height: 500px;
     }
 
     .right-panel {
@@ -138,29 +142,28 @@ const handleScroll = () => {
         padding: 0 .7rem;
 
         .right-card {
-            box-shadow: var(--el-box-shadow);
-            background-color: var(--hami-card-bg);
-            border-radius: var(--hami-radius);
             margin-bottom: 20px;
         }
     }
 
     .welcome {
-        padding: 20px;
+        padding: 1.14rem;
         background: linear-gradient(135deg, #5433ff, #20bdff, #a5fecb);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
+        font-size: 1.2rem;
         font-weight: 700;
     }
 
     .more-list {
-        padding: 20px;
+        padding: 1.1rem;
 
         .list-wrap {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
+            justify-content: space-between;
         }
 
         .item:hover, .list-item:hover {
@@ -181,11 +184,14 @@ const handleScroll = () => {
             }
         }
 
-        .list-item:not(:first-child) {
-            margin-left: 4px;
-        }
     }
 
+}
+
+.left-panel .sticky-card {
+    width: 14rem;
+    padding: 0 1.4rem 0 0;
+    box-sizing: border-box;
 }
 
 .sticky-card {

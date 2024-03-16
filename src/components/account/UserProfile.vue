@@ -145,7 +145,7 @@ const getChangedProp = (): UserProfileParam => {
 
 </script>
 <template>
-    <div class="hami-user-profile">
+    <div class="card hami-user-profile">
         <el-skeleton :rows="5" animated :loading="onLoading"></el-skeleton>
         <div class="user-profile-container" v-if="!onLoading">
             <div class="user-profile-header">个人资料</div>

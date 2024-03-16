@@ -115,7 +115,6 @@ provide<Ref<Boolean>>(ON_PUBLISH_ARTICLE, onProcess)
 provide<Ref<ArticleDraft>>(DRAFT_REF, draft)
 
 const handleSave = async () => {
-    console.log(draft.value)
     let loading = $message.loading("保存中....")
     try {
         if (!hasDraftId()) {
@@ -262,10 +261,13 @@ const checkParam = () => {
 <style scoped lang="less">
 .hami-editor-header {
     padding: 0 20px;
-    background-color: var(--hami-bg);
     display: flex;
+    background-color: var(--hami-bg);
+    width: 100%;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    z-index: 100;
 
     .title {
         padding-left: 20px;

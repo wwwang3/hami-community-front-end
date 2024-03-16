@@ -24,7 +24,7 @@ const bg = computed(() => {
 </script>
 <template>
     <div class="data-container">
-        <div class="block stat-block">
+        <div class="block stat-block card">
             <div class="stat-title">个人成就</div>
             <div class="stat">
                 <div class="stat-item">
@@ -61,7 +61,7 @@ const bg = computed(() => {
                 </div>
             </div>
         </div>
-        <div class="block follow-block">
+        <div class="block follow-block card">
             <StatItem label="关注了" :value="stat?.totalFollowings" reversed center></StatItem>
             <!--            <div class="follow-item">-->
             <!--                <div class="text">关注了</div>-->

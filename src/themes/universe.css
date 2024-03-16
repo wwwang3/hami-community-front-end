@@ -1,0 +1,24 @@
+.canvas_effects {
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+html.dark .canvas_effects.dark {
+    display: block;
+}
+
+html.dark {
+    opacity: 1;
+}
+
+.canvas_effects.dark {
+    display: none;
+}

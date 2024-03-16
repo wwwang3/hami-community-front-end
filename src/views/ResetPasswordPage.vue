@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import HamiResetPasswordCard from '@/components/auth/ResetPasswordFrame.vue'
-import { useTokenStore } from '@/store/modules/token.ts'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import useUserStore from '@/store/modules/user.ts'
 
-const tokenStore = useTokenStore()
 const $router = useRouter()
+const userStore = useUserStore()
 
 onMounted(() => {
-    if (tokenStore.authenticated()) {
+    if (userStore.logined) {
         $router.replace("/")
     }
 })

@@ -33,7 +33,7 @@ const handleQuery = (current: number, size: number) => {
             key-property="id"
         >
             <template #item="data">
-                <HamiArticleCard :article="data.item" border></HamiArticleCard>
+                <CommonArticleCard :article="data.item" border></CommonArticleCard>
             </template>
         </HamiScrollList>
     </div>

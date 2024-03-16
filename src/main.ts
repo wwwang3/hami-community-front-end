@@ -1,7 +1,7 @@
 import "./style.css";
 import "./themes/light.css"
 import "./themes/dark.css"
-import "./style/device.less"
+import "./themes/universe.js"
 import App from "./App.vue";
 import { createApp } from "vue";
 import { loadPlugins } from '@/plugins'
@@ -34,7 +34,7 @@ async function start() {
     registerRouter(app)
     await router.isReady()
 
-    app.mount("#app")
+    app.mount("#hami")
     let end = Date.now();
     console.log(`start Hami success. use: ${end - start}ms`)
 }

@@ -39,7 +39,7 @@ const handleClick = () => {
 <template>
     <div class="hami-creator">
         <div class="hami-creator-container">
-            <div class="creator-nav">
+            <div class="card creator-nav">
                 <el-button class="creator-nav-title" type="primary" size="large" @click="handleClick">写文章</el-button>
                 <el-menu
                     :default-active="frameMode"
@@ -105,9 +105,8 @@ const handleClick = () => {
     }
 
     .creator-nav {
-        min-width: 220px;
-        background-color: var(--hami-bg);
-        padding: 16px 16px;
+        min-width: 210px;
+        padding: 1.2rem;
         height: 500px;
         border-radius: var(--hami-radius);
 

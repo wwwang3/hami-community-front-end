@@ -33,9 +33,10 @@ onBeforeMount(async () => {
                 :followers="userInfo?.stat?.totalFollowers ?? 0"
                 :followings="userInfo?.stat?.totalFollowings ?? 0"
                 :username="userInfo?.username"
+                class="card"
             >
             </CreatorUserCard>
-            <HamiUserStat :stat="userInfo.stat"></HamiUserStat>
+            <HamiUserStat :stat="userInfo.stat" class="card"></HamiUserStat>
         </div>
     </div>
 </template>

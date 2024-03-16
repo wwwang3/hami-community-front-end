@@ -67,7 +67,7 @@ const isSelf = () => {
             key-property="id"
         >
             <template #item="data">
-                <HamiArticleCard :article="data.item" border>
+                <CommonArticleCard :article="data.item" border>
                     <template #top="article">
                         <ArticleDeleteOperate
                             msg="确定取消收藏吗?"
@@ -77,7 +77,7 @@ const isSelf = () => {
                             @delete="handleCancelCollect" v-if="isSelf()">
                         </ArticleDeleteOperate>
                     </template>
-                </HamiArticleCard>
+                </CommonArticleCard>
             </template>
         </HamiScrollList>
     </div>

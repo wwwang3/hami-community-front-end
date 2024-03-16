@@ -97,7 +97,7 @@ const clearKeyword = () => {
                     timestamp-key="readingTime"
                 >
                     <template #item="{item, index, _delete}">
-                        <HamiArticleCard
+                        <CommonArticleCard
                             :article="item.content"
                             reverse
                             border
@@ -111,7 +111,7 @@ const clearKeyword = () => {
                                     <span class="text">删除</span>
                                 </div>
                             </template>
-                        </HamiArticleCard>
+                        </CommonArticleCard>
                     </template>
                 </HamiScrollList>
             </div>

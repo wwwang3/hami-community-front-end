@@ -76,6 +76,11 @@ const avatarMouseLeave = () => {
     </div>
 </template>
 
+<style>
+.hami-avatar-popper {
+    opacity: 1 !important;
+}
+</style>
 
 <style scoped lang="less">
 .hami-avatar-wrap {
@@ -88,6 +93,7 @@ const avatarMouseLeave = () => {
     .hami-avatar-container {
         position: relative;
         z-index: 99999;
+        opacity: 1;
     }
 
     .hami-avatar-large {

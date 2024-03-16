@@ -313,10 +313,60 @@ const convertToCommentUser = (user: User): CommentUserApi => {
     :deep(.u-comment) {
         border-radius: var(--hami-radius);
         min-height: 300px;
+        background-color: var(--hami-card-bg);
+
+        .comment {
+
+            &:not(.reply):not(:last-child) {
+                border-bottom: 1px solid var(--color-9);
+            }
+
+            .content {
+                padding: .5rem;
+                color: var(--hami-card-text-color);
+                border-radius: var(--hami-radius);
+                background-color: var(--hami-comment-bg);
+                margin-bottom: .4rem;
+                opacity: .9;
+            }
+        }
+    }
+
+    :deep(.reply-list) {
+        padding-left: 0;
+        padding-top: .4rem;
+        padding-bottom: .4rem;
+
+        .reply:not(:first-child) {
+            margin-top: 1.5rem;
+        }
+    }
+
+    :deep(.u-editor) {
+        opacity: .9;
     }
 
     :deep(.nav__sort) {
         border-radius: 2px;
+    }
+
+    :deep(.comment-form) {
+        .content {
+            min-height: 106px;
+        }
+    }
+
+    :deep(.comment-list-wrapper) {
+        padding-top: 1.2rem;
+    }
+
+    :deep(.reply-box) {
+        //opacity: .9;
+        background: 0 0;
+
+        .reply .el-avatar {
+            --el-avatar-size: 40px !important;
+        }
     }
 }
 </style>

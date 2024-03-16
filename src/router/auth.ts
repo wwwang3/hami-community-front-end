@@ -1,10 +1,7 @@
-
-//需要登录的页面
-
-
 import { RouteLocationNormalized } from 'vue-router'
 import { loadUserStore } from '@/store/modules/user.ts'
 
+//需要登录的页面
 const needLoginPages: Array<string> = [
     "/account",
     "/creator",

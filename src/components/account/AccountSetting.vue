@@ -63,7 +63,7 @@ const handleCancel = () => {
 
 </script>
 <template>
-    <div class="hami-account-setting">
+    <div class="card hami-account-setting">
         <el-skeleton v-if="onLoading"></el-skeleton>
         <div class="account-setting-view" v-else>
             <div class="account-header">账号管理</div>
@@ -136,7 +136,6 @@ const handleCancel = () => {
 .hami-account-setting {
     min-height: 500px;
     padding: 20px 24px;
-    background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);
 }
 

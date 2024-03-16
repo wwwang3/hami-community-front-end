@@ -136,8 +136,8 @@ const baseLink = computed(() => {
                 align-items: center;
 
                 .username {
-                    color: var(--hami-text-1);
-                    font-size: 17px;
+                    color: var(--hami-title-color);
+                    font-size: 1.21rem;
                     font-weight: 600;
                 }
 

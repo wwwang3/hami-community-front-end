@@ -115,7 +115,7 @@ const calculateHotIndex = (rank: number) => {
                                         fill="currentColor"></path>
                                 </svg>
                             </el-icon>
-                            <span class="hot-index">{{ calculateHotIndex(item.hotRank) }}</span>
+                            <span class="ellipsis hot-index">{{ calculateHotIndex(item.hotRank) }}</span>
                         </span>
                     </router-link>
                 </div>
@@ -179,7 +179,7 @@ const calculateHotIndex = (rank: number) => {
         .hot-article-item {
             display: flex;
             align-items: center;
-            font-size: 18px;
+            font-size: 1.23rem;
             padding: 6px 10px;
 
             .first {
@@ -216,9 +216,15 @@ const calculateHotIndex = (rank: number) => {
                 color: var(--hami-title-color);
             }
 
+            .title {
+                max-width: 100px;
+            }
+
             .hot {
+                flex: 1;
                 display: flex;
                 align-items: center;
+                width: 28px;
 
                 .hot-icon {
                     color: #f64242;

@@ -86,7 +86,8 @@ const header = computed(() => {
 html.dark {
     .hami-notify {
         .hami-empty {
-            background-color: var(--hami-frame-bg);
+            background-color: #333;
+            opacity: .8;
         }
     }
 }

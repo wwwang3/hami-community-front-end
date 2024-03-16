@@ -20,7 +20,7 @@
                     </template>
                     <template #suffix>
                         <HamiEye @change="handleChange" :size="18"></HamiEye>
-                        <span class="forget-password" @click="() => $router.replace('/reset-pass')">忘记密码?</span>
+                        <span class="forget-password" @click="toResetPass">忘记密码?</span>
                     </template>
                 </el-input>
             </el-form-item>
@@ -50,10 +50,12 @@ import { useTokenStore } from '@/store/modules/token.ts'
 import { useRequest } from '@/hooks'
 import { LOGIN_REGISTER_SUCCESS } from '@/store/keys.ts'
 import useThemeStore from '@/store/modules/theme.ts'
+import { useRouter } from 'vue-router'
 
 const success = inject<Function>(LOGIN_REGISTER_SUCCESS)
 const tokenStore = useTokenStore()
 const themeStore = useThemeStore()
+const $router = useRouter()
 
 const [onLogin, handleLogin] = useRequest<string, [LoginParam]>({
     run: (...params) => tokenStore.login(...params)
@@ -102,6 +104,10 @@ const login = async (el: FormInstance | undefined) => {
             })
     } catch (e) {
     }
+}
+
+const toResetPass = () => {
+    $router.replace('/reset-pass')
 }
 
 </script>

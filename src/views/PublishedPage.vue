@@ -33,7 +33,7 @@ const handleClick = () => {
 
 </script>
 <template>
-    <div class="hami-published">
+    <div class="card hami-published">
         <div class="hami-published-body">
             <img :src="publishedImg" alt="">
             <router-link :to="'/article/' + $props.id" class="title">《{{ $props.title }}》</router-link>
@@ -48,7 +48,6 @@ const handleClick = () => {
     margin: 80px auto 0;
     width: 900px;
     padding: 20px;
-    background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);
 
     .hami-published-body {

@@ -71,7 +71,7 @@ const formatTime = (time: number) => {
 
 </script>
 <template>
-    <div class="hami-login-record">
+    <div class="card hami-login-record">
         <div class="login-record-title">
             登录记录
         </div>
@@ -120,6 +120,22 @@ const formatTime = (time: number) => {
         </div>
     </div>
 </template>
+
+<style lang="less">
+html.dark {
+    .login-record-header {
+        opacity: .9;
+    }
+
+    .el-table__row:hover {
+        opacity: .9;
+    }
+
+    .el-table__row.el-table__row--striped {
+        opacity: .9;
+    }
+}
+</style>
 
 <style scoped lang="less">
 .hami-login-record {

@@ -6,7 +6,6 @@ import HamiSearch from '@/components/header/HeaderSearch.vue'
 import HeaderNotify from '@/components/header/HeaderNotify.vue'
 import HeaderThemeButton from '@/components/header/HeaderThemeButton.vue'
 import useUserStore from '@/store/modules/user.ts'
-import { $message } from '@/utils'
 import useThemeStore from '@/store/modules/theme.ts'
 
 const $router = useRouter()
@@ -23,14 +22,6 @@ const toHistory = () => {
 
 const toNotify = () => {
     $router.replace("/notify")
-}
-
-const handleAboutClick = () => {
-    $message.alert("作者喜欢吃哈密瓜, 所以叫Hami ✿ヽ(°▽°)ノ✿", "关于Hami")
-}
-
-const onPPT = () => {
-    $message.notifySuccess("开发中~~~")
 }
 
 </script>
@@ -110,7 +101,7 @@ const onPPT = () => {
     position: relative;
     z-index: 100;
     background: var(--hami-header-bg);
-    box-shadow: var(--el-box-shadow-lighter);
+
 
     .page-header-container {
         display: flex;
