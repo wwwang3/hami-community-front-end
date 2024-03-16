@@ -15,7 +15,7 @@ const $props = withDefaults(defineProps<EmptyProps>(), {
 
 </script>
 <template>
-    <el-empty :description="description" :image="image" :image-size="imageSize" class="hami-empty"></el-empty>
+    <el-empty :description="description" :image="image" :image-size="imageSize" class="card hami-empty"></el-empty>
 </template>
 
 <style scoped lang="less">

@@ -42,9 +42,9 @@ const handleClose = () => {
             </el-icon>
             <span class="text">公告</span>
         </div>
-        <el-skeleton v-if="loading" :loading="loading" animated></el-skeleton>
-        <div class="new-bulletin" v-else>
-            <BulletinCard :bulletin="bulletin"></BulletinCard>
+        <div class="new-bulletin">
+            <el-skeleton v-if="loading" :loading="loading" animated :rows="1"></el-skeleton>
+            <BulletinCard :bulletin="bulletin" v-else></BulletinCard>
         </div>
         <div class="more-log" @click="handleClick">
             查看更多

@@ -30,6 +30,7 @@ async function start() {
     loadPlugins(app)
     // 加载登录用户
     let loginUser = await loadLoginUser()
+    console.log(loginUser)
     // 注册路由
     registerRouter(app)
     await router.isReady()

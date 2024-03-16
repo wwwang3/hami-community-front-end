@@ -38,6 +38,8 @@ const getArticles = async (pageNum: number, pageSize: number): Promise<PageData<
             setTimeout(() => {
                 resolve(data)
             }, 500)
+        }).catch(err => {
+            reject(err)
         })
     })
 }

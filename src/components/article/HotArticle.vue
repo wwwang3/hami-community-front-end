@@ -66,7 +66,7 @@ const getHotArticles = async () => {
             return t
         });
         subArticleList.value = getSubList()
-        pages.value = articleList.value?.length / size ?? 1
+        pages.value = articleList.value ? articleList.value.length / size : 1
     } catch (e) {
         console.log(e)
     }

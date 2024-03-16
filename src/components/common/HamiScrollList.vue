@@ -140,6 +140,7 @@ const _init = () => {
         })
         .finally(() => {
             inited.value = true
+            onLoadingMore.value = false
             console.log(`init finish, cost: ${Date.now() - start}ms`)
         })
 }
@@ -173,6 +174,8 @@ const handleScroll = async () => {
         refreshData(pageData.data ?? [])
     } catch (e) {
         loadingError.value = true
+    } finally {
+        onLoadingMore.value = false
     }
 }
 const refreshData = (data: T[]) => {

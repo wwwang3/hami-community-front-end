@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
+import { computed, Ref, ref } from "vue"
 import { formatDateTime } from "@/utils/index.ts"
 //interface
 
@@ -10,11 +10,11 @@ const $props = defineProps<{
 const ctime = computed(() => {
     return formatDateTime($props.bulletin?.ctime, "YYYY-MM-DD")
 })
-const content = ref($props.bulletin?.content)
+const content = ref($props.bulletin?.content) as Ref<string>
 
 </script>
 <template>
-    <div class="hami-bulletin-card">
+    <div class="hami-bulletin-card" v-if="bulletin">
         <div class="bulletin-header">
             <div class="title">{{ bulletin?.title }}</div>
             <div class="ctime">{{ ctime }}</div>
