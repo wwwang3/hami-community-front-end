@@ -145,7 +145,7 @@ export function useScrollPage<T, P extends any[] = any[]>(props: UsePageProps<T,
             }
             return Promise.resolve(data.data as T[])
         } catch (e) {
-            console.log(e)
+            console.error(e)
             return Promise.reject(e)
         }
     }

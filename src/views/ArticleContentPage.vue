@@ -303,7 +303,7 @@ const getArticle = async () => {
             font-size: 1.34rem;
 
             &:hover {
-                color: var(--hami-grey-7);
+                color: var(--hami-grey-6);
             }
 
             &:not(:last-child) {

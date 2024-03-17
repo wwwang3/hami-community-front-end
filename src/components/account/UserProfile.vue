@@ -223,7 +223,6 @@ const getChangedProp = (): UserProfileParam => {
 <style scoped lang="less">
 .hami-user-profile {
     padding: 20px 24px;
-    background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);
     min-height: 540px;
 

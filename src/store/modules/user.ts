@@ -40,11 +40,6 @@ const useUserStore = defineStore("user", () => {
     })
     const getProfile = async (): Promise<LoginProfile> => {
         console.log("start to get profile")
-        //token在cookie就不要判断了
-        // if (tokenStore.getTokenValue() === null || tokenStore.getTokenName() == null) {
-        //     inited.value = true
-        //     return Promise.reject("没有token")
-        // }
         if (checkLoaded()) {
             return Promise.resolve(userInfo.value)
         }
@@ -68,8 +63,7 @@ const useUserStore = defineStore("user", () => {
             userInfo.value = await process(null)
             return userInfo.value
         } catch (e) {
-            console.log(e)
-            // tokenStore.clear()
+            console.error(e)
             return Promise.reject(e)
         } finally {
             inited.value = true

@@ -15,7 +15,7 @@ const dataGrowing = ref<DailyDataGrowing>()
 
 const follower_incr = computed(() => {
     if (isEmpty(dataGrowing.value)) return 0
-    let incr =  ifNull(dataGrowing.value?.follower_incr, 0)
+    let incr = ifNull(dataGrowing.value?.follower_incr, 0)
     let cancel = ifNull(dataGrowing.value?.cancel_follow_incr, 0)
     return incr - cancel;
 })
@@ -89,7 +89,6 @@ const getUserDataGrowing = async () => {
     height: 360px;
     border-radius: var(--hami-radius);
     margin-top: 20px;
-    background-color: var(--hami-bg);
 
     .user-stat-title {
         padding: 20px;

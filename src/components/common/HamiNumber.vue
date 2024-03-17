@@ -2,7 +2,7 @@
 import { formatNumber } from '@/utils'
 
 interface Props {
-    value: number
+    value: number | undefined
 }
 
 const $props = defineProps<Props>()

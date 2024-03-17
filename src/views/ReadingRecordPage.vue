@@ -59,61 +59,63 @@ const clearKeyword = () => {
 </script>
 <template>
     <div class="hami-reading-record">
-        <div class="reading-record-container container">
-            <div class="reading-record-header">
-                <div class="left-panel">
-                    <el-icon size="22">
-                        <AlarmClock/>
-                    </el-icon>
-                    <span class="text">阅读记录</span>
-                </div>
-                <div class="right-panel">
-                    <el-input placeholder="请输入标题关键字" maxlength="8" v-model="keyword" class="search-item">
-                        <template #suffix>
-                            <el-icon @click="clearKeyword" v-if="keyword.length > 0" class="clear">
-                                <CircleClose/>
-                            </el-icon>
-                            <el-button
-                                type="info"
-                                :icon="Search"
-                                @click="handleSearch"
-                                :disabled="keyword.length <= 1" size="small" class="search-btn">
-                            </el-button>
-                        </template>
-                    </el-input>
-                    <el-button type="primary" plain @click="clearRecords" class="clear-item">清空记录</el-button>
-                </div>
-            </div>
-            <div class="reading-record-body">
-                <HamiScrollList
-                    ref="readingRecordList"
-                    :size="20"
-                    :query="handleQuery"
-                    :immediate-loading="true"
-                    :show-no-more="false"
-                    key-property="articleId"
-                    no-data-text="还没有阅读记录"
-                    timeline
-                    timestamp-key="readingTime"
-                >
-                    <template #item="{item, index, _delete}">
-                        <CommonArticleCard
-                            :article="item.content"
-                            reverse
-                            border
-                            :highlight-title="highlight"
-                        >
-                            <template #top="article">
-                                <div class="option-item" @click="handleDeleteRecord(item, index)">
-                                    <el-icon size="14">
-                                        <Delete/>
-                                    </el-icon>
-                                    <span class="text">删除</span>
-                                </div>
+        <div class="container">
+            <div class="card">
+                <div class="reading-record-header">
+                    <div class="left-panel">
+                        <el-icon size="22">
+                            <AlarmClock/>
+                        </el-icon>
+                        <span class="text">阅读记录</span>
+                    </div>
+                    <div class="right-panel">
+                        <el-input placeholder="请输入标题关键字" maxlength="8" v-model="keyword" class="search-item">
+                            <template #suffix>
+                                <el-icon @click="clearKeyword" v-if="keyword.length > 0" class="clear">
+                                    <CircleClose/>
+                                </el-icon>
+                                <el-button
+                                    type="info"
+                                    :icon="Search"
+                                    @click="handleSearch"
+                                    :disabled="keyword.length <= 1" size="small" class="search-btn">
+                                </el-button>
                             </template>
-                        </CommonArticleCard>
-                    </template>
-                </HamiScrollList>
+                        </el-input>
+                        <el-button type="primary" plain @click="clearRecords" class="clear-item">清空记录</el-button>
+                    </div>
+                </div>
+                <div class="reading-record-body">
+                    <HamiScrollList
+                        ref="readingRecordList"
+                        :size="20"
+                        :query="handleQuery"
+                        :immediate-loading="true"
+                        :show-no-more="false"
+                        key-property="articleId"
+                        no-data-text="还没有阅读记录"
+                        timeline
+                        timestamp-key="readingTime"
+                    >
+                        <template #item="{item, index, _delete}">
+                            <CommonArticleCard
+                                :article="item.content"
+                                reverse
+                                border
+                                :highlight-title="highlight"
+                            >
+                                <template #top="article">
+                                    <div class="option-item" @click="handleDeleteRecord(item, index)">
+                                        <el-icon size="14">
+                                            <Delete/>
+                                        </el-icon>
+                                        <span class="text">删除</span>
+                                    </div>
+                                </template>
+                            </CommonArticleCard>
+                        </template>
+                    </HamiScrollList>
+                </div>
             </div>
         </div>
     </div>
@@ -126,7 +128,11 @@ const clearKeyword = () => {
 
     .reading-record-container {
         border-radius: var(--hami-radius);
-        background-color: var(--hami-bg);
+        background-color: var(--hami-card-bg);
+    }
+
+    .container {
+        margin-bottom: 20px;
     }
 
     .reading-record-header {

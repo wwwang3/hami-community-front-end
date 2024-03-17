@@ -23,7 +23,7 @@ function createInstance() {
         }
         return config
     }, (error) => {
-        console.log(error)
+        console.error(error)
         return Promise.reject("request error")
     })
 
@@ -46,7 +46,6 @@ function createInstance() {
                 //返回数据
                 return Promise.resolve(apiData.data)
             default:
-                console.log(apiData)
                 // $message.error(apiData.msg)
                 //错误信息
                 return Promise.reject(apiData.msg)

@@ -150,7 +150,7 @@ html.dark {
                 align-items: center;
                 position: relative;
                 justify-content: normal;
-                color: var(--hami-grey-5);
+                color: var(--hami-grey-4);
                 margin-bottom: 6px;
                 cursor: pointer;
                 transition: color .3s;

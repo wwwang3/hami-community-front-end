@@ -55,7 +55,6 @@ export const AccountService: AccountServiceApi = {
     },
 
     updateUserProfile(params: UserProfileParam): Promise<any> {
-        console.log(params)
         return http.post("/account/update", params)
     },
 

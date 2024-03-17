@@ -140,7 +140,6 @@ html.dark {
 <style scoped lang="less">
 .hami-login-record {
     padding: 20px 24px;
-    background-color: var(--hami-bg);
     border-radius: var(--hami-radius-medium);
     min-height: 500px;
     height: 500px;
@@ -166,7 +165,7 @@ html.dark {
 
         :deep(.login-record-header th.el-table__cell) {
             background-color: var(--hami-white-1);
-            color: var(--hami-grey-6);
+            color: var(--hami-grey-5);
         }
 
         :deep(.el-table__body td.el-table__cell) {

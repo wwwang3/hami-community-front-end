@@ -1,24 +1,24 @@
 @import 'element-plus/theme-chalk/dark/css-vars.css';
 @import "universe.css";
+
 html.dark {
     --hami-blue-6: rgba(30, 128, 255, 0.3);
     --hami-white-1: rgba(229, 230, 235, 0.7);
     --hami-white-8: rgba(244, 245, 245, 0.4);
     --hami-blue-3: rgba(0, 127, 255, 0.8);
-    --hami-grey-4: #999;
+    --hami-grey-3: #999;
 }
 
 html.dark {
     --hami-bg: #181818;
     --hami-frame-bg: var(--hami-bg-blue);
-    --hami-card-bg: 0;
+    --hami-card-bg: 0 0;
     /*--hami-card-bg: #181818;*/
     --hami-login-bg: linear-gradient(150deg, #4f50b0cc, #595eaacc, #606da4cc, #657b9dcc);
     --hami-header-bg: linear-gradient(to right, rgba(47, 128, 185, 0.8), rgba(120, 21, 227, 0.8));
     --hami-notify-bg: url("/assets/notify-dark-bg.jpeg") top/cover no-repeat fixed;
     --hami-notify-nav-bg: rgba(15, 15, 15, .8);
     --hami-notify-body-bg: rgba(15, 15, 15, .6);
-
     --hami-item-bg: rgb(255, 255, 255, 0.12);
     --hami-comment-bg: rgba(58, 59, 63, .5);
 }
@@ -33,7 +33,7 @@ html.dark {
     --hami-text-common: rgba(229, 234, 243, 0.8);
     --hami-card-text-color: #999;
     --hami-card-text-color-2: rgba(207, 211, 220, .8);
-    --hami-card-blue-bg-1: rgba(65, 108, 223, 0.3);
+    --hami-card-blue-bg-1: rgba(65, 110, 210, 0.3);
     --hami-card-blue-bg-2: #1f2a38;
     --hami-card-hover-bg: hsla(0, 0%, 100%, 0.08);;
     --hami-menu-active-bg: rgba(30, 128, 255, 0.3);
@@ -49,12 +49,17 @@ html.dark {
 }
 
 html.dark .md-editor-dark {
-    --md-bk-color: var(--hami-card-bg);
+    --md-bk-color: 0 0;
 }
 
 html.dark .md-editor-dark pre[data-line='3'] {
-    opacity: .9;
+    opacity: .8;
 }
+
+html.dark blockquote {
+    background-color: var(--dark-bg-1);
+}
+
 html.dark .md-editor-dark article.default-theme {
     --md-theme-code-block-bg-color: #252933;
 }
@@ -76,6 +81,10 @@ html.dark .nav__sort .item.active {
 }
 
 html.dark .card {
-    background: 0 0;
+    /*background: rgba(40, 44, 52, 0.6);*/
     border: 1px solid var(--color-9);
 }
+
+/*html.dark .card:hover {*/
+/*    background: rgba(40, 44, 52, 0.8);*/
+/*}*/

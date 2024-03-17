@@ -70,8 +70,8 @@ const handleQuery = (current: number, size: number) => {
 html.dark {
     .hami-search-page {
         .list-item {
-            background-color: var(--hami-bg);
-            opacity: .8;
+            background-color: var(--hami-card-bg);
+            border: 1px solid var(--color-9);
         }
     }
 }
@@ -93,7 +93,7 @@ html.dark {
         }
 
         &:hover {
-            box-shadow: var(--el-box-shadow);
+            background-color: var(--hami-card-hover-bg);
         }
 
         &:last-child {

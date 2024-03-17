@@ -47,7 +47,7 @@ const changeTheme = () => {
     flex-shrink: 0;
 
     .el-icon {
-        color: var(--hami-grey-4);
+        color: var(--hami-grey-3);
         transition: color .3s;
         margin-bottom: 2px;
     }

@@ -18,7 +18,6 @@ const router: Router = createRouter({
  * 全局路由守卫
  */
 router.beforeEach((to, from) => {
-    console.log(to, from)
     return doFilter(to, from)
 })
 
@@ -26,8 +25,5 @@ export function registerRouter(app: App) {
     app.use(router)
 }
 
-export function getRoutePrefix() {
-    return import.meta.env.VITE_ROUTER_HISTORY === "hash" ? "/#/" : "/"
-}
 
 export default router

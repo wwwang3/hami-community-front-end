@@ -1,3 +1,8 @@
+:root {
+    --dark-bg-1: rgba(40, 44, 52, 0.6);
+    --dark-bg-1-hover: rgba(40, 44, 52, 0.8);
+}
+
 html {
     font-size: 14px;
 }

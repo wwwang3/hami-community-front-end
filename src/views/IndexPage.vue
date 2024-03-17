@@ -42,7 +42,6 @@ watch(() => scrollTop.value, (newVal, _) => {
 })
 
 const handleScroll = () => {
-    console.log(window.scrollY, window.screenY)
     scrollTop.value = window.scrollY
 }
 

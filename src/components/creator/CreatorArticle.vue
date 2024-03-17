@@ -25,7 +25,7 @@ const handleDelete = async (item: ArticleDraft, index: number) => {
         $message.success("删除成功")
         creatorArticleList.value?.deleteItem(item, index)
     } catch (e) {
-        console.log(e)
+        console.error(e)
         $message.error("删除失败")
     }
 }

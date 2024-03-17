@@ -256,8 +256,9 @@ const randomType = (): TimelineTagType => {
     }
 
     :deep(.el-skeleton) {
-        background-color: var(--hami-bg);
+        background-color: var(--hami-card-bg);
         border-radius: var(--hami-radius);
+        border: 1px solid var(--color-9);
         padding: 20px;
         margin-bottom: 20px;
     }

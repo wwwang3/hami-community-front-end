@@ -64,8 +64,10 @@ const handleClose = () => {
 <style>
 
 .bulletin-modal {
+
     .title {
         margin: 12px 0;
+        font-size: 1.25rem;
         color: var(--hami-title-color);
     }
 
@@ -96,7 +98,7 @@ const handleClose = () => {
 
         .text {
             font-size: 1.25rem;
-            margin-left: 0.43rem;
+            margin-left: 0.4rem;
         }
 
     }
@@ -123,7 +125,7 @@ const handleClose = () => {
         align-items: center;
         cursor: pointer;
         height: 20px;
-        color: var(--hami-card-text-color);
+        color: var(--hami-title-color);
 
         .el-icon {
             position: relative;

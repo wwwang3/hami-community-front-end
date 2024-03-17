@@ -22,7 +22,7 @@ const goBack = () => {
 </script>
 <template>
     <div class="hami-user-center">
-        <div class="user-center-title">
+        <div class="user-center-title card">
             <div class="content" @click="goBack()">
                 <el-icon class="icon" :size="18">
                     <ArrowLeft/>
@@ -75,9 +75,8 @@ const goBack = () => {
     margin-top: 20px;
 
     .user-center-title {
-        max-width: 1200px;
+        max-width: 1100px;
         margin: 0 auto;
-        background-color: var(--hami-bg);
         border-radius: var(--hami-radius-medium);
         padding: 6px 0 6px 20px;
 
@@ -98,9 +97,10 @@ const goBack = () => {
 
     .user-center-container {
         position: relative;
-        max-width: 1200px;
+        max-width: 1100px;
         margin: 24px auto;
         display: flex;
+        justify-content: space-between;
 
         .hami-user-center-body {
             flex: 1;
@@ -108,7 +108,7 @@ const goBack = () => {
     }
 
     .user-center-nav {
-        margin-right: 30px;
+        //margin-right: 30px;
         padding: 1.2rem 1.2rem 1.5rem;
         width: 210px;
         height: 500px;
