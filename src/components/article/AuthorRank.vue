@@ -16,7 +16,7 @@ const [onLoading, getUserRankList] = useRequest<HotAuthor[], []>({
 })
 
 const page = ref<Page>({
-    current: 1,
+    current: 0,
     size: 5,
     total: 0
 })
@@ -39,15 +39,15 @@ const refreshUserRank = () => {
     if (onLoading.value || isEmpty(userRankList.value)) {
         return
     }
-    page.value.current = (pages.value === 0) ? 1 : (page.value.current + 1) % pages.value
-    rotate.value += 360
+    page.value.current = (page.value.current + 1) % pages.value
+    rotate.value = rotate.value + 360
     subRankList.value = getSubList()
 }
 
 const getSubList = () => {
     let current = page.value.current
     let size = page.value.size
-    return userRankList.value.slice((current - 1) * size, current * size)
+    return userRankList.value.slice(current * size, (current + 1) * size)
 }
 
 </script>
@@ -114,6 +114,7 @@ const getSubList = () => {
                 position: relative;
                 top: 1px;
                 margin-right: 6px;
+                transition: all .3s linear;
             }
         }
     }

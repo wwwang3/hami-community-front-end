@@ -8,7 +8,7 @@ const $route = useRoute()
 const paths = ["/editor/drafts", "/login", "/register"]
 
 const showHeader = ref(true)
-watch(() => $route.path, (newVal, oldValue) => {
+watch(() => $route.path, (newVal, _oldValue) => {
     for (let path of paths) {
         if (newVal.includes(path)) {
             showHeader.value = false

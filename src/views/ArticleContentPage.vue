@@ -13,6 +13,7 @@ import HamiMdViewer from '@/components/md/HamiMdViewer.vue'
 import HamiComment from '@/components/comment/HamiComment.vue'
 import HamiBackTop from '@/components/common/HamiBackTop.vue'
 import CommonUserCard from '@/components/user/CommonUserCard.vue'
+import { useRouter } from 'vue-router'
 
 
 const $props = defineProps<{
@@ -25,7 +26,7 @@ const [onLoading, getArticleContent] = useRequest<Article, [number]>({
 const cateStore = useCateStore()
 const articleId = ref<number>(parseInt($props.id))
 const article = ref<Article>() as Ref<Article>
-
+const $router = useRouter()
 
 onBeforeMount(async () => {
     await getArticle()
@@ -91,6 +92,7 @@ const handleLike = () => {
         itemType: 1
     }).then(state => {
         if (state) {
+            $message.success("点赞成功~")
             article.value.stat.likes++
             article.value.liked = true
         } else {
@@ -126,14 +128,17 @@ const handleCommentChange = (delta: number) => {
 
 const getArticle = async () => {
     let loading = $message.loading("加载中")
+
     try {
         article.value = await getArticleContent(articleId.value)
         liked.value = article.value.liked
         collected.value = article.value.collected
     } catch (e) {
         console.error(e)
+        await $router.push("/error")
     } finally {
         loading?.close()
+        onLoading.value = false
     }
 }
 

@@ -85,6 +85,10 @@ html.dark .card {
     border: 1px solid var(--color-9);
 }
 
+html.dark .hami-index-columns .welcome {
+    background-image: linear-gradient(270deg, #161ef1, #9363ec, #b473da, #ec7bca);
+}
+
 /*html.dark .card:hover {*/
 /*    background: rgba(40, 44, 52, 0.8);*/
 /*}*/

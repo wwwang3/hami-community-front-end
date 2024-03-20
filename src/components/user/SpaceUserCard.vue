@@ -93,7 +93,7 @@ const handleClick = () => {
                         <el-tag class="tag" v-if="showTag && user?.tag" size="small">{{ user.tag }}</el-tag>
                     </div>
                     <div class="account-box-right">
-                        <el-link :href="blog" :underline="false" v-if="blog">
+                        <el-link :href="blog" :underline="false" v-if="blog" target="_blank">
                             <el-icon size="18">
                                 <svg class="icon" viewBox="0 0 1024 1024"
                                      xmlns="http://www.w3.org/2000/svg">

@@ -216,7 +216,8 @@ const routes: RouteRecordRaw[] = [
         path: "/:catchAll(.*)",
         name: "404",
         component: () => import("@/components/common/HamiNotFound.vue")
-    }
+    },
+
 ]
 
 export default routes

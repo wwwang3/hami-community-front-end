@@ -78,6 +78,7 @@ const handleLike = () => {
         itemType: 1
     }).then(state => {
         if (state) {
+            $message.success("点赞成功~")
             $props.article.stat.likes++
             $props.article.liked = true
         } else {

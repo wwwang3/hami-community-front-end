@@ -167,7 +167,7 @@ const checkItem = () => {
                     :disabled="onUpload"
                 >
                     <template #default>
-                        <HamiLoading :loading="onUpload" text="上传中" style="border-radius: 50%; height: 120px;">
+                        <HamiLoading :loading="onUpload" text="上传中">
                             <div class="picture-item">
                                 <img :src="draft.picture" alt="" v-if="!isEmpty(draft.picture)">
                                 <el-icon :size="24" v-else>
@@ -179,7 +179,7 @@ const checkItem = () => {
                 </el-upload>
                 <div class="tips">
                     <span>建议比例(16:9)</span>
-                    <span>图片大小不超过2M</span>
+                    <span>图片大小不超过4M</span>
                 </div>
             </el-form-item>
             <el-form-item prop="summary" label="摘要:" style="width: 90%">

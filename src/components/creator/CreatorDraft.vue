@@ -49,5 +49,9 @@ const handleDelete = async (item: ArticleDraft, index: number) => {
             margin-bottom: 10px;
         }
     }
+
+    :deep(.hami-empty) {
+        border: none !important;
+    }
 }
 </style>

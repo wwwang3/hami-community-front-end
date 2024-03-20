@@ -50,6 +50,7 @@ const getAuthor = async (id: number) => {
         user.value = await getAuthorInfo(id)
     } catch (e) {
         console.error(e)
+        await $router.replace("/error")
     } finally {
     }
 }

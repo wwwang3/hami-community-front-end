@@ -45,7 +45,7 @@ const themeStore = useThemeStore()
 const activeNav = ref('首页')
 
 const handleAboutClick = () => {
-    $message.success("作者喜欢吃哈密瓜, 所以叫Hami ✿ヽ(°▽°)ノ✿")
+    $message.notifySuccess("作者喜欢吃哈密瓜, 所以叫Hami ✿ヽ(°▽°)ノ✿", "关于Hami")
 }
 
 const onPPT = () => {

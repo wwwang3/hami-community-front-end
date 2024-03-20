@@ -111,6 +111,7 @@ const handleScroll = () => {
     </div>
 </template>
 
+
 <style scoped lang="less">
 .hami-index-container {
     max-width: 1280px;
@@ -147,7 +148,7 @@ const handleScroll = () => {
 
     .welcome {
         padding: 1.14rem;
-        background: linear-gradient(135deg, #5433ff, #20bdff, #a5fecb);
+        background-image: linear-gradient(270deg, #8b42e8, #7d71e8, #6396e8, #25b8e7);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;

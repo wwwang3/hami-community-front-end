@@ -28,7 +28,7 @@ const up = (value: number) => {
         <div class="stat-title">{{ title }}</div>
         <u-counter :start-amount="0" :end-amount="value" class="count"></u-counter>
         <div class="footer">
-            <span class="text">较昨日</span>
+            <span class="text">较前日</span>
             <template v-if="changed(incr)">
                 <div class="var-box incr" v-if="up(incr!)">
                     <el-icon class="icon">
