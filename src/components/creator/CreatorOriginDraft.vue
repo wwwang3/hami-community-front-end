@@ -21,7 +21,7 @@ const handleQuery = (current: number, size: number): Promise<PageData<ArticleDra
 const handleDelete = async (item: ArticleDraft, index: number) => {
     //删除草稿
     try {
-        await ArticleDraftService.deleteDraft(item.id)
+        await ArticleDraftService.deleteOriginDraft(item.id)
         $message.success("删除成功")
         creatorDraftList.value?.deleteItem(item, index)
     } catch (e) {
