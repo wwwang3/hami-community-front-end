@@ -119,12 +119,14 @@ const handleSave = async () => {
     try {
         if (!hasDraftId()) {
             let data = await handleCreate();
+            draft.value.id = data.id;
             if (!isEmpty(data)) {
                 $message.success("保存草稿成功")
                 await $router.replace("/editor/drafts/" + data.id)
             }
         } else {
             let data = await handleUpdate()
+            draft.value.id = data.id;
             if (!isEmpty(data)) {
                 $message.success("更新成功")
             }
@@ -175,17 +177,16 @@ const handleEnsure = async () => {
             $message.notifyError("系统错误")
             return
         }
+        // null-data
         let data = await process(ArticleDraftService.publishArticle(draft.value.id))
-        if (!isEmpty(data) || isEmpty(data.articleId)) {
-            // 跳转到发表成功页面
-            draft.value.articleId = data.articleId
-            $message.notifySuccess("发表成功")
-            window.sessionStorage.setItem("p_article_id", data.articleId + "")
-            window.sessionStorage.setItem("p_title", draft.value.title)
-            await $router.replace({
-                name: "Published"
-            })
-        }
+        // 跳转到发表成功页面
+        // draft.value.articleId = data.articleId
+        $message.notifySuccess("发表成功")
+        // window.sessionStorage.setItem("p_article_id", data.articleId + "")
+        window.sessionStorage.setItem("p_title", draft.value.title)
+        await $router.replace({
+            name: "Published"
+        })
     } catch (e) {
         console.error(e)
     } finally {

@@ -16,3 +16,14 @@ declare interface ArticleStat {
     comments: number // 评论数
     collects: number // 收藏数
 }
+
+declare interface SiteStat {
+    users: number
+    articles: number
+    views: number
+    likes: number
+    comments: number
+    collects: number
+    pv: number
+    uv: number
+}

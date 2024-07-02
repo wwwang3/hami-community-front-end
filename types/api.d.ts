@@ -81,11 +81,17 @@ declare interface Page {
     total: number
 }
 
-declare interface  Bulletin {
+declare interface Bulletin {
     id: number
     title: string
     content: string
     ctime: number | Date
     mtime: number | Date
     deleted: 0 | 1
+}
+
+declare interface BulletinParam {
+    title: string
+    content: string
+    id: number | null
 }

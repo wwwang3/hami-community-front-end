@@ -4,6 +4,14 @@ export const ArticleDraftService: ArticleDraftServiceApi = {
 
     /**
      * 获取草稿
+     * @param page
+     */
+    listDraft(page: ArticleDraftPageParam): Promise<PageData<ArticleDraft>> {
+        return http.post("/draft/list", page)
+    },
+
+    /**
+     * 获取草稿
      * @param id
      */
     getArticleDraft(id: number): Promise<ArticleDraft> {
@@ -12,22 +20,6 @@ export const ArticleDraftService: ArticleDraftServiceApi = {
                 draftId: id
             }
         })
-    },
-
-    /**
-     * 获取草稿列表
-     * @param page
-     */
-    listDraft(page: PageParam): Promise<PageData<ArticleDraft>> {
-        return http.post("/draft/list", page)
-    },
-
-    /**
-     * 获取发布文章草稿列表
-     * @param page
-     */
-    listArticle(page: PageParam): Promise<PageData<ArticleDraft>> {
-        return http.post("/draft/article/list", page)
     },
 
     /**
@@ -48,23 +40,24 @@ export const ArticleDraftService: ArticleDraftServiceApi = {
 
     /**
      * 发布文章
-     * @param draftId
+     * @param draftId 草稿ID
      */
-    publishArticle(draftId: number): Promise<ArticleDraft> {
+    publishArticle(draftId: number): Promise<any> {
         return http.post("/draft/publish", null, {
             params: {
                 draftId: draftId
             }
         })
     },
+
     /**
-     * 删除文章
+     * 删除文章 state == 1 or 2 or 3
      * @param id
      */
     deleteArticle(id: number): Promise<any> {
         return http.post("/draft/article/delete", null, {
             params: {
-                articleId: id
+                draftId: id
             }
         })
     },
@@ -73,13 +66,13 @@ export const ArticleDraftService: ArticleDraftServiceApi = {
      * 删除草稿
      * @param id
      */
-    deleteDraft(id: number): Promise<any> {
+    deleteOriginDraft(id: number): Promise<any> {
         return http.post("/draft/delete", null, {
             params: {
                 draftId: id
             }
         })
-    },
+    }
 }
 
 export const ArticleService: ArticleServiceApi = {

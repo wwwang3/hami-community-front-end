@@ -20,7 +20,7 @@ export interface MessageUtils {
 
     loading(text: string, background?: string, options?: LoadingOptionsResolved): any
 
-    closeLoading(loading: LoadingInstance, time?: number): void
+    closeLoading(loading: LoadingInstance | null, time?: number): void
 
     notify(options: NotificationParams): any
 

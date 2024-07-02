@@ -57,9 +57,7 @@ declare interface ArticleServiceApi {
 
 declare interface ArticleDraftServiceApi {
 
-    listArticle(page: PageParam): Promise<PageData<ArticleDraft>>
-
-    listDraft(page: PageParam): Promise<PageData<ArticleDraft>>
+    listDraft(page: ArticleDraftPageParam): Promise<PageData<ArticleDraft>>
 
     getArticleDraft(id: number): Promise<ArticleDraft>
 
@@ -67,9 +65,9 @@ declare interface ArticleDraftServiceApi {
 
     updateDraft(param: ArticleDraftParam): Promise<ArticleDraft>
 
-    publishArticle(draftId: number): Promise<ArticleDraft>
+    publishArticle(draftId: number): Promise<any>
 
-    deleteDraft(id: number): Promise<any>
+    deleteOriginDraft(id: number): Promise<any>
 
     deleteArticle(id: number): Promise<any>
 }
@@ -167,4 +165,30 @@ declare interface BulletinServiceApi {
 
     getNewBulletin(): Promise<Bulletin>
 
+}
+
+declare interface AdminServiceApi {
+    // reviewPass(param: ArticleDraft): Promise<any>
+    //
+    // reviewReject(param: ArticleDraft, msg: string): Promise<any>
+
+    review(param: ArticleDraft, msg: String): Promise<any>
+
+    listReviewDraft(param: ArticleDraftPageParam): Promise<PageData<ArticleDraftVo>>
+
+    listBulletin(param: PageParam): Promise<PageData<Bulletin>>
+
+    deleteBulletin(id: number): Promise<any>
+
+    publishBulletin(param: BulletinParam): Promise<Bulletin>
+
+    listComment(param: PageParam): Promise<PageData<Comment>>
+
+    deleteComment(id: number)
+
+    listUser(param: PageParam): Promise<PageData<User>>
+
+    deleteUser(id: number): Promise<any>
+
+    getSiteStat(): Promise<SiteStat>
 }

@@ -1,5 +1,5 @@
 
-declare type ArticleState = 0 | 1
+declare type ArticleState = 0 | 1 | 2 | 3
 
 /**
  * 文章草稿信息
@@ -21,6 +21,11 @@ declare interface ArticleDraft {
     mtime: number // 修改时间
 }
 
+declare interface ArticleDraftVo {
+    draft: ArticleDraft
+    user: User
+}
+
 declare interface ArticleDraftParam {
     id?: number // 草稿ID
     categoryId: number // 分类ID
@@ -29,4 +34,8 @@ declare interface ArticleDraftParam {
     summary: string // 简介
     content: string //内容
     picture: string // 图片
+}
+
+declare interface ArticleDraftPageParam extends PageParam {
+    state: 0 | 1 | 2 | 3
 }

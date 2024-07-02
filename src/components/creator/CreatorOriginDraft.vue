@@ -13,19 +13,20 @@ onMounted(() => {
 })
 
 const handleQuery = (current: number, size: number): Promise<PageData<ArticleDraft>> => {
+    const state = 0
     return ArticleDraftService.listDraft({
-        current, size
+        current, size, state
     })
 }
 
 const handleDelete = async (item: ArticleDraft, index: number) => {
-    //删除草稿
+    // 原始草稿
     try {
         await ArticleDraftService.deleteOriginDraft(item.id)
         $message.success("删除成功")
         creatorDraftList.value?.deleteItem(item, index)
     } catch (e) {
-
+        console.error(e)
     }
 }
 

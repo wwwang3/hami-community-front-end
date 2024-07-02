@@ -2,6 +2,8 @@
 import { onMounted, ref } from "vue"
 import { useRoute } from "vue-router"
 import { TabsPaneContext } from 'element-plus'
+import CreatorArticlePanel from '@/components/creator/CreatorArticlePanel.vue'
+import CreatorOriginDraft from '@/components/creator/CreatorOriginDraft.vue'
 
 
 const $route = useRoute()
@@ -30,12 +32,12 @@ const handleClick = (pane: TabsPaneContext, ev: Event) => {
                  @tab-click="handleClick">
             <el-tab-pane label="文章" name="article">
                 <div class="creator-content-body">
-                    <CreatorArticle></CreatorArticle>
+                    <CreatorArticlePanel></CreatorArticlePanel>
                 </div>
             </el-tab-pane>
             <el-tab-pane label="草稿" name="draft">
                 <div class="creator-content-body">
-                    <CreatorDraft></CreatorDraft>
+                    <CreatorOriginDraft></CreatorOriginDraft>
                 </div>
             </el-tab-pane>
         </el-tabs>

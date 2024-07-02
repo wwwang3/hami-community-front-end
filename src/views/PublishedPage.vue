@@ -15,7 +15,7 @@ const $router = useRouter()
 
 onMounted(() => {
     console.log($props)
-    if (isEmpty($props.id) || isEmpty($props.title)) {
+    if (isEmpty($props.title)) {
         console.warn("no article_id or title")
         handleClick()
     }
@@ -36,8 +36,8 @@ const handleClick = () => {
     <div class="card hami-published">
         <div class="hami-published-body">
             <img :src="publishedImg" alt="">
-            <router-link :to="'/article/' + $props.id" class="title">《{{ $props.title }}》</router-link>
-            <div class="msg">发表成功! 有你的分享Hami会变得更好~</div>
+            <div class="title">《{{ $props.title }}》</div>
+            <div class="msg">发表成功! 请等待管理员审核，有你的分享Hami会变得更好~</div>
             <el-button type="primary" @click="handleClick">回到首页</el-button>
         </div>
     </div>

@@ -6,6 +6,12 @@ import HamiScrollList from '@/components/common/HamiScrollList.vue'
 import HamiArticleDraftCard from '@/components/article/ArticleDraftCard.vue'
 import { HamiScrollListInstance } from '@/components/types'
 
+interface CreatorArticleProps {
+    state: 1 | 2 | 3
+}
+
+const $props = defineProps<CreatorArticleProps>()
+
 const creatorArticleList = ref<HamiScrollListInstance<ArticleDraft>>()
 
 onMounted(() => {
@@ -13,15 +19,16 @@ onMounted(() => {
 })
 
 const handleQuery = (current: number, size: number): Promise<PageData<ArticleDraft>> => {
-    return ArticleDraftService.listArticle({
-        current,
-        size
+    return ArticleDraftService.listDraft({
+        current: current,
+        size: size,
+        state: $props.state
     })
 }
 
 const handleDelete = async (item: ArticleDraft, index: number) => {
     try {
-        await ArticleDraftService.deleteArticle(item.articleId)
+        await ArticleDraftService.deleteArticle(item.id)
         $message.success("删除成功")
         creatorArticleList.value?.deleteItem(item, index)
     } catch (e) {

@@ -15,7 +15,7 @@ import { useRoute, useRouter } from "vue-router"
 
 </script>
 <template>
-  $END$
+44
 </template>
 
 <style scoped lang="less">

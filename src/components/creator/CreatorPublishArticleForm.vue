@@ -94,8 +94,8 @@ const handleSave = () => {
     $emit("save")
 }
 
-//有文章ID时表示确定并更新
-//有文章ID时保存草稿和确定并发表是同样的效果
+// 有文章ID时表示确定并更新
+// 有文章ID时保存草稿和确定并发表是同样的效果
 const handleEnsure = () => {
     if (!checkItem()) return
     $emit("ensure")

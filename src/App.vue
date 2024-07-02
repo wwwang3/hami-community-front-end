@@ -5,7 +5,7 @@ import HamiHeader from '@/components/header/HamiHeader.vue'
 
 
 const $route = useRoute()
-const paths = ["/editor/drafts", "/login", "/register"]
+const paths = ["/editor/drafts", "/login", "/register", "/admin"]
 
 const showHeader = ref(true)
 watch(() => $route.path, (newVal, _oldValue) => {

@@ -217,7 +217,38 @@ const routes: RouteRecordRaw[] = [
         name: "404",
         component: () => import("@/components/common/HamiNotFound.vue")
     },
-
+    {
+        path: "/admin",
+        name: "Admin",
+        component: () => import("@/views/Admin.vue"),
+        children: [
+            {
+                path: "",
+                name: "AdminDefault",
+                redirect: "/admin/stat"
+            },
+            {
+                path: "stat",
+                name: "AdminStat",
+                component: () => import("@/components/admin/AdminStat.vue")
+            },
+            {
+                path: "bulletin",
+                name: "AdminBulletin",
+                component: () => import("@/components/admin/AdminBulletin.vue")
+            },
+            {
+                path: "article",
+                name: "AdminArticle",
+                component: () => import("@/components/admin/AdminArticle.vue")
+            },
+            {
+                path: "user",
+                name: "AdminUser",
+                component: () => import("@/components/admin/AdminUser.vue")
+            },
+        ]
+    }
 ]
 
 export default routes
